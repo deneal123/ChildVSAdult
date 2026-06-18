@@ -1,0 +1,111 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "age-gap"
+version = "0.1.0"
+description = "Controlled, consent-based, human-reviewed cross-age identity matching from naturally anchored social posts."
+requires-python = ">=3.10,<3.13"
+# Базовые зависимости MVP-1 (конвейер данных): парсинг, препроцессинг лиц, схемы.
+# ONNX Runtime ставится через extra cpu/gpu (взаимоисключающие — см. ниже).
+dependencies = [
+    "numpy>=1.24.0",
+    "pyyaml>=6.0",
+    "dynaconf>=3.2",
+    "python-dotenv>=1.0",
+    "insightface>=0.7.3",
+    "opencv-python-headless>=4.9",
+    "Pillow>=10.0",
+    "requests>=2.31",
+    "tqdm>=4.66",
+    "gigachat>=0.1.30",
+    "loguru>=0.7",
+]
+
+[project.optional-dependencies]
+# CPU-инференс ONNX (портативный вариант по умолчанию): uv sync --extra cpu
+cpu = ["onnxruntime>=1.17"]
+# GPU-инференс ONNX: uv sync --extra gpu (нужен NVIDIA GPU).
+# nvidia-*-cu12 — CUDA12/cuDNN9 рантаймы, которые onnxruntime-gpu подгружает в рантайме
+# (на Windows их каталоги добавляются в DLL-пути в age_gap.common.device).
+gpu = [
+    "onnxruntime-gpu>=1.18",
+    "nvidia-cudnn-cu12>=9.0",
+    "nvidia-cublas-cu12>=12.0",
+    "nvidia-cuda-runtime-cu12>=12.0",
+    "nvidia-cufft-cu12>=11.0",
+    "nvidia-curand-cu12>=10.0",
+]
+# ML-стек для обучения/оценки (MVP-2+): uv sync --extra ml
+ml = [
+    "torch>=2.0.0",
+    "torchvision>=0.27.0",
+    "pandas>=2.0.0",
+    "plotly>=5.18.0",
+    "networkx>=3.0",
+    "datasets>=2.14",
+    "bitsandbytes>=0.49.2",
+    # Реальная aging-модель FRAN (synthetic-baseline): U-Net с antialiased BlurPool;
+    # веса (~124 МБ) тянутся с HuggingFace при первом обращении (models/aging.py).
+    "antialiased-cnns>=0.3",
+    "huggingface-hub>=0.20",
+]
+
+# onnxruntime (cpu) и onnxruntime-gpu предоставляют один и тот же модуль — нельзя ставить вместе.
+[tool.uv]
+conflicts = [[{ extra = "cpu" }, { extra = "gpu" }]]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.1.0",
+    "pre-commit>=4.6.0",
+    "ruff>=0.15.14",
+    "pytest>=7.4.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = [
+    ".cache",
+    ".git",
+    ".pytest_cache",
+    ".venv",
+    "runs",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["age_gap"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src", "scripts"]
+ignore_missing_imports = true
+follow_imports = "silent"
+warn_unused_ignores = false
+show_error_codes = true
+pretty = true
+exclude = [
+    "^runs/",
+    "^\\.cache/",
+]
+
+# PyTorch-индекс помечен explicit: из него берутся только пакеты, явно привязанные
+# в [tool.uv.sources]. Иначе uv пытался бы резолвить из него ВСЕ зависимости
+# (requests, insightface и т.д.) и падал бы — их там нет.
+[[tool.uv.index]]
+name = "pytorch-cu132"
+url = "https://download.pytorch.org/whl/cu132"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu132" }
+torchvision = { index = "pytorch-cu132" }
