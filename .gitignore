@@ -24,3 +24,5 @@ cache/
 data/
 logs/
 splits/
+.env
+src/age_gap/settings/certs/

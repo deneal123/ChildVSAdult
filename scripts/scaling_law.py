@@ -36,6 +36,7 @@ def main() -> None:
     bb = args.backbone
 
     frozen = eval_all(make_backbone(bb, pretrained=True).to(device).eval(), device)
+    print("frozen baseline: " + " ".join(f"{k}={frozen.get(k, float('nan')):.4f}" for k in _KEYS), flush=True)
     rows: list[tuple[float, dict[str, float]]] = []
     for f in args.fracs:
         split_run(neg_per_pos=1.0, seed=args.seed, train_frac=f)
@@ -47,7 +48,13 @@ def main() -> None:
             seed=args.seed,
             ckpt_out=Path(str(models / f"bb_{bb}_scale.pt")),
         )
-        rows.append((f, eval_all(load_finetuned(ckpt, device), device)))
+        m = eval_all(load_finetuned(ckpt, device), device)
+        rows.append((f, m))
+        # Инкрементальный вывод: переживает обрыв (не терять уже посчитанные доли).
+        print(
+            f"[scaling frac={f:.2f}] " + " ".join(f"{k}={m.get(k, float('nan')):.4f}" for k in _KEYS),
+            flush=True,
+        )
 
     split_run(neg_per_pos=1.0, seed=args.seed)  # восстановить полный сплит
 
