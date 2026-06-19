@@ -5,7 +5,12 @@ from __future__ import annotations
 from age_gap.common.schemas import AgeLabel, IdentityGroup, Pair
 from age_gap.datasets.age_anchors import RegexAgeExtractor  # noqa: F401 (smoke import)
 from age_gap.datasets.pair_builder import build_negative_pairs, build_positive_pairs
-from age_gap.datasets.splits import assign_group_splits, split_pairs
+from age_gap.datasets.splits import (
+    _group_wall,
+    assign_group_splits,
+    assign_wall_splits,
+    split_pairs,
+)
 
 
 def _make_groups(n: int) -> list[IdentityGroup]:
@@ -55,6 +60,23 @@ def test_no_identity_leakage_across_splits():
     assert train.isdisjoint(val)
     assert train.isdisjoint(test)
     assert val.isdisjoint(test)
+
+
+def test_group_wall_detection():
+    assert _group_wall(["-77072632_1_f0", "-77072632_2_f0"]) == "A"
+    assert _group_wall(["-134190297_1_f0"]) == "B"
+    assert _group_wall(["-77072632_1_f0", "-134190297_2_f0"]) == "AB"  # cross-wall
+
+
+def test_assign_wall_splits_other_wall_is_test():
+    groups = [
+        IdentityGroup("pA", "pA", ["-77072632_1_f0", "-77072632_2_f0"]),
+        IdentityGroup("pB", "pB", ["-134190297_1_f0", "-134190297_2_f0"]),
+        IdentityGroup("pAB", "pAB", ["-77072632_9_f0", "-134190297_9_f0"]),
+    ]
+    sp = assign_wall_splits(groups, train_wall="B", val_frac=0.0)
+    assert sp["pB"] == "train" and sp["pAB"] == "train"  # B и cross-wall -> train
+    assert sp["pA"] == "test"  # другая стена -> test (held-out источник)
 
 
 def test_cross_split_negatives_excluded():

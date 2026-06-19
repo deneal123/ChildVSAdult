@@ -45,6 +45,40 @@ def assign_group_splits(
     return assignment
 
 
+_WALL_A = "-77072632_"  # первая стена; вторая — всё остальное (-134190297_)
+
+
+def _group_wall(faces: list[str]) -> str:
+    """Стена группы по префиксу face_id: 'A' | 'B' | 'AB' (cross-wall)."""
+    a = any(f.startswith(_WALL_A) for f in faces)
+    b = any(not f.startswith(_WALL_A) for f in faces)
+    return "AB" if (a and b) else ("A" if a else "B")
+
+
+def assign_wall_splits(
+    groups: list[IdentityGroup], train_wall: str, val_frac: float = 0.1, seed: int = 42
+) -> dict[str, str]:
+    """Сплит ПО СТЕНЕ (cross-wall генерализация): train_wall → train (часть в val),
+    другая стена → test. Cross-wall личности ('AB') → train (чтобы test был чистый по источнику).
+    """
+    other = "B" if train_wall == "A" else "A"
+    assignment: dict[str, str] = {}
+    train_ids: list[str] = []
+    for g in groups:
+        w = _group_wall(g.faces)
+        if w == other:
+            assignment[g.identity_group_id] = "test"
+        else:  # train_wall или AB
+            assignment[g.identity_group_id] = "train"
+            train_ids.append(g.identity_group_id)
+    rng = random.Random(seed)
+    rng.shuffle(train_ids)
+    n_val = int(round(val_frac * len(train_ids)))
+    for gid in train_ids[:n_val]:
+        assignment[gid] = "val"
+    return assignment
+
+
 def split_pairs(pairs: list[Pair], group_split: dict[str, str]) -> tuple[list[Pair], int]:
     """Проставить split парам. Возвращает (пары, число исключённых кросс-сплитовых)."""
     dropped = 0
@@ -67,6 +101,9 @@ def run(
     ratios: tuple[float, float, float] = (0.7, 0.15, 0.15),
     seed: int = 42,
     neg_per_pos: float = 1.0,
+    age_matched_neg: bool = False,
+    by_wall: str | None = None,
+    train_frac: float = 1.0,
 ) -> dict[str, str]:
     """Leakage-safe сплит групп + БАЛАНСИРОВАННЫЕ негативы ВНУТРИ каждого сплита.
 
@@ -82,20 +119,34 @@ def run(
     split_map_out = split_map_out or str(data_path("splits_dir", "group_splits.jsonl"))
 
     groups = [IdentityGroup.from_dict(r) for r in read_jsonl(groups_file)]
-    group_split = assign_group_splits([g.identity_group_id for g in groups], ratios, seed)
+    if by_wall:
+        group_split = assign_wall_splits(groups, train_wall=by_wall, seed=seed)
+    else:
+        group_split = assign_group_splits([g.identity_group_id for g in groups], ratios, seed)
     groups_by_split: dict[str, list[IdentityGroup]] = {s: [] for s in SPLITS}
     for g in groups:
         s = group_split.get(g.identity_group_id)
         if s is not None:
             groups_by_split[s].append(g)
 
+    # Scaling-law: подвыборка train-личностей до доли train_frac (val/test без изменений).
+    if train_frac < 1.0:
+        tr = groups_by_split["train"]
+        rng = random.Random(seed + 777)
+        keep = set(rng.sample([g.identity_group_id for g in tr], int(round(train_frac * len(tr)))))
+        for g in tr:
+            if g.identity_group_id not in keep:
+                del group_split[g.identity_group_id]  # исключаем (позитивы -> split None -> отброс)
+        groups_by_split["train"] = [g for g in tr if g.identity_group_id in keep]
+
     pairs = [Pair.from_dict(r) for r in read_jsonl(pairs_file)]
 
-    # Позитивы (внутри группы → обе группы в одном сплите): штампуем сплитом.
+    # Позитивы (внутри группы → обе группы в одном сплите): штампуем сплитом. НЕ удаляем
+    # из файла те, что вне сплита (split=None) — иначе train_frac/by-wall безвозвратно теряли бы
+    # позитивы из pairs.jsonl; ImagePairDataset(split=...) их игнорирует, полный re-split вернёт.
     positives = [p for p in pairs if p.label == 1]
     for p in positives:
         p.split = group_split.get(p.identity_group_a or "")
-    positives = [p for p in positives if p.split is not None]
 
     # Сохраняем уже намайненные hard-негативы, чьи группы в одном сплите.
     kept_hard: list[Pair] = []
@@ -118,7 +169,12 @@ def run(
             continue
         simple_neg.extend(
             build_negative_pairs(
-                groups_by_split[s], n_per_positive=1, n_positives=target, seed=seed + i + 1, split=s
+                groups_by_split[s],
+                n_per_positive=1,
+                n_positives=target,
+                seed=seed + i + 1,
+                split=s,
+                age_matched=age_matched_neg,
             )
         )
 

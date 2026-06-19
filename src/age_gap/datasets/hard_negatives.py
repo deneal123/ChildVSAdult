@@ -41,42 +41,62 @@ def mine(
     hard_min_sim: float = HARD_MIN_SIM,
     uncertain_sim: float = UNCERTAIN_SIM,
     max_total: int | None = None,
+    chunk: int = 2048,
 ) -> MineResult:
     """Намайнить hard-негативы: для каждого лица — top_k ближайших из ДРУГИХ групп.
 
     max_total ограничивает итоговое число, оставляя САМЫЕ сложные (с наибольшим сходством) —
     защита от перекоса выборки, который иначе топит позитивы массой негативов.
+
+    Память-безопасно: сходства считаются блоками по ``chunk`` якорей (полная N×N матрица при
+    десятках тысяч лиц не помещается в память), для каждого якоря берём кандидатов через
+    argpartition. Семантика идентична наивному варианту.
     """
-    if len(face_ids) < 2:
+    n = len(face_ids)
+    if n < 2:
         return MineResult(hard=[], n_uncertain=0)
 
-    sims = embeddings @ embeddings.T  # косинус (эмбеддинги нормированы)
-    groups = [group_by_face.get(f, "") for f in face_ids]
+    # Коды групп для быстрого сравнения «та же группа».
+    gid_code: dict[str, int] = {}
+    gcode = np.empty(n, dtype=np.int64)
+    for i, f in enumerate(face_ids):
+        g = group_by_face.get(f, "")
+        gcode[i] = gid_code.setdefault(g, len(gid_code))
 
     scored: list[tuple[float, tuple[str, str]]] = []  # (sim, key)
     seen: set[tuple[str, str]] = set()
     n_uncertain = 0
+    # Берём с запасом кандидатов (на отсев same-group / uncertain / дубли), потом сортируем.
+    n_cand = min(n - 1, top_k + 32)
 
-    for i, fa in enumerate(face_ids):
-        order = np.argsort(-sims[i])  # соседи по убыванию сходства
-        taken = 0
-        for j in order:
-            if j == i or groups[i] == groups[j]:
-                continue
-            s = float(sims[i, j])
-            if s < hard_min_sim:
-                break  # дальше только меньше
-            key = (fa, face_ids[j]) if fa < face_ids[j] else (face_ids[j], fa)
-            if key in seen:
-                continue
-            seen.add(key)
-            if s >= uncertain_sim:
-                n_uncertain += 1  # возможный тот же человек — не используем как негатив
-                continue
-            scored.append((s, key))
-            taken += 1
-            if taken >= top_k:
-                break
+    for start in range(0, n, chunk):
+        block = embeddings[start : start + chunk] @ embeddings.T  # (b, N), косинус
+        for bi in range(block.shape[0]):
+            i = start + bi
+            fa = face_ids[i]
+            row = block[bi]
+            row[i] = -1.0  # исключить самого себя
+            cand = np.argpartition(-row, n_cand)[: n_cand + 1]
+            cand = cand[np.argsort(-row[cand])]  # кандидаты по убыванию сходства
+            taken = 0
+            for j in cand:
+                if gcode[i] == gcode[j]:
+                    continue
+                s = float(row[j])
+                if s < hard_min_sim:
+                    break  # дальше только меньше
+                fb = face_ids[j]
+                key = (fa, fb) if fa < fb else (fb, fa)
+                if key in seen:
+                    continue
+                seen.add(key)
+                if s >= uncertain_sim:
+                    n_uncertain += 1  # возможный тот же человек — не используем как негатив
+                    continue
+                scored.append((s, key))
+                taken += 1
+                if taken >= top_k:
+                    break
 
     # Оставляем самые сложные (highest sim) при лимите.
     scored.sort(key=lambda x: -x[0])

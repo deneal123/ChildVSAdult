@@ -78,6 +78,39 @@
   (таблицы), Observations.md (находки), TODO.md (только список задач). Добавлен научный бэклог
   гипотез ([TODO §5](TODO.md)).
 
+## 2026-06-19 — TODO по порядку
+
+- **Item 1 (забывание сильных backbone):** дообучение сильных backbone с мягким lr 1e-5 (вместо
+  3e-5). Прогон прерывался (ноут уснул, exit 4 на eval), но чекпойнты сохранились → возобновлено
+  через новый флаг `backbones_benchmark.py --eval-only` (оценка готовых чекпойнтов без
+  переобучения). Итог: мягкий lr ~вдвое-вчетверо уменьшает просадку на FG-NET и улучшает внутренний
+  выигрыш ([Results E10](Results.md)) — забывание lr-driven, митигируется.
+- **Item 2 (hard-негативы, переориентировано на backbone):** `mine()` переписан на память-safe
+  chunked top-k (полная 49k² матрица не влезает); re-embed 49k ArcFace → майнинг (7 410 hard в
+  train) → дообучение. Помогают facenet, переусердствуют на пластичном arcface_r50_casia
+  ([Results E11](Results.md)).
+- **Ручная проверка high-cosine пар (по подсказке пользователя):** при cos 0.55–0.8 это СМЕСЬ
+  look-alike и same-person; надёжно «тот же» только ≥0.85; ~1.0 — дубликаты. Вскрыло **утечку
+  личности** (сплит по посту, а не по человеку) ([Observations](Observations.md)).
+- **Leakage-safe сплит ПО ЧЕЛОВЕКУ:** `person_clusters.py` (union-find по cos≥0.85) слил 27 487
+  групп → 21 847 личностей (~20% повторов); `--apply` → person-level группы → пары 131 794
+  (+cross-post позитивы) → сплит по человеку. Перезапуск на честном сплите: **выигрыш от пар
+  устойчив** (facenet our.25+ +0.169, FG-NET large-gap +0.119); `our.*` даже чуть выше —
+  per-post сплит занижался ложными негативами ([Results E12](Results.md)).
+- **§5.1 age-matched negatives** (`build_negative_pairs(age_matched=True)` + `split --age-matched-neg`):
+  негативы из одного возрастного бакета → identity-only. Доказали возрастной шорткат: frozen
+  our.25+ 0.705→0.592 под age-control, +pairs → 0.865 ([Results E13](Results.md)). Ценность —
+  честный протокол оценки; тренировочный эффект маргинален.
+- **§5.3 age-gap калибровка** (`calibration.py`, `calibrate.py`): P(same | cos, age_gap) vs
+  Platt(cos). Сырой косинус плохо калиброван на gap 15–25 (ECE 0.088), age-gap-aware чинит (0.054),
+  Brier 0.041→0.034 ([Results E14](Results.md)). Отвечает на вопрос «насколько вероятно при большом разрыве».
+- **Фаза 9 / §5.2 disentanglement** (`disentangle.py`: GRL + age-голова): малый устойчивый прирост
+  cross-age (+0.008 FG-NET large-gap, +0.014 our.25+) без вреда easy-бенчмаркам ([Results E15](Results.md)).
+  Согласуется с E1 — драйвер данные, не явная age-супервизия. (Баг val-кортежа поправлен на лету.)
+- **§5.5 cross-wall генерализация** (`split.py --by-wall B`): train на стене B → test на held-out
+  стене A. Прирост переносится: внешний FG-NET large-gap +0.123 (≈within-source), стена A our.25+
+  +0.102 ([Results E16](Results.md)) — source-agnostic возрастная инвариантность.
+
 ---
 
 > Качество кодовой базы поддерживается зелёным на каждом шаге: ruff ✓, mypy ✓, pytest ✓

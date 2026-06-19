@@ -68,3 +68,19 @@ def test_negatives_deterministic():
     r1 = [p.pair_id for p in build_negative_pairs(groups, 2, 2, seed=7)]
     r2 = [p.pair_id for p in build_negative_pairs(groups, 2, 2, seed=7)]
     assert r1 == r2
+
+
+def test_age_matched_negatives_same_bucket():
+    # Бакеты: 6-12, 18-25, 26-35 (см. _AGE_BUCKETS). a1/b1 — дети; a2/b2 — взрослые.
+    from age_gap.datasets.pair_builder import _age_bucket
+
+    groups = [
+        _group("g1", ["a1", "a2"], ages={"a1": 8, "a2": 30}),
+        _group("g2", ["b1", "b2"], ages={"b1": 10, "b2": 33}),
+    ]
+    negs = build_negative_pairs(groups, 5, 10, seed=1, age_matched=True)
+    assert negs, "ожидались age-matched негативы"
+    for p in negs:
+        assert p.identity_group_a != p.identity_group_b
+        assert _age_bucket(p.age_a) == _age_bucket(p.age_b)  # один возрастной бакет
+        assert p.pair_type == "negative_age_controlled"
