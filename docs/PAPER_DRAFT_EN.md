@@ -53,11 +53,10 @@ a scalable, naturally-supervised signal of cross-age identity, and fine-tuning a
 should transfer to external benchmarks.
 
 **Contributions (bounded).** (1) A **naturally-supervised (manual-label-free) longitudinal signal**
-mined from social posts. (2) A rigorous **honest protocol** (one weak trainable backbone, frozen vs.
+mined from social posts. (2) A rigorous **attribution protocol** (one weak trainable backbone, frozen vs.
 fine-tuned, external evaluation) isolating the contribution of *data* from network capacity. (3)
 **Mutually reinforcing controls** (loss family, architecture, source community, training objective,
-real-vs-synthetic, shortcut diagnosis) supporting the bounded claim that *within this protocol the
-data dominates the objective among the variants tested*. (4) A **curation pipeline** with an audit of
+real-vs-synthetic, shortcut diagnosis) supporting the bounded claim that, within this protocol and across the objectives tested, the data contributes more to the large-gap gain than the choice among loss families. (4) A **curation pipeline** with an audit of
 its automatic components, and the finding that naive positive counts are inflated ~2× by
 near-duplicate frames. (5) **Applied calibration** and an **apparent-demographic fairness audit** with
 confidence intervals.
@@ -183,7 +182,10 @@ not rest the headline on FG-NET alone (small, old, partial detector coverage): A
 corroborate. We distinguish **threshold-free** metrics (ROC-AUC) from **threshold-based** ones
 (accuracy, TAR@FAR).
 
-**Statistics.** The headline gain is **mean ± std over 3 seeds** (seed variance captures training
+**Statistics.** Our *primary endpoint* is the FG-NET large-gap (≥25-year) ROC-AUC, with the null
+hypothesis that fine-tuning on the mined pairs does not improve it over the frozen baseline (gain ≤ 0);
+AgeDB-30, CALFW and the internal cross-age test are secondary endpoints, and easy LFW accuracy is
+monitored as a forgetting control. The headline gain is **mean ± std over 3 seeds** (seed variance captures training
 stochasticity, not full evaluation uncertainty). The fairness audit uses a **paired percentile
 bootstrap** (1000 resamples, resampling pairs and recomputing both models on the same resample) for the
 *gain*, accounting for frozen/tuned correlation. The release adds **paired-bootstrap / DeLong
@@ -359,8 +361,7 @@ construction and is not comparable to the standard internal test.)
 The contribution is a **scalable, naturally-supervised source of longitudinal supervision** and
 evidence that it teaches transferable age invariance that synthetic aging cannot replace and explicit
 age supervision does not explain. The reinforcing controls — loss family, architecture, source
-community, and training objective — converge on the bounded conclusion that, *within this protocol*,
-the data dominates the objective among the variants tested. The age-shortcut diagnostic gives a clean
+community, and training objective — converge on the bounded conclusion that, within this protocol and across the objectives tested, the data contributes more to the large-gap gain than the choice among loss families. The age-shortcut diagnostic gives a clean
 identity-only metric and explains the mechanism; the curation finding (half the raw positives were
 duplicates) is itself a methodological lesson. This is a *data-centric* contribution, not an
 architectural one, and several claims are bounded by our two-source, single-platform, apparent-attribute
@@ -459,8 +460,8 @@ keeps the full study within a 6 GB GPU budget.
 ## 10. Conclusion and Future Work
 
 Multi-photo posts are a cheap, scalable, naturally-supervised signal of cross-age identity; fine-tuning
-a weak recognizer on them yields transferable, cross-source, objective-robust age invariance, explained
-by removing an age shortcut, that is data-efficient and does not worsen any apparent-demographic
+a weak recognizer on them yields transferable, cross-source, objective-robust gains concentrated on large-gap cross-age matching (with only minor forgetting on easy benchmarks), explained
+by removing an age shortcut, that are data-efficient and do not worsen any apparent-demographic
 stratum. Future work: an independent non-VK and a child↔adult-specific external set; DeLong CIs and
 multiple-comparison correction in the main text; a human-audited supervision subset; full SOTA add-ons;
 a real aging model at native resolution; and a calibrated demo under the governance constraints of §8.
