@@ -223,7 +223,7 @@ our.25+ & 0.640 & \textbf{0.838} & 0.594 & 0.549 \\
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_headroom.pdf}
+\includegraphics[width=\columnwidth]{fig_headroom_ru.pdf}
 \caption{Кривая headroom: прирост от $+$pairs на FG-NET large-gap монотонно убывает с усилением frozen-backbone, пересекая ноль для сильных насыщенных моделей.}
 \label{fig:headroom}
 \end{figure}
@@ -252,7 +252,7 @@ AdaFace IR-101 (сильный) & 0.957 & 0.931 & $-$0.026 & $-$0.006 \\
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_scaling.pdf}
+\includegraphics[width=\columnwidth]{fig_scaling_ru.pdf}
 \caption{Закон масштабирования: внешний (FG-NET large-gap) и внутренний (our.25+) ROC-AUC против числа обучающих личностей (лог-шкала). Около 96\% прироста достигается на 10\% личностей; пунктир --- frozen-базлайны.}
 \label{fig:scaling}
 \end{figure}
@@ -281,7 +281,7 @@ frozen & 0 & 0.736 & 0.640 \\
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.86\columnwidth]{fig_shortcut.pdf}
+\includegraphics[width=0.86\columnwidth]{fig_shortcut_ru.pdf}
 \caption{Возрастной шорткат. На identity-only тесте (age-matched негативы) frozen падает почти к случайности; дообучение на наших парах восстанавливает различение по личности.}
 \label{fig:shortcut}
 \end{figure}
@@ -309,7 +309,7 @@ $+$pairs$+$disentangle & 0.632 $\pm$ 0.017 & 0.918 \\
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_sota.pdf}
+\includegraphics[width=\columnwidth]{fig_sota_ru.pdf}
 \caption{Сравнение objective: pair-contrastive и каноническая ArcFace-классификация совпадают на кросс-возрастном переносе; ArcFace чуть меньше забывает на easy-бенчмарках.}
 \label{fig:sota}
 \end{figure}
@@ -337,7 +337,7 @@ AgeDB-30 ROC & 0.953 & 0.945 & 0.947 \\
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_fairness.pdf}
+\includegraphics[width=\columnwidth]{fig_fairness_ru.pdf}
 \caption{Аудит по кажущимся стратам: frozen против $+$pairs ROC-AUC по стратам кажущихся пола/возраста. Все страты улучшаются; максимальный прирост --- у младшей группы (0--17), где frozen слабее всего.}
 \label{fig:fairness}
 \end{figure}
@@ -433,13 +433,13 @@ CALFW ROC & 0.948 & 0.949 & 0.934 \\
 \section{Воспроизводимость}\label{sec:repro}
 Мы публикуем скрипты и конфигурации. Ключевые детали: \emph{критерии usable-лица} (det-score, минимальный размер, размытие по Лапласиану, единственное целевое лицо по IoU); \emph{детектор/выравнивание} (InsightFace \texttt{buffalo\_l} RetinaFace, 5-точечный ArcFace \texttt{norm\_crop}, 112\,px; вход FaceNet 160\,px); \emph{эмбеддинги} (ArcFace \texttt{w600k\_r50}) для кластеризации/дедупа; \emph{кластеризация личности} (union-find, cos $\geq$ 0.85); \emph{дедуп} (внутри личности union-find, cos $\geq$ 0.97); \emph{LLM} (GigaChat; полные версионированные системные промпты для извлечения возраста и валидации групп; concurrency 10; кэш, резюмируемо); \emph{сплит} (по человеку, 70/15/15, сбалансированные негативы по сплитам, seed 42); \emph{сэмплинг негативов} (кросс-личность случайно $+$ age-matched вариант); \emph{обучение} (margin contrastive, head scope, lr 3e-5 для слабых / 1e-5 для сильных; ArcFace-голова $m{=}0.5$, $s{=}32$, lr 1e-3; ранняя остановка по внутреннему val-AUC; сиды 42/1/2); \emph{метрики} (чистый NumPy ROC-AUC через Mann--Whitney, EER, TAR@FAR; 10-fold для выровненных пар).
 
+\textbf{Вычисления.} Всё исследование выполняется на одном ноутбуке: одна NVIDIA RTX~3060 Laptop GPU (6~ГБ), AMD Ryzen~7~5800H (8~ядер / 16~потоков) и 16~ГБ RAM под Windows~11; программный стек --- Python~3.12, PyTorch~2.12 (CUDA~13.2, cuDNN~9.2), InsightFace~1.0 / ONNX~Runtime~1.26 для детекции и эмбеддингов, scikit-learn~1.9 / Matplotlib~3.11 для анализа и фигур. Протокол со слабым backbone удерживает всё исследование в пределах 6~ГБ GPU.
+
 \section{Заключение и дальнейшая работа}\label{sec:conclusion}
 Мультифото-посты --- дешёвый, масштабируемый naturally-supervised сигнал кросс-возрастной идентичности; дообучение слабого распознавателя на них даёт переносимую, кросс-источниковую, objective-устойчивую возрастную инвариантность, объяснимую снятием возрастного шортката, данные-эффективную и не ухудшающую ни одну кажущуюся демографическую страту. Дальнейшая работа: независимый не-VK и child$\leftrightarrow$adult-специфичный внешний набор; DeLong-CI и поправка на множественные сравнения в основном тексте; human-audited subset супервизии; полные SOTA-надстройки; реальная aging-модель на нативном разрешении; и калиброванный демонстратор в рамках governance-ограничений разд.~\ref{sec:ethics}.
 
 \section*{Благодарности}
 \reviewnote{При наличии добавьте сюда финансирование, номера грантов и благодарности за вычислительные ресурсы; иначе раздел можно удалить.}
-
-\reviewnote{Подписи на рисунках --- на английском (общие с EN-версией); при необходимости можно сгенерировать русифицированные рисунки.}
 
 \bibliographystyle{IEEEtran}
 \bibliography{refs}

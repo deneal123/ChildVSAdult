@@ -450,6 +450,12 @@ contrastive, head scope, lr 3e-5 weak / 1e-5 strong; ArcFace head m=0.5 s=32, lr
 internal val-AUC; seeds 42/1/2); **metrics** (pure-numpy ROC-AUC via Mann–Whitney, EER, TAR@FAR;
 10-fold for aligned-pair benchmarks).
 
+**Compute.** The entire study runs on a single laptop: one NVIDIA RTX 3060 Laptop GPU (6 GB), an AMD
+Ryzen 7 5800H (8 cores / 16 threads) and 16 GB RAM under Windows 11; the software stack is Python 3.12,
+PyTorch 2.12 (CUDA 13.2, cuDNN 9.2), with InsightFace 1.0 / ONNX Runtime 1.26 for detection and
+embeddings and scikit-learn 1.9 / Matplotlib 3.11 for analysis and figures. The weak-backbone protocol
+keeps the full study within a 6 GB GPU budget.
+
 ## 10. Conclusion and Future Work
 
 Multi-photo posts are a cheap, scalable, naturally-supervised signal of cross-age identity; fine-tuning
