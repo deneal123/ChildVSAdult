@@ -1,0 +1,16 @@
+# LaTeX build artifacts (regenerated on compile)
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.spl
+*.toc
+*.fls
+*.fdb_latexmk
+*.lof
+*.lot
+
+# Archived leftover template files from an unrelated project
+_attic/

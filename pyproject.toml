@@ -50,6 +50,7 @@ ml = [
     # веса (~124 МБ) тянутся с HuggingFace при первом обращении (models/aging.py).
     "antialiased-cnns>=0.3",
     "huggingface-hub>=0.20",
+    "matplotlib>=3.7",
 ]
 
 # onnxruntime (cpu) и onnxruntime-gpu предоставляют один и тот же модуль — нельзя ставить вместе.

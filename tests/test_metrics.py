@@ -4,7 +4,13 @@ from __future__ import annotations
 
 import numpy as np
 
-from age_gap.evaluation.metrics import eer, roc_auc, tar_at_far, verification_metrics
+from age_gap.evaluation.metrics import (
+    bootstrap_auc_ci,
+    eer,
+    roc_auc,
+    tar_at_far,
+    verification_metrics,
+)
 
 
 def test_roc_auc_perfect_separation():
@@ -62,3 +68,35 @@ def test_empty_class_returns_nan():
     labels = np.array([1, 1])  # нет негативов
     assert np.isnan(roc_auc(scores, labels))
     assert np.isnan(eer(scores, labels))
+
+
+def test_bootstrap_ci_brackets_point_estimate():
+    rng = np.random.default_rng(0)
+    pos = rng.normal(1.0, 1.0, 200)
+    neg = rng.normal(-1.0, 1.0, 200)
+    scores = np.concatenate([pos, neg])
+    labels = np.array([1] * 200 + [0] * 200)
+    point = roc_auc(scores, labels)
+    lo, hi = bootstrap_auc_ci(scores, labels, n_boot=300, seed=0)
+    assert lo < point < hi
+    assert 0.0 <= lo <= hi <= 1.0
+
+
+def test_bootstrap_ci_wider_for_small_sample():
+    rng = np.random.default_rng(1)
+    big = (
+        np.concatenate([rng.normal(1, 1, 300), rng.normal(-1, 1, 300)]),
+        np.array([1] * 300 + [0] * 300),
+    )
+    small = (
+        np.concatenate([rng.normal(1, 1, 20), rng.normal(-1, 1, 20)]),
+        np.array([1] * 20 + [0] * 20),
+    )
+    lo_b, hi_b = bootstrap_auc_ci(*big, n_boot=300, seed=0)
+    lo_s, hi_s = bootstrap_auc_ci(*small, n_boot=300, seed=0)
+    assert (hi_s - lo_s) > (hi_b - lo_b)
+
+
+def test_bootstrap_ci_empty():
+    lo, hi = bootstrap_auc_ci(np.array([]), np.array([]))
+    assert np.isnan(lo) and np.isnan(hi)

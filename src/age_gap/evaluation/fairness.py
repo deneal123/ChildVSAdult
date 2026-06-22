@@ -163,6 +163,32 @@ def _stratum_auc(
     return roc_auc(s, y), n_pos, n_neg
 
 
+def _paired_gain_ci(
+    items: list[tuple[float, float, int]], n_boot: int = 1000, seed: int = 0
+) -> tuple[float, float]:
+    """95% bootstrap-CI прироста (tuned−frozen): ресэмплинг ОДНИХ И ТЕХ ЖЕ пар для обеих моделей.
+
+    Парный ресэмплинг учитывает корреляцию frozen/tuned-скоров (CI у́же, чем у независимого).
+    """
+    if len(items) < 40:
+        return float("nan"), float("nan")
+    sf = np.asarray([it[0] for it in items], dtype=float)
+    st = np.asarray([it[1] for it in items], dtype=float)
+    y = np.asarray([it[2] for it in items], dtype=int)
+    n = len(items)
+    rng = np.random.default_rng(seed)
+    gains: list[float] = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, n)
+        yi = y[idx]
+        if (yi == 1).sum() < 2 or (yi == 0).sum() < 2:
+            continue
+        gains.append(roc_auc(st[idx], yi) - roc_auc(sf[idx], yi))
+    if not gains:
+        return float("nan"), float("nan")
+    return float(np.percentile(gains, 2.5)), float(np.percentile(gains, 97.5))
+
+
 def stratified_audit(
     frozen: torch.nn.Module,
     tuned: torch.nn.Module,
@@ -209,12 +235,15 @@ def stratified_audit(
     for stratum, items in buckets.items():
         af, np_, nn_ = _stratum_auc([(sf, y) for sf, _st, y in items])
         at, _, _ = _stratum_auc([(st, y) for _sf, st, y in items])
+        lo, hi = _paired_gain_ci(items)  # 95% CI прироста (C)
         result[stratum] = {
             "n_pos": np_,
             "n_neg": nn_,
             "frozen": af,
             "tuned": at,
             "gain": at - af,
+            "gain_lo": lo,
+            "gain_hi": hi,
         }
     return result
 
@@ -222,10 +251,14 @@ def stratified_audit(
 def print_audit(result: dict[str, dict[str, Any]]) -> None:
     order = ["overall", "gender:F", "gender:M", "age:0-17", "age:18-29", "age:30-44", "age:45+"]
     keys = [k for k in order if k in result] + [k for k in result if k not in order]
-    print(f"\n{'stratum':<14}{'n_pos':>8}{'n_neg':>8}{'frozen':>10}{'tuned':>10}{'gain':>9}")
+    print(
+        f"\n{'stratum':<14}{'n_pos':>8}{'n_neg':>8}{'frozen':>10}{'tuned':>10}"
+        f"{'gain':>9}{'gain 95% CI':>20}"
+    )
     for k in keys:
         r = result[k]
+        ci = f"[{r['gain_lo']:+.4f},{r['gain_hi']:+.4f}]"
         print(
             f"{k:<14}{r['n_pos']:>8}{r['n_neg']:>8}"
-            f"{r['frozen']:>10.4f}{r['tuned']:>10.4f}{r['gain']:>+9.4f}"
+            f"{r['frozen']:>10.4f}{r['tuned']:>10.4f}{r['gain']:>+9.4f}{ci:>20}"
         )

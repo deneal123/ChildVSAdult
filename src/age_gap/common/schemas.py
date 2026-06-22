@@ -165,6 +165,10 @@ class IdentityGroup:
     faces: list[str] = field(default_factory=list)
     age_labels: list[AgeLabel] = field(default_factory=list)
     status: str = "auto"
+    apparent_gender: str | None = None  # "F"/"M": majority genderage по лицам группы
+    apparent_age: int | None = None  # медианный apparent-возраст лиц группы (genderage)
+    gender_consistency: float | None = None  # доля лиц с majority-полом (1.0 = все согласны)
+    identity_review: str | None = None  # LLM-валидация: single | multi_person | collage | meme | unknown
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -173,6 +177,10 @@ class IdentityGroup:
             "faces": list(self.faces),
             "age_labels": [a.to_dict() for a in self.age_labels],
             "status": self.status,
+            "apparent_gender": self.apparent_gender,
+            "apparent_age": self.apparent_age,
+            "gender_consistency": self.gender_consistency,
+            "identity_review": self.identity_review,
         }
 
     @classmethod
@@ -183,6 +191,10 @@ class IdentityGroup:
             faces=list(d.get("faces", [])),
             age_labels=[AgeLabel.from_dict(a) for a in d.get("age_labels", [])],
             status=d.get("status", "auto"),
+            apparent_gender=d.get("apparent_gender"),
+            apparent_age=d.get("apparent_age"),
+            gender_consistency=d.get("gender_consistency"),
+            identity_review=d.get("identity_review"),
         )
 
 

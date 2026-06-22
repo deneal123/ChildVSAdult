@@ -92,3 +92,34 @@ def verification_metrics(
     for far in far_targets:
         out[f"tar@far={far:g}"] = tar_at_far(scores, labels, far)
     return out
+
+
+def bootstrap_auc_ci(
+    scores: np.ndarray,
+    labels: np.ndarray,
+    n_boot: int = 1000,
+    alpha: float = 0.05,
+    seed: int = 0,
+) -> tuple[float, float]:
+    """Перцентильный bootstrap-CI для ROC-AUC: ресэмплинг пар с возвратом.
+
+    Возвращает (lo, hi) для уровня (1−alpha). Учитывает конечность тестовой выборки — ширина
+    растёт на малых стратах (мало позитивов/негативов).
+    """
+    scores = np.asarray(scores, dtype=float)
+    labels = np.asarray(labels)
+    n = len(labels)
+    if n == 0:
+        return float("nan"), float("nan")
+    rng = np.random.default_rng(seed)
+    aucs: list[float] = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, n)
+        a = roc_auc(scores[idx], labels[idx])
+        if not np.isnan(a):
+            aucs.append(a)
+    if not aucs:
+        return float("nan"), float("nan")
+    lo = float(np.percentile(aucs, 100 * alpha / 2))
+    hi = float(np.percentile(aucs, 100 * (1 - alpha / 2)))
+    return lo, hi

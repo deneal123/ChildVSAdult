@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 
-from age_gap.evaluation.fairness import _GENDER, _age_band, _stratum_auc
+from age_gap.evaluation.fairness import _GENDER, _age_band, _paired_gain_ci, _stratum_auc
 
 
 def test_age_band_boundaries():
@@ -39,3 +39,17 @@ def test_stratum_auc_perfect_separation():
     auc, n_pos, n_neg = _stratum_auc(rows)
     assert n_pos == 25 and n_neg == 25
     assert auc == 1.0
+
+
+def test_paired_gain_ci_too_few_is_nan():
+    items = [(0.5, 0.9, 1)] * 10 + [(0.5, 0.1, 0)] * 10  # 20 < 40
+    lo, hi = _paired_gain_ci(items)
+    assert math.isnan(lo) and math.isnan(hi)
+
+
+def test_paired_gain_ci_positive_when_tuned_better():
+    # frozen на уровне случайности (скор не зависит от метки), tuned идеально разделяет.
+    items = [(0.5, 0.9, 1)] * 40 + [(0.5, 0.1, 0)] * 40
+    lo, hi = _paired_gain_ci(items, n_boot=300, seed=0)
+    assert lo > 0.0  # прирост уверенно положителен
+    assert lo <= hi <= 0.6
