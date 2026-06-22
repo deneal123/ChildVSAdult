@@ -378,11 +378,20 @@ setting.
   clustering forms persons — audited (§3.3) but a residual hidden-noise source.
 - **Statistics:** seed variance and paired bootstrap (fairness) are reported; DeLong/paired-bootstrap
   CIs for all benchmark comparisons and Holm correction are in the release supplement.
-- **External benchmarks are small/old:** FG-NET has partial detector coverage; the headline is
-  corroborated on AgeDB-30/CALFW, but an independent non-VK longitudinal set and a child↔adult-specific
-  set remain desirable (future work).
-- **Full SOTA pipelines not reproduced end-to-end:** we trained the core ArcFace objective on our
-  source, not method-specific add-ons (MTLFace age synthesis, OE-CNN orthogonal subspaces).
+- **Benchmark scale and age:** we evaluate on the field-standard cross-age suite — AgeDB-30 and CALFW
+  (6,000 pairs each) and FG-NET for the explicit ≥25-year subset — the same benchmarks used by
+  OE-CNN/DAL/MTLFace, which fixes comparability but inherits their limited scale and age (FG-NET in
+  particular is small with partial detector coverage, so we never rest the headline on it alone). Our
+  curated internal test (5,107 cross-age positives with controlled negatives) is a sizeable modern
+  complement; a larger independent non-VK longitudinal set and a dedicated child↔adult benchmark remain
+  the priority for future work.
+- **SOTA pipelines not reproduced end-to-end:** by design we train the *shared core* of modern AIFR —
+  the ArcFace angular-margin objective — under our weak-backbone protocol for clean attribution, not a
+  leaderboard comparison. §5.6 shows this objective matches our contrastive one on the key external
+  metric, so the objective is not what drives the gain; the omitted method-specific add-ons (MTLFace's
+  age-synthesis branch, OE-CNN's orthogonal subspaces) refine that shared objective and are orthogonal to
+  our claim about the supervision source. Whether a full SOTA pipeline trained on naturally-supervised
+  data closes the remaining absolute gap is a well-scoped follow-up.
 
 ## 8. Ethics, legal basis and data governance
 

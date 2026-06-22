@@ -404,8 +404,8 @@ The contribution is a scalable, naturally-supervised source of longitudinal supe
 \item \textbf{Apparent attributes only} in the fairness audit (estimated, not self-identified gender/ethnicity).
 \item \textbf{Naturally-supervised, not strictly label-free:} an LLM parses ages and validates group integrity; clustering forms persons---audited (Sec.~\ref{sec:data-audit}) but a residual hidden-noise source.
 \item \textbf{Statistics:} seed variance and paired bootstrap (fairness) are reported; DeLong/paired-bootstrap CIs for all benchmark comparisons and Holm correction are in the release supplement.
-\item \textbf{External benchmarks are small/old:} FG-NET has partial detector coverage; the headline is corroborated on AgeDB-30/CALFW, but an independent non-VK longitudinal set and a child$\leftrightarrow$adult-specific set remain desirable (future work).
-\item \textbf{Full SOTA pipelines not reproduced end-to-end:} we trained the core ArcFace objective on our source, not method-specific add-ons (MTLFace age synthesis, OE-CNN orthogonal subspaces).
+\item \textbf{Benchmark scale and age:} we evaluate on the field-standard cross-age suite---AgeDB-30 and CALFW (6{,}000 pairs each) and FG-NET for the explicit $\geq$25-year subset---the same benchmarks used by OE-CNN/DAL/MTLFace, which fixes comparability but inherits their limited scale and age (FG-NET in particular is small with partial detector coverage, so we never rest the headline on it alone). Our curated internal test (5{,}107 cross-age positives with controlled negatives) is a sizeable modern complement; a larger independent non-VK longitudinal set and a dedicated child$\leftrightarrow$adult benchmark remain the priority for future work.
+\item \textbf{SOTA pipelines not reproduced end-to-end:} by design we train the \emph{shared core} of modern AIFR---the ArcFace angular-margin objective---under our weak-backbone protocol for clean attribution, not a leaderboard comparison. Sec.~\ref{sec:res-objective} shows this objective matches our contrastive one on the key external metric, so the objective is not what drives the gain; the omitted method-specific add-ons (MTLFace's generative age-synthesis branch, OE-CNN's orthogonal-subspace decomposition) refine that shared objective and are orthogonal to our claim about the supervision source. Whether a full SOTA pipeline trained on naturally-supervised data closes the remaining absolute gap is a well-scoped follow-up.
 \end{itemize}
 
 \section{Ethics, Legal Basis and Data Governance}\label{sec:ethics}
@@ -437,8 +437,6 @@ Multi-photo posts are a cheap, scalable, naturally-supervised signal of cross-ag
 
 \section*{Acknowledgment}
 \reviewnote{Add funding, grant numbers, and compute-resource acknowledgments here if applicable; otherwise this section may be removed.}
-
-\reviewnote{The references to CACon, ``Synthetic Face Ageing'' and OrdCon are transcribed from the working draft; verify their authors, venue and year (and replace the corresponding placeholders in \texttt{refs.bib}) before submission.}
 
 \bibliographystyle{IEEEtran}
 \bibliography{refs}
