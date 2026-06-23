@@ -260,13 +260,21 @@
   из gallery (`media_metadata`/`gallery_data`) и одиночных image-постов.
 - **`parsing/reddit_ingest.py`** + **`scripts/ingest_reddit.py`** — нормализация в RawPost
   (post_id `reddit_<id>`, source `reddit_public`, caption=заголовок → возраст той же LLM),
-  параллельная загрузка фото в `data/raw/images/reddit_<id>/` → `data/raw/posts_reddit.jsonl`.
+  параллельная загрузка фото → стандартный `posts.jsonl` + `images/reddit_<id>/` под активным data_dir.
 - Парсинг провалидирован офлайн (gallery→N фото по порядку, single→1, permalink-чистка, to_dict).
   Живой fetch из dev-среды блокируется по IP → запускать на резидентном IP с OAuth-креденшелами.
-- **Следующие шаги (на машине с доступом):** зарегистрировать «script»-app на reddit.com/prefs/apps
-  → `.env` (REDDIT_CLIENT_ID/SECRET[/USERNAME/PASSWORD/USER_AGENT]) → `ingest_reddit.py` →
-  preprocess → cluster/dedup/build_pairs/split на reddit-данных → кросс-платформенный eval
-  (train VK / test Reddit) → вписать как независимую не-VK валидацию в §5.
+- **Отдельный data-root через dynaconf-окружение `[reddit]`** (settings.toml): `ENV_FOR_DYNACONF=reddit`
+  перенаправляет `data_dir → data_reddit/`, `splits_dir → data_reddit/splits` (merge), а `models_dir`/
+  `metrics_dir` наследуются (общий VK-чекпойнт). Так весь штатный пайплайн гоняется на Reddit, не трогая VK.
+- **`scripts/eval_cross_platform.py`** — frozen + VK-чекпойнт на произвольном held-out pairs-наборе:
+  overall + large-gap (≥25) ROC-AUC c 95% bootstrap-CI, EER, TAR@FAR → `metrics/cross_platform_<tag>.json`.
+- **Рантбук (на машине с доступом, ВСЁ под `ENV_FOR_DYNACONF=reddit`):**
+  1. script-app на reddit.com/prefs/apps → `.env` (REDDIT_CLIENT_ID/SECRET[/USERNAME/PASSWORD/USER_AGENT]);
+  2. `ingest_reddit.py` → `data_reddit/raw/posts.jsonl`; `preprocess.py` → faces; `build_groups.py`;
+     (опц.) `audit_ages.py --apply` (возрасты нужны для 25+ среза); `cluster_persons.py --apply`; dedup;
+     `build_pairs.py`; `split.py`;
+  3. `eval_cross_platform.py --ckpts models/bb_facenet_seed42.pt --tag vk2reddit`;
+  4. вписать как независимую не-VK валидацию в §5 (снимает ключевую научную претензию рецензента).
 
 ---
 

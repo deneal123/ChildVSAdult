@@ -21,12 +21,14 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=1000)
     ap.add_argument("--sorts", nargs="+", default=["top", "new", "hot"])
     ap.add_argument("--time-filter", default="all", help="для sort=top: all|year|month|week")
-    ap.add_argument("--append", action="store_true", help="дозапись к posts_reddit.jsonl")
+    ap.add_argument("--append", action="store_true", help="дозапись к posts.jsonl активного root")
+    ap.add_argument("--posts-out", default=None, help="путь posts.jsonl (по умолчанию <data_dir>/raw/posts.jsonl)")
+    ap.add_argument("--images-dir", default=None, help="каталог изображений (по умолчанию <data_dir>/raw/images)")
     ap.add_argument("--post", default=None, help="ингест одного поста по ссылке (проверка парсера)")
     args = ap.parse_args()
 
     if args.post:
-        p = ingest_reddit_post(args.post)
+        p = ingest_reddit_post(args.post, images_dir=args.images_dir)
         if p:
             got = sum(1 for ph in p.photos if ph.local_path)
             print(f"{p.post_id}: фото={len(p.photos)} (скачано {got}) | caption={p.caption[:90]!r}")
@@ -40,6 +42,8 @@ def main() -> None:
         sorts=tuple(args.sorts),
         time_filter=args.time_filter,
         append=args.append,
+        posts_out=args.posts_out,
+        images_dir=args.images_dir,
     )
     multi = sum(1 for p in posts if len(p.photos) >= 2)
     print(f"Готово: {len(posts)} постов r/{args.subreddit} (мультифото: {multi})")

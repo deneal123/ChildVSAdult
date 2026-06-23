@@ -50,3 +50,12 @@ max_gen_tokens = 10000
 max_embed_tokens = 512
 repetition_penalty = 1
 profanity_check = false
+
+# ── Reddit кросс-платформенный workspace ────────────────────────────────────
+# Отдельный data-root, чтобы прогнать весь пайплайн на не-VK источнике (Reddit),
+# не затирая VK-данные/сплит. Наследует остальные пути из [default.paths].
+# Активация для всех reddit-шагов: ENV_FOR_DYNACONF=reddit (PowerShell: $env:ENV_FOR_DYNACONF="reddit").
+[reddit.paths]
+dynaconf_merge = true                 # наследовать остальные пути из [default.paths]
+data_dir = "data_reddit"
+splits_dir = "data_reddit/splits"

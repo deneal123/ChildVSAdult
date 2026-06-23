@@ -2,13 +2,15 @@
 
 Поток (зеркало VK-ингеста):
     листинг сабреддита (.json) -> нормализация в RawPost -> скачивание фото ->
-    data/raw/posts_reddit.jsonl + data/raw/images/<post_id>/<photo_id>.jpg
+    <data_dir>/raw/posts.jsonl + <data_dir>/raw/images/<post_id>/<photo_id>.jpg
 
-post_id префиксуется ``reddit_`` (не пересекается с ``vk_``), поэтому источники могут
-сосуществовать в одном images-каталоге и разделяться по полю source / префиксу для
-кросс-платформенной валидации. Возраст извлекается downstream из caption (заголовка) LLM.
+Чтобы не затирать VK, запускайте под ОТДЕЛЬНЫМ data-root через reddit-окружение
+(``ENV_FOR_DYNACONF=reddit`` → ``data_reddit/``; см. settings.toml). post_id префиксуется
+``reddit_`` (не пересекается с ``vk_``); возраст извлекается downstream из caption (заголовка)
+той же LLM. Запись идёт в стандартный ``posts.jsonl`` под активным data_dir, поэтому downstream
+(build_groups → cluster_persons → dedup → build_pairs → split) работает без изменений.
 
-    uv run python scripts/ingest_reddit.py --subreddit PastAndPresentPics --limit 1000
+    ENV_FOR_DYNACONF=reddit uv run python scripts/ingest_reddit.py --subreddit PastAndPresentPics
 """
 
 from __future__ import annotations
@@ -129,9 +131,18 @@ def ingest_subreddit(
     Reddit ограничивает листинг ~1000 постами на sort; объединение top/new/hot расширяет охват.
     append=True --- дозапись к существующему posts_reddit.jsonl с дедупом по post_id.
     """
-    posts_out = posts_out or data_path("data_dir", "raw", "posts_reddit.jsonl")
+    posts_out = posts_out or data_path("data_dir", "raw", "posts.jsonl")
     images_dir = Path(images_dir or data_path("data_dir", "raw", "images"))
     collection_date = _dt.datetime.now(tz=_dt.timezone.utc).date().isoformat()
+
+    # Защита от случайной записи поверх VK-данных (запускать reddit-ингест под data_reddit/).
+    if not append and Path(posts_out).exists():
+        first = next(iter(read_jsonl(posts_out)), None)
+        if first is not None and first.get("source") != "reddit_public":
+            raise RuntimeError(
+                f"{posts_out} содержит не-reddit посты (вероятно VK). Запускайте reddit-ингест "
+                "под ENV_FOR_DYNACONF=reddit (отдельный data_reddit/) или задайте свой --posts-out."
+            )
 
     client = RedditClient()
     seen_ids: set[str] = set()
