@@ -105,9 +105,11 @@ T = {
     },
     "sota": {
         "en": {"ylabel": "ROC-AUC / accuracy", "frozen": "frozen",
-               "pairs": "+pairs (contrastive)", "arc": "+ArcFace (SOTA obj.)"},
+               "pairs": "+pairs (contrastive)", "arc": "+ArcFace", "cos": "+CosFace",
+               "sphere": "+SphereFace"},
         "ru": {"ylabel": "ROC-AUC / accuracy", "frozen": "frozen",
-               "pairs": "+pairs (контрастив)", "arc": "+ArcFace (SOTA-цель)"},
+               "pairs": "+pairs (контрастив)", "arc": "+ArcFace", "cos": "+CosFace",
+               "sphere": "+SphereFace"},
     },
 }
 
@@ -223,23 +225,29 @@ def fig_shortcut(lang: str) -> None:
 
 
 def fig_sota(lang: str) -> None:
-    """Objective comparison (curated): ArcFace classification vs contrastive coincide cross-age."""
+    """Objective comparison (curated): contrastive ~ ArcFace ~ CosFace; SphereFace trails."""
     s = T["sota"][lang]
     metrics = ["FG-NET\nlarge-gap", "our.25+", "LFW", "AgeDB-30\nROC"]
-    frozen = [0.736, 0.640, 0.969, 0.953]
-    pairs = [0.848, 0.838, 0.946, 0.945]
-    arcface = [0.851, 0.868, 0.952, 0.947]
+    series = [
+        (s["frozen"], [0.736, 0.640, 0.969, 0.953], _FROZEN, ""),
+        (s["pairs"], [0.848, 0.838, 0.946, 0.945], _TUNED, "////"),
+        (s["arc"], [0.851, 0.868, 0.952, 0.947], _ACCENT, "xxx"),
+        (s["cos"], [0.843, 0.860, 0.952, 0.945], "#E69F00", "..."),
+        (s["sphere"], [0.801, 0.699, 0.950, 0.943], "#CC79A7", "\\\\"),
+    ]
     x = range(len(metrics))
-    fig, ax = plt.subplots(figsize=(_CW, 2.6))
-    w = 0.27
-    ax.bar([i - w for i in x], frozen, w, color=_FROZEN, edgecolor="black", lw=0.4, label=s["frozen"])
-    ax.bar(list(x), pairs, w, color=_TUNED, edgecolor="black", lw=0.4, hatch="////", label=s["pairs"])
-    ax.bar([i + w for i in x], arcface, w, color=_ACCENT, edgecolor="black", lw=0.4, hatch="xxx", label=s["arc"])
+    fig, ax = plt.subplots(figsize=(_CW, 2.8))
+    w = 0.16
+    offs = [-2 * w, -w, 0.0, w, 2 * w]
+    for (label, vals, color, hatch), off in zip(series, offs):
+        ax.bar([i + off for i in x], vals, w, color=color, edgecolor="black", lw=0.4,
+               hatch=hatch, label=label)
     ax.set_xticks(list(x))
     ax.set_xticklabels(metrics)
     ax.set_ylim(0.60, 1.0)
     ax.set_ylabel(s["ylabel"])
-    ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3, columnspacing=0.9, handletextpad=0.4)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3, columnspacing=0.9,
+              handletextpad=0.4, fontsize=6)
     _save(fig, "fig_sota" + _suf(lang))
 
 

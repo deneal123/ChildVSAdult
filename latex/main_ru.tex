@@ -241,7 +241,7 @@ LFW (AUC) & 0.994 [0.99, 1.00] & 0.987 [0.98, 0.99] & 0.032$\to$0.052 & 0.940$\t
 \end{table*}
 
 \subsection{Реальные пары превосходят синтетическое старение}\label{sec:res-synth}
-Замена реальных позитивов синтетически состаренными --- доменный прокси и настоящая re-aging-сеть (FRAN~\cite{zoss2022fran}) --- не просто не помогает, а \emph{активно вредит} на очищенных данных: FRAN даёт FG-NET large-gap 0.727 (\emph{ниже} frozen 0.736), а our.25+ рушится до 0.549 (ниже frozen 0.640), тогда как реальные пары дают $+$0.112 / $+$0.198 (Таблица~\ref{tab:synth}). Identity-preserving старение учит текстурным артефактам, а не реальной longitudinal-вариации (поза, камера, эпоха). (Кропы 112\,px ограничивают fidelity FRAN, рассчитанного на $\approx$1024\,px.)
+Замена реальных позитивов синтетически состаренными --- доменный прокси и настоящая re-aging-сеть (FRAN~\cite{zoss2022fran}) --- не просто не помогает, а \emph{активно вредит} на очищенных данных: FRAN даёт FG-NET large-gap 0.727 (\emph{ниже} frozen 0.736), а our.25+ рушится до 0.549 (ниже frozen 0.640), тогда как реальные пары дают $+$0.112 / $+$0.198 (Таблица~\ref{tab:synth}). Identity-preserving старение учит текстурным артефактам, а не реальной longitudinal-вариации (поза, камера, эпоха). Контроль на нативном разрешении исключает артефакт разрешения кропа: перекроп train-подмножества на 512\,px напрямую из сырых снимков (против хранимых 112\,px, которые FRAN апскейлит внутри) и повторное старение не меняют результат --- FG-NET large-gap 0.771 против 0.778 и our.25+ 0.671 против 0.670 на одном и том же подмножестве из 499 лиц --- т.е. синтетическое старение не дотягивает до реальных пар независимо от разрешения источника.
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.2}
@@ -346,29 +346,30 @@ $+$pairs$+$disentangle & 0.632 $\pm$ 0.017 & 0.918 \\
 \end{table}
 
 \subsection{Сравнение objective: обучение SOTA-цели на наших данных}\label{sec:res-objective}
-Мы обучаем каноническую цель современной FR --- ArcFace-margin классификацию личности~\cite{deng2019arcface} (ядро OE-CNN/MTLFace) --- на наших naturally-supervised личностях (9\,204 класса), тот же слабый backbone, scope и протокол. На ключевой внешней метрике контрастив и ArcFace \emph{совпадают} (Таблица~\ref{tab:objective}, Рис.~\ref{fig:sota}). Делаем ограниченный вывод: в этом протоколе и среди рассмотренных целей вклад источника данных доминирует над выбором objective --- а не «метод не важен вообще». ArcFace дополнительно \emph{забывает меньше} на easy-бенчмарках --- практическая рекомендация.
+Мы обучаем канонические margin-цели современной FR --- ArcFace-, CosFace- и SphereFace-margin классификацию личности~\cite{deng2019arcface} (ядро OE-CNN/MTLFace) --- на наших naturally-supervised личностях (9\,204 класса), тот же слабый backbone, scope и протокол. На primary endpoint (FG-NET large-gap) контрастив, ArcFace и CosFace \emph{совпадают} (0.848 / 0.851 / 0.843, в пределах $\pm$0.006; Таблица~\ref{tab:objective}, Рис.~\ref{fig:sota}); лишь SphereFace --- самый трудный для оптимизации margin, здесь без $\lambda$-annealing на 2--3-шот личностях --- отстаёт (0.801). Делаем ограниченный вывод: в этом протоколе и среди рассмотренных целей вклад источника данных доминирует над выбором objective --- а не «метод не важен вообще». ArcFace/CosFace дополнительно \emph{забывают меньше} на easy-бенчмарках --- практическая рекомендация.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_sota_ru.pdf}
-\caption{Сравнение objective: pair-contrastive и каноническая ArcFace-классификация совпадают на кросс-возрастном переносе; ArcFace чуть меньше забывает на easy-бенчмарках.}
+\caption{Сравнение objective: контрастив, ArcFace и CosFace совпадают на кросс-возрастном переносе; SphereFace (труднее всего оптимизировать, без $\lambda$-annealing) отстаёт. ArcFace/CosFace чуть меньше забывают на easy-бенчмарках.}
 \label{fig:sota}
 \end{figure}
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Сравнение objective (FaceNet, очищенные данные).}
+\caption{Сравнение objective (FaceNet, очищенные данные): контрастив, ArcFace и CosFace совпадают на primary endpoint (FG-NET large-gap); SphereFace (без $\lambda$-annealing) отстаёт на разреженных few-shot личностях.}
 \label{tab:objective}
 \centering
 \footnotesize
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-Метрика & Frozen & $+$pairs (контрастив) & $+$ArcFace (класс.) \\
+Objective & FG-NET l.g. & our.25+ & LFW & AgeDB-30 \\
 \midrule
-FG-NET large-gap & 0.736 & 0.848 & \textbf{0.851} \\
-our.25+ & 0.640 & 0.838 & 0.868 \\
-LFW accuracy & 0.969 & 0.946 & 0.952 \\
-AgeDB-30 ROC & 0.953 & 0.945 & 0.947 \\
+Frozen & 0.736 & 0.640 & 0.969 & 0.953 \\
+$+$pairs (контрастив) & 0.848 & 0.838 & 0.946 & 0.945 \\
+$+$ArcFace & \textbf{0.851} & 0.868 & 0.952 & 0.947 \\
+$+$CosFace & 0.843 & 0.860 & 0.952 & 0.945 \\
+$+$SphereFace & 0.801 & 0.699 & 0.950 & 0.943 \\
 \bottomrule
 \end{tabular}
 \end{table*}

@@ -6,7 +6,7 @@ share identities and pair-level CIs are anti-conservative.
 
     uv run python scripts/headline_stats.py
 
-Writes docs/headline_stats.json and prints a summary. No training; evaluates the
+Writes metrics/headline_stats.json and prints a summary. No training; evaluates the
 already-trained checkpoints (frozen + models/bb_facenet_seed42.pt).
 """
 
@@ -155,7 +155,7 @@ def main() -> None:
         print(f"  internal {mname}: overall={out['our.overall'][mname]['auc']} "
               f"25+={out['our.25+'][mname]['auc']}")
 
-    dst = resolve_path("docs", "headline_stats.json")
+    dst = data_path("metrics_dir", "headline_stats.json")
     dst.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\nwrote {dst}")
     print(json.dumps(out, indent=2, ensure_ascii=False))

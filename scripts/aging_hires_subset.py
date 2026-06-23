@@ -115,7 +115,7 @@ def main() -> None:
     }
     order = list(results)
     print_table(results, order)
-    dst = resolve_path("docs", "aging_hires.json")
+    dst = data_path("metrics_dir", "aging_hires.json")
     dst.write_text(json.dumps({"n_faces": len(subset), "results": results}, indent=2), encoding="utf-8")
     print(f"wrote {dst}")
 

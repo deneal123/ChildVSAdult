@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 from math import comb
 
-from age_gap.common.io import data_path, read_jsonl, resolve_path
+from age_gap.common.io import data_path, read_jsonl
 from age_gap.common.schemas import IdentityGroup
 from age_gap.datasets.dedup import find_redundant_faces
 from age_gap.models.embeddings import load_embeddings
@@ -47,7 +47,7 @@ def main() -> None:
         out["thresholds"][f"{t}"] = {"redundant_faces": nred, "positives": pos, "reduction_pct": red_pct}
         print(f"thr={t}: redundant_faces={nred} positives={pos} reduction={red_pct}%")
 
-    dst = resolve_path("docs", "sensitivity_dedup.json")
+    dst = data_path("metrics_dir", "sensitivity_dedup.json")
     dst.write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(f"wrote {dst}")
 

@@ -16,7 +16,7 @@ import json
 from pathlib import Path
 
 from age_gap.common.device import torch_device
-from age_gap.common.io import data_path, resolve_path
+from age_gap.common.io import data_path
 from age_gap.evaluation.external_suite import eval_all, print_table
 from age_gap.models.backbones import make_backbone
 from age_gap.training.arcface_train import train_arcface
@@ -49,7 +49,7 @@ def main() -> None:
         order.append(f"+{obj}")
 
     print_table(results, order)
-    dst = resolve_path("docs", "sota_objectives.json")
+    dst = data_path("metrics_dir", "sota_objectives.json")
     dst.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(f"wrote {dst}")
 

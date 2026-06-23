@@ -242,7 +242,7 @@ LFW (AUC) & 0.994 [0.99, 1.00] & 0.987 [0.98, 0.99] & 0.032$\to$0.052 & 0.940$\t
 \end{table*}
 
 \subsection{Real Pairs Outperform Synthetic Aging}\label{sec:res-synth}
-Replacing real positives with synthetically aged versions---a domain proxy and a real re-aging network (FRAN~\cite{zoss2022fran})---not only fails to help but \emph{actively hurts} on clean data: FRAN reaches FG-NET large-gap 0.727 (\emph{below} frozen 0.736) and our.25+ collapses to 0.549 (below frozen 0.640), whereas real pairs give $+$0.112 / $+$0.198 (Table~\ref{tab:synth}). Identity-preserving aging teaches texture artifacts, not real longitudinal variation (pose, camera, era). (Our 112-px crops limit FRAN fidelity, which targets $\approx$1024 px.)
+Replacing real positives with synthetically aged versions---a domain proxy and a real re-aging network (FRAN~\cite{zoss2022fran})---not only fails to help but \emph{actively hurts} on clean data: FRAN reaches FG-NET large-gap 0.727 (\emph{below} frozen 0.736) and our.25+ collapses to 0.549 (below frozen 0.640), whereas real pairs give $+$0.112 / $+$0.198 (Table~\ref{tab:synth}). Identity-preserving aging teaches texture artifacts, not real longitudinal variation (pose, camera, era). A native-resolution control rules out a crop-resolution artifact: re-cropping a train subset at 512~px directly from the raw images (vs.\ our stored 112-px crops, which FRAN upscales internally) and re-aging leaves the result unchanged---FG-NET large-gap 0.771 vs.\ 0.778 and our.25+ 0.671 vs.\ 0.670 on the same 499-face subset---so synthetic aging fails to match real pairs regardless of source resolution.
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
@@ -346,29 +346,30 @@ $+$pairs$+$disentangle & 0.632 $\pm$ 0.017 & 0.918 \\
 \end{table}
 
 \subsection{Objective Comparison: Training the SOTA Objective on Our Data}\label{sec:res-objective}
-We train the canonical modern-FR objective---ArcFace-margin identity classification~\cite{deng2019arcface} (the core of OE-CNN/MTLFace)---on our naturally-supervised identities (9{,}204 classes), same weak backbone, scope and protocol. On the key external metric the contrastive and ArcFace objectives \emph{coincide} (Table~\ref{tab:objective}, Fig.~\ref{fig:sota}). We draw the bounded conclusion that, within this protocol and among the objectives tested, the data source dominates the objective choice---not that the method is irrelevant in general. ArcFace additionally \emph{forgets less} on easy benchmarks---a practical recommendation.
+We train the canonical modern-FR margin objectives---ArcFace-, CosFace- and SphereFace-margin identity classification~\cite{deng2019arcface} (the core of OE-CNN/MTLFace)---on our naturally-supervised identities (9{,}204 classes), same weak backbone, scope and protocol. On the FG-NET large-gap primary endpoint the contrastive, ArcFace and CosFace objectives \emph{coincide} (0.848 / 0.851 / 0.843, within $\pm$0.006; Table~\ref{tab:objective}, Fig.~\ref{fig:sota}); only SphereFace---the hardest margin to optimize, here without $\lambda$-annealing on 2--3-shot identities---trails (0.801). We draw the bounded conclusion that, within this protocol and among the objectives tested, the data source dominates the objective choice---not that the method is irrelevant in general. ArcFace/CosFace additionally \emph{forget less} on easy benchmarks---a practical recommendation.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_sota.pdf}
-\caption{Objective comparison: a pair-contrastive objective and the canonical ArcFace-margin classification objective coincide on cross-age transfer; ArcFace forgets slightly less on easy benchmarks.}
+\caption{Objective comparison: contrastive, ArcFace and CosFace coincide on cross-age transfer; SphereFace (hardest to optimize, no $\lambda$-annealing) trails. ArcFace/CosFace forget slightly less on easy benchmarks.}
 \label{fig:sota}
 \end{figure}
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Objective Comparison (FaceNet, Curated Data).}
+\caption{Objective Comparison (FaceNet, Curated Data): contrastive, ArcFace and CosFace coincide on the FG-NET large-gap primary endpoint; SphereFace (no $\lambda$-annealing) trails on our sparse few-shot identities.}
 \label{tab:objective}
 \centering
 \footnotesize
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-Metric & Frozen & $+$pairs (contrastive) & $+$ArcFace (class.) \\
+Objective & FG-NET l.g. & our.25+ & LFW & AgeDB-30 \\
 \midrule
-FG-NET large-gap & 0.736 & 0.848 & \textbf{0.851} \\
-our.25+ & 0.640 & 0.838 & 0.868 \\
-LFW accuracy & 0.969 & 0.946 & 0.952 \\
-AgeDB-30 ROC & 0.953 & 0.945 & 0.947 \\
+Frozen & 0.736 & 0.640 & 0.969 & 0.953 \\
+$+$pairs (contrastive) & 0.848 & 0.838 & 0.946 & 0.945 \\
+$+$ArcFace & \textbf{0.851} & 0.868 & 0.952 & 0.947 \\
+$+$CosFace & 0.843 & 0.860 & 0.952 & 0.945 \\
+$+$SphereFace & 0.801 & 0.699 & 0.950 & 0.943 \\
 \bottomrule
 \end{tabular}
 \end{table}

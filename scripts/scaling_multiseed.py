@@ -18,7 +18,7 @@ from pathlib import Path
 import numpy as np
 
 from age_gap.common.device import torch_device
-from age_gap.common.io import data_path, resolve_path
+from age_gap.common.io import data_path
 from age_gap.datasets.splits import run as split_run
 from age_gap.evaluation.external_suite import eval_all
 from age_gap.models.backbones import make_backbone
@@ -34,7 +34,7 @@ def main() -> None:
     models = data_path("models_dir")
     frozen = eval_all(make_backbone("facenet", pretrained=True).to(DEV).eval(), DEV)
     out: dict = {"frozen": {k: float(frozen.get(k, float("nan"))) for k in KEYS}, "fracs": {}}
-    dst = resolve_path("docs", "scaling_multiseed.json")
+    dst = data_path("metrics_dir", "scaling_multiseed.json")
     try:
         for f in FRACS:
             split_run(neg_per_pos=1.0, seed=42, train_frac=f)  # fixed subsample + val/test

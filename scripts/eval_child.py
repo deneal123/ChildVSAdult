@@ -75,8 +75,8 @@ def main() -> None:
             "tar@far1e-2": round(float(tar_at_far(s, y, 0.01)), 4),
         }
         print(name, out[name])
-    resolve_path("docs", "child_eval.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
-    print("wrote docs/child_eval.json")
+    data_path("metrics_dir", "child_eval.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    print("wrote metrics/child_eval.json")
 
 
 if __name__ == "__main__":

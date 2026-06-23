@@ -230,7 +230,7 @@
 
 **Future-work эксперименты:**
 
-- #1 child↔adult / независимый не-VK — **ГОТОВО** (`eval_child.py` → docs/child_eval.json,
+- #1 child↔adult / независимый не-VK — **ГОТОВО** (`eval_child.py` → metrics/child_eval.json,
   [Results E22](Results.md)). FG-NET child↔adult (<13 ↔ >25; 195 поз): frozen 0.684 → +pairs 0.813
   (+0.129, CI не пересекаются) ≈ внутренний 0–17 (+0.130). В §5.7. Коммит 472011d.
 - #3 dedup-threshold sensitivity — **ГОТОВО** (`sensitivity_dedup.py`). Первый перепрогон был
