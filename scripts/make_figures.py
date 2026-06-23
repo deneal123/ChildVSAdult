@@ -150,21 +150,31 @@ def fig_scaling(lang: str) -> None:
 
 
 def fig_fairness(lang: str) -> None:
-    """Apparent-demographic audit (curated): all strata improve; strongest for 0-17."""
+    """Apparent-demographic audit (curated): all strata improve; strongest for 0-17.
+
+    Error bars = 95% paired-bootstrap CI of the gain (Table tab:strata); n on the
+    x-axis is positive pairs per stratum.
+    """
     s = T["fairness"][lang]
     strata = ["overall", "F", "M", "0-17", "18-29", "30-44", "45+"]
     frozen = [0.836, 0.840, 0.838, 0.750, 0.872, 0.822, 0.859]
     tuned = [0.916, 0.923, 0.897, 0.880, 0.936, 0.893, 0.893]
+    glo = [0.075, 0.077, 0.048, 0.113, 0.058, 0.054, 0.004]  # 95% CI of the gain
+    ghi = [0.086, 0.090, 0.071, 0.146, 0.069, 0.087, 0.064]
+    npos = [5107, 3790, 1317, 1123, 3159, 672, 153]
     x = range(len(strata))
-    fig, ax = plt.subplots(figsize=(_CW, 2.6))
+    fig, ax = plt.subplots(figsize=(_CW, 2.75))
     w = 0.4
     ax.bar([i - w / 2 for i in x], frozen, w, color=_FROZEN, edgecolor="black", lw=0.4, label=s["frozen"])
     ax.bar([i + w / 2 for i in x], tuned, w, color=_TUNED, edgecolor="black", lw=0.4, hatch="////", label=s["tuned"])
     for i in x:
-        ax.text(i, tuned[i] + 0.004, f"+{tuned[i] - frozen[i]:.2f}", ha="center", va="bottom", fontsize=6.0)
+        g = tuned[i] - frozen[i]
+        ax.errorbar(i + w / 2, tuned[i], yerr=[[g - glo[i]], [ghi[i] - g]], fmt="none",
+                    ecolor="black", elinewidth=0.7, capsize=2, capthick=0.7, zorder=4)
+        ax.text(i, tuned[i] + (ghi[i] - g) + 0.012, f"+{g:.2f}", ha="center", va="bottom", fontsize=6.0)
     ax.axvspan(2.5, 3.5, color=_ACCENT, alpha=0.07, zorder=0)
     ax.set_xticks(list(x))
-    ax.set_xticklabels(strata)
+    ax.set_xticklabels([f"{st}\nn={n}" for st, n in zip(strata, npos, strict=True)], fontsize=6.3)
     ax.set_ylim(0.70, 1.0)
     ax.set_ylabel(s["ylabel"])
     ax.set_xlabel(s["xlabel"])
