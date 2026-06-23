@@ -247,6 +247,27 @@
 > GPU сериализован (один тренинг за раз). Чистый сплит проверяется/восстанавливается между прогонами
 > (train 22179/22179, val 4579, test 5107). Инфра #2/#4 — коммит ed34113.
 
+## 2026-06-23 — Второй источник супервизии: Reddit r/PastAndPresentPics (не-VK)
+
+> По рецензии главный Q1-апгрейд (после этики) — независимая не-VK внешняя валидация. Добавлен
+> Reddit-ингест мультифото «then/now»-постов, зеркальный VK: тот же RawPost/Photo формат →
+> downstream (preprocess → LLM-возраст → группы → пары → сплит) работает без изменений.
+
+- **`parsing/reddit_client.py`** — OAuth2 (`oauth.reddit.com`) с client_id/secret из `.env`;
+  публичный `.json` как fallback. Reddit с 2023 отдаёт **403 Blocked** на неаутентифицированный
+  скрейпинг (проверено: 403 даже с браузерным UA и на old.reddit.com → блок по IP/анти-бот),
+  поэтому основной путь — OAuth. Листинг (top/new/hot, дедуп по id, ~1000/sort), извлечение фото
+  из gallery (`media_metadata`/`gallery_data`) и одиночных image-постов.
+- **`parsing/reddit_ingest.py`** + **`scripts/ingest_reddit.py`** — нормализация в RawPost
+  (post_id `reddit_<id>`, source `reddit_public`, caption=заголовок → возраст той же LLM),
+  параллельная загрузка фото в `data/raw/images/reddit_<id>/` → `data/raw/posts_reddit.jsonl`.
+- Парсинг провалидирован офлайн (gallery→N фото по порядку, single→1, permalink-чистка, to_dict).
+  Живой fetch из dev-среды блокируется по IP → запускать на резидентном IP с OAuth-креденшелами.
+- **Следующие шаги (на машине с доступом):** зарегистрировать «script»-app на reddit.com/prefs/apps
+  → `.env` (REDDIT_CLIENT_ID/SECRET[/USERNAME/PASSWORD/USER_AGENT]) → `ingest_reddit.py` →
+  preprocess → cluster/dedup/build_pairs/split на reddit-данных → кросс-платформенный eval
+  (train VK / test Reddit) → вписать как независимую не-VK валидацию в §5.
+
 ---
 
 > Качество кодовой базы поддерживается зелёным на каждом шаге: ruff ✓, mypy ✓, pytest ✓
