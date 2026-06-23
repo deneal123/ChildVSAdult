@@ -406,7 +406,31 @@ age 45+ & 153 & 0.859 & 0.893 & $+$0.034 & [$+$0.004, $+$0.064] \\
 \end{table*}
 
 \subsection{Cross-Source Transfer}\label{sec:res-cross}
-Training on one community and testing on the held-out other transfers the gain: external FG-NET large-gap $+$0.113 (vs.\ $+$0.112 within-source---essentially identical) and internal $+$0.092 on the held-out community. We frame this as transfer between two independent sources within one platform domain, not platform-agnostic or web-scale generalization.
+Training on one community and testing on the held-out other transfers the gain: external FG-NET large-gap $+$0.113 (vs.\ $+$0.112 within-source---essentially identical) and internal $+$0.092 on the held-out community. We frame this as transfer between two independent sources within one platform domain; Sec.~\ref{sec:res-crossplatform} extends the test to an independent non-VK platform, and we do not claim web-scale generalization.
+
+\subsection{Cross-Platform Transfer (Independent, Non-VK Source)}\label{sec:res-crossplatform}
+The strongest external check of a naturally-supervised \emph{source} is whether it generalizes beyond the originating platform. We therefore apply the \emph{identical} mining protocol to an independent, non-VK community---the Reddit board r/PastAndPresentPics, whose ``then/now'' multi-photo posts carry the same free-text/numeric age descriptions parsed by the same LLM---and evaluate the VK-trained $+$pairs model (with \emph{no} Reddit data in training) against the frozen baseline on the Reddit-mined cross-age pairs (Table~\ref{tab:crossplatform}). \fillin{Result (fill from the table): the VK-trained model transfers to the independent Reddit source, raising large-gap ROC-AUC from X to Y, or note the observed degree of transfer.}
+\reviewnote{Scaffold pending the cross-platform run (needs Reddit OAuth credentials). Build the Reddit set under \texttt{ENV\_FOR\_DYNACONF=reddit} (Sec.~\ref{sec:repro}: \texttt{scripts/ingest\_reddit.py} $\rightarrow$ preprocess $\rightarrow$ build\_groups $\rightarrow$ cluster\_persons $\rightarrow$ dedup $\rightarrow$ build\_pairs $\rightarrow$ split), then run \texttt{scripts/eval\_cross\_platform.py --ckpts models/bb\_facenet\_seed42.pt --tag vk2reddit} and fill the red cells from \texttt{metrics/cross\_platform\_vk2reddit.json}. Optional \texttt{audit\_ages.py --apply} enables the large-gap ($\geq$25\,y) row.}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Cross-platform transfer: a VK-trained model evaluated on an independent Reddit (non-VK) cross-age test set (frozen vs.\ $+$pairs, trained on VK only). To be completed once the Reddit set is built.}
+\label{tab:crossplatform}
+\centering
+\footnotesize
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Reddit (non-VK) test metric & Frozen & $+$pairs (VK-trained) \\
+\midrule
+Overall ROC-AUC [95\% CI] & \fillin{0.xxx} & \fillin{0.xxx} \\
+Large-gap ($\geq$25\,y) ROC-AUC [95\% CI] & \fillin{0.xxx} & \fillin{0.xxx} \\
+EER & \fillin{0.xxx} & \fillin{0.xxx} \\
+TAR@FAR$=$1\% & \fillin{0.xxx} & \fillin{0.xxx} \\
+\midrule
+Test pairs (pos / neg) & \multicolumn{2}{c}{\fillin{N / N}} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Calibration}\label{sec:res-calib}
 Raw cosine (Platt) is mis-calibrated across gap bins---over-confident at 15--25 years (ECE 0.052); a $P(\text{same}\mid\text{cosine},\text{age-gap})$ calibrator fixes every bin (15--25 $\rightarrow$ 0.017) and improves the overall Brier score (0.035 $\rightarrow$ 0.029)---a usable, age-aware same-identity probability.

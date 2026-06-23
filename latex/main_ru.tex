@@ -406,7 +406,31 @@ apparent M & 1\,317 & 0.838 & 0.897 & $+$0.059 & [$+$0.048, $+$0.071] \\
 \end{table*}
 
 \subsection{Перенос между источниками}\label{sec:res-cross}
-Обучение на одном сообществе и тест на held-out другом переносит прирост: внешний FG-NET large-gap $+$0.113 (против $+$0.112 within-source --- практически идентично) и внутренний $+$0.092 на held-out сообществе. Мы формулируем это как перенос между двумя независимыми источниками внутри одного платформенного домена, а не platform-agnostic или web-scale генерализацию.
+Обучение на одном сообществе и тест на held-out другом переносит прирост: внешний FG-NET large-gap $+$0.113 (против $+$0.112 within-source --- практически идентично) и внутренний $+$0.092 на held-out сообществе. Мы формулируем это как перенос между двумя независимыми источниками внутри одного платформенного домена; разд.~\ref{sec:res-crossplatform} расширяет проверку на независимую не-VK платформу, web-scale генерализацию мы не утверждаем.
+
+\subsection{Перенос между платформами (независимый не-VK источник)}\label{sec:res-crossplatform}
+Сильнейшая внешняя проверка naturally-supervised \emph{источника} --- переносится ли он за пределы исходной платформы. Поэтому мы применяем \emph{идентичный} протокол извлечения к независимому не-VK сообществу --- Reddit-доске r/PastAndPresentPics, чьи «тогда/сейчас» мультифото-посты несут те же текстово-числовые описания возраста, разбираемые той же LLM, --- и оцениваем обученную на VK $+$pairs-модель (без Reddit-данных в обучении) против frozen-базлайна на Reddit-парах (Таблица~\ref{tab:crossplatform}). \fillin{Результат (заполнить по таблице): VK-обученная модель переносится на независимый Reddit-источник, поднимая large-gap ROC-AUC с X до Y, либо отметить наблюдаемую степень переноса.}
+\reviewnote{Заготовка до кросс-платформенного прогона (нужны Reddit OAuth-креды). Соберите Reddit-набор под \texttt{ENV\_FOR\_DYNACONF=reddit} (разд.~\ref{sec:repro}: \texttt{scripts/ingest\_reddit.py} $\rightarrow$ preprocess $\rightarrow$ build\_groups $\rightarrow$ cluster\_persons $\rightarrow$ dedup $\rightarrow$ build\_pairs $\rightarrow$ split), затем \texttt{scripts/eval\_cross\_platform.py --ckpts models/bb\_facenet\_seed42.pt --tag vk2reddit} и заполните красные ячейки из \texttt{metrics/cross\_platform\_vk2reddit.json}. Опц.\ \texttt{audit\_ages.py --apply} включает строку large-gap ($\geq$25\,лет).}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Перенос между платформами: VK-обученная модель на независимом Reddit (не-VK) кросс-возрастном тесте (frozen против $+$pairs, обучение только на VK). Заполняется после сборки Reddit-набора.}
+\label{tab:crossplatform}
+\centering
+\footnotesize
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Reddit (не-VK) метрика теста & Frozen & $+$pairs (VK) \\
+\midrule
+Overall ROC-AUC [95\% CI] & \fillin{0.xxx} & \fillin{0.xxx} \\
+Large-gap ($\geq$25\,лет) ROC-AUC [95\% CI] & \fillin{0.xxx} & \fillin{0.xxx} \\
+EER & \fillin{0.xxx} & \fillin{0.xxx} \\
+TAR@FAR$=$1\% & \fillin{0.xxx} & \fillin{0.xxx} \\
+\midrule
+Тестовых пар (поз / нег) & \multicolumn{2}{c}{\fillin{N / N}} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Калибровка}\label{sec:res-calib}
 Сырой косинус (Platt) плохо калиброван по бинам разрыва --- переуверен на 15--25 лет (ECE 0.052); калибратор $P(\text{same}\mid\text{cosine},\text{age-gap})$ чинит каждый бин (15--25 $\rightarrow$ 0.017) и улучшает общий Brier (0.035 $\rightarrow$ 0.029) --- пригодная age-aware вероятность того же человека.
