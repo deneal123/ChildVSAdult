@@ -169,7 +169,7 @@ Provenance, rights and governance fields are stored per item (source, origin URL
 
 \textbf{Benchmarks and metrics.} LFW (10-fold accuracy), AgeDB-30 and CALFW (aligned pairs; ROC-AUC and 10-fold accuracy), FG-NET (ROC-AUC overall and on the large-gap $\geq$25-year subset). We deliberately do not rest the headline on FG-NET alone (small, old, partial detector coverage): AgeDB-30 and CALFW corroborate. We distinguish \emph{threshold-free} metrics (ROC-AUC) from \emph{threshold-based} ones (accuracy, TAR@FAR).
 
-\textbf{Statistics.} Our \emph{primary endpoint} is the FG-NET large-gap ($\geq$25-year) ROC-AUC, with the null hypothesis that fine-tuning on the mined pairs does not improve it over the frozen baseline (gain $\leq 0$); AgeDB-30, CALFW and the internal cross-age test are secondary endpoints, and easy LFW accuracy is monitored as a forgetting control. The headline gain is mean $\pm$ std over three seeds (seed variance captures training stochasticity, not full evaluation uncertainty). The fairness audit uses a paired percentile bootstrap (1000 resamples, resampling pairs and recomputing both models on the same resample) for the \emph{gain}, accounting for frozen/tuned correlation. The release adds paired-bootstrap / DeLong confidence intervals for the key benchmark AUC comparisons and a Holm correction across the stratified fairness tests.
+\textbf{Statistics.} Our \emph{primary endpoint} is the FG-NET large-gap ($\geq$25-year) ROC-AUC, with the null hypothesis that fine-tuning on the mined pairs does not improve it over the frozen baseline (gain $\leq 0$); AgeDB-30, CALFW and the internal cross-age test are secondary endpoints, and easy LFW accuracy is monitored as a forgetting control. The headline gain is mean $\pm$ std over three seeds (seed variance captures training stochasticity, not full evaluation uncertainty). The fairness audit uses a paired percentile bootstrap (1000 resamples, resampling pairs and recomputing both models on the same resample) for the \emph{gain}, accounting for frozen/tuned correlation. Table~\ref{tab:stats} reports bootstrap CIs, EER and TAR@FAR for the key benchmark comparisons (the internal test additionally uses an identity-level, person-resampling bootstrap), and a Holm correction is applied across the stratified fairness tests.
 
 \textbf{Curated dataset.} All headline experiments are on the curated data of Sec.~\ref{sec:data-curation}: 21{,}427 person groups, 40{,}586 faces, 31{,}865 positives; split train 22{,}179 / val 4{,}579 / test 5{,}107 with balanced negatives per split.
 
@@ -199,6 +199,27 @@ CALFW ROC & 0.9482 & 0.9489 $\pm$ 0.0014 & $+$0.0007 & $-$0.0030 \\
 \end{table*}
 
 The gain is statistically robust (std $\leq$ 0.003) and survives curation; the internal cross-age gain even \emph{grows} on the harder curated test (our.25+ $+$0.195) because curation lowers the frozen baseline to 0.640 while $+$pairs recovers to 0.835.
+
+Bootstrap confidence intervals (seed 42) confirm the primary endpoint: FG-NET large-gap rises from 0.736~[0.70, 0.78] to 0.848~[0.82, 0.88] with \emph{non-overlapping} 95\% CIs; the equal-error rate nearly halves (0.335$\to$0.219) and TAR@FAR$=$1\% nearly doubles (0.21$\to$0.39). On the internal 25+ test the gain holds under the more conservative \emph{identity-level} bootstrap (resampling persons, not pairs): $+$pairs 0.838~[0.80, 0.88] vs.\ frozen 0.640~[0.59, 0.69], an interval wider than the pair-level one as expected when pairs share identities. Operating points and intervals for all benchmarks are in Table~\ref{tab:stats}.
+
+\begin{table*}[!t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Operating points and 95\% bootstrap CIs (FaceNet frozen vs.\ $+$pairs, seed 42). All values are ROC-AUC unless noted; LFW is shown as ROC-AUC for consistency (its 10-fold accuracy is in Table~\ref{tab:main}). External CIs are pair-level; the internal test additionally uses an identity-level bootstrap (text).}
+\label{tab:stats}
+\centering
+\footnotesize
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Benchmark & Frozen AUC [95\% CI] & $+$pairs AUC [95\% CI] & EER (fr.$\to$$+$p.) & TAR@1\% & TAR@0.1\% \\
+\midrule
+FG-NET large-gap & 0.736 [0.70, 0.78] & \textbf{0.848 [0.82, 0.88]} & 0.335$\to$0.219 & 0.209$\to$0.386 & 0.074$\to$0.154 \\
+FG-NET overall & 0.896 [0.89, 0.90] & 0.922 [0.92, 0.93] & 0.186$\to$0.151 & 0.502$\to$0.562 & 0.315$\to$0.308 \\
+AgeDB-30 & 0.953 [0.95, 0.96] & 0.945 [0.94, 0.95] & 0.115$\to$0.126 & 0.525$\to$0.510 & 0.285$\to$0.309 \\
+CALFW & 0.948 [0.94, 0.95] & 0.948 [0.94, 0.95] & 0.116$\to$0.117 & 0.580$\to$0.624 & 0.213$\to$0.320 \\
+LFW (AUC) & 0.994 [0.99, 1.00] & 0.987 [0.98, 0.99] & 0.032$\to$0.052 & 0.940$\to$0.869 & 0.858$\to$0.575 \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 \subsection{Real Pairs Outperform Synthetic Aging}\label{sec:res-synth}
 Replacing real positives with synthetically aged versions---a domain proxy and a real re-aging network (FRAN~\cite{zoss2022fran})---not only fails to help but \emph{actively hurts} on clean data: FRAN reaches FG-NET large-gap 0.727 (\emph{below} frozen 0.736) and our.25+ collapses to 0.549 (below frozen 0.640), whereas real pairs give $+$0.112 / $+$0.198 (Table~\ref{tab:synth}). Identity-preserving aging teaches texture artifacts, not real longitudinal variation (pose, camera, era). (Our 112-px crops limit FRAN fidelity, which targets $\approx$1024 px.)
@@ -403,7 +424,7 @@ The contribution is a scalable, naturally-supervised source of longitudinal supe
 \item \textbf{External validity:} two VK communities, one platform, one language/cultural context; apparent-female-skewed (76.7\%); sparse at apparent age 45+. Transfer is shown between these sources and to standard benchmarks, not platform-agnostic generalization.
 \item \textbf{Apparent attributes only} in the fairness audit (estimated, not self-identified gender/ethnicity).
 \item \textbf{Naturally-supervised, not strictly label-free:} an LLM parses ages and validates group integrity; clustering forms persons---audited (Sec.~\ref{sec:data-audit}) but a residual hidden-noise source.
-\item \textbf{Statistics:} seed variance and paired bootstrap (fairness) are reported; DeLong/paired-bootstrap CIs for all benchmark comparisons and Holm correction are in the release supplement.
+\item \textbf{Statistics:} seed variance, paired bootstrap (fairness), and benchmark CIs / EER / TAR@FAR (Table~\ref{tab:stats}, including an identity-level bootstrap) are reported in-text; DeLong tests and full multiple-comparison correction across every cell remain for the release supplement.
 \item \textbf{Benchmark scale and age:} we evaluate on the field-standard cross-age suite---AgeDB-30 and CALFW (6{,}000 pairs each) and FG-NET for the explicit $\geq$25-year subset---the same benchmarks used by OE-CNN/DAL/MTLFace, which fixes comparability but inherits their limited scale and age (FG-NET in particular is small with partial detector coverage, so we never rest the headline on it alone). Our curated internal test (5{,}107 cross-age positives with controlled negatives) is a sizeable modern complement; a larger independent non-VK longitudinal set and a dedicated child$\leftrightarrow$adult benchmark remain the priority for future work.
 \item \textbf{SOTA pipelines not reproduced end-to-end:} by design we train the \emph{shared core} of modern AIFR---the ArcFace angular-margin objective---under our weak-backbone protocol for clean attribution, not a leaderboard comparison. Sec.~\ref{sec:res-objective} shows this objective matches our contrastive one on the key external metric, so the objective is not what drives the gain; the omitted method-specific add-ons (MTLFace's generative age-synthesis branch, OE-CNN's orthogonal-subspace decomposition) refine that shared objective and are orthogonal to our claim about the supervision source. Whether a full SOTA pipeline trained on naturally-supervised data closes the remaining absolute gap is a well-scoped follow-up.
 \end{itemize}
