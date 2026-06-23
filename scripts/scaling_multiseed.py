@@ -31,12 +31,22 @@ KEYS = ("fgnet.large_gap", "our.25+")
 
 
 def main() -> None:
+    import torch
+
     models = data_path("models_dir")
-    frozen = eval_all(make_backbone("facenet", pretrained=True).to(DEV).eval(), DEV)
-    out: dict = {"frozen": {k: float(frozen.get(k, float("nan"))) for k in KEYS}, "fracs": {}}
     dst = data_path("metrics_dir", "scaling_multiseed.json")
+    # Resume: keep already-computed fractions (the sweep is long and the laptop GPU can throw
+    # a transient CUDA illegal-access after hours of sequential training).
+    out: dict = json.loads(dst.read_text(encoding="utf-8")) if dst.exists() else {}
+    out.setdefault("fracs", {})
+    if "frozen" not in out:
+        frozen = eval_all(make_backbone("facenet", pretrained=True).to(DEV).eval(), DEV)
+        out["frozen"] = {k: float(frozen.get(k, float("nan"))) for k in KEYS}
     try:
         for f in FRACS:
+            if f"{f}" in out["fracs"]:
+                print(f"frac={f}: cached, skip", flush=True)
+                continue
             split_run(neg_per_pos=1.0, seed=42, train_frac=f)  # fixed subsample + val/test
             per: list[dict] = []
             for s in SEEDS:
@@ -45,6 +55,8 @@ def main() -> None:
                     seed=s, ckpt_out=Path(str(models / f"bb_facenet_scale_s{s}.pt")),
                 )
                 per.append(eval_all(load_finetuned(ck, DEV), DEV))
+                if torch.cuda.is_available():  # release GPU state between trainings
+                    torch.cuda.empty_cache()
             out["fracs"][f"{f}"] = {
                 k: {
                     "mean": float(np.mean([p[k] for p in per])),
