@@ -130,9 +130,17 @@ def fig_scaling(lang: str) -> None:
     """Data-scaling law (curated): metrics vs #train identities (early plateau)."""
     s = T["scaling"][lang]
     n = [1500, 3750, 7499, 14998]
-    fgnet = [0.845, 0.853, 0.864, 0.848]
-    our = [0.814, 0.842, 0.848, 0.838]
+    fgnet = [0.846, 0.852, 0.856, 0.848]
+    fgnet_sd = [0.0015, 0.0002, 0.0054, 0.0007]
+    our = [0.816, 0.842, 0.845, 0.835]
+    our_sd = [0.0028, 0.0019, 0.0022, 0.0027]
     fig, ax = plt.subplots(figsize=(_CW, 2.5))
+    ax.fill_between(n, [m - d for m, d in zip(fgnet, fgnet_sd, strict=True)],
+                    [m + d for m, d in zip(fgnet, fgnet_sd, strict=True)],
+                    color=_TUNED, alpha=0.20, lw=0, zorder=2)
+    ax.fill_between(n, [m - d for m, d in zip(our, our_sd, strict=True)],
+                    [m + d for m, d in zip(our, our_sd, strict=True)],
+                    color=_ACCENT, alpha=0.20, lw=0, zorder=2)
     ax.plot(n, fgnet, "-o", color=_TUNED, label=s["l1"], zorder=3)
     ax.plot(n, our, "--s", color=_ACCENT, label=s["l2"], zorder=3)
     ax.axhline(0.736, ls=":", color=_TUNED, lw=1.0, alpha=0.7)

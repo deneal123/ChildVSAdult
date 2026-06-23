@@ -290,18 +290,18 @@ AdaFace IR-101 (strong) & 0.957 & 0.931 & $-$0.026 & $-$0.006 \\
 \end{table*}
 
 \subsection{Data-Scaling Law}\label{sec:res-scaling}
-Varying the fraction of training identities (val/test fixed), the gain saturates early: $\approx$96\% of the full FG-NET large-gap gain is reached with only 10\% of identities ($\approx$1{,}500), reaching a plateau from 25\% (Table~\ref{tab:scaling}, Fig.~\ref{fig:scaling}); the slight dip at full data (0.50$\rightarrow$1.00) lies within seed variance---the curve is flat, not monotonic, beyond $\approx$10\%. The signal is thus data-efficient; further gains require \emph{harder} data (larger gaps, hard positives) rather than merely a greater volume.
+Varying the fraction of training identities (val/test fixed), the gain saturates early: $\approx$96\% of the full FG-NET large-gap gain is reached with only 10\% of identities ($\approx$1{,}500), reaching a plateau from 25\% (Table~\ref{tab:scaling}, Fig.~\ref{fig:scaling}; each point is mean $\pm$ std over three seeds); the slight dip at full data (0.50$\rightarrow$1.00) lies within seed variance---the curve is flat, not monotonic, beyond $\approx$10\%. The signal is thus data-efficient; further gains require \emph{harder} data (larger gaps, hard positives) rather than merely a greater volume.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_scaling.pdf}
-\caption{Data-scaling law: external (FG-NET large-gap) and internal (our.25+) ROC-AUC vs.\ the number of training identities (log scale). Roughly 96\% of the gain is reached at 10\% of identities; dashed lines are the frozen baselines.}
+\caption{Data-scaling law: external (FG-NET large-gap) and internal (our.25+) ROC-AUC vs.\ the number of training identities (log scale). Roughly 96\% of the gain is reached at 10\% of identities; shaded bands are $\pm$1 std over three seeds and dashed lines are the frozen baselines.}
 \label{fig:scaling}
 \end{figure}
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Data-Scaling Law (FaceNet, Curated; val/test Fixed).}
+\caption{Data-Scaling Law (FaceNet, Curated; val/test Fixed; mean $\pm$ std over three seeds).}
 \label{tab:scaling}
 \centering
 \footnotesize
@@ -310,10 +310,10 @@ Varying the fraction of training identities (val/test fixed), the gain saturates
 Train fraction & \# identities & FG-NET large-gap & our.25+ \\
 \midrule
 frozen & 0 & 0.736 & 0.640 \\
-0.10 & $\approx$1{,}500 & 0.845 & 0.814 \\
-0.25 & $\approx$3{,}750 & 0.853 & 0.842 \\
-0.50 & $\approx$7{,}499 & 0.864 & 0.848 \\
-1.00 & $\approx$14{,}998 & 0.848 & 0.838 \\
+0.10 & $\approx$1{,}500 & 0.846\,$\pm$\,0.002 & 0.816\,$\pm$\,0.003 \\
+0.25 & $\approx$3{,}750 & 0.852\,$\pm$\,0.000 & 0.842\,$\pm$\,0.002 \\
+0.50 & $\approx$7{,}499 & 0.856\,$\pm$\,0.005 & 0.845\,$\pm$\,0.002 \\
+1.00 & $\approx$14{,}998 & 0.848\,$\pm$\,0.001 & 0.835\,$\pm$\,0.003 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -508,7 +508,7 @@ We release scripts and configurations. Key details: \emph{usable-face criteria} 
 \textbf{Compute.} The entire study runs on a single laptop: one NVIDIA RTX~3060 Laptop GPU (6~GB), an AMD Ryzen~7~5800H (8~cores / 16~threads) and 16~GB RAM under Windows~11; the software stack is Python~3.12, PyTorch~2.12 (CUDA~13.2, cuDNN~9.2), with InsightFace~1.0 / ONNX~Runtime~1.26 for detection and embeddings and scikit-learn~1.9 / Matplotlib~3.11 for analysis and figures. The weak-backbone protocol keeps the full study within a 6~GB GPU budget.
 
 \section{Conclusion and Future Work}\label{sec:conclusion}
-Multi-photo posts are an inexpensive, scalable, naturally-supervised signal of cross-age identity; fine-tuning a weak recognizer on them yields transferable, cross-source, objective-robust gains concentrated on large-gap cross-age matching (with only minor forgetting on easy benchmarks), explained by removing an age shortcut, that are data-efficient and do not worsen any apparent-demographic stratum. Future work: an independent non-VK and a child$\leftrightarrow$adult-specific external set; a human-audited supervision subset (with human--LLM agreement); per-point multi-seed confidence bands for the scaling and headroom curves; full DeLong tests and per-cell multiple-comparison correction; full SOTA add-ons; a real aging model at native resolution; and a calibrated demonstrator under the governance constraints of Sec.~\ref{sec:ethics}.
+Multi-photo posts are an inexpensive, scalable, naturally-supervised signal of cross-age identity; fine-tuning a weak recognizer on them yields transferable, cross-source, objective-robust gains concentrated on large-gap cross-age matching (with only minor forgetting on easy benchmarks), explained by removing an age shortcut, that are data-efficient and do not worsen any apparent-demographic stratum. Future work: an independent non-VK and a child$\leftrightarrow$adult-specific external set; a human-audited supervision subset (with human--LLM agreement); per-point multi-seed confidence bands for the headroom curve; full DeLong tests and per-cell multiple-comparison correction; full SOTA add-ons; a real aging model at native resolution; and a calibrated demonstrator under the governance constraints of Sec.~\ref{sec:ethics}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{refs}
