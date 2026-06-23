@@ -213,6 +213,40 @@
   45 302 / minor исключено 8 201; 0 сырых VK-id в выводе.
 - **TODO (вне кода, на вас):** этическая экспертиза/IRB организации + юрист по 152-ФЗ (биометрия/дети).
 
+## 2026-06-23 — Ответ рецензенту: правки статьи + 4 future-work эксперимента
+
+> Внешняя рецензия («publishable after major revision»). Пользователь выбрал 4 пакета правок и
+> попросил реально выполнить пункты future-work. Лимит страниц снят (приоритет — полнота).
+
+**Пакеты правок (в LaTeX EN+RU, оба компилируются чисто):**
+
+- П1 — формулировки/язык: «данные > метод» → within-protocol large-gap; headline = targeted
+  large-gap robustness; добавлен primary endpoint + H0 (FG-NET ≥25 лет) в §4. Коммит 0053d83.
+- П2 — статистика в тексте: bootstrap-CI заголовочных AUC, EER, TAR@FAR, identity-level bootstrap
+  (Таблица операционных точек). FG-NET large-gap CI не пересекаются (frozen [0.70,0.78] vs
+  +pairs [0.82,0.88]). Коммит c3f6788.
+- П3 — sensitivity дедупа (см. [Results D3](Results.md)). Коммит 1b57542.
+- П4 — CI на фигуре fairness (gain-CI усы + n по стратам). Коммит 1924d8c.
+
+**Future-work эксперименты:**
+
+- #1 child↔adult / независимый не-VK — **ГОТОВО** (`eval_child.py` → docs/child_eval.json,
+  [Results E22](Results.md)). FG-NET child↔adult (<13 ↔ >25; 195 поз): frozen 0.684 → +pairs 0.813
+  (+0.129, CI не пересекаются) ≈ внутренний 0–17 (+0.130). В §5.7. Коммит 472011d.
+- #3 dedup-threshold sensitivity — **ГОТОВО** (`sensitivity_dedup.py`). Первый перепрогон был
+  ВЫРОЖДЕН (re-dedup уже-курированных групп → 0 near-dup; все пороги бит-в-бит совпали). Валидно —
+  только на PRE-prune группах (`identity_groups.jsonl.pre_prune_bak`): −52% устойчиво на 0.93–0.97,
+  плавно к 0.99 (−41%). В §3.4. Коммит 1b57542.
+- #2 SOTA-objectives (CosFace/SphereFace) — **В РАБОТЕ** (`sota_arcface.py`; `MarginHead` обобщён на
+  arcface/cosface/sphereface). Полные MTLFace/OE-CNN конвейеры вне scope (портирование 2 чужих статей).
+- #4 aging на нативном res — **В РАБОТЕ** (`aging_hires_subset.py`). FRAN внутри апскейлит 112→512;
+  проверяем на 512-перекропах из raw, не артефакт ли разрешения находка §5.2.
+- #3-CI scaling per-point multi-seed — **В ОЧЕРЕДИ** (`scaling_multiseed.py`, 12 facenet, ~10ч) →
+  CI-полосы на fig_scaling.
+
+> GPU сериализован (один тренинг за раз). Чистый сплит проверяется/восстанавливается между прогонами
+> (train 22179/22179, val 4579, test 5107). Инфра #2/#4 — коммит ed34113.
+
 ---
 
 > Качество кодовой базы поддерживается зелёным на каждом шаге: ruff ✓, mypy ✓, pytest ✓
