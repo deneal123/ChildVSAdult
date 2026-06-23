@@ -163,7 +163,7 @@ Meme / collage & 52 & 0.2\% \\
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Dedup-threshold sensitivity: near-duplicate removal alone, on the pre-curation groups (the separate group-integrity prune removes a further ${\approx}500$ positives to reach the headline 31{,}865). Stable across 0.93--0.97.}
+\caption{Dedup-Threshold Sensitivity: near-duplicate removal alone, on the pre-curation groups (the separate group-integrity prune removes a further ${\approx}500$ positives to reach the headline 31{,}865). Stable across 0.93--0.97.}
 \label{tab:dedupsens}
 \centering
 \footnotesize
@@ -199,7 +199,7 @@ The weak FaceNet, softly fine-tuned on our pairs, raises FG-NET large-gap ROC-AU
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Main Result: Weak FaceNet Frozen vs.\ $+$pairs, Three Seeds, Curated Data. Pre-clean Gain Shown for Reference.}
+\caption{Main Result: Weak FaceNet Frozen vs.\ $+$pairs, Three Seeds, Curated Data. Pre-clean gain shown for reference.}
 \label{tab:main}
 \centering
 \footnotesize
@@ -224,7 +224,7 @@ Bootstrap confidence intervals (seed 42) confirm the primary endpoint: FG-NET la
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Operating points and 95\% bootstrap CIs (FaceNet frozen vs.\ $+$pairs, seed 42). All values are ROC-AUC unless noted; LFW is shown as ROC-AUC for consistency (its 10-fold accuracy is in Table~\ref{tab:main}). External CIs are pair-level; the internal test additionally uses an identity-level bootstrap (text).}
+\caption{Operating Points and 95\% Bootstrap CIs (FaceNet Frozen vs.\ $+$pairs, Seed 42). All values are ROC-AUC unless noted; LFW is shown as ROC-AUC for consistency (its 10-fold accuracy is in Table~\ref{tab:main}). External CIs are pair-level; the internal test additionally uses an identity-level bootstrap (text).}
 \label{tab:stats}
 \centering
 \footnotesize
@@ -324,7 +324,7 @@ Under age-matched negatives (same age bucket, different people), frozen accuracy
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.86\columnwidth]{fig_shortcut.pdf}
-\caption{The age shortcut. On an identity-only test (age-matched negatives), the frozen model falls to near-chance; fine-tuning on our pairs restores discrimination by identity.}
+\caption{The age shortcut: on an identity-only test (age-matched negatives), the frozen model falls to near-chance; fine-tuning on our pairs restores discrimination by identity.}
 \label{fig:shortcut}
 \end{figure}
 
@@ -414,7 +414,7 @@ The strongest external check of a naturally-supervised \emph{source} is whether 
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Cross-platform transfer: a VK-trained model evaluated on an independent Reddit (non-VK) cross-age test set (frozen vs.\ $+$pairs, trained on VK only). To be completed once the Reddit set is built.}
+\caption{Cross-Platform Transfer: a VK-Trained Model on an Independent Reddit (Non-VK) Cross-Age Test Set (Frozen vs.\ $+$pairs, Trained on VK Only). To be completed once the Reddit set is built.}
 \label{tab:crossplatform}
 \centering
 \footnotesize
