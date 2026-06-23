@@ -462,9 +462,9 @@ keeps the full study within a 6 GB GPU budget.
 Multi-photo posts are a cheap, scalable, naturally-supervised signal of cross-age identity; fine-tuning
 a weak recognizer on them yields transferable, cross-source, objective-robust gains concentrated on large-gap cross-age matching (with only minor forgetting on easy benchmarks), explained
 by removing an age shortcut, that are data-efficient and do not worsen any apparent-demographic
-stratum. Future work: an independent non-VK and a child↔adult-specific external set; DeLong CIs and
-multiple-comparison correction in the main text; a human-audited supervision subset; full SOTA add-ons;
-a real aging model at native resolution; and a calibrated demo under the governance constraints of §8.
+stratum. Future work: an independent non-VK and a child↔adult-specific external set; a human-audited supervision subset (with human–LLM agreement); per-point multi-seed
+confidence bands for the scaling and headroom curves; full DeLong tests and per-cell
+multiple-comparison correction; full SOTA add-ons; a real aging model at native resolution; and a calibrated demo under the governance constraints of §8.
 
 ## References
 

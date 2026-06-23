@@ -1,0 +1,30 @@
+{
+  "no_dedup_positives": 65897,
+  "thresholds": {
+    "0.93": {
+      "redundant_faces": 8653,
+      "positives": 31304,
+      "reduction_pct": 52.5
+    },
+    "0.95": {
+      "redundant_faces": 8564,
+      "positives": 31611,
+      "reduction_pct": 52.0
+    },
+    "0.97": {
+      "redundant_faces": 8304,
+      "positives": 32360,
+      "reduction_pct": 50.9
+    },
+    "0.98": {
+      "redundant_faces": 7876,
+      "positives": 33684,
+      "reduction_pct": 48.9
+    },
+    "0.99": {
+      "redundant_faces": 6274,
+      "positives": 38565,
+      "reduction_pct": 41.5
+    }
+  }
+}

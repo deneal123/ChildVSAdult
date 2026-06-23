@@ -159,6 +159,26 @@ Meme / collage & 52 & 0.2\% \\
 
 \textbf{Key finding.} Because positives are quadratic in faces per group, removing near-duplicates collapsed positives 65{,}897 $\rightarrow$ 31{,}865 ($-$52\%): roughly half of the raw ``positives'' were duplicate frames (one shoot, burst, or repost) that had inflated internal metrics. After curation, the frozen baseline on our internal test honestly drops (our.overall 0.856 $\rightarrow$ 0.836; our.25+ 0.705 $\rightarrow$ 0.640), exposing a harder, more honest benchmark. External benchmarks are unaffected. This is a transferable lesson for mining longitudinal pairs from social media.
 
+\textbf{Threshold robustness.} The $-$52\% reduction is not an artifact of the 0.97 cutoff. Re-running the near-duplicate dedup on the pre-curation groups at cosine thresholds 0.93--0.99 (Table~\ref{tab:dedupsens}) leaves 31.3k--32.4k positives across 0.93--0.97 (a stable $\approx$52\% reduction) and degrades gracefully only at the very strict 0.99 ($-$41\%): the near-duplicates are dominated by near-identical frames (cos $\approx$ 1), so the finding does not hinge on the exact cutoff.
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Dedup-threshold sensitivity: near-duplicate removal alone, on the pre-curation groups (the separate group-integrity prune removes a further ${\approx}500$ positives to reach the headline 31{,}865). Stable across 0.93--0.97.}
+\label{tab:dedupsens}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Dedup cos & Near-dup faces & Positives & Reduction \\
+\midrule
+0.93 & 8{,}653 & 31{,}304 & $-$52.5\% \\
+0.95 & 8{,}564 & 31{,}611 & $-$52.0\% \\
+0.97 (used) & 8{,}304 & 32{,}360 & $-$50.9\% \\
+0.99 & 6{,}274 & 38{,}565 & $-$41.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Dataset Datasheet (Summary)}\label{sec:data-datasheet}
 Provenance, rights and governance fields are stored per item (source, origin URL, collection date, license/consent status, allowed use, retention policy, deletion status, review status). Collection: public VK walls. Intended use: research on consent-based cross-age matching. Out of scope: mass identification, surveillance, de-anonymization. Minors: the child$\leftrightarrow$adult regime is in scope only under an explicit legal/ethical framework; per-item review status is tracked and deletion-on-request is supported. A full datasheet~\cite{gebru2021datasheets} accompanies the release.
 
