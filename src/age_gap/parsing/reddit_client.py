@@ -85,6 +85,24 @@ def load_config() -> RedditConfig:
     return cfg
 
 
+def load_proxies() -> dict[str, str] | None:
+    """Прокси из env (PROXY_HOST/PROXY_PORT[/PROXY_USER/PROXY_PASS/PROXY_SCHEME]) для всех
+    Reddit-запросов и загрузки изображений.
+
+    Полезно, когда прямой IP блокируется Reddit (резидентный/мобильный прокси). По умолчанию
+    схема ``http`` (тоннелирует и https через CONNECT); для SOCKS задайте ``PROXY_SCHEME=socks5h``
+    (нужен пакет ``requests[socks]``). Возвращает None, если PROXY_HOST/PORT не заданы.
+    """
+    host, port = _env("PROXY_HOST"), _env("PROXY_PORT")
+    if not host or not port:
+        return None
+    scheme = _env("PROXY_SCHEME") or "http"
+    user, pwd = _env("PROXY_USER"), _env("PROXY_PASS")
+    auth = f"{user}:{pwd}@" if user and pwd else ""
+    url = f"{scheme}://{auth}{host}:{port}"
+    return {"http": url, "https": url}
+
+
 def permalink_path(url_or_permalink: str) -> str:
     """Достать путь permalink (``/r/.../comments/.../``) из полной ссылки или голого пути."""
     s = url_or_permalink.strip().split("?")[0].split("#")[0]
@@ -104,6 +122,10 @@ class RedditClient:
         self._token: str | None = None
         self._last_call = 0.0
         self._public_hosts = list(PUBLIC_HOSTS)
+        self._proxies = load_proxies()
+        if self._proxies:
+            self._session.proxies.update(self._proxies)
+            log.info("Reddit через прокси %s:%s", _env("PROXY_HOST"), _env("PROXY_PORT"))
         if self.config.client_id and self.config.client_secret:
             self._authenticate()
             self._api_base = OAUTH_URL
@@ -136,6 +158,7 @@ class RedditClient:
             data=data,
             headers={"User-Agent": self.config.oauth_user_agent},
             timeout=self.config.timeout_sec,
+            proxies=self._proxies,
         )
         resp.raise_for_status()
         self._token = resp.json()["access_token"]

@@ -26,7 +26,7 @@ from age_gap.common.io import append_jsonl, data_path, read_jsonl, write_jsonl
 from age_gap.common.logging import get_logger
 from age_gap.common.schemas import Photo, Provenance, RawPost
 from age_gap.parsing.ingest import DOWNLOAD_TIMEOUT, DOWNLOAD_WORKERS, download_image
-from age_gap.parsing.reddit_client import BASE_URL, RedditClient, post_image_urls
+from age_gap.parsing.reddit_client import BASE_URL, RedditClient, load_proxies, post_image_urls
 
 log = get_logger(__name__)
 
@@ -99,6 +99,9 @@ def _materialize(
 
     session = requests.Session()
     session.headers["User-Agent"] = user_agent  # i.redd.it отдаёт без UA, но не мешает
+    proxies = load_proxies()
+    if proxies:
+        session.proxies.update(proxies)  # качаем картинки через тот же прокси (единый exit-IP)
 
     def _fetch(job: tuple[Photo, str, Path]) -> None:
         photo, url, dest = job
