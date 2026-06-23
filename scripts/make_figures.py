@@ -215,7 +215,8 @@ def fig_shortcut(lang: str) -> None:
     for b, v in zip(bars, vals, strict=True):
         ax.text(b.get_x() + b.get_width() / 2, v + 0.006, f"{v:.3f}", ha="center", fontsize=7.0)
     ax.axhline(0.5, ls=":", color="black", lw=0.9, alpha=0.6)
-    ax.text(2.46, 0.506, s["chance"], va="bottom", ha="right", fontsize=6.3, alpha=0.7)
+    ax.set_xlim(-0.6, 3.05)  # right margin so the chance label clears the bars
+    ax.text(2.42, 0.5, s["chance"], va="center", ha="left", fontsize=6.2, alpha=0.75)
     ax.set_ylim(0.47, 0.90)
     ax.set_ylabel(s["ylabel"])
     _save(fig, "fig_shortcut" + _suf(lang))
