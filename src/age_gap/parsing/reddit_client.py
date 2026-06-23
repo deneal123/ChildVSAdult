@@ -1,19 +1,23 @@
 """Тонкий клиент к Reddit для сбора мультифото-постов «then/now» (не-VK источник).
 
-Reddit с 2023 года блокирует неаутентифицированный скрейпинг публичного ``.json`` (HTTP 403
-``Blocked``) с дата-центровых IP и бот-User-Agent. Поэтому основной путь --- официальный
-OAuth2 (как VK-токен): зарегистрируйте «script»-приложение на https://www.reddit.com/prefs/apps
-и положите в ``src/age_gap/settings/.env``:
+Два режима, OAuth НЕОБЯЗАТЕЛЕН:
 
-    REDDIT_CLIENT_ID=...
-    REDDIT_CLIENT_SECRET=...
-    REDDIT_USERNAME=...            # опционально (password-grant); иначе client_credentials
-    REDDIT_PASSWORD=...
-    REDDIT_USER_AGENT=script:age-gap:0.1 (by /u/<username>)
+1. **Публичный скрейпинг (по умолчанию, без креденшелов).** Ходим на публичный ``.json``
+   с браузерными заголовками и фоллбэком хостов ``www.reddit.com`` -> ``old.reddit.com``,
+   вежливым rate limit и бэкоффом. С резидентного (домашнего) IP это обычно работает; с
+   дата-центровых IP Reddit часто отдаёт 403 ``Blocked``.
+2. **OAuth2 (фоллбэк для заблокированных IP).** Зарегистрируйте «script»-приложение на
+   https://www.reddit.com/prefs/apps и положите в ``src/age_gap/settings/.env``:
 
-При наличии client_id/secret клиент аутентифицируется и ходит на ``oauth.reddit.com``.
-Без креденшелов --- откат на публичный ``www.reddit.com/...json`` с браузерным UA (работает
-с резидентных IP, но Reddit может вернуть 403). Соблюдается rate limit, ошибки ретраятся.
+       REDDIT_CLIENT_ID=...
+       REDDIT_CLIENT_SECRET=...
+       REDDIT_USERNAME=...            # опционально (password-grant); иначе client_credentials
+       REDDIT_PASSWORD=...
+       REDDIT_USER_AGENT=script:age-gap:0.1 (by /u/<username>)
+
+   При наличии client_id/secret клиент аутентифицируется и ходит на ``oauth.reddit.com``.
+
+Сначала проверьте публичный режим одним постом: ``scripts/ingest_reddit.py --post <url>``.
 """
 
 from __future__ import annotations
@@ -40,6 +44,15 @@ BROWSER_UA = (
     "(KHTML, like Gecko) Chrome/120.0 Safari/537.36"
 )
 OAUTH_UA = "script:age-gap:0.1 (cross-age research)"
+# Публичный (без OAuth) скрейпинг .json: пробуем несколько хостов, маскируемся под браузер.
+PUBLIC_HOSTS = ("https://www.reddit.com", "https://old.reddit.com")
+BROWSER_HEADERS = {
+    "Accept": "application/json, text/html;q=0.9, */*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+}
 
 
 @dataclass
@@ -90,18 +103,20 @@ class RedditClient:
         self._session = requests.Session()
         self._token: str | None = None
         self._last_call = 0.0
+        self._public_hosts = list(PUBLIC_HOSTS)
         if self.config.client_id and self.config.client_secret:
             self._authenticate()
             self._api_base = OAUTH_URL
             self._suffix = ""
             self.user_agent = self.config.oauth_user_agent
         else:
-            self._api_base = BASE_URL
+            self._api_base = self._public_hosts[0]
             self._suffix = ".json"
             self.user_agent = self.config.public_user_agent
+            self._session.headers.update(BROWSER_HEADERS)  # маскируемся под браузер
             log.warning(
-                "Reddit без OAuth: публичный .json часто отдаёт 403. "
-                "Задайте REDDIT_CLIENT_ID/REDDIT_CLIENT_SECRET в .env (см. docstring)."
+                "Reddit без OAuth: скрейпинг публичного .json (хосты www->old, браузерные "
+                "заголовки, бэкофф). С дата-центровых IP часто 403; с резидентного обычно работает."
             )
         self._session.headers["User-Agent"] = self.user_agent
 
@@ -133,27 +148,31 @@ class RedditClient:
         self._last_call = time.monotonic()
 
     def _get(self, path: str, params: dict[str, Any] | None = None) -> Any:
-        url = f"{self._api_base}{path}{self._suffix}"
+        hosts = [self._api_base] if self._token else self._public_hosts
         headers = {"Authorization": f"Bearer {self._token}"} if self._token else {}
         last_err: Exception | None = None
         for attempt in range(1, self.config.max_retries + 1):
-            self._throttle()
-            try:
-                resp = self._session.get(
-                    url, params=params, headers=headers, timeout=self.config.timeout_sec
-                )
-                if resp.status_code == 429:
-                    raise requests.RequestException("HTTP 429 rate limit")
-                resp.raise_for_status()
-                return resp.json()
-            except (requests.RequestException, ValueError) as exc:
-                last_err = exc
-                log.warning(
-                    "Reddit GET попытка %d/%d (%s): %s",
-                    attempt, self.config.max_retries, url, exc,
-                )
-                time.sleep(self.config.min_interval_sec * 2 * attempt)
-        raise RuntimeError(f"Reddit GET не удался после {self.config.max_retries} попыток: {last_err}")
+            for host in hosts:  # публичный режим: www -> old при 403/блоке
+                self._throttle()
+                url = f"{host}{path}{self._suffix}"
+                try:
+                    resp = self._session.get(
+                        url, params=params, headers=headers, timeout=self.config.timeout_sec
+                    )
+                    if resp.status_code in (403, 429):
+                        raise requests.RequestException(f"HTTP {resp.status_code} ({host})")
+                    resp.raise_for_status()
+                    return resp.json()
+                except (requests.RequestException, ValueError) as exc:
+                    last_err = exc
+                    log.warning(
+                        "Reddit GET попытка %d/%d (%s): %s",
+                        attempt, self.config.max_retries, url, exc,
+                    )
+            time.sleep(self.config.min_interval_sec * 2 * attempt)
+        raise RuntimeError(
+            f"Reddit GET не удался после {self.config.max_retries} попыток по {hosts}: {last_err}"
+        )
 
     def get_subreddit(
         self,

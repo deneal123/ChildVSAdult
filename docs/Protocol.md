@@ -255,8 +255,10 @@
 
 - **`parsing/reddit_client.py`** — OAuth2 (`oauth.reddit.com`) с client_id/secret из `.env`;
   публичный `.json` как fallback. Reddit с 2023 отдаёт **403 Blocked** на неаутентифицированный
-  скрейпинг (проверено: 403 даже с браузерным UA и на old.reddit.com → блок по IP/анти-бот),
-  поэтому основной путь — OAuth. Листинг (top/new/hot, дедуп по id, ~1000/sort), извлечение фото
+  скрейпинг (проверено: 403 даже с браузерным UA и на old.reddit.com → блок по IP/анти-бот в
+  dev-среде). **OAuth НЕОБЯЗАТЕЛЕН:** публичный режим усилен (браузерные заголовки + фоллбэк
+  хостов www→old + бэкофф) и обычно работает с резидентного IP; OAuth — фоллбэк для
+  заблокированных дата-центровых IP. Листинг (top/new/hot, дедуп по id, ~1000/sort), извлечение фото
   из gallery (`media_metadata`/`gallery_data`) и одиночных image-постов.
 - **`parsing/reddit_ingest.py`** + **`scripts/ingest_reddit.py`** — нормализация в RawPost
   (post_id `reddit_<id>`, source `reddit_public`, caption=заголовок → возраст той же LLM),
