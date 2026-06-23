@@ -35,8 +35,16 @@ from age_gap.training.losses import ContrastivePairLoss
 log = get_logger(__name__)
 
 
-def _train_faces(split: str = "train") -> list[tuple[Path, int]]:
-    """Кропы лиц указанного сплита с кодом личности (для leakage-safe синтетики)."""
+def _train_faces(
+    split: str = "train",
+    crops_dir: str = "faces",
+    face_ids: set[str] | None = None,
+) -> list[tuple[Path, int]]:
+    """Кропы лиц указанного сплита с кодом личности (для leakage-safe синтетики).
+
+    ``crops_dir`` — подкаталог в data/interim (например ``faces_hires512`` для нативного
+    разрешения). ``face_ids`` — необязательный allowlist (подмножество лиц).
+    """
     gsplit = {
         r["identity_group_id"]: r["split"]
         for r in read_jsonl(data_path("splits_dir", "group_splits.jsonl"))
@@ -48,7 +56,9 @@ def _train_faces(split: str = "train") -> list[tuple[Path, int]]:
         if gsplit.get(g.identity_group_id) != split:
             continue
         for fid in g.faces:
-            p = _crop_path(fid)
+            if face_ids is not None and fid not in face_ids:
+                continue
+            p = _crop_path(fid, crops_dir)
             if p.exists():
                 items.append((p, code))
         code += 1
@@ -58,9 +68,16 @@ def _train_faces(split: str = "train") -> list[tuple[Path, int]]:
 class SyntheticPairDataset(Dataset):
     """Позитивы (лицо, состаренное лицо) + кросс-личностные негативы (баланс 1:1)."""
 
-    def __init__(self, aging: AgingTransform, split: str = "train", seed: int = 42) -> None:
+    def __init__(
+        self,
+        aging: AgingTransform,
+        split: str = "train",
+        seed: int = 42,
+        crops_dir: str = "faces",
+        face_ids: set[str] | None = None,
+    ) -> None:
         self.aging = aging
-        faces = _train_faces(split)
+        faces = _train_faces(split, crops_dir, face_ids)
         rng = np.random.default_rng(seed)
         # items: (path_a, path_b|None, label). b=None -> позитив (состарить a).
         self._items: list[tuple[Path, Path | None, int]] = [(p, None, 1) for p, _ in faces]
@@ -112,6 +129,8 @@ def train_synthetic(
     pretrained: str = "casia-webface",
     ckpt_out: Path | None = None,
     seed: int = 42,
+    crops_dir: str = "faces",
+    face_ids: set[str] | None = None,
 ) -> Path:
     """Дообучить facenet на синтетических парах; отбор по РЕАЛЬНОМУ val. Возвращает чекпойнт."""
     ckpt_out = ckpt_out or data_path("models_dir", "facenet_synthetic.pt")
@@ -119,7 +138,9 @@ def train_synthetic(
     torch.manual_seed(seed)
     device = torch_device()
 
-    train_ds = SyntheticPairDataset(aging, split="train", seed=seed)
+    train_ds = SyntheticPairDataset(
+        aging, split="train", seed=seed, crops_dir=crops_dir, face_ids=face_ids
+    )
     val_ds = ImagePairDataset(split="val")  # отбор по реальным парам — как у +pairs
     if len(train_ds) == 0:
         raise RuntimeError("Нет лиц train-сплита для синтетики")

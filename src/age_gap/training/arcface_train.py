@@ -38,29 +38,59 @@ from age_gap.training.finetune import (
 log = get_logger(__name__)
 
 
-class ArcMarginHead(nn.Module):
-    """ArcFace: аддитивный угловой margin на целевой класс, затем масштаб (Deng et al., 2019)."""
+_DEFAULT_MARGIN = {"arcface": 0.5, "cosface": 0.35, "sphereface": 2.0}
 
-    def __init__(self, in_features: int, n_classes: int, margin: float = 0.5, scale: float = 32.0):
+
+class MarginHead(nn.Module):
+    """Margin-softmax head over a normalized backbone embedding. Three objective families:
+
+    * ``arcface`` --- additive angular margin cos(θ+m) (Deng et al., 2019).
+    * ``cosface`` --- additive cosine margin cos(θ)-m (Wang et al., 2018).
+    * ``sphereface`` --- multiplicative angular margin cos(mθ) (Liu et al., 2017), with the
+      original piecewise-monotonic ψ. SphereFace has no λ-annealing here, so on sparse
+      few-shot identities it can train slowly --- reported honestly as part of the comparison.
+    """
+
+    def __init__(
+        self,
+        in_features: int,
+        n_classes: int,
+        loss_type: str = "arcface",
+        margin: float | None = None,
+        scale: float = 32.0,
+    ):
         super().__init__()
         self.weight = nn.Parameter(torch.empty(n_classes, in_features))
         nn.init.xavier_uniform_(self.weight)
+        self.loss_type = loss_type
         self.scale = scale
-        self.cos_m = math.cos(margin)
-        self.sin_m = math.sin(margin)
-        self.th = math.cos(math.pi - margin)  # порог для устойчивости при cos(θ+m)
-        self.mm = math.sin(math.pi - margin) * margin
+        self.margin = _DEFAULT_MARGIN[loss_type] if margin is None else margin
+        m = self.margin
+        self.cos_m = math.cos(m)  # arcface precompute
+        self.sin_m = math.sin(m)
+        self.th = math.cos(math.pi - m)  # порог устойчивости при cos(θ+m)
+        self.mm = math.sin(math.pi - m) * m
 
     def forward(self, emb: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
         cosine = nn.functional.linear(
             nn.functional.normalize(emb), nn.functional.normalize(self.weight)
         ).clamp(-1 + 1e-7, 1 - 1e-7)
-        sine = torch.sqrt(1.0 - cosine**2)
-        phi = cosine * self.cos_m - sine * self.sin_m  # cos(θ+m)
-        phi = torch.where(cosine > self.th, phi, cosine - self.mm)  # моноттонность вне диапазона
+        if self.loss_type == "cosface":
+            phi = cosine - self.margin
+        elif self.loss_type == "sphereface":
+            theta = torch.acos(cosine)
+            k = torch.floor(self.margin * theta / math.pi)
+            phi = ((-1.0) ** k) * torch.cos(self.margin * theta) - 2.0 * k  # piecewise ψ
+        else:  # arcface
+            sine = torch.sqrt(1.0 - cosine**2)
+            phi = cosine * self.cos_m - sine * self.sin_m  # cos(θ+m)
+            phi = torch.where(cosine > self.th, phi, cosine - self.mm)  # монотонность вне диапазона
         onehot = torch.zeros_like(cosine)
         onehot.scatter_(1, labels.view(-1, 1), 1.0)
         return (onehot * phi + (1.0 - onehot) * cosine) * self.scale
+
+
+ArcMarginHead = MarginHead  # обратная совместимость
 
 
 class FaceLabelDataset(Dataset):
@@ -114,11 +144,12 @@ class FaceLabelDataset(Dataset):
 
 def train_arcface(
     backbone_name: str = "facenet",
+    loss_type: str = "arcface",
     epochs: int = 15,
     lr_backbone: float = 3e-5,
     lr_head: float = 1e-3,
     batch_size: int = 128,
-    margin: float = 0.5,
+    margin: float | None = None,
     scale: float = 32.0,
     trainable_scope: str = "head",
     patience: int = 4,
@@ -130,7 +161,7 @@ def train_arcface(
     backbone движется мягко (lr_backbone, как +pairs), ArcFace-классификатор учится быстрее (lr_head).
     Чекпойнт совместим с ``load_finetuned`` (сохраняется только backbone — голова не нужна для оценки).
     """
-    ckpt_out = ckpt_out or data_path("models_dir", f"bb_{backbone_name}_arcface.pt")
+    ckpt_out = ckpt_out or data_path("models_dir", f"bb_{backbone_name}_{loss_type}.pt")
     torch.manual_seed(seed)
     device = torch_device()
 
@@ -145,7 +176,9 @@ def train_arcface(
     backbone.eval()  # проб emb-dim батчем=1: train-режим уронил бы BatchNorm (нужно >1 примера)
     with torch.no_grad():
         emb_dim = int(backbone(torch.zeros(1, 3, size, size, device=device)).shape[-1])
-    head = ArcMarginHead(emb_dim, train_ds.n_classes, margin=margin, scale=scale).to(device)
+    head = MarginHead(
+        emb_dim, train_ds.n_classes, loss_type=loss_type, margin=margin, scale=scale
+    ).to(device)
 
     if trainable_scope != "full":
         _set_trainable(backbone, trainable_scope)
@@ -157,13 +190,14 @@ def train_arcface(
     # drop_last: последний батч из 1 примера уронил бы BatchNorm в train-режиме.
     loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, drop_last=True)
     log.info(
-        "ArcFace %s: classes=%d, device=%s, lr=(bb %.0e, head %.0e), m=%.2f s=%.0f",
+        "%s %s: classes=%d, device=%s, lr=(bb %.0e, head %.0e), m=%.2f s=%.0f",
+        loss_type,
         backbone_name,
         train_ds.n_classes,
         device,
         lr_backbone,
         lr_head,
-        margin,
+        head.margin,
         scale,
     )
 
