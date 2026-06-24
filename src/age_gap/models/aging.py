@@ -183,6 +183,7 @@ class FRANAging:
         target_age_range: tuple[int, int] = (55, 78),
         p_young: float = 0.25,
         weights_only: bool = True,
+        real_gaps: list[int] | None = None,
     ) -> None:
         import torch
 
@@ -193,6 +194,10 @@ class FRANAging:
         self.source_age_range = source_age_range
         self.target_age_range = target_age_range
         self.p_young = float(p_young)
+        # Parity mode: when given the real training pairs' age-gaps, synthetic pairs are aged
+        # to the SAME gap distribution (not a fixed wide 8-22 -> 55-78), so the real-vs-synthetic
+        # comparison is not confounded by a gap mismatch -- the reviewer's parity request.
+        self.real_gaps = list(real_gaps) if real_gaps else None
 
         net = _build_fran_unet()
         state = torch.load(
@@ -202,6 +207,14 @@ class FRANAging:
         self.net = net.to(self.device).eval()
 
     def _ages(self, rng: np.random.Generator) -> tuple[float, float]:
+        if self.real_gaps is not None:  # parity: gap drawn from the real-pair distribution
+            slo, shi = self.source_age_range
+            gap = float(self.real_gaps[int(rng.integers(len(self.real_gaps)))])
+            src = float(rng.integers(slo, shi + 1))
+            tgt = min(src + gap, 90.0)
+            if rng.uniform() < self.p_young:  # омоложение: меняем направление
+                src, tgt = tgt, src
+            return src, tgt
         slo, shi = self.source_age_range
         tlo, thi = self.target_age_range
         if rng.uniform() < self.p_young:  # омоложение: меняем роли диапазонов
