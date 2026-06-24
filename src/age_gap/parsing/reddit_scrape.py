@@ -129,17 +129,21 @@ def _env_port() -> str:
 
 
 def _parse_listing(html: str) -> list[dict[str, Any]]:
-    """Извлечь посты (t3) из HTML листинга old.reddit по их thing-div."""
+    """Извлечь посты (t3) из HTML листинга old.reddit.
+
+    Матчим thing-div по ``data-fullname`` (атрибуты идут в произвольном порядке: class раньше id),
+    затем тянем data-url/permalink/timestamp из того же тега.
+    """
     posts: list[dict[str, Any]] = []
-    for m in re.finditer(r'<div id="thing_(t3_\w+)"([^>]*)>', html):
-        attrs = m.group(2)
+    for m in re.finditer(r'<div\b([^>]*\bdata-fullname="(t3_\w+)"[^>]*)>', html):
+        attrs, fid = m.group(1), m.group(2)
         if _attr(attrs, "promoted") == "true":
             continue  # реклама
         chunk = html[m.end() : m.end() + 4000]
         tm = re.search(r'<a[^>]*class="[^"]*\btitle\b[^"]*"[^>]*>([^<]+)</a>', chunk)
         posts.append(
             {
-                "id": m.group(1).split("_", 1)[-1],
+                "id": fid.split("_", 1)[-1],
                 "permalink": _attr(attrs, "permalink") or "",
                 "data_url": _attr(attrs, "url") or "",
                 "title": _html.unescape(tm.group(1)) if tm else "",
