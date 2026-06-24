@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from age_gap.common.io import data_path, read_jsonl
@@ -103,7 +104,7 @@ def build_groups(
                 source_post_id=post.post_id,
                 faces=[fc.face_id for fc in post_faces],
                 age_labels=age_labels,
-                status=_group_status(post_faces),
+                status=_group_status(post.caption, post_faces),
             )
             f.write(json.dumps(group.to_dict(), ensure_ascii=False) + "\n")
             f.flush()
@@ -161,7 +162,21 @@ def _map_ages(
     return mapped
 
 
-def _group_status(post_faces: list[FaceCrop]) -> str:
-    """Авто-статус группы. Коллажи (2 лица в кадре) теперь штатны и идут в позитивы (auto);
-    групповые кадры (>2 лиц) отбракованы на препроцессинге и сюда не попадают."""
+# Признаки НЕСКОЛЬКИХ людей в подписи (RU+EN): коллаж с такой подписью — вероятно разные
+# люди (пара/семья), а не один человек «тогда/сейчас» -> исключаем из автопозитивов.
+_MULTI_PERSON = re.compile(
+    r"\b(?:we|us|our|wife|husband|spouse|girlfriend|boyfriend|partner|parents?|mom|dad|"
+    r"mother|father|brother|sister|siblings?|cousin|couple|twins?|friends?|family|kids|"
+    r"children|son|daughter)\b|\band[ ]+(?:i|my)\b|&[ ]*i\b|"
+    r"муж|жена|супруг|вдвоё?м|сем(?:ья|ьи|ей)|родител|брат|сестр|друзь|подруг|\bмы\b|\bнас\b",
+    re.IGNORECASE,
+)
+
+
+def _group_status(caption: str, post_faces: list[FaceCrop]) -> str:
+    """Авто-статус группы. Коллаж (несколько лиц в одном кадре) штатно идёт в позитивы (auto),
+    КРОМЕ случаев, когда подпись указывает на нескольких людей (пара/семья) -> manual_review."""
+    is_collage = any(fc.num_faces_in_image > 1 for fc in post_faces)
+    if is_collage and caption and _MULTI_PERSON.search(caption):
+        return "manual_review_required"
     return "auto"
