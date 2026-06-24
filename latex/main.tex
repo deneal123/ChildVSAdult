@@ -346,7 +346,7 @@ $+$pairs$+$disentangle & 0.632 $\pm$ 0.017 & 0.918 \\
 \end{table}
 
 \subsection{Objective Comparison: Training the SOTA Objective on Our Data}\label{sec:res-objective}
-We train the canonical modern-FR margin objectives---ArcFace-, CosFace- and SphereFace-margin identity classification~\cite{deng2019arcface} (the core of OE-CNN/MTLFace)---on our naturally-supervised identities (9{,}204 classes), same weak backbone, scope and protocol. On the FG-NET large-gap primary endpoint the contrastive, ArcFace and CosFace objectives \textbf{coincide} (0.848 / 0.851 / 0.843, within $\pm$0.006; Table~\ref{tab:objective}, Fig.~\ref{fig:sota}); only SphereFace---the hardest margin to optimize, here without $\lambda$-annealing on 2--3-shot identities---trails (0.801). We draw the bounded conclusion that, within this protocol and among the objectives tested, the data source accounts for more of the gain than the objective choice---not that the objective is irrelevant in general. ArcFace/CosFace additionally \emph{forget less} on easy benchmarks---a practical recommendation.
+We train the canonical modern-FR margin objectives---ArcFace-, CosFace- and SphereFace-margin identity classification~\cite{deng2019arcface} (the core of OE-CNN/MTLFace)---on our naturally-supervised identities (9{,}204 classes), same weak backbone, scope and protocol. On the FG-NET large-gap primary endpoint the contrastive, ArcFace and CosFace objectives \textbf{coincide} (0.848 / 0.851 / 0.843, within $\pm$0.006; Table~\ref{tab:objective}, Fig.~\ref{fig:sota}); only SphereFace---the hardest margin to optimize, here without $\lambda$-annealing on 2--3-shot identities---trails (0.801). We draw the bounded conclusion that, within this protocol and among the objectives tested, the data source accounts for more of the gain than the objective choice---not that the objective is irrelevant in general. ArcFace/CosFace additionally \emph{forget less} on easy benchmarks---a practical recommendation. A \emph{noise-robust} comparator---sub-center ArcFace~\cite{deng2020subcenter}, which keeps $K{=}3$ centroids per identity so that label-noisy or low-quality crops route to off-centers---lands at the \emph{same} large-gap 0.851 (our.25+ 0.869); explicit label-noise handling thus adds nothing over a plain margin on our \emph{curated} mined pairs, consistent with deduplication having already removed the dominant noise source. The supervision source, not noise-robust loss machinery, drives the gain.
 
 \begin{figure}[!t]
 \centering
@@ -368,6 +368,7 @@ Objective & FG-NET l.g. & our.25+ & LFW & AgeDB-30 \\
 Frozen & 0.736 & 0.640 & 0.969 & 0.953 \\
 $+$pairs (contrastive) & 0.848 & 0.838 & 0.946 & 0.945 \\
 $+$ArcFace & \textbf{0.851} & 0.868 & 0.952 & 0.947 \\
+$+$ArcFace, sub-center & 0.851 & 0.869 & 0.951 & 0.947 \\
 $+$CosFace & 0.843 & 0.860 & 0.952 & 0.945 \\
 $+$SphereFace & 0.801 & 0.699 & 0.950 & 0.943 \\
 \bottomrule

@@ -349,7 +349,7 @@ $+$pairs$+$disentangle & 0.632 $\pm$ 0.017 & 0.918 \\
 \end{table}
 
 \subsection{Сравнение objective: обучение SOTA-цели на наших данных}\label{sec:res-objective}
-Мы обучаем канонические margin-цели современной FR --- ArcFace-, CosFace- и SphereFace-margin классификацию личности~\cite{deng2019arcface} (ядро OE-CNN/MTLFace) --- на наших naturally-supervised личностях (9\,204 класса), тот же слабый backbone, scope и протокол. На primary endpoint (FG-NET large-gap) контрастив, ArcFace и CosFace \textbf{совпадают} (0.848 / 0.851 / 0.843, в пределах $\pm$0.006; Таблица~\ref{tab:objective}, Рис.~\ref{fig:sota}); лишь SphereFace --- самый трудный для оптимизации margin, здесь без $\lambda$-annealing на 2--3-шот личностях --- отстаёт (0.801). Делаем ограниченный вывод: в этом протоколе и среди рассмотренных целей вклад источник данных объясняет большую часть прироста, чем выбор objective --- а не «objective не важен вообще». ArcFace/CosFace дополнительно \emph{забывают меньше} на easy-бенчмарках --- практическая рекомендация.
+Мы обучаем канонические margin-цели современной FR --- ArcFace-, CosFace- и SphereFace-margin классификацию личности~\cite{deng2019arcface} (ядро OE-CNN/MTLFace) --- на наших naturally-supervised личностях (9\,204 класса), тот же слабый backbone, scope и протокол. На primary endpoint (FG-NET large-gap) контрастив, ArcFace и CosFace \textbf{совпадают} (0.848 / 0.851 / 0.843, в пределах $\pm$0.006; Таблица~\ref{tab:objective}, Рис.~\ref{fig:sota}); лишь SphereFace --- самый трудный для оптимизации margin, здесь без $\lambda$-annealing на 2--3-шот личностях --- отстаёт (0.801). Делаем ограниченный вывод: в этом протоколе и среди рассмотренных целей вклад источник данных объясняет большую часть прироста, чем выбор objective --- а не «objective не важен вообще». ArcFace/CosFace дополнительно \emph{забывают меньше} на easy-бенчмарках --- практическая рекомендация. \emph{Noise-robust} компаратор --- sub-center ArcFace~\cite{deng2020subcenter}, держащий $K{=}3$ центроида на личность, чтобы шумные/низкокачественные кропы уходили на off-центры --- даёт \emph{тот же} large-gap 0.851 (our.25+ 0.869); т.е.\ явная обработка шума меток ничего не добавляет к простому margin на наших \emph{очищенных} намайненных парах, что согласуется с уже выполненной дедупликацией, убравшей главный источник шума. Прирост даёт источник супервизии, а не noise-robust loss-машинерия.
 
 \begin{figure}[!t]
 \centering
@@ -371,6 +371,7 @@ Objective & FG-NET l.g. & our.25+ & LFW & AgeDB-30 \\
 Frozen & 0.736 & 0.640 & 0.969 & 0.953 \\
 $+$pairs (контрастив) & 0.848 & 0.838 & 0.946 & 0.945 \\
 $+$ArcFace & \textbf{0.851} & 0.868 & 0.952 & 0.947 \\
+$+$ArcFace, sub-center & 0.851 & 0.869 & 0.951 & 0.947 \\
 $+$CosFace & 0.843 & 0.860 & 0.952 & 0.945 \\
 $+$SphereFace & 0.801 & 0.699 & 0.950 & 0.943 \\
 \bottomrule
