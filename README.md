@@ -188,5 +188,8 @@ uv run ruff check . && uv run mypy && uv run pytest -q
 
 Линт/типы — в [pyproject.toml](pyproject.toml); хуки — [.pre-commit-config.yaml](.pre-commit-config.yaml).
 
-> Результаты получены на сообществах VK и носят исследовательский характер; перенос на другие
-> источники требует повторной валидации.
+> Результаты получены преимущественно на сообществах VK и носят исследовательский характер.
+> Кросс-платформенный перенос подтверждён на независимом **не-VK** источнике (Reddit
+> r/PastAndPresentPics: overall ROC-AUC frozen 0.718 → +pairs 0.749); HTML-скрейпер old.reddit —
+> `scripts/ingest_reddit.py --mode html` (англ. подписи + восстановление коллажей; см.
+> [docs/Protocol.md](docs/Protocol.md)). Дальнейшая внешняя валидация полезна.
