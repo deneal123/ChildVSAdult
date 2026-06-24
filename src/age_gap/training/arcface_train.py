@@ -58,9 +58,15 @@ class MarginHead(nn.Module):
         loss_type: str = "arcface",
         margin: float | None = None,
         scale: float = 32.0,
+        sub_centers: int = 1,
     ):
         super().__init__()
-        self.weight = nn.Parameter(torch.empty(n_classes, in_features))
+        self.n_classes = n_classes
+        # sub_centers>1 => sub-center ArcFace (Deng et al., ECCV 2020): K centroids per class,
+        # max-pooled at forward time so label-noisy/low-quality samples are routed to off-centers
+        # instead of corrupting the dominant centroid. A noise-robust comparator for mined web labels.
+        self.sub_centers = sub_centers
+        self.weight = nn.Parameter(torch.empty(n_classes * sub_centers, in_features))
         nn.init.xavier_uniform_(self.weight)
         self.loss_type = loss_type
         self.scale = scale
@@ -74,7 +80,10 @@ class MarginHead(nn.Module):
     def forward(self, emb: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
         cosine = nn.functional.linear(
             nn.functional.normalize(emb), nn.functional.normalize(self.weight)
-        ).clamp(-1 + 1e-7, 1 - 1e-7)
+        )
+        if self.sub_centers > 1:  # max over the K sub-centers of each class -> (B, n_classes)
+            cosine = cosine.view(-1, self.n_classes, self.sub_centers).amax(dim=2)
+        cosine = cosine.clamp(-1 + 1e-7, 1 - 1e-7)
         if self.loss_type == "cosface":
             phi = cosine - self.margin
         elif self.loss_type == "sphereface":
@@ -154,6 +163,7 @@ def train_arcface(
     trainable_scope: str = "head",
     patience: int = 4,
     seed: int = 42,
+    sub_centers: int = 1,
     ckpt_out: Path | None = None,
 ) -> Path:
     """Обучить backbone ArcFace-классификацией по личности; отбор по identity val-AUC.
@@ -161,7 +171,8 @@ def train_arcface(
     backbone движется мягко (lr_backbone, как +pairs), ArcFace-классификатор учится быстрее (lr_head).
     Чекпойнт совместим с ``load_finetuned`` (сохраняется только backbone — голова не нужна для оценки).
     """
-    ckpt_out = ckpt_out or data_path("models_dir", f"bb_{backbone_name}_{loss_type}.pt")
+    _sc = f"_sc{sub_centers}" if sub_centers > 1 else ""
+    ckpt_out = ckpt_out or data_path("models_dir", f"bb_{backbone_name}_{loss_type}{_sc}.pt")
     torch.manual_seed(seed)
     device = torch_device()
 
@@ -177,7 +188,8 @@ def train_arcface(
     with torch.no_grad():
         emb_dim = int(backbone(torch.zeros(1, 3, size, size, device=device)).shape[-1])
     head = MarginHead(
-        emb_dim, train_ds.n_classes, loss_type=loss_type, margin=margin, scale=scale
+        emb_dim, train_ds.n_classes, loss_type=loss_type, margin=margin, scale=scale,
+        sub_centers=sub_centers,
     ).to(device)
 
     if trainable_scope != "full":
