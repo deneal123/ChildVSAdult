@@ -31,28 +31,42 @@ def _normalize_ref(ref: object) -> str:
     return "unknown"
 
 
+# Двуязычный системный промпт: полные инструкции на русском И английском (GigaChat —
+# русскоязычная модель, но подписи Reddit англоязычные), общий формат ответа и примеры.
 SYSTEM_PROMPT = (
-    "Ты извлекаешь возраст человека из подписи к мультифото-посту (русский язык). "
-    "Верни СТРОГО JSON-массив объектов без пояснений. Каждый объект: "
-    '{"age": <целое 1..99>, "photo_reference": <см. ниже>, "confidence": <0..1>}. '
-    "photo_reference — к какому фото относится возраст: "
-    '"position_0" (первое фото), "position_1" (второе), "position_2" и т.д.; '
-    'либо "unknown", если из подписи нельзя понять, к какому фото. '
-    "Синонимы: «слева/сначала/в детстве» → раннее фото (меньший индекс), "
-    "«справа/сейчас/теперь» → позднее фото (больший индекс). "
-    "ВАЖНО: если подпись — это числа через слэш или дефис (например «6/18/21» при 3 фото, "
-    "«5/26» или «5-26» при 2 фото), это ВОЗРАСТЫ человека по одному на каждое фото по порядку "
-    "(position_0, position_1, ...), а НЕ дата. Так часто подписывают фото в разном возрасте. "
-    "Извлекай ТОЛЬКО возраст человека на фото (не годы съёмки, не стаж/срок брака, "
-    "не «N лет назад»). Если возраста нет — верни []. "
-    "Число возрастов не обязано совпадать с числом фото."
+    "[RU] Ты извлекаешь ВОЗРАСТ человека из подписи к мультифото-посту «тогда и сейчас». "
+    "Подпись может быть на РУССКОМ ИЛИ АНГЛИЙСКОМ. Верни СТРОГО JSON-массив объектов, без пояснений. "
+    'Каждый объект: {"age": <целое 1..99>, "photo_reference": <см. ниже>, "confidence": <0..1>}. '
+    'photo_reference — к какому фото относится возраст: "position_0" (первое фото), "position_1" '
+    '(второе), и т.д.; либо "unknown". Раньше/младше («слева», «сначала», «в детстве», then, left, '
+    "younger) → меньший индекс; позже («справа», «сейчас», «теперь», now, present, today) → больший "
+    "индекс. Числа через «/», «-», to, and, vs, & (напр. «6/18/21», «5-26», «16 to 22 to 36», "
+    "«18 and 72») — это ВОЗРАСТА, по одному на фото по порядку (position_0, position_1, ...). "
+    "Бери ТОЛЬКО возраст человека. НЕ бери: годы съёмки (1971, 1995, 2024), сроки/стаж/годовщины "
+    "(«married 29 years», «N лет назад», «29 years later», «стаж»). Если возраста нет — верни []. "
+    "Число возрастов не обязано совпадать с числом фото.\n"
+    "[EN] You extract a person's AGE from a multi-photo \"then vs now\" caption. The caption may be "
+    "in RUSSIAN OR ENGLISH. Return STRICTLY a JSON array of objects, no prose. Each object: "
+    '{"age": <integer 1..99>, "photo_reference": "position_0"/"position_1"/.../"unknown", '
+    '"confidence": <0..1>}. Earlier/younger ("then", "left", "younger", «в детстве», «слева») → '
+    'smaller index; later ("now", "present", "today", "right", «сейчас», «справа») → larger index. '
+    "Numbers joined by '/', '-', to, and, vs, & (e.g. 'from 16 to 22 to 36', '18 and 72', '6/18/21') "
+    "are AGES, one per photo in order. Do NOT extract calendar years (1971, 1995, 2024) or "
+    "durations/anniversaries ('married 29 years', '37 years ago', '29 years later'). "
+    "Examples: 'Then vs Now' → []; 'From 11 to 29 (Now)' → "
+    '[{"age":11,"photo_reference":"position_0","confidence":0.9},'
+    '{"age":29,"photo_reference":"position_1","confidence":0.9}]; '
+    "'Us in 1995 and 2024, married 29 years' → []. If no age, return []."
 )
 
 
 def _build_user_message(caption: str, n_photos: int | None) -> str:
     if n_photos and n_photos > 0:
-        return f"Фото в посте: {n_photos} (индексы position_0..position_{n_photos - 1}).\nПодпись: {caption}"
-    return f"Подпись: {caption}"
+        return (
+            f"Photos in post: {n_photos} (indices position_0..position_{n_photos - 1}).\n"
+            f"Caption: {caption}"
+        )
+    return f"Caption: {caption}"
 
 
 # Достаём JSON-массив, даже если модель обернула его в ```json ... ``` или текст.

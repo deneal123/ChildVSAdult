@@ -48,9 +48,6 @@ def assess(
     reject: str | None = None
     if num_faces_in_image == 0:
         reject = "no_face_detected"
-    elif num_faces_in_image > 1:
-        # Несколько лиц без сопоставления цели — на ручную проверку (SKILL §11).
-        reject = "multiple_faces_no_target_mapping"
     elif det_score < MIN_DET_SCORE:
         reject = "low_detector_confidence"
     elif face_size < MIN_FACE_SIZE:

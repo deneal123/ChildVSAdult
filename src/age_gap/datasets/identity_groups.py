@@ -69,6 +69,13 @@ def build_groups(
         if fc.is_usable:
             usable[fc.face_id] = fc
 
+    # usable-лица по фото; внутри фото — слева направо (коллаж «тогда/сейчас»: f0=раньше, f1=позже).
+    faces_by_photo: dict[str, list[FaceCrop]] = {}
+    for fc in usable.values():
+        faces_by_photo.setdefault(fc.photo_id, []).append(fc)
+    for group_faces in faces_by_photo.values():
+        group_faces.sort(key=lambda fc: fc.bbox[0] if fc.bbox else 0.0)
+
     done: set[str] = set()
     if resume:
         done = {row.get("source_post_id", "") for row in read_jsonl(groups_out)}
@@ -85,21 +92,18 @@ def build_groups(
             # Порядковый номер фото в посте (0-индекс по ПОЛНОМУ списку фото, включая те,
             # чьё лицо отбраковано) — к нему привязывает позиции LLM/regex.
             photos_sorted = sorted(post.photos, key=lambda p: p.order)
-            seq_by_photo = {ph.photo_id: i for i, ph in enumerate(photos_sorted)}
-            total_photos = len(photos_sorted)
-            post_faces = [
-                usable[f"{ph.photo_id}_f0"] for ph in photos_sorted if f"{ph.photo_id}_f0" in usable
-            ]
+            # Глобальный порядок лиц: по порядку фото, затем слева направо внутри фото (коллажи).
+            post_faces = [fc for ph in photos_sorted for fc in faces_by_photo.get(ph.photo_id, [])]
             if not post_faces:
                 continue
 
-            age_labels = _map_ages(post.caption, post_faces, seq_by_photo, total_photos, extractor)
+            age_labels = _map_ages(post.caption, post_faces, extractor)
             group = IdentityGroup(
                 identity_group_id=post.post_id,
                 source_post_id=post.post_id,
                 faces=[fc.face_id for fc in post_faces],
                 age_labels=age_labels,
-                status=_group_status(post, post_faces),
+                status=_group_status(post_faces),
             )
             f.write(json.dumps(group.to_dict(), ensure_ascii=False) + "\n")
             f.flush()
@@ -112,32 +116,24 @@ def build_groups(
 def _map_ages(
     caption: str,
     post_faces: list[FaceCrop],
-    seq_by_photo: dict[str, int],
-    total_photos: int,
     extractor: AgeExtractor,
 ) -> list[AgeLabel]:
-    """Сопоставить возрасты лицам по позиции фото в посте (а не по индексу usable-лица).
+    """Сопоставить возрасты лицам по ГЛОБАЛЬНОЙ позиции (порядок фото + слева направо внутри кадра).
 
-    Позиция position_N от LLM/regex = порядковый номер фото в посте; привязываем к usable-лицу
-    именно этого фото (если оно не отбраковано). Это исключает привязку к чужому лицу, когда
-    часть фото поста отбракована.
+    post_faces уже в глобальном порядке. position_N / first / left / second / right -> индекс в
+    post_faces. Для коллажа «тогда/сейчас»: left=раньше=post_faces[0], right=позже=post_faces[1].
     """
-    # Порядковый номер фото -> usable-лицо этого фото; и лица в порядке фото.
-    face_by_seq = {seq_by_photo.get(fc.photo_id, -1): fc for fc in post_faces}
-    faces_in_order = sorted(post_faces, key=lambda fc: seq_by_photo.get(fc.photo_id, 0))
-
-    # LLM получает ОБЩЕЕ число фото — индексы position_N совпадают с порядком фото в посте.
-    raw_labels = extractor.extract(caption, total_photos)
+    n = len(post_faces)
+    raw_labels = extractor.extract(caption, n)  # n = число лиц-слотов (для коллажа = число лиц кадра)
     if not raw_labels:
         return []
 
-    # Позиционный fallback (TODO §8, правило 2): все якоря «unknown», но число возрастов
-    # совпадает с числом usable-лиц И с числом фото (нет отбраковки) — возраст i -> лицо i.
+    # Позиционный fallback: все якоря «unknown», число возрастов == числу лиц (>=2) -> возраст i -> лицо i.
     all_unknown = all(lbl.photo_reference == "unknown" for lbl in raw_labels)
-    if all_unknown and len(raw_labels) == len(faces_in_order) == total_photos and total_photos >= 2:
+    if all_unknown and len(raw_labels) == n and n >= 2:
         return [
             AgeLabel(
-                face_id=faces_in_order[i].face_id,
+                face_id=post_faces[i].face_id,
                 age=lbl.age,
                 photo_reference=f"position_{i}",
                 source=lbl.source,
@@ -147,35 +143,25 @@ def _map_ages(
             for i, lbl in enumerate(raw_labels)
         ]
 
-    # Явная привязка по позиции фото: first/left=0, second/right=1, position_N=N.
+    # Явная привязка: first/left=0, second/right=1, position_N=N -> индекс в глобальном порядке лиц.
     mapped: list[AgeLabel] = []
     for label in raw_labels:
         pos = _ref_position(label.photo_reference)
-        target = face_by_seq.get(pos) if pos is not None else None
-        target_face = target.face_id if target else None
+        face = post_faces[pos] if (pos is not None and 0 <= pos < n) else None
         mapped.append(
             AgeLabel(
-                face_id=target_face,
+                face_id=face.face_id if face else None,
                 age=label.age,
                 photo_reference=label.photo_reference,
                 source=label.source,
                 confidence=label.confidence,
-                mapping_confidence=label.mapping_confidence if target_face else 0.0,
+                mapping_confidence=label.mapping_confidence if face else 0.0,
             )
         )
     return mapped
 
 
-def _group_status(post: RawPost, post_faces: list[FaceCrop]) -> str:
-    """Авто-статус группы. Неоднозначные посты -> manual_review_required (SKILL §9.2).
-
-    Признак неоднозначности на этом этапе: фото поста, где детектор нашёл несколько лиц
-    (коллаж/несколько людей), повышают риск неверного позитива.
-    """
-    # Если хотя бы у одного usable-лица в исходном фото было >1 лица — на ревью.
-    if any(fc.num_faces_in_image > 1 for fc in post_faces):
-        return "manual_review_required"
-    if len(post_faces) < 2:
-        # Группа из одного лица не даёт позитивных пар, но валидна как источник негативов.
-        return "auto"
+def _group_status(post_faces: list[FaceCrop]) -> str:
+    """Авто-статус группы. Коллажи (2 лица в кадре) теперь штатны и идут в позитивы (auto);
+    групповые кадры (>2 лиц) отбракованы на препроцессинге и сюда не попадают."""
     return "auto"

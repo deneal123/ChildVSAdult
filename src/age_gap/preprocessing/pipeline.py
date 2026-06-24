@@ -18,17 +18,15 @@ from age_gap.common.io import PROJECT_ROOT, data_path, read_jsonl, resolve_path
 from age_gap.common.logging import get_logger
 from age_gap.common.schemas import FaceCrop, RawPost
 from age_gap.preprocessing.crop_align import align_face, save_crop
-from age_gap.preprocessing.detect import DetectedFace, FaceDetector
+from age_gap.preprocessing.detect import FaceDetector
 from age_gap.preprocessing.quality import assess
 
 log = get_logger(__name__)
 
 
-def _select_target(faces: list[DetectedFace]) -> DetectedFace | None:
-    """Выбрать целевое лицо — самое крупное по площади bbox."""
-    if not faces:
-        return None
-    return max(faces, key=lambda f: f.area)
+# «Тогда/сейчас»-коллаж: 1 кадр с 2 лицами одного человека -> позитивная пара. Кадры с >2
+# лицами (групповые) слишком неоднозначны -> отбраковка целиком.
+MAX_FACES_PER_IMAGE = 2
 
 
 def process_photo(
@@ -36,69 +34,64 @@ def process_photo(
     image_path: Path,
     photo_id: str,
     faces_dir: Path,
-) -> FaceCrop:
-    face_id = f"{photo_id}_f0"
+) -> list[FaceCrop]:
+    """Детектировать лица кадра -> список кропов (по одному на лицо, СЛЕВА НАПРАВО).
+
+    1 лицо -> обычный кадр; 2 лица -> коллаж «тогда/сейчас» (f0=левое/раньше, f1=правое/позже);
+    >2 лиц -> групповой кадр, отбраковка целиком (одна reject-запись).
+    """
+    f0 = f"{photo_id}_f0"
     image = cv2.imread(str(image_path))
     if image is None:
         log.warning("Не удалось прочитать изображение %s (reject=unreadable_image)", image_path)
-        return FaceCrop(
-            face_id=face_id, photo_id=photo_id, is_usable=False, reject_reason="unreadable_image"
-        )
+        return [FaceCrop(face_id=f0, photo_id=photo_id, is_usable=False, reject_reason="unreadable_image")]
 
     try:
         detected = detector.detect(image)
     except Exception as exc:  # noqa: BLE001 — сбой инференса на одном кадре не должен валить прогон
         log.warning("Фото %s: ошибка детекции (%s) -> reject=detect_error", photo_id, exc)
-        return FaceCrop(
-            face_id=face_id, photo_id=photo_id, is_usable=False, reject_reason="detect_error"
-        )
-    target = _select_target(detected)
+        return [FaceCrop(face_id=f0, photo_id=photo_id, is_usable=False, reject_reason="detect_error")]
+
     num_faces = len(detected)
-
-    if target is None:
+    if num_faces == 0:
         log.info("Фото %s: лицо не найдено (reject=no_face_detected)", photo_id)
-        return FaceCrop(
-            face_id=face_id,
-            photo_id=photo_id,
-            num_faces_in_image=0,
-            is_usable=False,
-            reject_reason="no_face_detected",
-        )
+        return [FaceCrop(face_id=f0, photo_id=photo_id, num_faces_in_image=0, is_usable=False, reject_reason="no_face_detected")]
+    if num_faces > MAX_FACES_PER_IMAGE:
+        log.info("Фото %s: лиц=%d > %d (reject=too_many_faces)", photo_id, num_faces, MAX_FACES_PER_IMAGE)
+        return [FaceCrop(face_id=f0, photo_id=photo_id, num_faces_in_image=num_faces, is_usable=False, reject_reason="too_many_faces")]
 
-    # Кроп по bbox для оценки качества (резкость именно области лица).
-    x1, y1, x2, y2 = (int(round(v)) for v in target.bbox)
     h, w = image.shape[:2]
-    x1, y1 = max(0, x1), max(0, y1)
-    x2, y2 = min(w, x2), min(h, y2)
-    face_region = image[y1:y2, x1:x2]
-    face_size = min(target.width, target.height)
-
-    q = assess(
-        face_region, face_size=face_size, det_score=target.det_score, num_faces_in_image=num_faces
-    )
-
-    crop_path: str | None = None
-    if q.is_usable:
-        aligned = align_face(image, target.kps)
-        dest = faces_dir / f"{face_id}.jpg"
-        save_crop(aligned, dest)
-        crop_path = str(dest.relative_to(PROJECT_ROOT))
-
-    if not q.is_usable:
-        log.info("Фото %s: reject=%s (faces=%d)", photo_id, q.reject_reason, num_faces)
-
-    return FaceCrop(
-        face_id=face_id,
-        photo_id=photo_id,
-        bbox=target.bbox,
-        landmarks=target.kps,
-        face_crop_path=crop_path,
-        face_quality_score=q.quality_score,
-        det_score=round(target.det_score, 4),
-        num_faces_in_image=num_faces,
-        is_usable=q.is_usable,
-        reject_reason=q.reject_reason,
-    )
+    crops: list[FaceCrop] = []
+    for i, face in enumerate(sorted(detected, key=lambda d: d.bbox[0])):  # слева направо = then..now
+        face_id = f"{photo_id}_f{i}"
+        x1, y1, x2, y2 = (int(round(v)) for v in face.bbox)
+        x1, y1, x2, y2 = max(0, x1), max(0, y1), min(w, x2), min(h, y2)
+        face_region = image[y1:y2, x1:x2]
+        # num_faces_in_image=1: качество оценивается ПО ЛИЦУ; коллаж больше не повод для реджекта.
+        q = assess(face_region, face_size=min(face.width, face.height), det_score=face.det_score, num_faces_in_image=1)
+        crop_path: str | None = None
+        if q.is_usable:
+            aligned = align_face(image, face.kps)
+            dest = faces_dir / f"{face_id}.jpg"
+            save_crop(aligned, dest)
+            crop_path = str(dest.relative_to(PROJECT_ROOT))
+        else:
+            log.info("Фото %s f%d: reject=%s (faces=%d)", photo_id, i, q.reject_reason, num_faces)
+        crops.append(
+            FaceCrop(
+                face_id=face_id,
+                photo_id=photo_id,
+                bbox=face.bbox,
+                landmarks=face.kps,
+                face_crop_path=crop_path,
+                face_quality_score=q.quality_score,
+                det_score=round(face.det_score, 4),
+                num_faces_in_image=num_faces,
+                is_usable=q.is_usable,
+                reject_reason=q.reject_reason,
+            )
+        )
+    return crops
 
 
 def run(
@@ -137,12 +130,12 @@ def run(
                 if f"{photo.photo_id}_f0" in processed:
                     continue
                 image_path = resolve_path(photo.local_path)
-                crop = process_photo(detector, image_path, photo.photo_id, Path(faces_dir))
+                crops = process_photo(detector, image_path, photo.photo_id, Path(faces_dir))
 
                 # Несколько detect_error подряд = вероятно умер CUDA-контекст: прерываем
                 # прогон (прогресс сохранён построчно), чтобы свежий перезапуск догнал остаток
                 # и не пометил весь хвост как ошибочный.
-                if crop.reject_reason == "detect_error":
+                if crops and crops[0].reject_reason == "detect_error":
                     consecutive_errors += 1
                     if consecutive_errors >= 3:
                         log.error(
@@ -154,10 +147,11 @@ def run(
                     continue  # не пишем ошибочный кадр — повторим при следующем запуске
                 consecutive_errors = 0
 
-                f.write(json.dumps(crop.to_dict(), ensure_ascii=False) + "\n")
-                f.flush()
-                new += 1
-                usable += int(crop.is_usable)
+                for crop in crops:  # 1 кадр или 2 лица коллажа
+                    f.write(json.dumps(crop.to_dict(), ensure_ascii=False) + "\n")
+                    f.flush()
+                    new += 1
+                    usable += int(crop.is_usable)
             if aborted:
                 break
 
