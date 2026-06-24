@@ -41,6 +41,16 @@ _SLASH_SEQ = re.compile(r"\s*(\d{1,2}(?:\s*/\s*\d{1,2})+)\s*")
 _AGE_UNIT_RE = re.compile(_AGE_UNIT)
 _AGE_BARE_RE = re.compile(_AGE_BARE)
 
+# Английские then/now-паттерны (Reddit r/PastAndPresentPics). Сначала вырезаем 4-значные годы
+# (1971/2026) и длительности («married 29 years», «37 years ago»), затем берём возрасты из
+# последовательностей, соединённых to/and/vs/&/-/«/», и из «(43)»/«aged 25»/«at 7».
+_EN_YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
+_EN_DURATION = re.compile(r"\b\d{1,3}\s*(?:years?|yrs?|yr|y/?o)\b(?:\s*ago)?")
+_EN_CONNECTOR = re.compile(r"\b(?:to|and|vs)\b|[-–—/&]")
+_EN_AGED = re.compile(r"\b(?:aged?|at)\s+(\d{1,2})\b")
+_EN_PAREN = re.compile(r"\((\d{1,2})\)")
+_EN_NUM = re.compile(r"\b(\d{1,2})\b")
+
 
 def _valid(age: int) -> bool:
     return MIN_AGE <= age <= MAX_AGE
@@ -74,7 +84,30 @@ class RegexAgeExtractor:
         if labels:
             return labels
 
-        return self._singles(text)
+        labels = self._singles(text)
+        if labels:
+            return labels
+
+        return self._english(text, n_photos)  # fallback: англоязычные then/now-подписи
+
+    def _english(self, text: str, n_photos: int | None) -> list[AgeLabel]:
+        t = _EN_DURATION.sub(" ", _EN_YEAR.sub(" ", text))  # убрать годы и длительности
+        ages: list[int] = []
+        if _EN_CONNECTOR.search(t) or "(" in t:  # then/now-структура: берём все возрасты подряд
+            for x in _EN_NUM.findall(t):
+                if _valid(int(x)) and int(x) not in ages:
+                    ages.append(int(x))
+        else:  # без коннектора — только явные «aged 25» / «(43)»
+            for rx in (_EN_AGED, _EN_PAREN):
+                for m in rx.finditer(t):
+                    if _valid(int(m.group(1))) and int(m.group(1)) not in ages:
+                        ages.append(int(m.group(1)))
+        if not ages:
+            return []
+        if n_photos and len(ages) == n_photos:  # позиционная привязка, если совпало с числом фото
+            return [self._label(a, f"position_{i}", 0.5, 0.5) for i, a in enumerate(ages)]
+        conf = 0.5 if len(ages) <= 3 else 0.3
+        return [self._label(a, "unknown", conf, 0.25) for a in ages]
 
     def _slash_sequence(self, text: str, n_photos: int | None) -> list[AgeLabel]:
         if not n_photos or n_photos < 2:

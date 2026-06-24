@@ -48,7 +48,7 @@ def _stem(url: str) -> str:
 
 
 class RedditScraper:
-    def __init__(self, delay: float = 1.5) -> None:
+    def __init__(self, delay: float = 2.5) -> None:
         self.session = requests.Session()
         self.session.headers.update(BROWSER_HEADERS)
         self.session.headers["User-Agent"] = BROWSER_UA
@@ -58,19 +58,23 @@ class RedditScraper:
             log.info("scraper через прокси %s:%s", _env_host(), _env_port())
         self.delay = delay
 
-    def _get(self, url: str, retries: int = 4) -> str | None:
+    def _get(self, url: str, retries: int = 5) -> str | None:
         for attempt in range(1, retries + 1):
+            wait = self.delay * attempt
             try:
                 r = self.session.get(url, timeout=40)
-                if r.status_code in (403, 429):
-                    raise requests.RequestException(f"HTTP {r.status_code}")
+                if r.status_code == 429:  # rate limit: ждать заметно дольше
+                    wait = max(wait, 12 * attempt)
+                    raise requests.RequestException("HTTP 429")
+                if r.status_code == 403:
+                    raise requests.RequestException("HTTP 403")
                 r.raise_for_status()
                 if r.text.strip():
                     return r.text
                 raise requests.RequestException("empty body")
             except requests.RequestException as exc:
                 log.warning("scrape GET %d/%d (%s): %s", attempt, retries, url, exc)
-                time.sleep(self.delay * attempt)
+                time.sleep(wait)
         return None
 
     def listing(self, subreddit: str, sort: str = "hot", pages: int = 10) -> list[dict[str, Any]]:
@@ -211,6 +215,7 @@ def scrape_subreddit(
     subreddit: str = "PastAndPresentPics",
     sorts: tuple[str, ...] = ("hot", "new", "top"),
     pages: int = 10,
+    max_posts: int = 400,
     posts_out: Path | None = None,
     images_dir: Path | None = None,
     append: bool = False,
@@ -235,10 +240,13 @@ def scrape_subreddit(
     if append:
         existing = {row.get("post_id") for row in read_jsonl(posts_out)}
         listed = {k: v for k, v in listed.items() if f"reddit_{k}" not in existing}
-    log.info("Уникальных постов к разбору: %d", len(listed))
+    items = list(listed.values())
+    if max_posts and len(items) > max_posts:
+        items = items[:max_posts]  # кап: меньше post-page запросов -> меньше 429
+    log.info("Уникальных постов %d; к разбору: %d", len(listed), len(items))
 
     rawposts: list[RawPost] = []
-    for post in listed.values():
+    for post in items:
         imgs = sc.post_images(post)
         if imgs:
             rawposts.append(_to_rawpost(post, imgs, collection_date))

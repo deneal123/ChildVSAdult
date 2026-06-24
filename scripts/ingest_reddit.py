@@ -35,6 +35,7 @@ def main() -> None:
     ap.add_argument("--subreddit", default="PastAndPresentPics")
     ap.add_argument("--limit", type=int, default=1000, help="api: максимум постов на sort")
     ap.add_argument("--pages", type=int, default=10, help="html: страниц листинга на sort")
+    ap.add_argument("--max-posts", type=int, default=400, help="html: кап на число разбираемых постов (против 429)")
     ap.add_argument("--sorts", nargs="+", default=["top", "new", "hot"])
     ap.add_argument("--time-filter", default="all", help="api top: all|year|month|week")
     ap.add_argument("--append", action="store_true", help="дозапись к posts.jsonl активного root")
@@ -63,6 +64,7 @@ def main() -> None:
             subreddit=args.subreddit,
             sorts=tuple(args.sorts),
             pages=args.pages,
+            max_posts=args.max_posts,
             posts_out=args.posts_out,
             images_dir=args.images_dir,
             append=args.append,
