@@ -111,6 +111,12 @@ T = {
                "pairs": "+pairs (контрастив)", "arc": "+ArcFace", "cos": "+CosFace",
                "sphere": "+SphereFace"},
     },
+    "external": {
+        "en": {"ylabel": "ROC-AUC", "frozen": "frozen", "tuned": "+pairs", "chance": "chance",
+               "sets": ["FG-NET\nlarge-gap", "FG-NET\nchild/adult", "Reddit\n(cross-platform)"]},
+        "ru": {"ylabel": "ROC-AUC", "frozen": "frozen", "tuned": "+pairs", "chance": "случайность",
+               "sets": ["FG-NET\nlarge-gap", "FG-NET\nchild/adult", "Reddit\n(кросс-платф.)"]},
+    },
 }
 
 
@@ -247,7 +253,7 @@ def fig_sota(lang: str) -> None:
     fig, ax = plt.subplots(figsize=(_CW, 2.8))
     w = 0.16
     offs = [-2 * w, -w, 0.0, w, 2 * w]
-    for (label, vals, color, hatch), off in zip(series, offs):
+    for (label, vals, color, hatch), off in zip(series, offs, strict=True):
         ax.bar([i + off for i in x], vals, w, color=color, edgecolor="black", lw=0.4,
                hatch=hatch, label=label)
     ax.set_xticks(list(x))
@@ -259,6 +265,40 @@ def fig_sota(lang: str) -> None:
     _save(fig, "fig_sota" + _suf(lang))
 
 
+def fig_external(lang: str) -> None:
+    """External generalization: the $+$pairs gain holds across three independent evaluations."""
+    s = T["external"][lang]
+    frozen = [0.736, 0.684, 0.718]
+    flo, fhi = [0.70, 0.63, 0.70], [0.78, 0.74, 0.74]
+    tuned = [0.848, 0.813, 0.749]
+    tlo, thi = [0.82, 0.77, 0.73], [0.88, 0.86, 0.77]
+    x = range(len(frozen))
+    w = 0.38
+    fig, ax = plt.subplots(figsize=(_CW, 2.7))
+    ax.bar([i - w / 2 for i in x], frozen, w,
+           yerr=[[f - lo for f, lo in zip(frozen, flo, strict=True)],
+                 [hi - f for f, hi in zip(frozen, fhi, strict=True)]],
+           color=_FROZEN, edgecolor="black", lw=0.4, capsize=2,
+           error_kw={"elinewidth": 0.7}, label=s["frozen"], zorder=3)
+    ax.bar([i + w / 2 for i in x], tuned, w,
+           yerr=[[t - lo for t, lo in zip(tuned, tlo, strict=True)],
+                 [hi - t for t, hi in zip(tuned, thi, strict=True)]],
+           color=_TUNED, edgecolor="black", lw=0.4, hatch="////", capsize=2,
+           error_kw={"elinewidth": 0.7}, label=s["tuned"], zorder=3)
+    for i in x:
+        ax.text(i, max(thi[i], fhi[i]) + 0.012, f"+{tuned[i] - frozen[i]:.3f}",
+                ha="center", va="bottom", fontsize=6.3)
+    ax.axhline(0.5, ls=":", color="gray", lw=0.8, alpha=0.7, zorder=0)
+    ax.text(len(frozen) - 0.5, 0.508, s["chance"], fontsize=6, color="gray", va="bottom", ha="right")
+    ax.set_xticks(list(x))
+    ax.set_xticklabels(s["sets"], fontsize=6.8)
+    ax.set_ylim(0.45, 0.95)
+    ax.set_ylabel(s["ylabel"])
+    ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, columnspacing=1.2,
+              handletextpad=0.5)
+    _save(fig, "fig_external" + _suf(lang))
+
+
 def main() -> None:
     print(f"Figures -> {OUT}")
     for lang in _LANGS:
@@ -267,6 +307,7 @@ def main() -> None:
         fig_headroom(lang)
         fig_shortcut(lang)
         fig_sota(lang)
+        fig_external(lang)
     print("Done (5 figures x 2 languages: EN + _ru).")
 
 
