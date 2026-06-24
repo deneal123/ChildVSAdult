@@ -56,24 +56,29 @@ class RedditScraper:
         if px:
             self.session.proxies.update(px)
             log.info("scraper через прокси %s:%s", _env_host(), _env_port())
-        self.delay = delay
+        self.base_delay = delay
+        self.delay = delay  # адаптивная: растёт на 429, плавно спадает на успехе
 
     def _get(self, url: str, retries: int = 5) -> str | None:
         for attempt in range(1, retries + 1):
             wait = self.delay * attempt
             try:
                 r = self.session.get(url, timeout=40)
-                if r.status_code == 429:  # rate limit: ждать заметно дольше
+                if r.status_code == 429:  # rate limit: адаптивно замедляемся + ждём дольше
+                    self.delay = min(self.delay * 1.6, 15.0)
                     wait = max(wait, 12 * attempt)
                     raise requests.RequestException("HTTP 429")
                 if r.status_code == 403:
                     raise requests.RequestException("HTTP 403")
                 r.raise_for_status()
                 if r.text.strip():
+                    self.delay = max(self.base_delay, self.delay * 0.92)  # плавный возврат к базе
                     return r.text
                 raise requests.RequestException("empty body")
             except requests.RequestException as exc:
-                log.warning("scrape GET %d/%d (%s): %s", attempt, retries, url, exc)
+                log.warning(
+                    "scrape GET %d/%d (delay=%.1fs) (%s): %s", attempt, retries, self.delay, url, exc
+                )
                 time.sleep(wait)
         return None
 
