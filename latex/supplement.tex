@@ -23,8 +23,8 @@
 
 \noindent This supplement collects material that supports, but need not occupy, the main paper:
 (S\ref{sec:claims}) an explicit claims-vs-evidence map; (S\ref{sec:audit}) a consolidated audit of
-the automatic (LLM / clustering / dedup) supervision components, and the human-ground-truth items a
-full audit would require but that are labor-intensive and beyond this study's resources; and
+the automatic (LLM / clustering / dedup) supervision components plus a small manual validation
+(100 posts), with a large multi-annotator audit left beyond this study's resources; and
 (S\ref{sec:card}) a model / data card. Section and table
 references of the form ``Sec.~V'' or ``Table~X'' point to the main paper.
 
@@ -71,7 +71,7 @@ The contribution is specific to weak/medium backbones &
 Strong saturated backbones show null/negative gains (Sec.~V-C) & Bounded (limitation) \\
 Platform-agnostic / cross-cultural generalization & one platform family, then/now format; single non-VK test & Open \\
 Drop-in upgrade to a general-purpose verifier & low-FAR easy-benchmark operating points degrade & Open (excluded) \\
-Human-grade label-noise guarantee & only automatic cross-checks; human $\kappa$ not provided---labor-intensive (S\ref{sec:audit}) & Open \\
+Human-grade label-noise guarantee & automatic cross-checks $+$ a small manual validation (100 posts; S\ref{sec:audit}); no multi-annotator $\kappa$ & Bounded \\
 Full SOTA-pipeline parity & only the shared margin objective is trained, not method-specific add-ons & Open (by design) \\
 Legal/ethical clearance for biometric processing & research basis stated; formal approval pending (Sec.~VIII) & Open (author/IRB) \\
 \bottomrule
@@ -82,16 +82,19 @@ Legal/ethical clearance for biometric processing & research basis stated; formal
 The supervision is \emph{naturally} (not human-) supervised, so its automatic components are potential
 hidden label noise. Table~\ref{tab:auditfull} consolidates the cross-checks reported across the main
 paper into a single view, in the structure a reviewer would expect, and states explicitly which rows
-are \emph{automatic cross-checks} (available now) and which would require \emph{human ground truth}---a
-full human-annotated audit that is labor-intensive and beyond the resources of this study, and that we
-therefore report as an acknowledged limitation rather than a result. We do not present an LLM-vs-regex agreement as if
-it were accuracy against a human reference; the distinction is made in the ``Reference'' column.
+are \emph{automatic cross-checks} (available at corpus scale) and which are checked against \emph{human
+ground truth}. We additionally ran a \emph{small} manual validation (one annotator; 100 posts and
+sampled pairs/merges) that broadly confirms the automatic pipeline (Table~\ref{tab:auditfull}, lower
+block); a large multi-annotator audit with inter-annotator $\kappa$ remains labor-intensive and beyond
+this study's resources. We do not treat the LLM-vs-regex agreement as accuracy against a human reference;
+the ``Reference'' column makes the distinction.
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.25}
 \caption{Consolidated audit of the automatic supervision. ``Reference'' states what the metric is
-measured against: an automatic cross-check, or human ground truth (the latter requires manual annotation
-that is labor-intensive and beyond this study's resources). $n$ is the audited population.}
+measured against: an automatic cross-check (upper block, corpus scale) or human ground truth from a small
+manual validation (lower block; 100 posts $+$ sampled pairs/merges, one annotator). $n$ is the audited
+population. A large multi-annotator audit with $\kappa$ remains beyond resources.}
 \label{tab:auditfull}
 \centering
 \footnotesize
@@ -105,18 +108,22 @@ Multi-person noise detector (within-person gender consistency) & multi-photo gro
 Near-duplicate inflation (within-person dedup) & $65{,}897$ raw positives & automatic (embedding) & $-52\%$ ($\to 31{,}865$); stable for cosine $0.93$--$0.97$; Table~XI \\
 Person-clustering recurrence & 27{,}487 post-groups & automatic (embedding) & $21{,}848$ persons ($\approx20\%$ cross-post recurrence); conservative cosine $0.85$ merge \\
 \midrule
-Age-extraction accuracy & --- & \textbf{human ground truth} & not provided---labor-intensive (MAE / accuracy vs.\ annotator) \\
-Group-integrity / pair correctness & --- & \textbf{human ground truth} & not provided---labor-intensive (PPV / NPV / precision) \\
-LLM vs.\ human agreement & --- & \textbf{human ground truth} & not provided---labor-intensive (Cohen's $\kappa$) \\
+\multicolumn{4}{@{}l}{\textbf{Small manual validation} (one annotator; 100 posts $+$ sampled pairs/merges)} \\
+Age extraction vs.\ human & 100 captions & human gold & exact-age $89\%$, within $\pm1$\,y $95\%$ (regex $71\%$ exact); MAE $0.5$\,y \\
+Group integrity (single vs.\ multi) & 100 posts & human gold & LLM precision $0.96$, recall $0.93$ \\
+Same-person positive pairs & 200 pairs & human gold & precision $0.96$ ($8/200$ different-person) \\
+Cluster merges (cosine $\geq 0.85$) & 100 merges & human gold & $95\%$ correct \\
+Near-duplicate removals & 100 removed & human gold & $93\%$ genuine duplicates \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
-The five automatic rows are reproducible from the released code and aggregates. The three
-human-ground-truth rows would require a stratified human-annotated subset (sampling post $\to$ group
-$\to$ cluster $\to$ pair) with a confusion matrix and $\kappa$; this manual annotation is labor-intensive
-and beyond the resources of this study, so we flag the residual, human-unverified noise as an
-acknowledged limitation rather than claiming to resolve it.
+The automatic rows are reproducible from the released code and aggregates. The manual-validation rows
+are a \emph{small} single-annotator spot-check (no inter-annotator $\kappa$): they indicate residual
+error at the few-percent level and corroborate, but do not certify, the automatic pipeline. A large
+stratified multi-annotator audit (post $\to$ group $\to$ cluster $\to$ pair, with a confusion matrix and
+$\kappa$) remains labor-intensive and beyond this study's resources, and the residual noise is
+acknowledged as a limitation.
 
 \section{Model / Data Card}\label{sec:card}
 \noindent\textbf{Model.} A deliberately weak trainable face recognizer (FaceNet, Inception-ResNet-v1,
