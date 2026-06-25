@@ -670,9 +670,17 @@ Sub-center ArcFace (K=3, Deng et al. 2020 — спроектирован под 
 на наших очищенных парах (дедуп уже убрал главный шум) → усиливает тезис «источник > objective».
 `scripts/noise_robust_baseline.py` → metrics/noise_robust_baseline.json. Строка в tab:objective, §5.5.
 
-## E27. Synthetic-ageing parity (gap-matched) — В ПРОЦЕССЕ (2026-06-25, ответ рецензенту)
+## E27. Synthetic-ageing parity (gap-matched) — DONE (2026-06-25, ответ рецензенту)
 
 Рецензент: «синтетика даёт умеренный выигрыш в long-gap, нужен parity-контроль». Обнаружено: старый FRAN
 старит на фикс. разрыв 33–70 лет, тогда как реальные train-пары имеют **медиану 9 лет** (n=16765) — реальный
-конфаунд. `FRANAging(real_gaps=...)` теперь сэмплит синтетический разрыв из реального распределения;
-`scripts/synthetic_parity.py` сравнивает frozen / +real / +syn_fran(fixed) / +syn_fran(parity). Прогон идёт.
+конфаунд. `FRANAging(real_gaps=...)` сэмплит синтетический разрыв из реального распределения. Результат
+(FG-NET large-gap / our.25+): frozen 0.736/0.640; +real **0.848/0.838**; +syn_fran(fixed) 0.727/0.549
+(ниже frozen); **+syn_fran(parity) 0.759/0.622**. Т.е. согласование зазора ПОДНИМАЕТ синтетику с 0.727 до
+**0.759** (умеренный плюс чуть выше frozen — рецензент прав, под-frozen был отчасти артефактом), НО реальные
+пары всё равно ведут на **+0.089**. Скорректированный вывод честнее: real > даже gap-matched re-aging-модели.
+`scripts/synthetic_parity.py` → metrics/synthetic_parity.json. tab:synth (колонка FRAN-gm), §5.2 обоих чистовиков.
+
+**Итог раунда рецензии (E24–E27 + текст):** заголовок сменён (age-anchor → mined same-person pairs),
+overclaim'ы смягчены, COI/funding/data-availability добавлены, 4 эксперимента закрыты. EN строго 10 стр.
+Осталось авторское: IRB-одобрение + подтверждение no-funding/no-COI.
