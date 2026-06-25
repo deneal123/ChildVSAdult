@@ -684,3 +684,33 @@ Sub-center ArcFace (K=3, Deng et al. 2020 — спроектирован под 
 **Итог раунда рецензии (E24–E27 + текст):** заголовок сменён (age-anchor → mined same-person pairs),
 overclaim'ы смягчены, COI/funding/data-availability добавлены, 4 эксперимента закрыты. EN строго 10 стр.
 Осталось авторское: IRB-одобрение + подтверждение no-funding/no-COI.
+
+---
+
+## E28. Cross-source перенос Reddit→VK (2026-06-25, 2-й раунд рецензии, MC5)
+
+Рецензент (2-й раунд): «нужен cross-source train/test, в т.ч. Reddit→VK». Обучил тот же слабый FaceNet
+**только** на Reddit-train (220 персон, 717 поз. пар; `ENV_FOR_DYNACONF=reddit finetune_facenet.py
+--ckpt models/bb_reddit_src.pt`; val-AUC пик на эпохе 1 → ранний стоп, переобучение на малом наборе)
+и оценил на VK/FG-NET (`scripts/cross_source.py` → metrics/cross_source_reddit2vk.json):
+
+| метрика | frozen | +reddit_src |
+| --- | --- | --- |
+| **FG-NET large-gap** | 0.736 | **0.783** (+0.047) |
+| FG-NET overall | 0.896 | 0.913 |
+| our.overall (VK) | 0.836 | 0.863 |
+| our.25+ (VK) | 0.640 | 0.659 |
+| LFW acc | 0.969 | 0.956 (забывание) |
+
+**Перенос ДВУНАПРАВЛЕННЫЙ:** VK→Reddit 0.718→0.749 ([[reddit-second-source]], E23) И Reddit→VK
+FG-NET large-gap 0.736→**0.783**. Даже крошечный шумный Reddit-источник (220 персон) поднимает FG-NET
+large-gap на +0.047 → сигнал «тогда/сейчас» НЕ специфичен для VK. В §5.8 обоих чистовиков (1 строка)
++ supplement (claims-таблица).
+
+**Supplement (latex/supplement.tex, 2 стр., отдельная компиляция):** claims-vs-evidence таблица;
+consolidated audit (авто-кросс-чеки vs human-κ deferred — MC4); model/data card. Закрывает desirable-
+пункты рецензии вне 10-стр. лимита.
+
+**2-й раунд — что сделано:** убран reviewnote (+макрос); release-policy (веса/эмбеддинги → controlled
+access, биометрический шаблон); research-only заявление; abstract сужен; supplement; Reddit→VK. EN 10 стр.
+Остаётся авторское: **IRB-одобрение** (3 красных fillin) + DPIA/DUA/legal opinion + human-κ аудит.
