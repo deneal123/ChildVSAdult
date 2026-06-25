@@ -441,11 +441,11 @@ Raw cosine (Platt) is mis-calibrated across gap bins---over-confident at 15--25 
 Explicit age removal (gradient reversal $+$ age head, MTLFace-style) adds only a small, stable cross-age gain over $+$pairs ($+$0.006 FG-NET large-gap, $+$0.015 our.25+) without harming easy benchmarks; its absolute large-gap ($\approx$0.853) matches the ArcFace objective (0.851), reinforcing that the data---not the objective or the disentangling add-on---sets the cross-age ceiling.
 
 \subsection{Hard-Negative Mining}\label{sec:res-hardneg}
-Adding the hardest cross-person negatives to fine-tuning---the top-5 most-similar other-person faces per anchor (cosine in a hard band, excluding the near-duplicate/uncertain range)---further sharpens cross-age discrimination: FG-NET large-gap rises to 0.866 (from 0.848 with random negatives), but easy benchmarks forget more (LFW 0.969$\to$0.934 vs.\ 0.950 for $+$pairs; AgeDB-30 and CALFW similar; Table~\ref{tab:hardneg}). Hard negatives thus trade easy-pair calibration for cross-age separation---useful for a cross-age retrieval setting, not for a general verifier. (Exploratory: a single run, not used for the main claims; the internal hard-negative test is near-chance for the frozen model by construction and is not comparable to the standard internal test.)
+Adding the hardest cross-person negatives to fine-tuning---the top-5 most-similar other-person faces per anchor (cosine in a hard band, excluding the near-duplicate/uncertain range)---further sharpens large-gap discrimination: FG-NET large-gap rises to \textbf{0.868\,$\pm$\,0.004} over three seeds (from 0.848 with random negatives), but easy benchmarks forget \emph{more} and FG-NET overall ROC actually drops (LFW 0.969$\to$0.925, AgeDB-30 0.953$\to$0.911, CALFW 0.948$\to$0.898, FG-NET ROC 0.923$\to$0.912; Table~\ref{tab:hardneg}). Hard negatives thus trade general-benchmark accuracy for large-gap separation---useful for a cross-age retrieval setting, not for a general verifier. (A secondary result, not part of the headline; the internal hard-negative test is near-chance for the frozen model by construction and is not comparable to the standard internal test.)
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Hard-Negative Mining (FaceNet, Curated Data; External Benchmarks, Single Run).}
+\caption{Hard-Negative Mining (FaceNet, Curated Data; External Benchmarks). $+$hard-neg is mean $\pm$ std over three seeds; frozen and $+$pairs as in Table~\ref{tab:main}.}
 \label{tab:hardneg}
 \centering
 \footnotesize
@@ -453,11 +453,11 @@ Adding the hardest cross-person negatives to fine-tuning---the top-5 most-simila
 \toprule
 Metric & Frozen & $+$pairs & $+$pairs$+$hard-neg \\
 \midrule
-FG-NET large-gap & 0.736 & 0.848 & \textbf{0.866} \\
-FG-NET ROC & 0.896 & 0.923 & \textbf{0.927} \\
-LFW accuracy & 0.969 & 0.950 & 0.934 \\
-AgeDB-30 ROC & 0.953 & 0.946 & 0.931 \\
-CALFW ROC & 0.948 & 0.949 & 0.934 \\
+FG-NET large-gap & 0.736 & 0.848 & \textbf{0.868\,$\pm$\,0.004} \\
+FG-NET ROC & 0.896 & 0.923 & 0.912\,$\pm$\,0.003 \\
+LFW accuracy & 0.969 & 0.950 & 0.925\,$\pm$\,0.005 \\
+AgeDB-30 ROC & 0.953 & 0.946 & 0.911\,$\pm$\,0.013 \\
+CALFW ROC & 0.948 & 0.949 & 0.898\,$\pm$\,0.015 \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -714,3 +714,26 @@ consolidated audit (авто-кросс-чеки vs human-κ deferred — MC4); 
 **2-й раунд — что сделано:** убран reviewnote (+макрос); release-policy (веса/эмбеддинги → controlled
 access, биометрический шаблон); research-only заявление; abstract сужен; supplement; Reddit→VK. EN 10 стр.
 Остаётся авторское: **IRB-одобрение** (3 красных fillin) + DPIA/DUA/legal opinion + human-κ аудит.
+
+---
+
+## E29. Hard-negatives на 3 сидах (2026-06-25, 3-й раунд рецензии, Major 6)
+
+Рецензент: «hard-neg — один прогон, нужно 3 сида / appendix / exploratory». Запустил
+`scripts/hardneg_multiseed.py` (backup→mine→split→finetune сиды 42/1/2→eval external→restore;
+**pairs.jsonl восстановлен**, чекпойнты `bb_facenet_hardneg_s{42,1,2}.pt` отдельные). Внешние метрики
+(только их даёт tab:hardneg; от pairs.jsonl не зависят), среднее±std:
+
+| метрика | +pairs | +pairs+hard-neg (3 сида) |
+| --- | --- | --- |
+| **FG-NET large-gap** | 0.848 | **0.868 ± 0.004** (сид-42 0.864 ≈ паблик 0.866 → рецепт верный) |
+| FG-NET ROC | 0.923 | 0.912 ± 0.003 (**падает** ниже +pairs!) |
+| LFW acc | 0.950 | 0.925 ± 0.005 |
+| AgeDB-30 | 0.946 | 0.911 ± 0.013 |
+| CALFW | 0.949 | 0.898 ± 0.015 |
+
+3 сида ЧЕСТНЕЕ одиночного прогона: large-gap-прирост держится (0.868±0.004), но забывание на лёгких
+бенчмарках **сильнее и вариативнее**, чем казалось (single-run давал 0.934/0.931/0.934; среднее
+0.925/0.911/0.898), и FG-NET overall даже падает. Усиливает trade-off-нарратив. tab:hardneg → mean±std,
+caption «3 seeds», убрана пометка «single run / exploratory» → «secondary, not headline». §5.9 обоих
+чистовиков. metrics/hardneg_multiseed.json.
