@@ -36,7 +36,7 @@
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Cross-age face verification---deciding whether two photographs taken years apart depict the same person---is hard, and longitudinal training data are scarce. We ask a \emph{data-centric} question: can the supervision for age invariance be obtained without a manually labeled longitudinal dataset? We show that multi-photo ``then/now'' social-media posts supply weak \emph{same-person} longitudinal pairs with no manual identity/age labels (a large-language model parses captions and embedding clustering forms persons; we audit these components, including a small manual validation), and that fine-tuning a deliberately weak recognizer on them induces \emph{transferable, targeted} large-gap robustness. On the external benchmark FG-NET, large-gap ($\geq$25-year) ROC-AUC rises \textbf{from 0.736 to 0.848} ($+$0.112 $\pm$ 0.001 over three seeds; DeLong $p<10^{-19}$), at the cost of $-$0.019 LFW accuracy and \emph{substantial} low-FAR degradation---a targeted retrieval gain, not a general-verifier upgrade. Our central, bounded claim is that, within this weak/medium-backbone attribution protocol, the \emph{data source}---not the choice among common losses---accounts for most of the gain: a pair-contrastive objective matches an ArcFace-margin one (0.848 vs.\ 0.851). The gain is driven by the same-person pairing (explicit caption age anchors add only $+$0.009) and is mechanistically tied to removing an age shortcut. Supporting evidence in the paper: superiority over a real re-aging model under a gap-parity control; bidirectional transfer to an independent non-VK platform (Reddit); data efficiency ($\approx$96\% of the gain at 10\% of identities); an apparent-demographic audit; calibration; and a curation finding that about half of the raw ``positives'' were near-duplicate frames inflating internal metrics.
+Cross-age face verification---deciding whether two photographs taken years apart depict the same person---is hard, and longitudinal training data are scarce. We ask a \emph{data-centric} question: can the supervision for age invariance be obtained without a manually labeled longitudinal dataset? We show that multi-photo ``then/now'' social-media posts supply weak \emph{same-person} longitudinal pairs with no manual identity/age labels (a large-language model parses captions and embedding clustering forms persons; we audit these components, including a small manual validation), and that fine-tuning a deliberately weak recognizer on them induces \emph{transferable, targeted} large-gap robustness. On the external benchmark FG-NET, large-gap ($\geq$25-year) ROC-AUC rises \textbf{from 0.736 to 0.848} ($+$0.112 $\pm$ 0.001 over three seeds; DeLong $p<10^{-19}$), at the cost of $-$0.019 LFW accuracy and \emph{substantial} low-FAR degradation---a targeted retrieval gain, not a general-verifier upgrade. Our central, bounded claim is that, within this weak/medium-backbone attribution protocol, the \emph{data source}---not the choice among the objectives we test---accounts for most of the gain: a pair-contrastive objective matches an ArcFace-margin one (0.848 vs.\ 0.851). The gain is driven by the same-person pairing (explicit caption age anchors add only $+$0.009) and is mechanistically tied to removing an age shortcut. Supporting evidence in the paper: superiority over a real re-aging model under a gap-parity control; bidirectional transfer to an independent non-VK platform (Reddit); data efficiency ($\approx$96\% of the gain at 10\% of identities); an apparent-demographic audit; calibration; and a curation finding that about half of the raw ``positives'' were near-duplicate frames inflating internal metrics.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -74,7 +74,7 @@ Three lines of prior work are most relevant. \emph{Discriminative age-invariant 
 \toprule
 Work & Supervision & Mechanism & Our difference \\
 \midrule
-OE-CNN (2018)~\cite{wang2018oecnn} & labeled id$+$age & orthogonal feature decomposition & label-free data source, not decomposition \\
+OE-CNN (2018)~\cite{wang2018oecnn} & labeled id$+$age & orthogonal feature decomposition & no manual id/age labels, not decomposition \\
 DAL (2019)~\cite{wang2019dal} & labeled id$+$age & adversarial id/age factorization & mined pairs $+$ simpler objective \\
 MTLFace (2021)~\cite{huang2021mtlface} & labeled id$+$age & recognition $+$ age synthesis (multi-task) & weaker pipeline; novel supervision origin \\
 CACon (2023)~\cite{wang2024cacon} & semi-sup.\ $+$ synthetic & contrastive on synthesized cross-age & real mined pairs $>$ synthetic aging (Sec.~\ref{sec:res-synth}) \\
@@ -130,7 +130,27 @@ LLM missed (regex found) & 852 & 2.5\% \\
 A naive ``one post $=$ one identity'' undercounts: a person recurs across posts. We cluster post-groups into persons by embedding similarity (cosine $\geq$ 0.85), giving 21{,}848 persons from 27{,}487 post-groups ($\approx$20\% recurrence), and split \emph{by person} (not by post). Manual inspection of high-cosine pairs showed cosine does not separate look-alikes from same-person in the 0.55--0.8 band, so the merge threshold is deliberately conservative (0.85).
 
 \subsection{Auditing the Automatic Supervision}\label{sec:data-audit}
-The automatic supervision components are potential hidden label noise, audited three ways: LLM-vs-regex age agreement (Table~\ref{tab:age}); manual inspection of high-cosine pair identity; and within-person gender consistency as an inexpensive noise detector (2{,}919 multi-photo groups with consistency $<$0.6 flag probable multi-person). A \emph{small} manual validation (one annotator; 100 posts and sampled pairs/merges; supplementary material) corroborates the pipeline---e.g.\ same-person positive-pair precision 0.96 and single-vs-multi precision 0.96---while a large multi-annotator audit with $\kappa$ remains beyond our resources, so residual noise is acknowledged as a limitation (Sec.~\ref{sec:limitations}).
+The automatic supervision components are potential hidden label noise, audited three ways: LLM-vs-regex age agreement (Table~\ref{tab:age}); manual inspection of high-cosine pair identity; and within-person gender consistency as an inexpensive noise detector (2{,}919 multi-photo groups with consistency $<$0.6 flag probable multi-person). A \emph{small} manual validation (one annotator) \emph{sanity-checks} the automatic pipeline (Table~\ref{tab:humanval}): it \emph{supports}, but---with a single annotator and no inter-annotator $\kappa$---does not \emph{certify} the supervision; a large multi-annotator audit remains beyond our resources, so residual noise is acknowledged as a limitation (Sec.~\ref{sec:limitations}).
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.15}
+\caption{Small manual validation (one annotator; a sanity check, \emph{not} a certified audit---no inter-annotator $\kappa$). Samples are drawn from the curated corpus.}
+\label{tab:humanval}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}%
+\begin{tabular}{@{}lrll@{}}
+\toprule
+Component & $n$ & Sampling & Human-checked result \\
+\midrule
+Age extraction & 100 & strat.\ random & LLM 89\% vs.\ regex 71\% exact \\
+Group integrity & 100 & random$+$risk & single/multi acc.\ 0.96 \\
+Positive pairs & 200 & random & same-person prec.\ 0.96 \\
+Cluster merges & 100 & near-thresh. & merge prec.\ 0.95 \\
+Near-dup removals & 100 & random & duplicate prec.\ 0.93 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Curation Pipeline and Its Largest Finding}\label{sec:data-curation}
 Three steps: (i)~\emph{apparent gender/age metadata} (estimator) per face, aggregated per person---the corpus is 76.7\% apparent-female / 23.3\% apparent-male; (ii)~\emph{LLM group-integrity validation} (Table~\ref{tab:integrity})---person-clustering had already separated most multi-person posts, so only 421 person-groups are flagged noisy; (iii)~\emph{near-duplicate dedup} within each person (cosine $\geq$ 0.97), removing 8{,}190 faces ($\approx$17\%).
@@ -190,7 +210,7 @@ Provenance, rights and governance fields are stored per item (source, origin URL
 \textbf{Curated dataset.} All headline experiments are on the curated data of Sec.~\ref{sec:data-curation}: 21{,}427 person groups, 40{,}586 faces, 31{,}865 positives; split train 22{,}179 / val 4{,}579 / test 5{,}107 with balanced negatives per split.
 
 \section{Results}\label{sec:results}
-\subsection{Main Effect and Self-Supervised Ablation}\label{sec:res-main}
+\subsection{Main Effect and Supervision-Source Ablation}\label{sec:res-main}
 The weak FaceNet, softly fine-tuned on our pairs, raises FG-NET large-gap ROC-AUC \textbf{0.736 $\rightarrow$ 0.848} ($+$0.112 $\pm$ 0.001), while easy LFW falls only $-$0.019 and AgeDB-30/CALFW move negligibly (Table~\ref{tab:main}). An ablation isolates the source: same-post pairs use no manual labels---neither identity nor age---and deliver almost all of the gain; adding explicit age anchors contributes only \textbf{$+$0.009} on the 25+ bucket (pre-clean ablation). The method is therefore \emph{weakly supervised by naturally occurring same-post co-occurrence} (not by manual identity/age labels), with age supervision contributing only marginally.
 
 \begin{table*}[!t]
@@ -406,7 +426,7 @@ age 45+ & 153 & 0.859 & 0.893 & $+$0.034 & [$+$0.004, $+$0.064] \\
 Training on one community and testing on the held-out other transfers the gain: external FG-NET large-gap $+$0.113 (vs.\ $+$0.112 within-source---essentially identical) and internal $+$0.092 on the held-out community. We frame this as transfer between two independent sources within one platform domain; Sec.~\ref{sec:res-crossplatform} extends the test to an independent non-VK platform, and we do not claim web-scale generalization.
 
 \subsection{Cross-Platform Transfer (Independent, Non-VK Source)}\label{sec:res-crossplatform}
-A key external check of a naturally-supervised \emph{source} is whether it generalizes beyond the originating platform. We therefore apply the \emph{identical} mining protocol to an independent, non-VK community---the Reddit board r/PastAndPresentPics, whose ``then/now'' multi-photo posts carry the same free-text/numeric age descriptions parsed by the same LLM---and evaluate the VK-trained $+$pairs model (with \emph{no} Reddit data in training) against the frozen baseline on 1{,}575 Reddit-mined positive pairs (after a multi-person-collage filter; Table~\ref{tab:crossplatform}). The gain \emph{transfers across platforms}: overall ROC-AUC rises \textbf{0.718~$\rightarrow$~0.749} ($+$0.031, near-disjoint 95\% CIs) and EER falls 0.345~$\rightarrow$~0.328. The transfer is \emph{bidirectional}: the same weak backbone trained on \emph{only} the small Reddit source (220 persons) and tested on VK also helps (FG-NET large-gap $0.736\!\rightarrow\!0.783$, internal 25+ $0.640\!\rightarrow\!0.659$), so the signal is not VK-specific. Reddit ``then/now'' pairs are inherently cross-age, so this overall AUC is itself a broad cross-age test---the frozen 0.718 sits far below its easy-benchmark ceiling, mirroring the within-VK large-gap regime. The gain is smaller than within-VK, as expected for a higher-variance, partly collage-derived external set; we therefore read it as confirmation that the naturally-supervised \emph{source} generalizes beyond the originating platform, not as a SOTA claim. The explicit $\geq$25-year subset is not reported separately, as Reddit titles seldom state exact ages. Figure~\ref{fig:external} places this cross-platform result alongside our other external evaluations: the $+$pairs gain stays \emph{positive across all three}, shrinking on the harder and noisier sets.
+A key external check of a naturally-supervised \emph{source} is whether it generalizes beyond the originating platform. We apply the \emph{identical} mining protocol to an independent, non-VK community---the Reddit board r/PastAndPresentPics (same ``then/now'' format, same LLM parser)---and evaluate the VK-trained $+$pairs model (\emph{no} Reddit data in training) on 1{,}575 Reddit pairs (Table~\ref{tab:crossplatform}): overall ROC-AUC rises \textbf{0.718~$\rightarrow$~0.749} ($+$0.031, near-disjoint 95\% CIs), EER 0.345~$\rightarrow$~0.328. The transfer is \emph{bidirectional} (Table~\ref{tab:crosssource}): a weak backbone trained on \emph{only} the small Reddit source---a 220-person \emph{pilot}, not a headline claim---also helps on VK. Reddit then/now pairs are inherently cross-age, so the frozen 0.718 sits far below its easy-benchmark ceiling, mirroring the within-VK large-gap regime; the gain is smaller than within-VK (a noisier, partly collage-derived set), so we read it as confirming the \emph{source} generalizes beyond its platform, not as a SOTA claim. The explicit $\geq$25-year subset is not reported separately (Reddit titles seldom state exact ages). Figure~\ref{fig:external} places this alongside our other external evaluations: the $+$pairs gain stays \emph{positive across all three}, shrinking on harder/noisier sets.
 
 \begin{figure}[!t]
 \centering
@@ -430,6 +450,23 @@ EER & 0.345 & \textbf{0.328} \\
 TAR@FAR$=$1\% & 0.271 & \textbf{0.279} \\
 \midrule
 Test pairs (pos / neg) & \multicolumn{2}{c}{1{,}575 / 1{,}575} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Cross-source transfer, both directions. VK$\to$Reddit is the main cross-platform test; Reddit$\to$VK is a small 220-person \emph{pilot} supporting source non-specificity, not a headline claim (single run).}
+\label{tab:crosssource}
+\centering
+\footnotesize
+\begin{tabular}{@{}llccc@{}}
+\toprule
+Train & Test & Frozen & Tuned & $\Delta$ \\
+\midrule
+VK & Reddit (overall) & 0.718 & 0.749 & $+$0.031 \\
+Reddit & FG-NET large-gap & 0.736 & 0.783 & $+$0.047 \\
+Reddit & VK internal 25+ & 0.640 & 0.659 & $+$0.019 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -504,7 +541,7 @@ The child$\leftrightarrow$adult regime necessarily involves images of minors, wh
 A public contact and takedown / deletion-on-request procedure are provided; deletion propagates to derived artifacts via a per-item deletion-status field. Where rights are unclear, the item is withheld. A full datasheet~\cite{gebru2021datasheets} and the DPIA accompany the release.
 
 \section{Reproducibility}\label{sec:repro}
-We release scripts and configurations. Key details: \emph{usable-face criteria} (detection score, minimum size, Laplacian blur, single-target via IoU); \emph{detector/alignment} (InsightFace \texttt{buffalo\_l} RetinaFace, 5-point ArcFace \texttt{norm\_crop}, 112 px; FaceNet input 160 px); \emph{embeddings} (ArcFace \texttt{w600k\_r50}) for clustering/dedup; \emph{person clustering} (union-find, cosine $\geq$ 0.85); \emph{dedup} (within-person union-find, cosine $\geq$ 0.97); \emph{LLM} (GigaChat; full versioned system prompts for age extraction and group integrity; concurrency 10; cached and resumable); \emph{split} (by person, 70/15/15, balanced negatives per split, seed 42); \emph{negative sampling} (cross-person random $+$ age-matched variant); \emph{training} (margin contrastive, head scope, lr 3e-5 weak / 1e-5 strong; ArcFace head $m{=}0.5$, $s{=}32$, lr 1e-3; early stop on internal val-AUC; seeds 42/1/2); \emph{metrics} (pure-NumPy ROC-AUC via Mann--Whitney, EER, TAR@FAR; 10-fold for aligned-pair benchmarks).
+We release all scripts and configurations; full hyperparameters are in the released configs. Key choices: \emph{usable-face} filtering (det-score, size, Laplacian blur, single target); detector/alignment InsightFace \texttt{buffalo\_l} RetinaFace $+$ 5-point ArcFace \texttt{norm\_crop} (112\,px; FaceNet input 160\,px); ArcFace \texttt{w600k\_r50} embeddings for \emph{clustering} (union-find, cosine $\geq$ 0.85) and \emph{dedup} (cosine $\geq$ 0.97); GigaChat LLM with versioned prompts (cached, resumable); a \emph{by-person} 70/15/15 split (seed 42, balanced negatives, $+$ an age-matched variant); margin-contrastive training (head scope; lr 3e-5 weak / 1e-5 strong; early stop on val-AUC; seeds 42/1/2); pure-NumPy ROC-AUC/EER/TAR@FAR.
 
 \textbf{Compute.} The entire study runs on a single laptop: one NVIDIA RTX~3060 Laptop GPU (6~GB), an AMD Ryzen~7~5800H (8~cores / 16~threads) and 16~GB RAM under Windows~11; the software stack is Python~3.12, PyTorch~2.12 (CUDA~13.2, cuDNN~9.2), with InsightFace~1.0 / ONNX~Runtime~1.26 for detection and embeddings and scikit-learn~1.9 / Matplotlib~3.11 for analysis and figures. The weak-backbone protocol keeps the full study within a 6~GB GPU budget.
 
