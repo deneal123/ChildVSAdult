@@ -14,3 +14,8 @@
 
 # Archived leftover template files from an unrelated project
 _attic/
+
+# Third-party class/style kits (downloadable references, not project source).
+# The IEEE build uses MiKTeX's IEEEtran; the AAAI build uses the copies committed
+# inside conference/aaai-27/en/.
+shared/vendor/

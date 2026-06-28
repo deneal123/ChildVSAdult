@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 from age_gap.common.io import resolve_path  # noqa: E402
 
-OUT = resolve_path("latex", "figures")
+OUT = resolve_path("latex", "shared", "figures")
 
 # Okabe-Ito colour-blind-safe palette.
 _FROZEN = "#9A9A9A"  # neutral grey  -- frozen baseline
