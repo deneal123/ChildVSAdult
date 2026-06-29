@@ -14,10 +14,11 @@ for review/checking and the thesis/defense (ВКР). It is **not** an AAAI submi
 ## Build
 
 ```sh
-pdflatex main_ru ; bibtex main_ru ; pdflatex main_ru ; pdflatex main_ru
+pdflatex main_ru       ; bibtex main_ru       ; pdflatex main_ru       ; pdflatex main_ru
+pdflatex supplement_ru ; bibtex supplement_ru ; pdflatex supplement_ru ; pdflatex supplement_ru
 ```
 
 Uses shared assets via relative paths (`../../../shared/figures/` with the `_ru` figure
-variants, `../../../shared/refs`). Current status: 7 pp, 0 errors / 0 undefined / 0 overfull,
-no Type-3 fonts. Content mirrors `../en/main.tex` (same tables/figures/results), translated to
-Russian; the supplementary appendix has not been mirrored (English `../en/supplement.tex`).
+variants, `../../../shared/refs`). Current status: `main_ru.tex` 7 pp and `supplement_ru.tex`
+5 pp, both 0 errors / 0 undefined / 0 overfull, no Type-3 fonts. They mirror `../en/main.tex`
+and `../en/supplement.tex` (same tables/figures/results), translated to Russian.
