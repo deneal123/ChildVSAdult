@@ -1,0 +1,154 @@
+%% supplement.tex -- supplementary material for the IEEE TNNLS submission.
+%% Standalone; compile: pdflatex supplement
+\documentclass[journal]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\dgr}{$\leftrightarrow$}
+
+\begin{document}
+
+\title{Supplementary Material:\\ Cross-Age Face Verification from Mined Same-Person Social-Media Pairs}
+\author{Danil~F.~Volkhin and Ivan~S.~Kopylov}
+\markboth{IEEE Transactions on Neural Networks and Learning Systems --- Supplementary Material}{}
+\maketitle
+
+\noindent This supplement collects material that supports, but need not occupy, the main paper:
+(S\ref{sec:claims}) an explicit claims-vs-evidence map; (S\ref{sec:audit}) a consolidated audit of
+the automatic (LLM / clustering / dedup) supervision components plus a small manual validation
+(100 posts), with a large multi-annotator audit left beyond this study's resources; and
+(S\ref{sec:card}) a model / data card. Section and table
+references of the form ``Sec.~V'' or ``Table~X'' point to the main paper.
+
+\section{Claims vs.\ Evidence}\label{sec:claims}
+Table~\ref{tab:claims} maps every substantive claim to its evidence and its scope, separating what
+is \emph{established within the attribution protocol} from what is \emph{not established}. The intent
+is to make the bounded reading explicit and to forestall over-generalization.
+
+\begin{table*}[!t]
+\renewcommand{\arraystretch}{1.25}
+\caption{Claims vs.\ Evidence. ``Est.'' = established within the weak/medium-backbone attribution
+protocol of the main paper; ``Bounded'' = holds only under stated conditions; ``Open'' = not
+established / out of scope.}
+\label{tab:claims}
+\centering
+\footnotesize
+\begin{tabular}{@{}p{0.40\textwidth}p{0.42\textwidth}c@{}}
+\toprule
+Claim & Evidence (main paper) & Status \\
+\midrule
+Mined ``then/now'' pairs improve large-gap ($\geq$25\,y) cross-age verification &
+FG-NET large-gap ROC-AUC $0.736\!\to\!0.848$; DeLong $p{=}1.4{\times}10^{-20}$, $\Delta$AUC 95\% CI $[{+}0.088,{+}0.135]$; internal 25+ $p{=}1.7{\times}10^{-34}$ (Sec.~V-A) & Est. \\
+The gain is \emph{targeted}, not a uniform verification gain &
+AgeDB-30 $-0.008$ ($p{=}4{\times}10^{-6}$), CALFW null ($p{=}0.95$), LFW TAR@FAR$=$0.1\% $0.858\!\to\!0.575$ (Sec.~V-A, Sec.~VI) & Est. \\
+The same-person pairing, not the caption age anchor, drives the gain &
+Ablation: explicit age anchors add only $+0.009$ on the 25+ bucket (Sec.~V-A) & Est. \\
+Real mined pairs outperform synthetic aging &
+$+$real $0.848$ vs.\ FRAN $0.727$ and gap-matched FRAN-gm $0.759$ ($+0.089$); native-resolution control (Sec.~V-B) & Est. \\
+The effect reproduces across objective / architecture / source &
+3 loss families, 2 architectures, 2 communities; ArcFace $0.851\approx$ contrastive $0.848$; sub-center ArcFace $0.851$ (Sec.~V-C/E) & Est. \\
+A noise-robust objective adds nothing on curated pairs &
+Sub-center ArcFace ($K{=}3$) $\equiv$ vanilla ArcFace on FG-NET large-gap (Sec.~V-E) & Est. \\
+The mechanism is removal of an age shortcut &
+Under age-matched negatives frozen falls $0.640\!\to\!0.517$ ($\approx$chance); pairs restore $0.838$ (Sec.~V-D) & Est. \\
+The supervision is data-efficient &
+${\approx}96\%$ of the gain at 10\% of identities (Sec.~V-C) & Est. \\
+No apparent-demographic stratum degrades; errors fall everywhere &
+Stratified AUC (all CIs $>0$); FMR/FNMR at 1\% FMR: FNMR down in every stratum (Sec.~V-G) & Est. \\
+About half of the raw ``positives'' were near-duplicates &
+$65{,}897\!\to\!31{,}865$ ($-52\%$), stable over cosine $0.93$--$0.97$ (Sec.~III, Table~XI) & Est. \\
+The gain transfers beyond the originating platform, in \emph{both} directions &
+VK$\to$Reddit overall ROC-AUC $0.718\!\to\!0.749$; Reddit$\to$VK FG-NET large-gap $0.736\!\to\!0.783$ ($+0.047$ from a 220-person source); small, noisy sets (Sec.~V-H) & Bounded \\
+The contribution is specific to weak/medium backbones &
+Strong saturated backbones show null/negative gains (Sec.~V-C) & Bounded (limitation) \\
+Platform-agnostic / cross-cultural generalization & one platform family, then/now format; single non-VK test & Open \\
+Drop-in upgrade to a general-purpose verifier & low-FAR easy-benchmark operating points degrade & Open (excluded) \\
+Human-grade label-noise guarantee & automatic cross-checks $+$ a small manual validation (100 posts; S\ref{sec:audit}); no multi-annotator $\kappa$ & Bounded \\
+Full SOTA-pipeline parity & only the shared margin objective is trained, not method-specific add-ons & Open (by design) \\
+Legal/ethical clearance for biometric processing & research basis stated; formal approval pending (Sec.~VIII) & Open (author/IRB) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Consolidated Audit of the Automatic Supervision}\label{sec:audit}
+The supervision is \emph{naturally} (not human-) supervised, so its automatic components are potential
+hidden label noise. Table~\ref{tab:auditfull} consolidates the cross-checks reported across the main
+paper into a single view, in the structure a reviewer would expect, and states explicitly which rows
+are \emph{automatic cross-checks} (available at corpus scale) and which are checked against \emph{human
+ground truth}. We additionally ran a \emph{small} manual validation (one annotator; 100 posts and
+sampled pairs/merges) that broadly confirms the automatic pipeline (Table~\ref{tab:auditfull}, lower
+block); a large multi-annotator audit with inter-annotator $\kappa$ remains labor-intensive and beyond
+this study's resources. We do not treat the LLM-vs-regex agreement as accuracy against a human reference;
+the ``Reference'' column makes the distinction.
+
+\begin{table*}[!t]
+\renewcommand{\arraystretch}{1.25}
+\caption{Consolidated audit of the automatic supervision. ``Reference'' states what the metric is
+measured against: an automatic cross-check (upper block, corpus scale) or human ground truth from a small
+manual validation (lower block; 100 posts $+$ sampled pairs/merges, one annotator). $n$ is the audited
+population. A large multi-annotator audit with $\kappa$ remains beyond resources.}
+\label{tab:auditfull}
+\centering
+\footnotesize
+\begin{tabular}{@{}p{0.26\textwidth}rp{0.20\textwidth}p{0.30\textwidth}@{}}
+\toprule
+Audit target & $n$ & Reference & Result \\
+\midrule
+Age extraction (LLM vs.\ regex) & 33{,}697 captions & automatic cross-check & $72.8\%$ agree; on the $27.2\%$ disagreements the LLM is favored ($+10.8\%$ filled, $-2.5\%$ missed); Table~III \\
+Group integrity (LLM classifier) & 33{,}697 posts & automatic (LLM) & $92.8\%$ single-person, $6.0\%$ multi-person, $1.0\%$ unknown, $0.2\%$ meme; Table~IV \\
+Multi-person noise detector (within-person gender consistency) & multi-photo groups & automatic proxy & $2{,}919$ groups with consistency $<0.6$ flagged as probable multi-person \\
+Near-duplicate inflation (within-person dedup) & $65{,}897$ raw positives & automatic (embedding) & $-52\%$ ($\to 31{,}865$); stable for cosine $0.93$--$0.97$; Table~XI \\
+Person-clustering recurrence & 27{,}487 post-groups & automatic (embedding) & $21{,}848$ persons ($\approx20\%$ cross-post recurrence); conservative cosine $0.85$ merge \\
+\midrule
+\multicolumn{4}{@{}l}{\textbf{Small manual validation} (one annotator; 100 posts $+$ sampled pairs/merges)} \\
+Age extraction vs.\ human & 100 captions & human gold & exact-age $89\%$, within $\pm1$\,y $95\%$ (regex $71\%$ exact); MAE $0.5$\,y \\
+Group integrity (single vs.\ multi) & 100 posts & human gold & LLM precision $0.96$, recall $0.93$ \\
+Same-person positive pairs & 200 pairs & human gold & precision $0.96$ ($8/200$ different-person) \\
+Cluster merges (cosine $\geq 0.85$) & 100 merges & human gold & $95\%$ correct \\
+Near-duplicate removals & 100 removed & human gold & $93\%$ genuine duplicates \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The automatic rows are reproducible from the released code and aggregates. The manual-validation rows
+are a \emph{small} single-annotator spot-check (no inter-annotator $\kappa$): they indicate residual
+error at the few-percent level and corroborate, but do not certify, the automatic pipeline. A large
+stratified multi-annotator audit (post $\to$ group $\to$ cluster $\to$ pair, with a confusion matrix and
+$\kappa$) remains labor-intensive and beyond this study's resources, and the residual noise is
+acknowledged as a limitation.
+
+\section{Model / Data Card}\label{sec:card}
+\noindent\textbf{Model.} A deliberately weak trainable face recognizer (FaceNet, Inception-ResNet-v1,
+casia-webface init) fine-tuned with a pair-contrastive margin objective on mined same-person pairs;
+this is an \emph{attribution probe}, not a deployable recognizer.\\
+\textbf{Intended use.} Research into whether naturally occurring longitudinal social-media pairs supply
+useful cross-age identity supervision. Permitted applied analogues are limited to rights-cleared,
+consent-based, human-in-the-loop settings (Sec.~VIII).\\
+\textbf{Out of scope / forbidden.} Mass identification, surveillance, de-anonymization, automated
+decisions, any processing of minors' data without a legal basis, and use as a general-purpose verifier
+(low-FAR easy-benchmark performance degrades).\\
+\textbf{Training data.} Public multi-photo ``then/now'' posts (VK communities; an independent Reddit
+board for the cross-platform test). Supervision is manual-label-free; ages and group integrity come
+from an LLM caption parser; persons from embedding clustering. Apparent-attribute skew: 76.7\%
+apparent-female. Raw images are \emph{not} released.\\
+\textbf{Evaluation data.} External: FG-NET (large-gap $\geq$25\,y subset), AgeDB-30, CALFW, LFW. Internal:
+a curated cross-age test (5{,}107 positives with controlled negatives). Cross-platform: 1{,}575 Reddit
+positive pairs.\\
+\textbf{Metrics.} ROC-AUC (primary: FG-NET large-gap), EER, TAR@FAR, FMR/FNMR by stratum, bootstrap and
+identity-level bootstrap CIs, DeLong and paired-permutation tests.\\
+\textbf{Ethical considerations.} Biometric special-category data; no individual consent; minors present
+in the child\dgr adult regime and withheld from release; weights and embeddings are biometric templates
+shared on request under a brief research-use agreement; the de-identified dataset is available on request, and formal ethics documentation will be provided if required (Sec.~VIII).\\
+\textbf{Caveats.} The gain is targeted to the large-gap regime and to weak/medium backbones; external
+validity beyond the then/now format is not established; the automatic supervision carries residual,
+not-yet-human-audited noise.
+
+\end{document}

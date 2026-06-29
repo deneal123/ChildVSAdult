@@ -12,12 +12,16 @@ latex/
     figures/                  # figures from scripts/make_figures.py (EN + _ru variants)
     vendor/                   # third-party class kits (git-ignored; downloadable refs)
       ieee-tbiom/             # IEEEtran bundle (build uses MiKTeX's IEEEtran, not this)
+      ieee-tnnls/             # IEEEtran v1.8b + TNNLS sample (build uses MiKTeX's IEEEtran)
       aaai2027/               # AAAI-27 AuthorKit (aaai2027.sty/.bst + templates)
   papers/
-    journal-1-tbiom/          # Article 1 — IEEE T-BIOM (exists)
+    journal-1-tbiom/          # Article 1 — IEEE T-BIOM
       en/main.tex             #   English submission (+ supplement.tex)
       ru/main_ru.tex          #   Russian mirror
       INFO.md                 #   T-BIOM author requirements
+    journal-1-tnnls/          # Article 1 — IEEE TNNLS (same content, retargeted format)
+      en/main.tex             #   English submission (+ supplement.tex)
+      ru/main_ru.tex          #   Russian mirror
     journal-2/                # Article 2 — reserved (future), en/ + ru/
   conference/
     aaai-27/                  # AAAI-27 conference paper
@@ -31,9 +35,10 @@ Each paper builds from **its own directory**:
 
 | Paper | Command (run inside the dir) |
 | --- | --- |
-| Journal EN | `cd papers/journal-1-tbiom/en` → `pdflatex main; bibtex main; pdflatex main; pdflatex main` |
-| Journal RU | `cd papers/journal-1-tbiom/ru` → `pdflatex main_ru; bibtex main_ru; pdflatex main_ru; pdflatex main_ru` |
-| Conference EN | `cd conference/aaai-27/en` → `pdflatex main; bibtex main; pdflatex main; pdflatex main` |
+| T-BIOM EN / RU | `cd papers/journal-1-tbiom/{en,ru}` → `pdflatex main(_ru); bibtex …; pdflatex …×2` |
+| TNNLS EN / RU | `cd papers/journal-1-tnnls/{en,ru}` → `pdflatex main(_ru); bibtex …; pdflatex …×2` |
+| AAAI EN (submission) | `cd conference/aaai-27/en` → `pdflatex main; bibtex main; pdflatex main; pdflatex main` |
+| AAAI RU (mirror, not submitted) | `cd conference/aaai-27/ru` → `pdflatex main_ru; bibtex …; pdflatex …×2` |
 
 - **Journal papers** pull shared assets via relative paths
   (`../../../shared/figures/`, `../../../shared/refs`).
