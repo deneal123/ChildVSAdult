@@ -25,3 +25,6 @@ shared/vendor/
 # The unique artifacts (title_page_en.docx, SUBMISSION.md) are tracked.
 papers/journal-1-tnnls/submission/manuscript/
 papers/journal-1-tnnls/submission/supplement/
+
+# MS Office lock/owner temp files (created while a .docx is open in Word)
+~$*
