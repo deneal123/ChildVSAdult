@@ -7,6 +7,11 @@ author info is kept in commented lines in `../en/main.tex` (search `CAMERA-READY
 separate title page. `../en/main.tex` and `../en/supplement.tex` are now the anonymized
 (submission) versions.
 
+**You are uploading the `.tex` source**, so the copies in `manuscript/` and `supplement/`
+have had **all LaTeX comments removed** (via `strip_comments.py`). This is essential: a
+reviewer who opens the source would otherwise read the commented-out camera-ready author
+block and de-anonymize you. (`../en/*.tex` keep their comments — they are not uploaded.)
+
 ## What to upload where
 
 | Portal slot | Upload | Source |
@@ -39,9 +44,11 @@ From `latex/papers/journal-1-tnnls/`:
    `\bibliography{refs}` (shared paths localized); copy `shared/refs.bib`, the six
    `shared/figures/fig_{headroom,scaling,shortcut,sota,fairness,external}.pdf`, and
    `shared/vendor/ieee-tnnls/IEEEtran.cls`.
-2. Compile: `pdflatex main; bibtex main; pdflatex main; pdflatex main` (bibtex uses MiKTeX's
+2. **Strip all comments** (double-blind safety, since the `.tex` is uploaded):
+   `python submission/strip_comments.py submission/manuscript/main.tex submission/supplement/supplement.tex`.
+3. Compile: `pdflatex main; bibtex main; pdflatex main; pdflatex main` (bibtex uses MiKTeX's
    genuine `IEEEtran.bst` — do **not** copy the corrupt `ieee-tbiom/IEEEtran.bst`).
-3. `supplement/` = `en/supplement.{tex,pdf}` (already standalone + anonymized).
+4. `supplement/` = `en/supplement.{tex,pdf}` (standalone + anonymized), then comment-stripped in step 2.
 
 ## Camera-ready (after acceptance)
 
