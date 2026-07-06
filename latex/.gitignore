@@ -19,3 +19,9 @@ _attic/
 # The IEEE build uses MiKTeX's IEEEtran; the AAAI build uses the copies committed
 # inside conference/aaai-27/en/.
 shared/vendor/
+
+# journal-1-tnnls submission bundle: the self-contained manuscript/ + supplement/
+# archives are DERIVED from en/ + shared/ (rebuild per submission/SUBMISSION.md).
+# The unique artifacts (title_page_en.docx, SUBMISSION.md) are tracked.
+papers/journal-1-tnnls/submission/manuscript/
+papers/journal-1-tnnls/submission/supplement/
