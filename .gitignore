@@ -27,3 +27,5 @@ logs/
 splits/
 .env
 src/age_gap/settings/certs/
+# Локальные отчёты ветки engagement: могут содержать кропы лиц (base64). Никогда не коммитить.
+reports/

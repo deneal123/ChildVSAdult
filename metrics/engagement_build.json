@@ -1,0 +1,30 @@
+{
+  "platform": "vk",
+  "table": {
+    "rows": 25811,
+    "cols": 557,
+    "path": "R:\\ChildVSAdult\\data\\processed\\engagement_features_vk.parquet"
+  },
+  "feature_blocks": {
+    "reach": 10,
+    "meta": 13,
+    "face": 13,
+    "domain": 2,
+    "emb": 512
+  },
+  "guardrails": {
+    "posts_total": 44609,
+    "posts_with_faces": 41862,
+    "persons_total": 21847,
+    "persons_dropped_minor": 1248,
+    "posts_dropped_minor_subject": 1451,
+    "posts_dropped_no_adult_face": 14600,
+    "posts_final": 25811,
+    "faces_total": 84147,
+    "faces_child_excluded_from_appearance": 6726,
+    "engagement_coverage": 1.0028,
+    "notes": [
+      "embeddings: 512-d, только взрослые usable-лица"
+    ]
+  }
+}
