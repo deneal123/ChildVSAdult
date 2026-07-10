@@ -130,6 +130,16 @@ def fig_clusters(clusters: list[dict[str, Any]]) -> go.Figure:
     return _layout(fig, "Кластеры-архетипы (без обучения)")
 
 
+def fig_deep(models: list[dict[str, Any]]) -> go.Figure:
+    labels = [m["name"] for m in models]
+    y = [m["sp"] for m in models]
+    colors = [MUTED if m["device"] == "cpu" else ACCENT for m in models]
+    fig = go.Figure(go.Bar(x=labels, y=y, marker_color=colors,
+                           text=[f"{v:.3f}" for v in y], textposition="outside"))
+    fig.update_layout(yaxis_title="Spearman ρ (OOF)")
+    return _layout(fig, "CPU-бустинг vs обучаемые GPU-энкодеры")
+
+
 def fig_pred_true(oof: pd.DataFrame, sample: int = 4000) -> go.Figure:
     d = oof.sample(min(sample, len(oof)), random_state=0)
     fig = go.Figure(go.Scattergl(x=d["pred_rate"], y=d["y_rate"], mode="markers",
@@ -289,7 +299,22 @@ views) — ρ={{ '%.3f'|format(spearman_b) }}, модель-свободный �
 <h3 style="margin-top:26px">Низ-{{ cards_bot|length }}</h3>
 <div class="cards">{% for c in cards_bot %}{{ card(c) }}{% endfor %}</div>
 
-<h2>7. Ограничения (честно)</h2>
+{% if deep %}<h2>7. Обучаемые GPU-модели: bi- vs cross-encoder</h2>
+<div class="plot">{{ p_deep }}</div>
+<table><tr><th>Модель</th><th>Устройство</th><th>Spearman</th><th>R²</th><th>NDCG@50</th><th>Lift@50</th></tr>
+{% for m in deep %}<tr><td>{{ m.name }}</td><td>{{ m.device }}</td>
+<td>{{ '%.4f'|format(m.sp) }}</td><td>{{ '%.4f'|format(m.r2) }}</td>
+<td>{{ '%.3f'|format(m.ndcg) }}</td><td>{{ '%.2f'|format(m.lift) }}</td></tr>{% endfor %}
+</table>
+<div class="note"><b>Что сравниваем.</b> Один и тот же таргет <code>y_rate</code> и те же person-grouped
+фолды. CPU-бустинг работает на 512-d <b>ArcFace</b>-эмбеддингах — специализированном кодировщике лиц.
+Обучаемые энкодеры берут <i>сырой</i> контент: подпись поста (RU-текст, <code>{{ deep_text }}</code>,
+<b>дообучается</b> на GPU) и кроп взрослого лица (<code>{{ deep_vision }}</code>, заморожен).
+<b>Bi-encoder</b> — позднее слияние двух независимых башен; <b>cross-encoder</b> — cross-attention между
+токенами текста и патчами лица. {{ deep_verdict }} Специализированный ArcFace остаётся сильнее сырых
+пикселей мелкого ViT для чистого лица, тогда как энкодеры добавляют сигнал текста подписи.</div>
+
+<h2>8. Ограничения (честно)</h2>{% else %}<h2>7. Ограничения (честно)</h2>{% endif %}
 <ul style="color:#cfd6e4">
 <li>Сигнал <b>скромный</b>: R²≈{{ '%.3f'|format(r2) }}, ρ≈{{ '%.3f'|format(spearman) }}. Большая часть
 вовлечённости — охват и шум ленты, а не человек.</li>
@@ -341,6 +366,22 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
     sp_ev = rate.get("spearman_e_raw_vs_views", float("nan"))
     sp_ratev = rate.get("spearman_e_rate_vs_views", float("nan"))
 
+    deep: list[dict[str, Any]] = []
+    deep_text = deep_vision = ""
+    deep_verdict = ""
+    dpath = data_path("metrics_dir", "engagement_deep.json")
+    if dpath.exists():
+        dj = json.loads(dpath.read_text(encoding="utf-8"))
+        for m in dj["models"]:
+            o = m["oof_overall"]
+            deep.append({"name": m["model"], "device": m.get("device", ""),
+                         "sp": o["spearman"], "r2": o["r2"], "ndcg": o["ndcg@50"], "lift": o["lift@50"]})
+        deep_text, deep_vision = dj.get("text_model", ""), dj.get("vision_model", "")
+        if deep:
+            best = max(deep, key=lambda d: d["sp"])
+            deep_verdict = (f"Лучшее ранжирование даёт <b>{best['name']}</b> "
+                            f"(ρ={best['sp']:.3f}).")
+
     thumbs: dict[str, str] = {}
     if with_thumbnails:
         d = oof.sort_values("pred_rate", ascending=False)
@@ -384,6 +425,8 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
         p_clu=plot(fig_clusters(res["clusters"]["clusters"])),
         p_dec=plot(fig_decile(oof)),
         p_pt=plot(fig_pred_true(oof)),
+        deep=deep, deep_text=deep_text, deep_vision=deep_vision, deep_verdict=deep_verdict,
+        p_deep=plot(fig_deep(deep)) if deep else "",
     )
     log.info("guardrails из build: %s", build.get("guardrails", {}).get("posts_final"))
 

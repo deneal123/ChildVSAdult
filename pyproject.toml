@@ -55,6 +55,10 @@ ml = [
     "antialiased-cnns>=0.3",
     "huggingface-hub>=0.20",
     "matplotlib>=3.7",
+    # ветка engagement, GPU-модели: bi-encoder + cross-encoder на мелких HF-энкодерах
+    # (rubert-tiny2 текст + deit-tiny vision). Дообучение на GPU (PyTorch).
+    "transformers>=4.44",
+    "accelerate>=0.34",
 ]
 
 # onnxruntime (cpu) и onnxruntime-gpu предоставляют один и тот же модуль — нельзя ставить вместе.
