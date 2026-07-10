@@ -45,36 +45,67 @@ REACH_EXOGENOUS = [
 ]
 
 
-def add_targets(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """Добавить e_raw / e_w / y_pct и служебные колонки. Возвращает (df, info)."""
-    df = df.copy()
-    df["owner_code"] = pd.Categorical(df["owner_id"]).codes
+def _pca1(matrix: np.ndarray) -> tuple[np.ndarray, PCA, float]:
+    """PCA1 со знаком, зафиксированным по первой колонке (лайки/лайки-на-показ > 0)."""
+    z = StandardScaler().fit_transform(matrix)
+    pca = PCA(n_components=1, random_state=0).fit(z)
+    sign = 1.0 if pca.components_[0][0] >= 0 else -1.0
+    return sign * pca.transform(z)[:, 0], pca, sign
 
+
+def add_targets(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Добавить таргеты. ГЛАВНЫЙ — e_rate (ставка на просмотр). Возвращает (df, info).
+
+    Строки без просмотров отбрасываются: без знаменателя нельзя посчитать ставку, а
+    покрытие views ~99–100%, так что потеря пренебрежимо мала и делает все таргеты
+    сопоставимыми на одном наборе строк.
+    """
+    df = df.copy()
+    v = pd.to_numeric(df["views"], errors="coerce")
+    n0 = len(df)
+    df = df[v.notna() & (v > 0)].reset_index(drop=True)
+    v = pd.to_numeric(df["views"], errors="coerce")
+    dropped = n0 - len(df)
+    if dropped:
+        log.info("Отброшено постов без просмотров (нужны для per-view ставки): %d", dropped)
+
+    df["owner_code"] = pd.Categorical(df["owner_id"]).codes
     for c in COUNT_COLS:
         df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0.0)
         df[f"log_{c}"] = np.log1p(df[c])
-    df["log_views"] = np.log1p(pd.to_numeric(df["views"], errors="coerce"))
+    df["log_views"] = np.log1p(v)
 
-    z = StandardScaler().fit_transform(df[[f"log_{c}" for c in COUNT_COLS]].to_numpy())
-    pca = PCA(n_components=1, random_state=0).fit(z)
-    comp = pca.components_[0]
-    sign = 1.0 if comp[0] >= 0 else -1.0  # нагрузка лайков должна быть положительной
-    df["e_raw"] = sign * pca.transform(z)[:, 0]
+    # E_raw — композит суммарной вовлечённости (БЕЗ просмотров), для сравнения.
+    e_raw, pca_raw, sign_raw = _pca1(df[[f"log_{c}" for c in COUNT_COLS]].to_numpy())
+    df["e_raw"] = e_raw
+
+    # E_rate (ГЛАВНЫЙ) — композит сглаженных ЛОГ-СТАВОК на просмотр: log((count+1)/(views+1)).
+    rate_mat = np.column_stack([np.log((df[c] + 1.0) / (v + 1.0)) for c in COUNT_COLS])
+    e_rate, pca_rate, sign_rate = _pca1(rate_mat)
+    df["e_rate"] = e_rate
 
     df["e_w"] = np.log1p(df["likes"] + 3.0 * df["comments"] + 5.0 * df["reposts"])
 
     bucket = [df["owner_id"].astype(str), df["year"].astype("Int64"), df["month"].astype("Int64")]
-    df["y_pct"] = df.groupby(bucket, dropna=False)["e_raw"].rank(pct=True)
+    df["y_pct"] = df.groupby(bucket, dropna=False)["e_rate"].rank(pct=True)
 
+    logv = df["log_views"]
+    sp = lambda a, b: float(pd.Series(a).corr(pd.Series(b), method="spearman"))  # noqa: E731
     info = {
-        "pca1_loadings": {c: float(sign * w) for c, w in zip(COUNT_COLS, comp, strict=True)},
-        "pca1_explained_variance_ratio": float(pca.explained_variance_ratio_[0]),
-        "spearman_e_raw_vs_log_likes": float(
-            pd.Series(df["e_raw"]).corr(df["log_likes"], method="spearman")
-        ),
+        "n_dropped_no_views": int(dropped),
+        "pca1_loadings": {c: float(sign_raw * w) for c, w in zip(COUNT_COLS, pca_raw.components_[0], strict=True)},
+        "pca1_explained_variance_ratio": float(pca_raw.explained_variance_ratio_[0]),
+        "rate_loadings": {c: float(sign_rate * w) for c, w in zip(COUNT_COLS, pca_rate.components_[0], strict=True)},
+        "rate_explained_variance_ratio": float(pca_rate.explained_variance_ratio_[0]),
+        # Диагностика: сырой композит тянется за просмотрами, ставка — нет.
+        "spearman_e_raw_vs_log_views": sp(df["e_raw"], logv),
+        "spearman_e_rate_vs_log_views": sp(df["e_rate"], logv),
+        "spearman_e_raw_vs_e_rate": sp(df["e_raw"], df["e_rate"]),
         "n_buckets": int(df.groupby(bucket, dropna=False).ngroups),
     }
-    log.info("Таргеты: loadings=%s", info["pca1_loadings"])
+    log.info("Таргеты: rate_loadings=%s | E_raw~views=%.3f E_rate~views=%.3f",
+             info["rate_loadings"], info["spearman_e_raw_vs_log_views"],
+             info["spearman_e_rate_vs_log_views"])
     return df, info
 
 

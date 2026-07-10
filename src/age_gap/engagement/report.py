@@ -132,18 +132,18 @@ def fig_clusters(clusters: list[dict[str, Any]]) -> go.Figure:
 
 def fig_pred_true(oof: pd.DataFrame, sample: int = 4000) -> go.Figure:
     d = oof.sample(min(sample, len(oof)), random_state=0)
-    fig = go.Figure(go.Scattergl(x=d["pred_symp_A"], y=d["y_symp_A"], mode="markers",
+    fig = go.Figure(go.Scattergl(x=d["pred_rate"], y=d["y_rate"], mode="markers",
                                  marker=dict(size=4, opacity=0.3, color=ACCENT)))
-    lo, hi = float(d["pred_symp_A"].min()), float(d["pred_symp_A"].max())
+    lo, hi = float(d["pred_rate"].min()), float(d["pred_rate"].max())
     fig.add_shape(type="line", x0=lo, y0=lo, x1=hi, y1=hi, line=dict(dash="dash", color="#555"))
-    fig.update_layout(xaxis_title="предсказанная симпатия", yaxis_title="фактический остаток")
+    fig.update_layout(xaxis_title="предсказанная симпатия на показ", yaxis_title="фактический остаток")
     return _layout(fig, "Предсказание против факта (out-of-fold)")
 
 
 def fig_decile(oof: pd.DataFrame) -> go.Figure:
     d = oof.copy()
-    d["decile"] = pd.qcut(d["pred_symp_A"].rank(method="first"), 10, labels=False) + 1
-    g = d.groupby("decile")["y_symp_A"].mean()
+    d["decile"] = pd.qcut(d["pred_rate"].rank(method="first"), 10, labels=False) + 1
+    g = d.groupby("decile")["y_rate"].mean()
     fig = go.Figure(go.Bar(x=g.index.astype(str), y=g.to_numpy(),
                            marker_color=[BAD if v < 0 else GOOD for v in g.to_numpy()]))
     fig.add_hline(y=0, line_dash="dash", line_color="#555")
@@ -156,13 +156,13 @@ def fig_decile(oof: pd.DataFrame) -> go.Figure:
 
 
 def _cards(oof: pd.DataFrame, thumbs: dict[str, str], n: int, top: bool) -> list[dict[str, Any]]:
-    d = oof.sort_values("pred_symp_A", ascending=not top).head(n)
+    d = oof.sort_values("pred_rate", ascending=not top).head(n)
     out = []
     for _, r in d.iterrows():
         out.append({
             "pid": pseudo_id(str(r["post_id"])),
-            "pred": float(r["pred_symp_A"]),
-            "actual": float(r["y_symp_A"]),
+            "pred": float(r["pred_rate"]),
+            "actual": float(r["y_rate"]),
             "likes": int(r["likes"]), "comments": int(r["comments"]), "reposts": int(r["reposts"]),
             "views": None if pd.isna(r["views"]) else int(r["views"]),
             "n_photos": int(r["n_photos"]),
@@ -217,26 +217,32 @@ TEMPLATE = """<!doctype html><html lang="ru"><head><meta charset="utf-8">
 Платформа: {{ platform }} · {{ n_posts }} постов · {{ n_persons }} человек.</p>
 
 <div class="kpi">
-  <div><small>Охват объясняет (без views)</small><b>{{ '%.1f'|format(reach_a*100) }}%</b></div>
-  <div><small>Ранжирование на остатке, Spearman</small><b class="pos">{{ '%.3f'|format(spearman) }}</b></div>
+  <div><small>Сырой E_raw ↔ показы (Spearman)</small><b class="neg">{{ '%.3f'|format(sp_ev) }}</b></div>
+  <div><small>Ставка-на-показ E_rate ↔ показы</small><b class="pos">{{ '%.3f'|format(sp_ratev) }}</b></div>
+  <div><small>Ранжирование ставки, Spearman</small><b class="pos">{{ '%.3f'|format(spearman) }}</b></div>
   <div><small>Топ-50: подъём над средним</small><b class="pos">{{ '%.2f'|format(lift) }}σ</b></div>
   <div><small>Негативный контроль</small><b>{{ '%.3f'|format(neg) }}</b></div>
 </div>
 
-<div class="note"><b>Как это читать.</b> Сырые лайки — это в основном <i>охват</i>: размер сообщества,
-время публикации, возраст поста, формат. Мы сначала предсказываем вовлечённость <b>только</b> по этим
-«внешним» факторам (модель охвата, строго out-of-fold), а затем пытаемся предсказать то, что она
-<b>не</b> объяснила — остаток. Именно остаток мы и называем «симпатией»: реакция сверх ожидаемой.
-Отрицательный результат тоже был бы честным — но негативный контроль (перемешанный таргет) даёт
-ρ≈{{ '%.3f'|format(neg) }}, а реальный сигнал ρ={{ '%.3f'|format(spearman) }}: сигнал есть, он скромный.</div>
+<div class="note"><b>Почему «на показ».</b> Ценность лайка зависит от того, скольким его показали: пост с
+8 млн показов и 1000 лайков — это <i>слабее</i>, чем пост с 1 млн показов и 600 лайков. Сырой композит
+вовлечённости почти целиком тянется за показами (Spearman с <code>views</code> =
+{{ '%.3f'|format(sp_ev) }}) — то есть измеряет охват, а не отношение. Поэтому <b>главный таргет</b> —
+<code>E_rate</code>: композит лог-<i>ставок</i> на показ log((L+1)/(V+1)), log((C+1)/(V+1)),
+log((R+1)/(V+1)). Он практически развязан с объёмом показов (Spearman =
+{{ '%.3f'|format(sp_ratev) }}). Из него мы дополнительно вычитаем экзогенный охват (сообщество, время,
+возраст поста, формат) строго out-of-fold — остаётся «симпатия на показ». Негативный контроль
+(перемешанный таргет) даёт ρ≈{{ '%.3f'|format(neg) }}, реальный сигнал ρ={{ '%.3f'|format(spearman) }}:
+сигнал есть, он скромный.</div>
 
-<h2>1. Охват против симпатии</h2>
+<h2>1. Сырые лайки — это в основном охват</h2>
 <div class="plot">{{ p_var }}</div>
-<div class="note"><b>Важная оговорка.</b> Показы (<code>views</code>) — частично <i>следствие</i>
-вовлечённости: понравившийся пост лента показывает чаще. Поэтому вариант B (с контролем views)
-вычитает часть самой симпатии и даёт нижнюю границу ({{ '%.3f'|format(spearman_b) }}), а вариант A —
-верхнюю ({{ '%.3f'|format(spearman) }}). Модель-свободный перцентиль внутри «сообщество×месяц» даёт
-{{ '%.3f'|format(spearman_pct) }}. Истина между ними.</div>
+<div class="note"><b>Диагностика.</b> Столбик показывает, какую долю дисперсии <i>сырого</i> композита
+<code>E_raw</code> съедает модель охвата. Именно поэтому мы не ранжируем по сырым лайкам, а переходим к
+ставке на показ. Для сравнения оставлены и остатки сырого композита: вариант A (без views)
+даёт ρ={{ '%.3f'|format(spearman_raw) }} на самом <code>E_raw</code>, консервативный B (с контролем
+views) — ρ={{ '%.3f'|format(spearman_b) }}, модель-свободный перцентиль ставки внутри
+«сообщество×месяц» — ρ={{ '%.3f'|format(spearman_pct) }}. Все они согласуются с главным таргетом.</div>
 
 <h2>2. Что именно даёт сигнал</h2>
 <div class="plot">{{ p_abl }}</div>
@@ -324,17 +330,20 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
     oof_p = data_path("data_dir", "processed", "engagement_oof.parquet")
     oof = pd.read_parquet(oof_p) if oof_p.exists() else pd.read_csv(oof_p.with_suffix(".csv.gz"))
 
-    abl = res["ablation_y_symp_A"]
+    abl = res["ablation_headline"]
     full = abl[-1]["oof_overall"]
     pre_emb = abl[-2]["oof_overall"]["spearman"] if len(abl) >= 2 else float("nan")
     by_target = {m["target"]: m["oof_overall"] for m in res["models"]}
-    sp_b = next((v["spearman"] for k, v in by_target.items() if k.startswith("y_symp_B")), float("nan"))
-    sp_pct = next((v["spearman"] for k, v in by_target.items() if k.startswith("y_pct")), float("nan"))
+    sp_b = next((v["spearman"] for k, v in by_target.items() if k.startswith("остаток B")), float("nan"))
+    sp_pct = next((v["spearman"] for k, v in by_target.items() if k.startswith("перцентиль")), float("nan"))
     sp_raw = next((v["spearman"] for k, v in by_target.items() if k.startswith("e_raw")), float("nan"))
+    rate = res.get("rate", {})
+    sp_ev = rate.get("spearman_e_raw_vs_views", float("nan"))
+    sp_ratev = rate.get("spearman_e_rate_vs_views", float("nan"))
 
     thumbs: dict[str, str] = {}
     if with_thumbnails:
-        d = oof.sort_values("pred_symp_A", ascending=False)
+        d = oof.sort_values("pred_rate", ascending=False)
         wanted = set(d.head(n_cards)["post_id"]) | set(d.tail(n_cards)["post_id"])
         paths = best_adult_face_paths(set(map(str, wanted)))
         for pid, p in paths.items():
@@ -350,8 +359,8 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
     models_tbl = [{"model": m["model"], "target": m["target"],
                    "sp": m["oof_overall"]["spearman"], "r2": m["oof_overall"]["r2"],
                    "ndcg": m["oof_overall"]["ndcg@50"]} for m in res["models"]]
-    models_tbl.insert(0, {"model": "hgb", "target": "y_symp_A (главный)", "sp": full["spearman"],
-                          "r2": full["r2"], "ndcg": full["ndcg@50"]})
+    models_tbl.insert(0, {"model": "hgb", "target": "y_rate — ставка на показ (главный)",
+                          "sp": full["spearman"], "r2": full["r2"], "ndcg": full["ndcg@50"]})
 
     tpl = Template(CARD_MACRO + TEMPLATE)
     html_out = tpl.render(
@@ -360,6 +369,7 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
         spearman=full["spearman"], r2=full["r2"], lift=full["lift@50"], pre_emb=pre_emb,
         neg=res["negative_control"]["oof_overall"]["spearman"],
         spearman_b=sp_b, spearman_pct=sp_pct, spearman_raw=sp_raw,
+        sp_ev=sp_ev, sp_ratev=sp_ratev,
         models=models_tbl, clusters=res["clusters"]["clusters"],
         sil=max(res["clusters"]["silhouette_by_k"].values()),
         female_share=float(np.nanmean(oof["share_female_adult"])),
