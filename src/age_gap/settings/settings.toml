@@ -59,3 +59,15 @@ profanity_check = false
 dynaconf_merge = true                 # наследовать остальные пути из [default.paths]
 data_dir = "data_reddit"
 splits_dir = "data_reddit/splits"
+
+# ── natural_faces: второй VK-домен для ветки engagement ─────────────────────
+# Другой паблик (vk.com/natural_faces, owner_id=-196079461): портреты, без «тогда/сейчас».
+# ВАЖНО: разводим не только data_dir, но и кэш эмбеддингов и metrics_dir — иначе
+# прогон затрёт артефакты основного исследования.
+# Активация: $env:ENV_FOR_DYNACONF="natural"
+[natural.paths]
+dynaconf_merge = true
+data_dir = "data_natural"
+splits_dir = "data_natural/splits"
+embeddings_cache_dir = "data_natural/cache/embeddings"
+metrics_dir = "metrics_natural"

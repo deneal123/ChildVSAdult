@@ -23,6 +23,7 @@ deep-research-report.md
 cache/
 data/
 data_reddit/
+data_natural/
 logs/
 splits/
 .env

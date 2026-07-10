@@ -240,10 +240,11 @@ TEMPLATE = """<!doctype html><html lang="ru"><head><meta charset="utf-8">
 
 <h2>2. Что именно даёт сигнал</h2>
 <div class="plot">{{ p_abl }}</div>
-<div class="note"><b>Главная (и этически неудобная) находка.</b> Эмбеддинги лица примерно
-<b>удваивают</b> качество ранжирования (0.108 → {{ '%.3f'|format(spearman) }}). То есть заметная часть
-«симпатии» — это реакция аудитории на <i>внешность</i>. Это измерение <b>предвзятости аудитории</b>,
-а не ценности человека.</div>
+<div class="note"><b>Главная (и этически неудобная) находка.</b> Без эмбеддингов лица (мета, текст,
+формат, атрибуты) ранжирование даёт Spearman {{ '%.3f'|format(pre_emb) }}; добавление эмбеддингов
+поднимает его до {{ '%.3f'|format(spearman) }}. То есть значимая (здесь — почти вся) часть «симпатии
+сверх охвата» — это реакция аудитории на <i>внешность</i>. Это измерение <b>предвзятости
+аудитории</b>, а не ценности человека.</div>
 <div class="plot">{{ p_imp }}</div>
 
 <h2>3. Таргеты, baseline'ы и негативный контроль</h2>
@@ -325,6 +326,7 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
 
     abl = res["ablation_y_symp_A"]
     full = abl[-1]["oof_overall"]
+    pre_emb = abl[-2]["oof_overall"]["spearman"] if len(abl) >= 2 else float("nan")
     by_target = {m["target"]: m["oof_overall"] for m in res["models"]}
     sp_b = next((v["spearman"] for k, v in by_target.items() if k.startswith("y_symp_B")), float("nan"))
     sp_pct = next((v["spearman"] for k, v in by_target.items() if k.startswith("y_pct")), float("nan"))
@@ -355,7 +357,7 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
     html_out = tpl.render(
         platform=res["platform"], n_posts=f"{res['n_posts']:,}", n_persons=f"{res['n_persons']:,}",
         reach_a=res["reach"]["A_exogenous_only"]["share_variance_explained_by_reach"],
-        spearman=full["spearman"], r2=full["r2"], lift=full["lift@50"],
+        spearman=full["spearman"], r2=full["r2"], lift=full["lift@50"], pre_emb=pre_emb,
         neg=res["negative_control"]["oof_overall"]["spearman"],
         spearman_b=sp_b, spearman_pct=sp_pct, spearman_raw=sp_raw,
         models=models_tbl, clusters=res["clusters"]["clusters"],
@@ -375,7 +377,9 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
     )
     log.info("guardrails из build: %s", build.get("guardrails", {}).get("posts_final"))
 
-    out = resolve_path("reports", "engagement", "report.html")
+    # имя по датасету: разные VK-паблики не должны перезаписывать отчёты друг друга
+    dataset = data_path("data_dir").name
+    out = resolve_path("reports", "engagement", f"report_{dataset}.html")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html_out, encoding="utf-8")
     log.info("Отчёт: %s (%.1f MB)", out, out.stat().st_size / 1e6)
