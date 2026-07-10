@@ -39,9 +39,13 @@ def main() -> None:
     ap.add_argument("--platform", default="vk")
     ap.add_argument("--arch", choices=["bi", "cross", "both"], default="both")
     ap.add_argument("--folds", type=int, default=mdl.N_SPLITS)
-    ap.add_argument("--epochs", type=int, default=8)
+    ap.add_argument("--epochs", type=int, default=12)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--lr", type=float, default=3e-4)
+    ap.add_argument("--lr-backbone", type=float, default=1e-4, help="LR предобученных энкодеров")
+    ap.add_argument("--rank-weight", type=float, default=1.0, help="вес ranking-loss поверх MSE")
+    ap.add_argument("--unfreeze-vision", type=int, default=0,
+                    help="сколько верхних блоков deit-tiny дообучать (0 = заморожен, кеш патчей)")
     ap.add_argument("--quick", action="store_true", help="3 фолда, 4 эпохи — быстрая проверка")
     args = ap.parse_args()
 
@@ -66,10 +70,13 @@ def main() -> None:
     archs = ["bi", "cross"] if args.arch == "both" else [args.arch]
     epochs = 4 if args.quick else args.epochs
     for a in archs:
-        res = deep.evaluate_deep(df, y, splits, a, device, epochs=epochs, batch=args.batch, lr=args.lr).aggregate()
+        res = deep.evaluate_deep(
+            df, y, splits, a, device, epochs=epochs, batch=args.batch, lr=args.lr,
+            lr_backbone=args.lr_backbone, rank_w=args.rank_weight, unfreeze_vision=args.unfreeze_vision,
+        ).aggregate()
         res["device"] = str(device)
         rows.append(res)
-        log.info("%-16s spearman=%.4f", res["model"], res["oof_overall"]["spearman"])
+        log.info("%-20s spearman=%.4f", res["model"], res["oof_overall"]["spearman"])
 
     out = {
         "platform": args.platform,
@@ -78,7 +85,9 @@ def main() -> None:
         "device": str(device),
         "text_model": deep.TEXT_MODEL,
         "vision_model": deep.VISION_MODEL,
-        "vision_trained": False,
+        "vision_unfrozen_blocks": int(args.unfreeze_vision),
+        "rank_weight": float(args.rank_weight),
+        "epochs": int(epochs),
         "target_info": {"e_rate_vs_views": tinfo["spearman_e_rate_vs_log_views"]},
         "models": rows,
     }

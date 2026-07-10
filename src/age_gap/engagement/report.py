@@ -309,10 +309,11 @@ views) — ρ={{ '%.3f'|format(spearman_b) }}, модель-свободный �
 <div class="note"><b>Что сравниваем.</b> Один и тот же таргет <code>y_rate</code> и те же person-grouped
 фолды. CPU-бустинг работает на 512-d <b>ArcFace</b>-эмбеддингах — специализированном кодировщике лиц.
 Обучаемые энкодеры берут <i>сырой</i> контент: подпись поста (RU-текст, <code>{{ deep_text }}</code>,
-<b>дообучается</b> на GPU) и кроп взрослого лица (<code>{{ deep_vision }}</code>, заморожен).
+<b>дообучается</b> на GPU) и кроп взрослого лица (<code>{{ deep_vision }}</code>, {{ deep_vision_state }}).
 <b>Bi-encoder</b> — позднее слияние двух независимых башен; <b>cross-encoder</b> — cross-attention между
-токенами текста и патчами лица. {{ deep_verdict }} Специализированный ArcFace остаётся сильнее сырых
-пикселей мелкого ViT для чистого лица, тогда как энкодеры добавляют сигнал текста подписи.</div>
+токенами текста и патчами лица.{{ deep_extras }} {{ deep_verdict }} Специализированный ArcFace заточен
+под лица и остаётся сильной базой по Spearman, тогда как обучаемые энкодеры добавляют сигнал текста
+подписи и выигрывают по топ-k (NDCG@50).</div>
 
 <h2>8. Ограничения (честно)</h2>{% else %}<h2>7. Ограничения (честно)</h2>{% endif %}
 <ul style="color:#cfd6e4">
@@ -368,6 +369,8 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
 
     deep: list[dict[str, Any]] = []
     deep_text = deep_vision = ""
+    deep_vision_state = "заморожен"
+    deep_extras = ""
     deep_verdict = ""
     dpath = data_path("metrics_dir", "engagement_deep.json")
     if dpath.exists():
@@ -377,6 +380,14 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
             deep.append({"name": m["model"], "device": m.get("device", ""),
                          "sp": o["spearman"], "r2": o["r2"], "ndcg": o["ndcg@50"], "lift": o["lift@50"]})
         deep_text, deep_vision = dj.get("text_model", ""), dj.get("vision_model", "")
+        nb = int(dj.get("vision_unfrozen_blocks", 0))
+        deep_vision_state = f"дообучаются верхние {nb} блока" if nb > 0 else "заморожен"
+        extras = []
+        if dj.get("rank_weight", 0):
+            extras.append("ranking-loss поверх MSE")
+        if dj.get("epochs"):
+            extras.append(f"{dj['epochs']} эпох")
+        deep_extras = (" Обучение: " + ", ".join(extras) + ".") if extras else ""
         if deep:
             best = max(deep, key=lambda d: d["sp"])
             deep_verdict = (f"Лучшее ранжирование даёт <b>{best['name']}</b> "
@@ -426,6 +437,7 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
         p_dec=plot(fig_decile(oof)),
         p_pt=plot(fig_pred_true(oof)),
         deep=deep, deep_text=deep_text, deep_vision=deep_vision, deep_verdict=deep_verdict,
+        deep_vision_state=deep_vision_state, deep_extras=deep_extras,
         p_deep=plot(fig_deep(deep)) if deep else "",
     )
     log.info("guardrails из build: %s", build.get("guardrails", {}).get("posts_final"))
