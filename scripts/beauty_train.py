@@ -28,35 +28,36 @@ def main() -> None:
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--epochs", type=int, default=8)
     ap.add_argument("--batch", type=int, default=32)
-    ap.add_argument("--unfreeze-vision", type=int, default=4, help="сколько верхних блоков CLIP дообучать (0=frozen)")
+    ap.add_argument("--backbone", default="clip", choices=list(beauty.BACKBONES), help="визуальный энкодер")
+    ap.add_argument("--unfreeze-vision", type=int, default=4, help="сколько верхних блоков дообучать (0=frozen)")
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--lr-backbone", type=float, default=1e-5)
     ap.add_argument("--save-full", action="store_true", help="дообучить на всех данных и сохранить веса для VK")
     ap.add_argument("--aligned", action="store_true",
-                    help="учить на SCUT, выровненном нашим 112-пайплайном (домен-матч под VK)")
+                    help="учить на SCUT, выровненном нашим 112-пайплайном (legacy домен-матч, только clip)")
     ap.add_argument("--quick", action="store_true", help="2 фолда, 3 эпохи")
     args = ap.parse_args()
 
     device = beauty.pick_device()
     ds, y, meta = beauty.load_scut()
-    px = beauty.precompute_pixels_aligned(ds) if args.aligned else beauty.precompute_pixels(ds)
-    tag = "_aligned" if args.aligned else ""
-    log.info("device=%s | n=%d unfreeze=%d", device, len(y), args.unfreeze_vision)
+    px = beauty.precompute_pixels_aligned(ds) if args.aligned else beauty.precompute_pixels(ds, args.backbone)
+    tag = "_aligned" if args.aligned else ("" if args.backbone == "clip" else f"_{args.backbone}")
+    log.info("device=%s | backbone=%s n=%d unfreeze=%d", device, args.backbone, len(y), args.unfreeze_vision)
 
     res = beauty.kfold_eval(
         px, y, device, n_splits=2 if args.quick else args.folds,
         unfreeze_top=args.unfreeze_vision, epochs=3 if args.quick else args.epochs,
-        batch=args.batch, lr=args.lr, lr_backbone=args.lr_backbone,
+        batch=args.batch, lr=args.lr, lr_backbone=args.lr_backbone, backbone=args.backbone,
     )
     res.pop("oof")
 
     out = {
-        "dataset": beauty.SCUT_DATASET, "clip_model": beauty.CLIP_MODEL,
+        "dataset": beauty.SCUT_DATASET, "backbone": args.backbone, "backbone_model": beauty.BACKBONES[args.backbone],
         "n": int(len(y)), "unfreeze_vision": int(args.unfreeze_vision),
         "epochs": int(3 if args.quick else args.epochs), "device": str(device),
         "per_fold": res["per_fold"], "cv_mean_std": res["mean_std"], "oof_overall": res["oof_overall"],
+        "aligned_112": bool(args.aligned),
     }
-    out["aligned_112"] = bool(args.aligned)
     dst = data_path("metrics_dir", f"beauty_scut{tag}.json")
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(json.dumps(out, ensure_ascii=False, indent=2, default=float), encoding="utf-8")
@@ -69,15 +70,15 @@ def main() -> None:
         n_val = max(1, int(0.1 * len(y)))
         va, core = idx[:n_val], idx[n_val:]
         mu, sd = float(y[core].mean()), float(y[core].std()) + 1e-8
-        model = beauty.CLIPBeauty(unfreeze_top=args.unfreeze_vision).to(device)
+        model = beauty.BeautyRegressor(args.backbone, unfreeze_top=args.unfreeze_vision).to(device)
         dl_tr = beauty._loader(px[core], (y[core] - mu) / sd, args.batch, True)
         dl_va = beauty._loader(px[va], (y[va] - mu) / sd, args.batch, False)
         beauty._train(model, dl_tr, dl_va, (y[va] - mu) / sd, device,
                       3 if args.quick else args.epochs, args.lr, args.lr_backbone, 0.05)
-        wpath = resolve_path("data_beauty", "weights", f"clip_beauty{tag}.pt")
+        wpath = resolve_path("data_beauty", "weights", f"beauty_{args.backbone}{tag}.pt")
         wpath.parent.mkdir(parents=True, exist_ok=True)
         torch.save({"state_dict": model.state_dict(), "mu": mu, "sd": sd,
-                    "unfreeze_vision": args.unfreeze_vision}, wpath)
+                    "unfreeze_vision": args.unfreeze_vision, "backbone": args.backbone}, wpath)
         log.info("Веса сохранены: %s", wpath)
 
     print(json.dumps({

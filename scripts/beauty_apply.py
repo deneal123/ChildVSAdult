@@ -49,12 +49,13 @@ def main() -> None:
     args = ap.parse_args()
 
     device = beauty.pick_device()
-    wpath = resolve_path(args.weights) if args.weights else resolve_path("data_beauty", "weights", "clip_beauty_aligned.pt")
+    wpath = resolve_path(args.weights) if args.weights else resolve_path("data_beauty", "weights", "beauty_dinov2.pt")
     ckpt = torch.load(wpath, map_location=device, weights_only=False)
-    model = beauty.CLIPBeauty(unfreeze_top=int(ckpt["unfreeze_vision"])).to(device)
+    backbone = ckpt.get("backbone", "clip")
+    model = beauty.BeautyRegressor(backbone, unfreeze_top=int(ckpt["unfreeze_vision"])).to(device)
     model.load_state_dict(ckpt["state_dict"])
     mu, sd = float(ckpt["mu"]), float(ckpt["sd"])
-    log.info("Веса: %s (mu=%.3f sd=%.3f)", wpath.name, mu, sd)
+    log.info("Веса: %s (backbone=%s mu=%.3f sd=%.3f)", wpath.name, backbone, mu, sd)
 
     # посты с таргетом (уже guardrailed: без несовершеннолетних-субъектов)
     oof_p = data_path("data_dir", "processed", "engagement_oof.parquet")
@@ -69,11 +70,12 @@ def main() -> None:
                 photo2post[ph["photo_id"]] = str(r["post_id"])
     ages = {r["face_id"]: r for r in read_jsonl(data_path("data_dir", "interim", "face_genderage.jsonl"))}
 
+    hires_dir = data_path("data_dir", "interim", "faces_hires")
     face_post: list[str] = []
     face_path: list = []
     face_gender: list = []
     for f in read_jsonl(data_path("data_dir", "interim", "faces.jsonl")):
-        if not f.get("is_usable") or not f.get("face_crop_path"):
+        if not f.get("is_usable"):
             continue
         pid = photo2post.get(f.get("photo_id"))
         if pid is None:
@@ -81,12 +83,15 @@ def main() -> None:
         ga = ages.get(f["face_id"])
         if ga is None or float(ga["age_est"]) < ADULT_MIN_AGE:  # guardrail: только взрослые
             continue
+        hp = hires_dir / f"{f['face_id']}.jpg"
+        if not hp.exists():  # используем hi-res кропы; без них лицо пропускаем
+            continue
         face_post.append(pid)
-        face_path.append(resolve_path(f["face_crop_path"]))
+        face_path.append(hp)
         face_gender.append(int(ga["gender"]))
-    log.info("Взрослых лиц к оценке: %d в %d постах", len(face_path), len(set(face_post)))
+    log.info("Взрослых лиц к оценке (hi-res): %d в %d постах", len(face_path), len(set(face_post)))
 
-    pixels = beauty.clip_pixels_from_crops(face_path)
+    pixels = beauty.clip_pixels_from_crops(face_path, backbone=backbone)
     beauty_face = _score(model, pixels, device, mu, sd)
 
     fdf = pd.DataFrame({"post_id": face_post, "beauty": beauty_face, "gender": face_gender})

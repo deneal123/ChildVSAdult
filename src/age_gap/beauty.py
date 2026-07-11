@@ -31,6 +31,29 @@ CLIP_MODEL = "openai/clip-vit-base-patch32"
 SCUT_DATASET = "ljnlonoljpiljm/scut-fbp5500-v2-facial-beauty-scores"
 VIS_HIDDEN = 768
 
+# Бэкбоны доступны через transformers без новых установок. hidden берётся из конфига динамически.
+BACKBONES = {
+    "clip": "openai/clip-vit-base-patch32",
+    "clip-large": "openai/clip-vit-large-patch14",
+    "dinov2": "facebook/dinov2-base",
+    "siglip": "google/siglip-base-patch16-224",
+}
+
+
+def _load_vision(backbone: str):
+    """-> (vision_module, layer_list, final_norm, hidden). Прячет различия CLIP/DINOv2/SigLIP."""
+    mid = BACKBONES[backbone]
+    if backbone.startswith("clip"):
+        vm = CLIPModel.from_pretrained(mid).vision_model
+        return vm, vm.encoder.layers, vm.post_layernorm, vm.config.hidden_size
+    if backbone.startswith("siglip"):
+        from transformers import SiglipVisionModel
+        vm = SiglipVisionModel.from_pretrained(mid)
+        return vm, vm.vision_model.encoder.layers, vm.vision_model.post_layernorm, vm.config.hidden_size
+    from transformers import AutoModel  # dinov2 и прочие ViT
+    vm = AutoModel.from_pretrained(mid)
+    return vm, vm.encoder.layer, vm.layernorm, vm.config.hidden_size
+
 
 def pick_device() -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -64,25 +87,27 @@ def load_scut() -> tuple[list, np.ndarray, dict[str, np.ndarray]]:
     return ds, scores, meta
 
 
-def precompute_pixels(ds: Any, cache_name: str = "scut_clip_pixels.npz", batch: int = 128) -> np.ndarray:
-    """CLIP pixel_values [N,3,224,224] fp16 — один раз, чтобы не гонять препроцессор каждую эпоху."""
-    cache = resolve_path("data_beauty", "cache", cache_name)
+def precompute_pixels(ds: Any, backbone: str = "clip", batch: int = 128) -> np.ndarray:
+    """pixel_values бэкбона [N,3,H,H] fp16 — один раз, чтобы не гонять препроцессор каждую эпоху."""
+    cache = resolve_path("data_beauty", "cache", f"scut_{backbone}_pixels.npz")
     if cache.exists():
         z = np.load(cache)
         if len(z["pixels"]) == len(ds):
             log.info("pixel cache HIT: %s", cache.name)
             return z["pixels"]
 
-    proc = AutoImageProcessor.from_pretrained(CLIP_MODEL)
-    out = np.zeros((len(ds), 3, 224, 224), dtype=np.float16)
+    proc = AutoImageProcessor.from_pretrained(BACKBONES[backbone])
     imgs = ds["image"]
+    out = None
     for i in range(0, len(ds), batch):
         chunk = [im.convert("RGB") for im in imgs[i:i + batch]]
-        pv = proc(images=chunk, return_tensors="np")["pixel_values"]
-        out[i:i + len(chunk)] = pv.astype(np.float16)
+        pv = proc(images=chunk, return_tensors="np")["pixel_values"].astype(np.float16)
+        if out is None:
+            out = np.zeros((len(ds), *pv.shape[1:]), dtype=np.float16)
+        out[i:i + len(chunk)] = pv
     cache.parent.mkdir(parents=True, exist_ok=True)
     np.savez(cache, pixels=out)
-    log.info("pixel cache: %d -> %s", len(ds), cache.name)
+    log.info("pixel cache: %d %s -> %s", len(ds), out.shape[1:], cache.name)
     return out
 
 
@@ -132,12 +157,13 @@ def precompute_pixels_aligned(ds: Any, cache_name: str = "scut_aligned112_pixels
     return out
 
 
-def clip_pixels_from_crops(paths: list, batch: int = 256) -> np.ndarray:
-    """Готовые 112px кропы (VK) -> CLIP pixel_values [N,3,224,224] fp16. None-путь -> нули."""
+def clip_pixels_from_crops(paths: list, batch: int = 256, backbone: str = "clip") -> np.ndarray:
+    """Готовые кропы (VK) -> pixel_values бэкбона [N,3,H,H] fp16. None-путь -> нули."""
     from PIL import Image
 
-    proc = AutoImageProcessor.from_pretrained(CLIP_MODEL)
-    out = np.zeros((len(paths), 3, 224, 224), dtype=np.float16)
+    proc = AutoImageProcessor.from_pretrained(BACKBONES[backbone])
+    probe = proc(images=[Image.new("RGB", (64, 64))], return_tensors="np")["pixel_values"]
+    out = np.zeros((len(paths), *probe.shape[1:]), dtype=np.float16)
     buf_i: list[int] = []
     buf_im: list[Any] = []
 
@@ -166,24 +192,29 @@ def clip_pixels_from_crops(paths: list, batch: int = 256) -> np.ndarray:
 # ---------------------------------------------------------------- модель
 
 
-class CLIPBeauty(nn.Module):
-    """CLIP ViT-B/32 vision + регрессионная голова. Верхние ``unfreeze_top`` блоков дообучаются."""
+class BeautyRegressor(nn.Module):
+    """Визуальный бэкбон + регрессионная голова. Верхние ``unfreeze_top`` блоков дообучаются.
 
-    def __init__(self, unfreeze_top: int = 4, dropout: float = 0.3):
+    Поддерживает CLIP/DINOv2/SigLIP: ``self.vision`` + pooler_output — общий интерфейс.
+    Для clip веса совместимы со старым CLIPBeauty (ключи state_dict те же).
+    """
+
+    def __init__(self, backbone: str = "clip", unfreeze_top: int = 4, dropout: float = 0.3):
         super().__init__()
-        clip = CLIPModel.from_pretrained(CLIP_MODEL)
-        self.vision = clip.vision_model
+        self.backbone = backbone
+        vm, layers, norm, hidden = _load_vision(backbone)
+        self.vision = vm
         for p in self.vision.parameters():
             p.requires_grad_(False)
         if unfreeze_top > 0:
-            for blk in self.vision.encoder.layers[-unfreeze_top:]:
+            for blk in layers[-unfreeze_top:]:
                 for p in blk.parameters():
                     p.requires_grad_(True)
-            for p in self.vision.post_layernorm.parameters():
+            for p in norm.parameters():
                 p.requires_grad_(True)
         self.frozen = unfreeze_top == 0
         self.head = nn.Sequential(
-            nn.LayerNorm(VIS_HIDDEN), nn.Dropout(dropout), nn.Linear(VIS_HIDDEN, 256), nn.GELU(),
+            nn.LayerNorm(hidden), nn.Dropout(dropout), nn.Linear(hidden, 256), nn.GELU(),
             nn.Dropout(dropout), nn.Linear(256, 1),
         )
 
@@ -194,6 +225,11 @@ class CLIPBeauty(nn.Module):
 
     def forward(self, pixel_values: torch.Tensor) -> torch.Tensor:
         return self.head(self.encode(pixel_values)).squeeze(-1)
+
+
+def CLIPBeauty(unfreeze_top: int = 4, dropout: float = 0.3) -> BeautyRegressor:
+    """Совместимость: старый конструктор -> BeautyRegressor('clip')."""
+    return BeautyRegressor("clip", unfreeze_top, dropout)
 
 
 # ---------------------------------------------------------------- обучение / оценка
@@ -260,7 +296,7 @@ def _train(model: nn.Module, dl_tr: DataLoader, dl_va: DataLoader, y_va: np.ndar
 def kfold_eval(px: np.ndarray, y: np.ndarray, device: torch.device, n_splits: int = 5,
                unfreeze_top: int = 4, epochs: int = 8, batch: int = 32,
                lr: float = 3e-4, lr_backbone: float = 1e-5, wd: float = 0.05,
-               val_frac: float = 0.15, seed: int = 0) -> dict[str, Any]:
+               val_frac: float = 0.15, seed: int = 0, backbone: str = "clip") -> dict[str, Any]:
     """Стандартный SCUT 5-fold. Возвращает per-fold метрики + OOF-предсказания."""
     from sklearn.model_selection import KFold
 
@@ -274,7 +310,7 @@ def kfold_eval(px: np.ndarray, y: np.ndarray, device: torch.device, n_splits: in
         n_val = max(1, int(len(tr) * val_frac))
         va, core = perm[:n_val], perm[n_val:]
         mu, sd = float(y[core].mean()), float(y[core].std()) + 1e-8
-        model = CLIPBeauty(unfreeze_top=unfreeze_top).to(device)
+        model = BeautyRegressor(backbone, unfreeze_top=unfreeze_top).to(device)
         log.info("fold %d: core=%d val=%d test=%d", fold + 1, len(core), len(va), len(te))
         dl_tr = _loader(px[core], (y[core] - mu) / sd, batch, True)
         dl_va = _loader(px[va], (y[va] - mu) / sd, batch, False)
