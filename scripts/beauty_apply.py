@@ -26,17 +26,6 @@ from age_gap.engagement.features import ADULT_MIN_AGE
 log = get_logger(__name__)
 
 
-@torch.no_grad()
-def _score(model, pixels: np.ndarray, device, mu: float, sd: float, batch: int = 256) -> np.ndarray:
-    model.eval()
-    out = []
-    for i in range(0, len(pixels), batch):
-        px = torch.from_numpy(np.asarray(pixels[i:i + batch], dtype=np.float32)).to(device)
-        with torch.autocast("cuda", enabled=device.type == "cuda"):
-            out.append(model(px).float().cpu().numpy())
-    return np.concatenate(out) * sd + mu
-
-
 def _corr(a: np.ndarray, b: np.ndarray) -> dict[str, float]:
     m = np.isfinite(a) & np.isfinite(b)
     return {"spearman": float(spearmanr(a[m], b[m]).statistic),
@@ -91,8 +80,7 @@ def main() -> None:
         face_gender.append(int(ga["gender"]))
     log.info("Взрослых лиц к оценке (hi-res): %d в %d постах", len(face_path), len(set(face_post)))
 
-    pixels = beauty.clip_pixels_from_crops(face_path, backbone=backbone)
-    beauty_face = _score(model, pixels, device, mu, sd)
+    beauty_face = beauty.score_paths(model, face_path, device, mu, sd, backbone)
 
     fdf = pd.DataFrame({"post_id": face_post, "beauty": beauty_face, "gender": face_gender})
     agg = fdf.groupby("post_id").agg(beauty_max=("beauty", "max"), beauty_mean=("beauty", "mean"),

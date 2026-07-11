@@ -157,8 +157,52 @@ def precompute_pixels_aligned(ds: Any, cache_name: str = "scut_aligned112_pixels
     return out
 
 
+@torch.no_grad()
+def score_paths(model: Any, paths: list, device: torch.device, mu: float = 0.0, sd: float = 1.0,
+                backbone: str = "clip", batch: int = 128) -> np.ndarray:
+    """Стриминговый скоринг кропов по путям — грузит+скорит по батчам, БЕЗ материализации всех пикселей.
+
+    Для VK-доменов (десятки тысяч лиц) полный массив [N,3,224,224] не влезает в RAM.
+    None-путь / битый файл -> NaN. Возвращает балл в исходной шкале (mu+sd*pred).
+    """
+    from PIL import Image
+
+    proc = AutoImageProcessor.from_pretrained(BACKBONES[backbone])
+    model.eval()
+    out = np.full(len(paths), np.nan, dtype=np.float32)
+    buf_i: list[int] = []
+    buf_im: list[Any] = []
+
+    def flush() -> None:
+        if not buf_i:
+            return
+        pv = torch.from_numpy(proc(images=buf_im, return_tensors="np")["pixel_values"]).to(device)
+        with torch.autocast("cuda", enabled=device.type == "cuda"):
+            s = model(pv).float().cpu().numpy()
+        for k, idx in enumerate(buf_i):
+            out[idx] = s[k]
+        buf_i.clear()
+        buf_im.clear()
+
+    for i, p in enumerate(paths):
+        if p is None:
+            continue
+        try:
+            buf_im.append(Image.open(p).convert("RGB"))
+            buf_i.append(i)
+        except Exception:  # noqa: BLE001
+            continue
+        if len(buf_i) >= batch:
+            flush()
+    flush()
+    return out * sd + mu
+
+
 def clip_pixels_from_crops(paths: list, batch: int = 256, backbone: str = "clip") -> np.ndarray:
-    """Готовые кропы (VK) -> pixel_values бэкбона [N,3,H,H] fp16. None-путь -> нули."""
+    """Готовые кропы (VK) -> pixel_values бэкбона [N,3,H,H] fp16. None-путь -> нули.
+
+    ВНИМАНИЕ: материализует ВЕСЬ массив — для десятков тысяч лиц используйте score_paths().
+    """
     from PIL import Image
 
     proc = AutoImageProcessor.from_pretrained(BACKBONES[backbone])

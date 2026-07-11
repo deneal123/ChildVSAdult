@@ -25,17 +25,6 @@ from age_gap.common.logging import get_logger
 log = get_logger(__name__)
 
 
-@torch.no_grad()
-def _score(model, pixels, device, mu, sd, batch=256):
-    model.eval()
-    out = []
-    for i in range(0, len(pixels), batch):
-        px = torch.from_numpy(np.asarray(pixels[i:i + batch], dtype=np.float32)).to(device)
-        with torch.autocast("cuda", enabled=device.type == "cuda"):
-            out.append(model(px).float().cpu().numpy())
-    return np.concatenate(out) * sd + mu
-
-
 def _hires_paths(df):
     d = data_path("data_dir", "interim", "faces_hires")
     paths = [d / f"{fid}.jpg" for fid in df["face_id"]]
@@ -47,6 +36,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--n", type=int, default=500, help="размер пула лиц")
     ap.add_argument("--pairs", type=int, default=300, help="рекомендуемое число пар для оценки")
+    ap.add_argument("--max-candidates", type=int, default=4000, help="сколько лиц скорить для сэмпла (память)")
     ap.add_argument("--weights", default=None)
     args = ap.parse_args()
 
@@ -63,8 +53,15 @@ def main() -> None:
     df, paths = df[ok].reset_index(drop=True), [p for p, k in zip(paths, ok, strict=True) if k]
     log.info("Взрослых лиц с hi-res кропом: %d", len(df))
 
-    px = beauty.clip_pixels_from_crops(paths, backbone=backbone)
-    df["beauty"] = _score(model, px, device, mu, sd)
+    # для пула нужно всего ~n лиц; скорить все десятки тысяч не нужно и тяжело по памяти —
+    # берём случайную подвыборку кандидатов и скорим только её (стриминг, малый расход).
+    if len(df) > args.max_candidates:
+        keep = np.random.default_rng(0).permutation(len(df))[: args.max_candidates]
+        df = df.iloc[keep].reset_index(drop=True)
+        paths = [paths[i] for i in keep]
+        log.info("Подвыборка кандидатов до %d для скоринга", len(df))
+
+    df["beauty"] = beauty.score_paths(model, paths, device, mu, sd, backbone, batch=64)
 
     # стратифицированный сэмпл по децилям предсказанной красоты (пары информативнее по всему диапазону)
     df["dec"] = np.clip((df["beauty"].rank(pct=True) * 10).astype(int), 0, 9)

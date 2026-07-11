@@ -13,7 +13,6 @@ import base64
 import hashlib
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import torch
 
@@ -22,17 +21,6 @@ from age_gap.common.io import data_path, resolve_path
 from age_gap.common.logging import get_logger
 
 log = get_logger(__name__)
-
-
-@torch.no_grad()
-def _score(model, pixels, device, mu, sd, batch=256):
-    model.eval()
-    out = []
-    for i in range(0, len(pixels), batch):
-        px = torch.from_numpy(np.asarray(pixels[i:i + batch], dtype=np.float32)).to(device)
-        with torch.autocast("cuda", enabled=device.type == "cuda"):
-            out.append(model(px).float().cpu().numpy())
-    return np.concatenate(out) * sd + mu
 
 
 def _b64(path):
@@ -77,8 +65,7 @@ def main() -> None:
     lpv = (oof["likes"] / oof["views"].clip(lower=1) * 1000)
     df = df.merge(pd.DataFrame({"post_id": oof["post_id"].astype(str), "like_pm": lpv}), on="post_id", how="left")
 
-    px = beauty.clip_pixels_from_crops(df["hires_path"].tolist(), backbone=backbone)
-    df["beauty"] = _score(model, px, device, mu, sd)
+    df["beauty"] = beauty.score_paths(model, df["hires_path"].tolist(), device, mu, sd, backbone)
     df = df.sort_values("beauty", ascending=False).reset_index(drop=True)
     log.info("beauty на VK: min=%.2f max=%.2f mean=%.2f", df["beauty"].min(), df["beauty"].max(), df["beauty"].mean())
 

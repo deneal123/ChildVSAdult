@@ -75,7 +75,8 @@ def main() -> None:
         dl_va = beauty._loader(px[va], (y[va] - mu) / sd, args.batch, False)
         beauty._train(model, dl_tr, dl_va, (y[va] - mu) / sd, device,
                       3 if args.quick else args.epochs, args.lr, args.lr_backbone, 0.05)
-        wpath = resolve_path("data_beauty", "weights", f"beauty_{args.backbone}{tag}.pt")
+        wsuffix = "_aligned" if args.aligned else ""
+        wpath = resolve_path("data_beauty", "weights", f"beauty_{args.backbone}{wsuffix}.pt")
         wpath.parent.mkdir(parents=True, exist_ok=True)
         torch.save({"state_dict": model.state_dict(), "mu": mu, "sd": sd,
                     "unfreeze_vision": args.unfreeze_vision, "backbone": args.backbone}, wpath)
