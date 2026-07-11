@@ -1,0 +1,64 @@
+{
+  "n_posts_matched": 25542,
+  "n_faces": 40614,
+  "weights": "beauty_dinov2.pt",
+  "correlations": {
+    "beauty_face_scut_range": [
+      1.86,
+      4.54,
+      3.33
+    ],
+    "beauty_max_vs_y_rate": {
+      "spearman": 0.04928078112163271,
+      "pearson": 0.04583818633136985,
+      "n": 25542
+    },
+    "beauty_mean_vs_y_rate": {
+      "spearman": 0.033269897902598954,
+      "pearson": 0.03122654222039087,
+      "n": 25542
+    },
+    "beauty_max_vs_e_rate": {
+      "spearman": 0.10146627695368765,
+      "pearson": 0.09382337953060131,
+      "n": 25542
+    },
+    "beauty_max_vs_like_per_view": {
+      "spearman": 0.084583452011201,
+      "pearson": 0.061048831072900676,
+      "n": 25542
+    },
+    "beauty_max_vs_log_likes": {
+      "spearman": 0.04743001647883694,
+      "pearson": 0.05278176991798757,
+      "n": 25542
+    },
+    "beauty_max_vs_age": {
+      "spearman": -0.2632082904112068,
+      "pearson": -0.30822792346076255,
+      "n": 25542
+    },
+    "beauty_max_vs_share_female": {
+      "spearman": 0.07754765060570512,
+      "pearson": 0.0901785344078358,
+      "n": 25542
+    },
+    "beauty_vs_e_rate__net_age_gender": {
+      "spearman": 0.09183954451385223,
+      "pearson": 0.08569498242014029,
+      "n": 25542
+    },
+    "beauty_vs_like_per_view__net_age_gender": {
+      "spearman": 0.09053422478579706,
+      "pearson": 0.07564671803980215,
+      "n": 25542
+    }
+  },
+  "top_vs_bottom_by_beauty": {
+    "k": 50,
+    "like_permille_top": 21.8,
+    "like_permille_bot": 18.03,
+    "yrate_top": 0.15,
+    "yrate_bot": -0.045
+  }
+}

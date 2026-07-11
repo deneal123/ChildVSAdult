@@ -32,6 +32,21 @@ def _corr(a: np.ndarray, b: np.ndarray) -> dict[str, float]:
             "pearson": float(pearsonr(a[m], b[m])[0]), "n": int(m.sum())}
 
 
+def _resid(v: np.ndarray, C: np.ndarray) -> np.ndarray:
+    """Остаток v после линейной регрессии на контролях C (для partial-корреляции)."""
+    m = np.isfinite(v) & np.isfinite(C).all(1)
+    X = np.c_[np.ones(m.sum()), C[m]]
+    beta, *_ = np.linalg.lstsq(X, v[m], rcond=None)
+    r = np.full(len(v), np.nan)
+    r[m] = v[m] - X @ beta
+    return r
+
+
+def _partial(y: np.ndarray, x: np.ndarray, C: np.ndarray) -> dict[str, float]:
+    """Корреляция y и x при контроле C (возраст, пол)."""
+    return _corr(_resid(y, C), _resid(x, C))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--weights", default=None, help="по умолчанию data_beauty/weights/clip_beauty_aligned.pt")
@@ -99,6 +114,10 @@ def main() -> None:
         "beauty_max_vs_age": _corr(m["beauty_max"].to_numpy(), m["age_est_median"].to_numpy()),
         "beauty_max_vs_share_female": _corr(m["beauty_max"].to_numpy(), m["share_female_adult"].to_numpy()),
     }
+    # partial: красота -> вовлечённость ПРИ КОНТРОЛЕ возраста и пола (net-of-confounds)
+    ctrl = np.c_[m["age_est_median"].to_numpy(), m["share_female_adult"].to_numpy()]
+    corr["beauty_vs_e_rate__net_age_gender"] = _partial(m["beauty_max"].to_numpy(), m["e_rate"].to_numpy(), ctrl)
+    corr["beauty_vs_like_per_view__net_age_gender"] = _partial(m["beauty_max"].to_numpy(), like_pm.to_numpy(), ctrl)
 
     # топ/низ по красоте: реальная ставка на показ
     ms = m.assign(like_pm=like_pm).sort_values("beauty_max", ascending=False)

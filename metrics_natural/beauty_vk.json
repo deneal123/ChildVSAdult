@@ -1,54 +1,64 @@
 {
   "n_posts_matched": 4306,
   "n_faces": 18317,
-  "weights": "clip_beauty_aligned.pt",
+  "weights": "beauty_dinov2.pt",
   "correlations": {
     "beauty_face_scut_range": [
-      1.65,
-      4.39,
-      2.96
+      1.67,
+      4.29,
+      3.04
     ],
     "beauty_max_vs_y_rate": {
-      "spearman": 0.09547135930141205,
-      "pearson": 0.08187551197368365,
+      "spearman": 0.09506852533238452,
+      "pearson": 0.08025087565413414,
       "n": 4306
     },
     "beauty_mean_vs_y_rate": {
-      "spearman": 0.12236961879713353,
-      "pearson": 0.10864637858066216,
+      "spearman": 0.11509919274354119,
+      "pearson": 0.10060549191956442,
       "n": 4306
     },
     "beauty_max_vs_e_rate": {
-      "spearman": 0.005567723314106569,
-      "pearson": 0.016221921133700506,
+      "spearman": 0.03156268362601021,
+      "pearson": 0.04075078654020891,
       "n": 4306
     },
     "beauty_max_vs_like_per_view": {
-      "spearman": 0.04961775097696639,
-      "pearson": 0.029585448306914112,
+      "spearman": 0.0067253848027701065,
+      "pearson": -0.007703021116369644,
       "n": 4306
     },
     "beauty_max_vs_log_likes": {
-      "spearman": 0.16297538925276922,
-      "pearson": 0.1422333086190454,
+      "spearman": 0.09282666054555952,
+      "pearson": 0.10052947141563386,
       "n": 4306
     },
     "beauty_max_vs_age": {
-      "spearman": -0.16979157666834185,
-      "pearson": -0.2013516781350975,
+      "spearman": -0.18638627384650586,
+      "pearson": -0.18995281969837735,
       "n": 4306
     },
     "beauty_max_vs_share_female": {
-      "spearman": 0.05959046223393821,
-      "pearson": 0.07780133291642531,
+      "spearman": -0.08401866195770405,
+      "pearson": -0.09378927964472378,
+      "n": 4306
+    },
+    "beauty_vs_e_rate__net_age_gender": {
+      "spearman": 0.018702299308776066,
+      "pearson": 0.03109385797230654,
+      "n": 4306
+    },
+    "beauty_vs_like_per_view__net_age_gender": {
+      "spearman": 0.007497052135211516,
+      "pearson": -0.012117072229030799,
       "n": 4306
     }
   },
   "top_vs_bottom_by_beauty": {
     "k": 50,
-    "like_permille_top": 8.68,
-    "like_permille_bot": 8.19,
-    "yrate_top": 0.19,
-    "yrate_bot": 0.389
+    "like_permille_top": 8.64,
+    "like_permille_bot": 9.12,
+    "yrate_top": 0.092,
+    "yrate_bot": 0.168
   }
 }
