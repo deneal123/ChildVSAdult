@@ -47,6 +47,9 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--weights", default=None)
     ap.add_argument("--n", type=int, default=24)
+    ap.add_argument("--sort", choices=["beauty", "engagement"], default="beauty",
+                    help="beauty = сортировка по красоте (проверка модели); "
+                         "engagement = по лайкам/показ (НЕкруговой тест связи красота->отклик)")
     args = ap.parse_args()
 
     device = beauty.pick_device()
@@ -66,11 +69,24 @@ def main() -> None:
     df = df.merge(pd.DataFrame({"post_id": oof["post_id"].astype(str), "like_pm": lpv}), on="post_id", how="left")
 
     df["beauty"] = beauty.score_paths(model, df["hires_path"].tolist(), device, mu, sd, backbone)
-    df = df.sort_values("beauty", ascending=False).reset_index(drop=True)
+    key = "beauty" if args.sort == "beauty" else "like_pm"
+    df = df.dropna(subset=[key]).sort_values(key, ascending=False).reset_index(drop=True)
     log.info("beauty на VK: min=%.2f max=%.2f mean=%.2f", df["beauty"].min(), df["beauty"].max(), df["beauty"].mean())
 
     top = df.head(args.n)
     bot = df.tail(args.n).iloc[::-1]
+    # ключевые средние: если сортируем по вовлечённости, смотрим, отличается ли КРАСОТА верха и низа
+    t_b, b_b = float(top["beauty"].mean()), float(bot["beauty"].mean())
+    t_l, b_l = float(top["like_pm"].mean()), float(bot["like_pm"].mean())
+    log.info("sort=%s | beauty top=%.2f bot=%.2f | like/1000v top=%.1f bot=%.1f",
+             args.sort, t_b, b_b, t_l, b_l)
+    verdict = (f"Отсортировано по <b>вовлечённости</b> (лайки/показ). Средняя предсказанная КРАСОТА: "
+               f"верх <b>{t_b:.2f}</b> против низ <b>{b_b:.2f}</b> (лайки/1000показов: {t_l:.1f} vs {b_l:.1f}). "
+               f"Если связь была бы прямой — верх был бы заметно красивее."
+               if args.sort == "engagement" else
+               f"Отсортировано по <b>предсказанной красоте</b> — разница верх/низ здесь гарантирована "
+               f"построением (сортируем по ней же). Средняя ставка лайков/1000показов: верх {t_l:.1f} "
+               f"против низ {b_l:.1f} — вот это уже информативно.")
     html = f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Beauty gallery</title><style>
  body{{margin:0;background:#0f1218;color:#e6e9ef;font:14px/1.5 Segoe UI,sans-serif}}
  .wrap{{max-width:1180px;margin:0 auto;padding:24px}}
@@ -84,14 +100,16 @@ def main() -> None:
 <div class="banner"><b>ЛОКАЛЬНО — НЕ ПУБЛИКОВАТЬ.</b> Кропы реальных лиц. Только взрослые (age≥18).
 Рейтинг предсказан beauty-моделью ({backbone}, обучена на SCUT-FBP5500 vs людей),
 применённой к VK по hi-res кропам. Шкала 1–5.</div>
-<h1>Что модель считает красивым/некрасивым на VK</h1>
-<p style="color:#8a94a6">Лиц оценено: {len(df):,}. Диапазон beauty: {df["beauty"].min():.2f}–{df["beauty"].max():.2f}.
-Рядом — фактическая ставка лайков/показ, чтобы видеть, связана ли красота с реакцией (по числам — почти нет).</p>
-<h2>Топ-{args.n} по красоте</h2><div class="cards">{_cards(top)}</div>
-<h2>Низ-{args.n} по красоте</h2><div class="cards">{_cards(bot)}</div>
+<h1>{"Топ/низ по ВОВЛЕЧЁННОСТИ — красивее ли верх?" if args.sort == "engagement" else "Что модель считает красивым/некрасивым на VK"}</h1>
+<div style="background:#171b24;border-left:3px solid #4f8ef7;padding:12px 16px;border-radius:8px;margin:12px 0;color:#cfd6e4">
+{verdict}</div>
+<p style="color:#8a94a6">Лиц оценено: {len(df):,}. Диапазон beauty: {df["beauty"].min():.2f}–{df["beauty"].max():.2f}.</p>
+<h2>Топ-{args.n} по {"вовлечённости" if args.sort == "engagement" else "красоте"}</h2><div class="cards">{_cards(top)}</div>
+<h2>Низ-{args.n} по {"вовлечённости" if args.sort == "engagement" else "красоте"}</h2><div class="cards">{_cards(bot)}</div>
 </div></body></html>'''
 
-    out = resolve_path("reports", "engagement", f"beauty_gallery_{data_path('data_dir').name}.html")
+    sfx = "_by_engagement" if args.sort == "engagement" else ""
+    out = resolve_path("reports", "engagement", f"beauty_gallery_{data_path('data_dir').name}{sfx}.html")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
     log.info("Галерея: %s (%.1f MB)", out, out.stat().st_size / 1e6)
