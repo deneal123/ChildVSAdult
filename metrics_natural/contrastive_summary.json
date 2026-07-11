@@ -1,0 +1,19 @@
+{
+  "experiment": "triplet/contrastive on faces, target = normalized like/view (per-post e_rate)",
+  "domain": "natural_faces",
+  "n_faces": 18317,
+  "n_posts": 4306,
+  "eval": "per-post Spearman(readout, e_rate), GroupKFold(person_id), 3 folds",
+  "results": {
+    "real_target": 0.289,
+    "encoder_target_shuffled__readout_real": 0.297,
+    "full_shuffle__label_broken": -0.005
+  },
+  "interpretation": [
+    "Pipeline clean: breaking the e_rate label collapses the readout to ~0 (no structural leak).",
+    "Triplet/contrastive objective contributes NOTHING: real target 0.289 == shuffled-encoder-target 0.297.",
+    "The ~0.29 signal comes entirely from a linear readout on pretrained CLIP face features, not from metric learning.",
+    "It is NOT facial beauty (beauty vs e_rate = 0.006); the full CLIP embedding captures photo style/quality/age/demographics.",
+    "Consistent with the whole investigation: face pixels weakly predict per-view engagement (~0.24-0.29), driven by non-beauty visual factors; contrastive training does not improve on a simple CLIP readout."
+  ]
+}

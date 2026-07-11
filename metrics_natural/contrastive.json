@@ -1,0 +1,33 @@
+{
+  "platform": "vk",
+  "n_faces": 18317,
+  "n_posts": 4306,
+  "n_persons": 4287,
+  "device": "cuda",
+  "unfreeze_vision": 2,
+  "epochs": 6,
+  "target": "z(log like/view), per-face from post",
+  "per_fold": [
+    {
+      "spearman_post_e_rate": 0.2988322138710542,
+      "n_test_posts": 1434,
+      "e_rate_top": 0.7638979905068131,
+      "e_rate_bot": -0.7170367754100052
+    },
+    {
+      "spearman_post_e_rate": 0.28165858934832216,
+      "n_test_posts": 1436,
+      "e_rate_top": 0.6653759511314656,
+      "e_rate_bot": -0.6183035789062241
+    },
+    {
+      "spearman_post_e_rate": 0.28525227783421947,
+      "n_test_posts": 1436,
+      "e_rate_top": 0.5152970398221208,
+      "e_rate_bot": -0.382301262413725
+    }
+  ],
+  "shuffled": false,
+  "mean_spearman": 0.28858102701786525,
+  "std_spearman": 0.007395664187331323
+}
