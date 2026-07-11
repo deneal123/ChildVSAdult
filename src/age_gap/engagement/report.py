@@ -169,12 +169,15 @@ def _cards(oof: pd.DataFrame, thumbs: dict[str, str], n: int, top: bool) -> list
     d = oof.sort_values("pred_rate", ascending=not top).head(n)
     out = []
     for _, r in d.iterrows():
+        vv = max(1.0, float(r["views"])) if not pd.isna(r["views"]) else None
         out.append({
             "pid": pseudo_id(str(r["post_id"])),
             "pred": float(r["pred_rate"]),
             "actual": float(r["y_rate"]),
             "likes": int(r["likes"]), "comments": int(r["comments"]), "reposts": int(r["reposts"]),
             "views": None if pd.isna(r["views"]) else int(r["views"]),
+            "like_pm": None if vv is None else round(float(r["likes"]) / vv * 1000, 1),
+            "rep_pm": None if vv is None else round(float(r["reposts"]) / vv * 1000, 2),
             "n_photos": int(r["n_photos"]),
             "age": None if pd.isna(r["age_est_median"]) else int(r["age_est_median"]),
             "female": float(r["share_female_adult"]),
@@ -294,6 +297,15 @@ views) — ρ={{ '%.3f'|format(spearman_b) }}, модель-свободный �
 чем чёткие группы. Различия читать только там, где CI не пересекает ноль.</div>
 
 <h2>6. Ранжирование постов</h2>
+<div class="note"><b>Ранг не пустой.</b> Сравнение верхних {{ sep.k }} и нижних {{ sep.k }} постов
+по <i>предсказанию</i> — по <b>фактической</b> ставке на показ они реально расходятся:
+лайков/показ <b>{{ '%.2f'|format(sep.like_top) }}‰</b> против {{ '%.2f'|format(sep.like_bot) }}‰
+(+{{ '%.0f'|format((sep.like_top/sep.like_bot-1)*100) }}%), репостов/показ
+<b>{{ '%.2f'|format(sep.rep_top) }}‰</b> против {{ '%.2f'|format(sep.rep_bot) }}‰
+(×{{ '%.1f'|format(sep.rep_top/sep.rep_bot) }}), фактический остаток
+{{ '%+.2f'|format(sep.y_top) }} против {{ '%+.2f'|format(sep.y_bot) }}. Разница есть, но домен
+портретный — по самим лицам она на глаз не читается; сигнал живёт в <i>реакции на показ</i>, а не в
+явных визуальных признаках. Карточки ниже отсортированы по предсказанию; на каждой — ставка лайков/показ.</div>
 <h3>Топ-{{ cards_top|length }} по предсказанной симпатии</h3>
 <div class="cards">{% for c in cards_top %}{{ card(c) }}{% endfor %}</div>
 <h3 style="margin-top:26px">Низ-{{ cards_bot|length }}</h3>
@@ -337,9 +349,10 @@ CARD_MACRO = """{% macro card(c) %}<div class="card">
 {% if c.thumb %}<img src="data:image/jpeg;base64,{{ c.thumb }}" alt="">{% endif %}
 <div class="pid">{{ c.pid }}</div>
 <div class="sc {{ 'pos' if c.pred>0 else 'neg' }}">{{ '%+.2f'|format(c.pred) }}</div>
+<div class="sc" style="font-size:13px;color:var(--acc)">{% if c.like_pm is not none %}{{ c.like_pm }}‰ лайков/показ{% endif %}</div>
 <div class="meta">факт {{ '%+.2f'|format(c.actual) }} · c{{ c.cluster }}<br>
 ♥ {{ '{:,}'.format(c.likes) }} · 💬 {{ '{:,}'.format(c.comments) }} · ↻ {{ '{:,}'.format(c.reposts) }}
-{% if c.views %}<br>👁 {{ '{:,}'.format(c.views) }}{% endif %}
+{% if c.views %}<br>👁 {{ '{:,}'.format(c.views) }}{% if c.rep_pm is not none %} · ↻{{ c.rep_pm }}‰{% endif %}{% endif %}
 <div>
 <span class="chip">{{ c.n_photos }} фото</span>
 {% if c.age %}<span class="chip">~{{ c.age }} лет</span>{% endif %}
@@ -393,6 +406,20 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
             deep_verdict = (f"Лучшее ранжирование даёт <b>{best['name']}</b> "
                             f"(ρ={best['sp']:.3f}).")
 
+    # разделение топ/низ по РЕАЛЬНОЙ ставке на показ — доказательство, что ранг не пустой
+    osort = oof.sort_values("pred_rate", ascending=False)
+    kk = min(50, len(osort) // 2)
+
+    def _pm(d: pd.DataFrame, col: str) -> float:
+        return float((d[col] / d["views"].clip(lower=1)).mean() * 1000)
+
+    sep = {
+        "k": kk,
+        "like_top": _pm(osort.head(kk), "likes"), "like_bot": _pm(osort.tail(kk), "likes"),
+        "rep_top": _pm(osort.head(kk), "reposts"), "rep_bot": _pm(osort.tail(kk), "reposts"),
+        "y_top": float(osort.head(kk)["y_rate"].mean()), "y_bot": float(osort.tail(kk)["y_rate"].mean()),
+    }
+
     thumbs: dict[str, str] = {}
     if with_thumbnails:
         d = oof.sort_values("pred_rate", ascending=False)
@@ -437,7 +464,7 @@ def build_report(with_thumbnails: bool = False, n_cards: int = 16) -> Path:
         p_dec=plot(fig_decile(oof)),
         p_pt=plot(fig_pred_true(oof)),
         deep=deep, deep_text=deep_text, deep_vision=deep_vision, deep_verdict=deep_verdict,
-        deep_vision_state=deep_vision_state, deep_extras=deep_extras,
+        deep_vision_state=deep_vision_state, deep_extras=deep_extras, sep=sep,
         p_deep=plot(fig_deep(deep)) if deep else "",
     )
     log.info("guardrails из build: %s", build.get("guardrails", {}).get("posts_final"))
