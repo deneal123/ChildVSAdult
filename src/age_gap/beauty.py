@@ -198,6 +198,47 @@ def score_paths(model: Any, paths: list, device: torch.device, mu: float = 0.0, 
     return out * sd + mu
 
 
+@torch.no_grad()
+def embed_paths(model: Any, paths: list, device: torch.device, backbone: str = "clip",
+                batch: int = 64) -> np.ndarray:
+    """Стриминговые эмбеддинги (pooler_output бэкбона) по путям. Для re-ranker'а/адаптации.
+
+    Возвращает [N, hidden] float32; None/битый путь -> строка NaN.
+    """
+    from PIL import Image
+
+    proc = AutoImageProcessor.from_pretrained(BACKBONES[backbone])
+    model.eval()
+    out: list[np.ndarray] = [None] * len(paths)  # type: ignore[list-item]
+    buf_i: list[int] = []
+    buf_im: list[Any] = []
+
+    def flush() -> None:
+        if not buf_i:
+            return
+        pv = torch.from_numpy(proc(images=buf_im, return_tensors="np")["pixel_values"]).to(device)
+        with torch.autocast("cuda", enabled=device.type == "cuda"):
+            e = model.encode(pv).float().cpu().numpy()
+        for k, idx in enumerate(buf_i):
+            out[idx] = e[k]
+        buf_i.clear()
+        buf_im.clear()
+
+    dim = model.head[0].normalized_shape[0]
+    for i, p in enumerate(paths):
+        if p is None:
+            continue
+        try:
+            buf_im.append(Image.open(p).convert("RGB"))
+            buf_i.append(i)
+        except Exception:  # noqa: BLE001
+            continue
+        if len(buf_i) >= batch:
+            flush()
+    flush()
+    return np.vstack([e if e is not None else np.full(dim, np.nan, np.float32) for e in out])
+
+
 def clip_pixels_from_crops(paths: list, batch: int = 256, backbone: str = "clip") -> np.ndarray:
     """Готовые кропы (VK) -> pixel_values бэкбона [N,3,H,H] fp16. None-путь -> нули.
 
@@ -340,8 +381,12 @@ def _train(model: nn.Module, dl_tr: DataLoader, dl_va: DataLoader, y_va: np.ndar
 def kfold_eval(px: np.ndarray, y: np.ndarray, device: torch.device, n_splits: int = 5,
                unfreeze_top: int = 4, epochs: int = 8, batch: int = 32,
                lr: float = 3e-4, lr_backbone: float = 1e-5, wd: float = 0.05,
-               val_frac: float = 0.15, seed: int = 0, backbone: str = "clip") -> dict[str, Any]:
-    """Стандартный SCUT 5-fold. Возвращает per-fold метрики + OOF-предсказания."""
+               val_frac: float = 0.15, seed: int = 0, backbone: str = "clip",
+               init_vision: dict | None = None) -> dict[str, Any]:
+    """Стандартный SCUT 5-fold. Возвращает per-fold метрики + OOF-предсказания.
+
+    ``init_vision`` — state_dict адаптированного энкодера (domain-adaptation) для инициализации.
+    """
     from sklearn.model_selection import KFold
 
     torch.manual_seed(seed)
@@ -355,6 +400,8 @@ def kfold_eval(px: np.ndarray, y: np.ndarray, device: torch.device, n_splits: in
         va, core = perm[:n_val], perm[n_val:]
         mu, sd = float(y[core].mean()), float(y[core].std()) + 1e-8
         model = BeautyRegressor(backbone, unfreeze_top=unfreeze_top).to(device)
+        if init_vision is not None:
+            model.vision.load_state_dict({k: v.to(device) for k, v in init_vision.items()})
         log.info("fold %d: core=%d val=%d test=%d", fold + 1, len(core), len(va), len(te))
         dl_tr = _loader(px[core], (y[core] - mu) / sd, batch, True)
         dl_va = _loader(px[va], (y[va] - mu) / sd, batch, False)

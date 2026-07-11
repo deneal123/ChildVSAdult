@@ -1,0 +1,10 @@
+{
+  "n_pairs_total": 267,
+  "n_decisive": 215,
+  "n_faces_rated": 280,
+  "pairwise_accuracy": 0.6884,
+  "n_pairs_used_for_acc": 215,
+  "spearman_model_vs_bt": 0.3327,
+  "n_faces_ge_min_games": 112,
+  "note": "pairwise_accuracy — доля пар, где модель согласна с человеком (0.5 = случайно)"
+}

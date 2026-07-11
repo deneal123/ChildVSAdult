@@ -29,6 +29,8 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=8)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--backbone", default="clip", choices=list(beauty.BACKBONES), help="визуальный энкодер")
+    ap.add_argument("--init-encoder", default=None,
+                    help="path к domain-adapted энкодеру (dinov2_adapted.pt) — инициализация vision")
     ap.add_argument("--unfreeze-vision", type=int, default=4, help="сколько верхних блоков дообучать (0=frozen)")
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--lr-backbone", type=float, default=1e-5)
@@ -41,13 +43,21 @@ def main() -> None:
     device = beauty.pick_device()
     ds, y, meta = beauty.load_scut()
     px = beauty.precompute_pixels_aligned(ds) if args.aligned else beauty.precompute_pixels(ds, args.backbone)
-    tag = "_aligned" if args.aligned else ("" if args.backbone == "clip" else f"_{args.backbone}")
-    log.info("device=%s | backbone=%s n=%d unfreeze=%d", device, args.backbone, len(y), args.unfreeze_vision)
+    init_vision = None
+    if args.init_encoder:
+        ck = torch.load(resolve_path(args.init_encoder), map_location="cpu", weights_only=False)
+        init_vision = ck["vision_state"]
+        log.info("Инициализация энкодера из %s (адаптирован на %d лицах)", args.init_encoder, ck.get("n_faces", 0))
+    suffix = "_adapted" if args.init_encoder else ""
+    tag = ("_aligned" if args.aligned else ("" if args.backbone == "clip" else f"_{args.backbone}")) + suffix
+    log.info("device=%s | backbone=%s n=%d unfreeze=%d adapted=%s",
+             device, args.backbone, len(y), args.unfreeze_vision, bool(args.init_encoder))
 
     res = beauty.kfold_eval(
         px, y, device, n_splits=2 if args.quick else args.folds,
         unfreeze_top=args.unfreeze_vision, epochs=3 if args.quick else args.epochs,
         batch=args.batch, lr=args.lr, lr_backbone=args.lr_backbone, backbone=args.backbone,
+        init_vision=init_vision,
     )
     res.pop("oof")
 
@@ -71,11 +81,13 @@ def main() -> None:
         va, core = idx[:n_val], idx[n_val:]
         mu, sd = float(y[core].mean()), float(y[core].std()) + 1e-8
         model = beauty.BeautyRegressor(args.backbone, unfreeze_top=args.unfreeze_vision).to(device)
+        if init_vision is not None:
+            model.vision.load_state_dict({k: v.to(device) for k, v in init_vision.items()})
         dl_tr = beauty._loader(px[core], (y[core] - mu) / sd, args.batch, True)
         dl_va = beauty._loader(px[va], (y[va] - mu) / sd, args.batch, False)
         beauty._train(model, dl_tr, dl_va, (y[va] - mu) / sd, device,
                       3 if args.quick else args.epochs, args.lr, args.lr_backbone, 0.05)
-        wsuffix = "_aligned" if args.aligned else ""
+        wsuffix = ("_aligned" if args.aligned else "") + ("_adapted" if args.init_encoder else "")
         wpath = resolve_path("data_beauty", "weights", f"beauty_{args.backbone}{wsuffix}.pt")
         wpath.parent.mkdir(parents=True, exist_ok=True)
         torch.save({"state_dict": model.state_dict(), "mu": mu, "sd": sd,

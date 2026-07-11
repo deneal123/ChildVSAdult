@@ -1,0 +1,17 @@
+{
+  "n_pairs": 215,
+  "n_faces": 280,
+  "folds": 5,
+  "pca": 40,
+  "C": 0.2,
+  "reranker_heldout_acc": 0.6744,
+  "scut_baseline_heldout_acc": 0.6884,
+  "reranker_per_fold": [
+    0.605,
+    0.651,
+    0.698,
+    0.744,
+    0.674
+  ],
+  "note": "pair-level CV (лица могут пересекаться train/test) — предварительная проба адаптации; для чистой генерализации нужен face-disjoint eval и больше пар"
+}
