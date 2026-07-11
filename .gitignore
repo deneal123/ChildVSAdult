@@ -30,3 +30,5 @@ splits/
 src/age_gap/settings/certs/
 # Локальные отчёты ветки engagement: могут содержать кропы лиц (base64). Никогда не коммитить.
 reports/
+# beauty research branch: SCUT caches + model weights
+data_beauty/
