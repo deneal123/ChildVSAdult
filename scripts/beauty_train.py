@@ -32,12 +32,15 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--lr-backbone", type=float, default=1e-5)
     ap.add_argument("--save-full", action="store_true", help="дообучить на всех данных и сохранить веса для VK")
+    ap.add_argument("--aligned", action="store_true",
+                    help="учить на SCUT, выровненном нашим 112-пайплайном (домен-матч под VK)")
     ap.add_argument("--quick", action="store_true", help="2 фолда, 3 эпохи")
     args = ap.parse_args()
 
     device = beauty.pick_device()
     ds, y, meta = beauty.load_scut()
-    px = beauty.precompute_pixels(ds)
+    px = beauty.precompute_pixels_aligned(ds) if args.aligned else beauty.precompute_pixels(ds)
+    tag = "_aligned" if args.aligned else ""
     log.info("device=%s | n=%d unfreeze=%d", device, len(y), args.unfreeze_vision)
 
     res = beauty.kfold_eval(
@@ -53,7 +56,8 @@ def main() -> None:
         "epochs": int(3 if args.quick else args.epochs), "device": str(device),
         "per_fold": res["per_fold"], "cv_mean_std": res["mean_std"], "oof_overall": res["oof_overall"],
     }
-    dst = data_path("metrics_dir", "beauty_scut.json")
+    out["aligned_112"] = bool(args.aligned)
+    dst = data_path("metrics_dir", f"beauty_scut{tag}.json")
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(json.dumps(out, ensure_ascii=False, indent=2, default=float), encoding="utf-8")
 
@@ -70,7 +74,7 @@ def main() -> None:
         dl_va = beauty._loader(px[va], (y[va] - mu) / sd, args.batch, False)
         beauty._train(model, dl_tr, dl_va, (y[va] - mu) / sd, device,
                       3 if args.quick else args.epochs, args.lr, args.lr_backbone, 0.05)
-        wpath = resolve_path("data_beauty", "weights", "clip_beauty.pt")
+        wpath = resolve_path("data_beauty", "weights", f"clip_beauty{tag}.pt")
         wpath.parent.mkdir(parents=True, exist_ok=True)
         torch.save({"state_dict": model.state_dict(), "mu": mu, "sd": sd,
                     "unfreeze_vision": args.unfreeze_vision}, wpath)
