@@ -1,0 +1,13 @@
+{
+  "weights": "beauty_dinov2_vk.pt",
+  "backbone": "dinov2",
+  "n_decisive_pairs": 215,
+  "n_pairs_used": 215,
+  "pairwise_accuracy": 0.7209,
+  "beauty_range": [
+    1.19,
+    3.34,
+    2.25
+  ],
+  "note": "0.5 = случайно; baseline (SCUT DINOv2, без адаптации) = 0.688"
+}

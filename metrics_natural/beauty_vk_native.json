@@ -1,0 +1,23 @@
+{
+  "n_labels": 1619,
+  "label_mean": 1.97,
+  "label_std": 0.79,
+  "zero_shot_scut_model_on_your_labels": {
+    "pearson": 0.2458,
+    "spearman": 0.2476,
+    "mae": 1.1609,
+    "rmse": 1.3364
+  },
+  "finetuned_oof_on_your_labels": {
+    "pearson": 0.3901,
+    "spearman": 0.3777,
+    "mae": 0.5804,
+    "rmse": 0.7278
+  },
+  "finetuned_scut_benchmark": {
+    "spearman": 0.8788,
+    "pearson": 0.8888
+  },
+  "weights": "beauty_dinov2_vk.pt",
+  "note": "независимый тест — scripts/beauty_eval_pairs.py на 215 парах then/now (baseline 0.688)"
+}
