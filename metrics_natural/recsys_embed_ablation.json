@@ -1,0 +1,26 @@
+{
+  "beauty_dinov2 (текущий)": {
+    "taste_oof_spearman": 0.433,
+    "pairs_accuracy": 0.7628,
+    "dim": 768
+  },
+  "dinov2_raw": {
+    "taste_oof_spearman": 0.4157,
+    "pairs_accuracy": 0.7442,
+    "dim": 768
+  },
+  "clip_raw": {
+    "taste_oof_spearman": 0.5001,
+    "pairs_accuracy": 0.7814,
+    "dim": 768
+  },
+  "concat(dinov2+clip)": {
+    "taste_oof_spearman": 0.5032,
+    "pairs_accuracy": 0.7907,
+    "dim": 1536
+  },
+  "_reference": {
+    "prior_only_pairs": 0.6884,
+    "full_finetune_pairs": 0.7209
+  }
+}

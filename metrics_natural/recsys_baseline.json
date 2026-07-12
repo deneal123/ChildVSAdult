@@ -1,0 +1,142 @@
+{
+  "baseline/dim40/swipes0": {
+    "taste": 0.2387,
+    "right@100": 0.3175,
+    "quality@100": 0.0688
+  },
+  "baseline/dim40/swipes100": {
+    "taste": 0.2807,
+    "right@100": 0.33,
+    "quality@100": 0.0675
+  },
+  "baseline/dim40/swipes400": {
+    "taste": 0.3289,
+    "right@100": 0.3475,
+    "quality@100": 0.075
+  },
+  "H2/dim10/swipes50": {
+    "taste": 0.2759,
+    "right@100": 0.34,
+    "quality@100": 0.0725
+  },
+  "H2/dim10/swipes100": {
+    "taste": 0.2801,
+    "right@100": 0.3425,
+    "quality@100": 0.0763
+  },
+  "H2/dim10/swipes200": {
+    "taste": 0.2828,
+    "right@100": 0.3413,
+    "quality@100": 0.075
+  },
+  "H2/dim10/swipes400": {
+    "taste": 0.3053,
+    "right@100": 0.355,
+    "quality@100": 0.0788
+  },
+  "H2/dim20/swipes50": {
+    "taste": 0.2623,
+    "right@100": 0.33,
+    "quality@100": 0.0725
+  },
+  "H2/dim20/swipes100": {
+    "taste": 0.2816,
+    "right@100": 0.3362,
+    "quality@100": 0.0675
+  },
+  "H2/dim20/swipes200": {
+    "taste": 0.3086,
+    "right@100": 0.35,
+    "quality@100": 0.075
+  },
+  "H2/dim20/swipes400": {
+    "taste": 0.3411,
+    "right@100": 0.3613,
+    "quality@100": 0.08
+  },
+  "H2/dim30/swipes50": {
+    "taste": 0.2556,
+    "right@100": 0.3337,
+    "quality@100": 0.065
+  },
+  "H2/dim30/swipes100": {
+    "taste": 0.2491,
+    "right@100": 0.3362,
+    "quality@100": 0.07
+  },
+  "H2/dim30/swipes200": {
+    "taste": 0.2993,
+    "right@100": 0.335,
+    "quality@100": 0.0725
+  },
+  "H2/dim30/swipes400": {
+    "taste": 0.329,
+    "right@100": 0.3513,
+    "quality@100": 0.0775
+  },
+  "H2/dim40/swipes50": {
+    "taste": 0.2521,
+    "right@100": 0.3075,
+    "quality@100": 0.0663
+  },
+  "H2/dim40/swipes100": {
+    "taste": 0.2807,
+    "right@100": 0.33,
+    "quality@100": 0.0675
+  },
+  "H2/dim40/swipes200": {
+    "taste": 0.303,
+    "right@100": 0.3463,
+    "quality@100": 0.0688
+  },
+  "H2/dim40/swipes400": {
+    "taste": 0.3289,
+    "right@100": 0.3475,
+    "quality@100": 0.075
+  },
+  "H4/dim20/lam100/swipes100": {
+    "taste": 0.2359,
+    "right@100": 0.32,
+    "quality@100": 0.065
+  },
+  "H4/dim20/lam300/swipes100": {
+    "taste": 0.2816,
+    "right@100": 0.3362,
+    "quality@100": 0.0675
+  },
+  "H4/dim20/lam800/swipes100": {
+    "taste": 0.276,
+    "right@100": 0.34,
+    "quality@100": 0.07
+  },
+  "BEST/dim20/onboard0/swipes0": {
+    "taste": 0.2387,
+    "right@100": 0.3175,
+    "quality@100": 0.0688
+  },
+  "BEST/dim20/onboard0/swipes100": {
+    "taste": 0.2816,
+    "right@100": 0.3362,
+    "quality@100": 0.0675
+  },
+  "BEST/dim20/onboard20/swipes0": {
+    "taste": 0.2501,
+    "right@100": 0.33,
+    "quality@100": 0.075
+  },
+  "BEST/dim20/onboard20/swipes100": {
+    "taste": 0.2805,
+    "right@100": 0.3387,
+    "quality@100": 0.0738
+  },
+  "BEST/dim20/onboard50/swipes0": {
+    "taste": 0.2579,
+    "right@100": 0.3312,
+    "quality@100": 0.0713
+  },
+  "BEST/dim20/onboard50/swipes100": {
+    "taste": 0.2799,
+    "right@100": 0.3387,
+    "quality@100": 0.0688
+  }
+}
