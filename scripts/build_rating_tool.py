@@ -107,23 +107,28 @@ _TEMPLATE = r"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><titl
 <div class="face" id="fR" onclick="pick('R')"><img id="iR"></div></div>
 <div><button onclick="pick('T')">≈ Равны / пропустить (Пробел)</button></div>
 <div class="bar"><div id="prog"></div></div>
-<p class="muted">Оценено: <b id="cnt">0</b>. <button onclick="save()">💾 Скачать pairs.jsonl</button></p>
+<p class="muted">Оценено: <b id="cnt">0</b> · прогресс сохраняется в браузере, можно закрыть и вернуться.
+<button onclick="save()">💾 Скачать pairs.jsonl</button> <button onclick="reset()">сбросить</button></p>
 <script>
-const FACES=__FACES__; let a,b,done=0, out=[];
+const FACES=__FACES__; const KEY='pairs_v2';
+let a,b, out = JSON.parse(localStorage.getItem(KEY) || '[]');   // автосохранение: можно закрыть и вернуться
 function rnd(){return Math.floor(Math.random()*FACES.length)}
+function upd(){document.getElementById('cnt').textContent=out.length;
+ document.getElementById('prog').style.width=Math.min(100,100*out.length/__TARGET__)+'%';}
 function next(){a=rnd();b=rnd();while(b===a)b=rnd();
  document.getElementById('iL').src='data:image/jpeg;base64,'+FACES[a].b;
  document.getElementById('iR').src='data:image/jpeg;base64,'+FACES[b].b;}
 function pick(w){let winner=w==='L'?FACES[a].id:w==='R'?FACES[b].id:null;
  out.push({a:FACES[a].id,b:FACES[b].id,winner:winner,sa:FACES[a].s,sb:FACES[b].s});
- done++;document.getElementById('cnt').textContent=done;
- document.getElementById('prog').style.width=Math.min(100,100*done/__TARGET__)+'%';next();}
+ localStorage.setItem(KEY, JSON.stringify(out));
+ upd();next();}
 function save(){let s=out.map(o=>JSON.stringify(o)).join('\n');
  let bl=new Blob([s],{type:'application/x-ndjson'});let u=URL.createObjectURL(bl);
  let el=document.createElement('a');el.href=u;el.download='pairs.jsonl';el.click();}
+function reset(){if(confirm('Стереть весь прогресс?')){out=[];localStorage.removeItem(KEY);upd();next();}}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')pick('L');
  else if(e.key==='ArrowRight')pick('R');else if(e.key===' '){e.preventDefault();pick('T')}});
-next();
+upd();next();
 </script></div></body></html>"""
 
 
