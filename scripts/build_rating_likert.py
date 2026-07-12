@@ -31,6 +31,9 @@ log = get_logger(__name__)
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--limit", type=int, default=0, help=">0: ограничить число лиц (0 = все)")
+    ap.add_argument("--retest", default=None,
+                    help="путь к ratings.jsonl: показать ТОЛЬКО уже оценённые лица (замер "
+                         "test-retest: насколько ты согласен сам с собой)")
     args = ap.parse_args()
 
     df = contrastive.build_face_table("vk").drop_duplicates("face_id").reset_index(drop=True)
@@ -38,20 +41,28 @@ def main() -> None:
     df["path"] = [hd / f"{fid}.jpg" for fid in df["face_id"]]
     df = df[[p.exists() for p in df["path"]]].reset_index(drop=True)
 
+    if args.retest:
+        from age_gap.common.io import read_jsonl as _rj
+        rated = {r["face_id"] for r in _rj(resolve_path(args.retest)) if r.get("score")}
+        df = df[df["face_id"].isin(rated)].reset_index(drop=True)
+        log.info("RETEST-режим: только уже оценённые лица (%d)", len(df))
+
     # случайный порядок -> частичная разметка остаётся несмещённой выборкой
     df = df.iloc[np.random.default_rng(0).permutation(len(df))].reset_index(drop=True)
     if args.limit:
         df = df.head(args.limit)
     log.info("Лиц к разметке: %d", len(df))
 
-    out = resolve_path("reports", "rating", f"likert_{data_path('data_dir').name}.html")
+    sfx = "_retest" if args.retest else ""
+    out = resolve_path("reports", "rating", f"likert_{data_path('data_dir').name}{sfx}.html")
     out.parent.mkdir(parents=True, exist_ok=True)
     # относительный путь от html к кропам
     faces = [{"id": r["face_id"],
               "p": os.path.relpath(str(r["path"]), str(out.parent)).replace("\\", "/")}
              for _, r in df.iterrows()]
 
-    html = _TPL.replace("__FACES__", json.dumps(faces, ensure_ascii=False))
+    html = (_TPL.replace("__FACES__", json.dumps(faces, ensure_ascii=False))
+                .replace("__KEY__", "likert_retest_v1" if args.retest else "likert_ratings_v1"))
     out.write_text(html, encoding="utf-8")
     print(f"OK: {out} ({out.stat().st_size / 1e6:.1f} MB, лиц {len(faces):,})")
 
@@ -87,7 +98,7 @@ _TPL = r"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>О�
  <button class="sk exp" onclick="save()">💾 Скачать ratings.jsonl</button>
  <button class="sk" onclick="reset()">сбросить</button></p>
 <script>
-const FACES=__FACES__; const KEY='likert_ratings_v1';
+const FACES=__FACES__; const KEY='__KEY__';
 let done = JSON.parse(localStorage.getItem(KEY) || '{}');
 let i = 0;
 document.getElementById('tot').textContent = FACES.length.toLocaleString();
