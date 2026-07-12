@@ -1,0 +1,430 @@
+{
+  "pca": 40,
+  "seeds": 4,
+  "n_holdout": 400,
+  "n_pool": 1219,
+  "swipe_rule": "right if rating>=3 (+5% noise) -> ~1 bit per interaction",
+  "metric": "taste_spearman (holdout faces) / pairs_acc (215 then/now pairs)",
+  "curves": {
+    "pp100/swipe/random": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2305,
+        "pairs_acc": 0.6547
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2161,
+        "pairs_acc": 0.6593
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.275,
+        "pairs_acc": 0.7244
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.2731,
+        "pairs_acc": 0.7081
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3226,
+        "pairs_acc": 0.7477
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3585,
+        "pairs_acc": 0.7453
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3658,
+        "pairs_acc": 0.7453
+      }
+    ],
+    "pp100/swipe/uncertainty": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2016,
+        "pairs_acc": 0.6814
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.1726,
+        "pairs_acc": 0.6663
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.1958,
+        "pairs_acc": 0.6953
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.2671,
+        "pairs_acc": 0.7326
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.341,
+        "pairs_acc": 0.7198
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.376,
+        "pairs_acc": 0.7465
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3819,
+        "pairs_acc": 0.7512
+      }
+    ],
+    "pp100/swipe/thompson": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2206,
+        "pairs_acc": 0.6628
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2046,
+        "pairs_acc": 0.6442
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2265,
+        "pairs_acc": 0.6802
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.2893,
+        "pairs_acc": 0.7221
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3493,
+        "pairs_acc": 0.7581
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3588,
+        "pairs_acc": 0.7523
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3851,
+        "pairs_acc": 0.7512
+      }
+    ],
+    "pp100/swipe/exploit": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.1842,
+        "pairs_acc": 0.6663
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2252,
+        "pairs_acc": 0.6756
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2377,
+        "pairs_acc": 0.7023
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.3132,
+        "pairs_acc": 0.7186
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3329,
+        "pairs_acc": 0.7267
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3667,
+        "pairs_acc": 0.7512
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3719,
+        "pairs_acc": 0.7453
+      }
+    ],
+    "pp100/likert/random": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2788,
+        "pairs_acc": 0.6942
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2762,
+        "pairs_acc": 0.7163
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2795,
+        "pairs_acc": 0.7151
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.3145,
+        "pairs_acc": 0.7174
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3482,
+        "pairs_acc": 0.7291
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3761,
+        "pairs_acc": 0.7442
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3886,
+        "pairs_acc": 0.7547
+      }
+    ],
+    "pp300/swipe/random": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2553,
+        "pairs_acc": 0.6872
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2564,
+        "pairs_acc": 0.6837
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2957,
+        "pairs_acc": 0.7407
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.299,
+        "pairs_acc": 0.7105
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3316,
+        "pairs_acc": 0.7523
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3637,
+        "pairs_acc": 0.7442
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3696,
+        "pairs_acc": 0.7419
+      }
+    ],
+    "pp300/swipe/uncertainty": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2511,
+        "pairs_acc": 0.6872
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2508,
+        "pairs_acc": 0.6895
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2831,
+        "pairs_acc": 0.7163
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.2936,
+        "pairs_acc": 0.7523
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3463,
+        "pairs_acc": 0.7442
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.373,
+        "pairs_acc": 0.7535
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3842,
+        "pairs_acc": 0.7488
+      }
+    ],
+    "pp300/swipe/thompson": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2298,
+        "pairs_acc": 0.707
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.262,
+        "pairs_acc": 0.6965
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2913,
+        "pairs_acc": 0.7291
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.2994,
+        "pairs_acc": 0.7244
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3471,
+        "pairs_acc": 0.7302
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3666,
+        "pairs_acc": 0.7419
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.379,
+        "pairs_acc": 0.7547
+      }
+    ],
+    "pp300/swipe/exploit": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2571,
+        "pairs_acc": 0.7105
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.269,
+        "pairs_acc": 0.7244
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.3033,
+        "pairs_acc": 0.7198
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.3559,
+        "pairs_acc": 0.7314
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3579,
+        "pairs_acc": 0.7349
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3764,
+        "pairs_acc": 0.7558
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3785,
+        "pairs_acc": 0.7547
+      }
+    ],
+    "pp300/likert/random": [
+      {
+        "n": 0,
+        "taste_spearman": 0.2441,
+        "pairs_acc": 0.6884
+      },
+      {
+        "n": 25,
+        "taste_spearman": 0.2676,
+        "pairs_acc": 0.707
+      },
+      {
+        "n": 50,
+        "taste_spearman": 0.2808,
+        "pairs_acc": 0.7198
+      },
+      {
+        "n": 100,
+        "taste_spearman": 0.2992,
+        "pairs_acc": 0.7279
+      },
+      {
+        "n": 200,
+        "taste_spearman": 0.3264,
+        "pairs_acc": 0.7244
+      },
+      {
+        "n": 400,
+        "taste_spearman": 0.3523,
+        "pairs_acc": 0.7395
+      },
+      {
+        "n": 700,
+        "taste_spearman": 0.3766,
+        "pairs_acc": 0.7384
+      },
+      {
+        "n": 1000,
+        "taste_spearman": 0.3895,
+        "pairs_acc": 0.7523
+      }
+    ]
+  }
+}
