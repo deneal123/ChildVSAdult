@@ -1,0 +1,59 @@
+{
+  "siglip_400m": {
+    "taste_oof": 0.5381,
+    "pairs": 0.7523,
+    "dim": 1152
+  },
+  "siglip_L": {
+    "taste_oof": 0.5158,
+    "pairs": 0.7455,
+    "dim": 1024
+  },
+  "dino_L": {
+    "taste_oof": 0.4275,
+    "pairs": 0.6972,
+    "dim": 1024
+  },
+  "clip_L336": {
+    "taste_oof": 0.5527,
+    "pairs": 0.7668,
+    "dim": 1024
+  },
+  "clip_b32+clip_L14+siglip_b": {
+    "taste_oof": 0.5596,
+    "pairs": 0.7515,
+    "dim": 2560
+  },
+  "clip_b32+clip_L14+siglip_b+dino_L": {
+    "taste_oof": 0.563,
+    "pairs": 0.771,
+    "dim": 3584
+  },
+  "siglip_400m+clip_L14": {
+    "taste_oof": 0.5612,
+    "pairs": 0.7651,
+    "dim": 2176
+  },
+  "siglip_400m+clip_L336": {
+    "taste_oof": 0.5631,
+    "pairs": 0.7617,
+    "dim": 2176
+  },
+  "siglip_400m+clip_L14+dino_L": {
+    "taste_oof": 0.5604,
+    "pairs": 0.7634,
+    "dim": 3200
+  },
+  "siglip_400m+siglip_L+clip_L14+clip_L336+dino_L": {
+    "taste_oof": 0.5653,
+    "pairs": 0.7642,
+    "dim": 5248
+  },
+  "_ref": {
+    "prior_pairs": 0.6158,
+    "prev_best_pairs": 0.7625,
+    "prev_best_taste": 0.5679,
+    "ceiling_taste": 0.85,
+    "pairs_SE": 0.0116
+  }
+}
