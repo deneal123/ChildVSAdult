@@ -1,0 +1,39 @@
+{
+  "margin 0.15": {
+    "taste_oof": 0.5464,
+    "pairs": 0.7371,
+    "dim": 1024
+  },
+  "margin 0.40 (текущий)": {
+    "taste_oof": 0.553,
+    "pairs": 0.7515,
+    "dim": 1024
+  },
+  "margin 0.80": {
+    "taste_oof": 0.5144,
+    "pairs": 0.7447,
+    "dim": 1024
+  },
+  "0.40 + flip-TTA": {
+    "taste_oof": 0.5538,
+    "pairs": 0.7557,
+    "dim": 1024
+  },
+  "concat 3 масштабов": {
+    "taste_oof": 0.5583,
+    "pairs": 0.7549,
+    "dim": 3072
+  },
+  "concat 3 масштабов + TTA": {
+    "taste_oof": 0.5568,
+    "pairs": 0.7489,
+    "dim": 3072
+  },
+  "_ref": {
+    "prior_pairs": 0.6158,
+    "best_ensemble_taste": 0.5679,
+    "best_ensemble_pairs": 0.771,
+    "ceiling_taste": 0.85,
+    "pairs_SE": 0.0116
+  }
+}

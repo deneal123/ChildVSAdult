@@ -39,9 +39,19 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--margin", type=float, default=0.4)
     ap.add_argument("--size", type=int, default=256)
+    ap.add_argument("--out-suffix", default="", help="суффикс папки: faces_hires<suffix> "
+                                                     "(для мульти-масштабных кропов)")
+    ap.add_argument("--face-list", default=None,
+                    help="файл со списком face_id (по одному в строке): кропать ТОЛЬКО их")
     args = ap.parse_args()
 
-    out_dir = data_path("data_dir", "interim", "faces_hires")
+    only = None
+    if args.face_list:
+        only = {ln.strip() for ln in resolve_path(args.face_list).read_text(encoding="utf-8").splitlines()
+                if ln.strip()}
+        log.info("Точечный режим: только %d указанных лиц", len(only))
+
+    out_dir = data_path("data_dir", "interim", f"faces_hires{args.out_suffix}")
     out_dir.mkdir(parents=True, exist_ok=True)
     photo_paths = _photo_paths()
     ages = {r["face_id"]: r for r in read_jsonl(data_path("data_dir", "interim", "face_genderage.jsonl"))}
@@ -49,6 +59,8 @@ def main() -> None:
     new = skipped = no_img = child = 0
     for f in read_jsonl(data_path("data_dir", "interim", "faces.jsonl")):
         if not f.get("is_usable") or not f.get("bbox"):
+            continue
+        if only is not None and f["face_id"] not in only:
             continue
         ga = ages.get(f["face_id"])
         if ga is None or float(ga["age_est"]) < ADULT_MIN_AGE:  # guardrail: только взрослые
