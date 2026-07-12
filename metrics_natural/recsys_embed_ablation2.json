@@ -1,0 +1,105 @@
+{
+  "dino_b": {
+    "taste_oof": 0.4243,
+    "pairs": 0.7442,
+    "dim": 768,
+    "chosen_pca_alpha": [
+      80,
+      50
+    ]
+  },
+  "clip_b32": {
+    "taste_oof": 0.5153,
+    "pairs": 0.786,
+    "dim": 768,
+    "chosen_pca_alpha": [
+      80,
+      50
+    ]
+  },
+  "clip_L14": {
+    "taste_oof": 0.5529,
+    "pairs": 0.7581,
+    "dim": 1024,
+    "chosen_pca_alpha": [
+      160,
+      50
+    ]
+  },
+  "siglip_b": {
+    "taste_oof": 0.5205,
+    "pairs": 0.814,
+    "dim": 768,
+    "chosen_pca_alpha": [
+      80,
+      50
+    ]
+  },
+  "dino_b+clip_b32": {
+    "taste_oof": 0.4997,
+    "pairs": 0.7953,
+    "dim": 1536,
+    "chosen_pca_alpha": [
+      40,
+      50
+    ]
+  },
+  "dino_b+clip_L14": {
+    "taste_oof": 0.5576,
+    "pairs": 0.7674,
+    "dim": 1792,
+    "chosen_pca_alpha": [
+      160,
+      50
+    ]
+  },
+  "clip_L14+siglip_b": {
+    "taste_oof": 0.5539,
+    "pairs": 0.8,
+    "dim": 1792,
+    "chosen_pca_alpha": [
+      80,
+      50
+    ]
+  },
+  "dino_b+clip_b32+clip_L14": {
+    "taste_oof": 0.5586,
+    "pairs": 0.7814,
+    "dim": 2560,
+    "chosen_pca_alpha": [
+      160,
+      50
+    ]
+  },
+  "dino_b+clip_b32+clip_L14+siglip_b": {
+    "taste_oof": 0.5679,
+    "pairs": 0.786,
+    "dim": 3328,
+    "chosen_pca_alpha": [
+      160,
+      50
+    ]
+  },
+  "clip_b32+clip_L14+siglip_b": {
+    "taste_oof": 0.5596,
+    "pairs": 0.8,
+    "dim": 2560,
+    "chosen_pca_alpha": [
+      80,
+      50
+    ]
+  },
+  "clip_b32+siglip_b": {
+    "taste_oof": 0.5336,
+    "pairs": 0.7953,
+    "dim": 1536,
+    "chosen_pca_alpha": [
+      80,
+      50
+    ]
+  },
+  "_ref": {
+    "prior_only_pairs": 0.6884,
+    "ceiling_taste": 0.85
+  }
+}
