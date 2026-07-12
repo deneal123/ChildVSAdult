@@ -1,0 +1,13 @@
+{
+  "n_retested": 150,
+  "test_retest_spearman": 0.7225,
+  "test_retest_pearson": 0.7534,
+  "exact_agreement": 0.62,
+  "within_1_point": 0.9733,
+  "mean_abs_shift": 0.407,
+  "mean_signed_drift": 0.22,
+  "implied_ceiling_for_model": 0.85,
+  "our_model_taste": 0.5,
+  "fraction_of_ceiling_reached": 0.5882,
+  "note": "потолок = sqrt(test-retest): столько дала бы ИДЕАЛЬНАЯ модель против шумных меток"
+}
