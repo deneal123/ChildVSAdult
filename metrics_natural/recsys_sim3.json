@@ -1,0 +1,189 @@
+{
+  "pool_mean_rating": 1.97,
+  "pool_right_rate": 0.229,
+  "block": 100,
+  "seeds": 6,
+  "note": "качество ВЫДАЧИ: средняя истинная оценка показанных лиц по блокам показов",
+  "curves": {
+    "alpha1/random": {
+      "mean_true_rating_by_block": [
+        1.97,
+        1.93,
+        1.925,
+        1.982,
+        1.973,
+        1.992
+      ],
+      "right_swipe_rate_by_block": [
+        0.227,
+        0.207,
+        0.213,
+        0.23,
+        0.207,
+        0.262
+      ]
+    },
+    "alpha1/prior_only": {
+      "mean_true_rating_by_block": [
+        2.34,
+        2.27,
+        2.05,
+        2.2,
+        2.11,
+        2.02
+      ],
+      "right_swipe_rate_by_block": [
+        0.41,
+        0.37,
+        0.3,
+        0.3,
+        0.33,
+        0.21
+      ]
+    },
+    "alpha1/personalized": {
+      "mean_true_rating_by_block": [
+        2.477,
+        2.397,
+        2.283,
+        2.215,
+        2.213,
+        2.115
+      ],
+      "right_swipe_rate_by_block": [
+        0.485,
+        0.428,
+        0.38,
+        0.35,
+        0.343,
+        0.285
+      ]
+    },
+    "alpha1/thompson": {
+      "mean_true_rating_by_block": [
+        2.183,
+        2.193,
+        2.237,
+        2.26,
+        2.185,
+        2.183
+      ],
+      "right_swipe_rate_by_block": [
+        0.323,
+        0.333,
+        0.382,
+        0.388,
+        0.35,
+        0.337
+      ]
+    },
+    "alpha1/oracle": {
+      "mean_true_rating_by_block": [
+        3.53,
+        3.0,
+        3.0,
+        2.71,
+        2.0,
+        2.0
+      ],
+      "right_swipe_rate_by_block": [
+        1.0,
+        1.0,
+        1.0,
+        0.71,
+        0.0,
+        0.0
+      ]
+    },
+    "alpha0.5/random": {
+      "mean_true_rating_by_block": [
+        1.97,
+        1.93,
+        1.925,
+        1.982,
+        1.973,
+        1.992
+      ],
+      "right_swipe_rate_by_block": [
+        0.227,
+        0.207,
+        0.213,
+        0.23,
+        0.207,
+        0.262
+      ]
+    },
+    "alpha0.5/prior_only": {
+      "mean_true_rating_by_block": [
+        2.34,
+        2.27,
+        2.05,
+        2.2,
+        2.11,
+        2.02
+      ],
+      "right_swipe_rate_by_block": [
+        0.41,
+        0.37,
+        0.3,
+        0.3,
+        0.33,
+        0.21
+      ]
+    },
+    "alpha0.5/personalized": {
+      "mean_true_rating_by_block": [
+        2.353,
+        2.353,
+        2.222,
+        2.135,
+        2.09,
+        2.088
+      ],
+      "right_swipe_rate_by_block": [
+        0.425,
+        0.425,
+        0.373,
+        0.317,
+        0.285,
+        0.272
+      ]
+    },
+    "alpha0.5/thompson": {
+      "mean_true_rating_by_block": [
+        2.173,
+        2.11,
+        2.202,
+        2.198,
+        2.198,
+        2.093
+      ],
+      "right_swipe_rate_by_block": [
+        0.325,
+        0.295,
+        0.34,
+        0.345,
+        0.36,
+        0.288
+      ]
+    },
+    "alpha0.5/oracle": {
+      "mean_true_rating_by_block": [
+        3.53,
+        3.0,
+        3.0,
+        2.71,
+        2.0,
+        2.0
+      ],
+      "right_swipe_rate_by_block": [
+        1.0,
+        1.0,
+        1.0,
+        0.71,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}
