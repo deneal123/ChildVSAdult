@@ -56,6 +56,10 @@ def main() -> None:
     wpath = resolve_path(args.weights) if args.weights else resolve_path("data_beauty", "weights", "beauty_dinov2.pt")
     ckpt = torch.load(wpath, map_location=device, weights_only=False)
     backbone = ckpt.get("backbone", "clip")
+    is_vk = wpath.stem.endswith("_vk")
+    mtag = "_vk" if is_vk else ("" if wpath.stem == "beauty_dinov2" else f"_{wpath.stem.split('_')[-1]}")
+    model_desc = ("<b>дообучена на ТВОИХ 1619 оценках</b> (VK-native, старт от SCUT-модели)" if is_vk
+                  else f"обучена на SCUT-FBP5500 vs людей ({backbone})")
     model = beauty.BeautyRegressor(backbone, unfreeze_top=int(ckpt["unfreeze_vision"])).to(device)
     model.load_state_dict(ckpt["state_dict"])
     mu, sd = float(ckpt["mu"]), float(ckpt["sd"])
@@ -98,8 +102,7 @@ def main() -> None:
  .sc{{font-size:20px;font-weight:700;color:#4f8ef7;margin-top:6px}} .sc span{{font-size:11px;color:#8a94a6;font-weight:400}}
  .m{{font-size:11px;color:#8a94a6;margin-top:4px}}</style></head><body><div class="wrap">
 <div class="banner"><b>ЛОКАЛЬНО — НЕ ПУБЛИКОВАТЬ.</b> Кропы реальных лиц. Только взрослые (age≥18).
-Рейтинг предсказан beauty-моделью ({backbone}, обучена на SCUT-FBP5500 vs людей),
-применённой к VK по hi-res кропам. Шкала 1–5.</div>
+Рейтинг предсказан beauty-моделью: {model_desc}, применена к VK по hi-res кропам. Шкала 1–5.</div>
 <h1>{"Топ/низ по ВОВЛЕЧЁННОСТИ — красивее ли верх?" if args.sort == "engagement" else "Что модель считает красивым/некрасивым на VK"}</h1>
 <div style="background:#171b24;border-left:3px solid #4f8ef7;padding:12px 16px;border-radius:8px;margin:12px 0;color:#cfd6e4">
 {verdict}</div>
@@ -109,7 +112,7 @@ def main() -> None:
 </div></body></html>'''
 
     sfx = "_by_engagement" if args.sort == "engagement" else ""
-    out = resolve_path("reports", "engagement", f"beauty_gallery_{data_path('data_dir').name}{sfx}.html")
+    out = resolve_path("reports", "engagement", f"beauty_gallery_{data_path('data_dir').name}{sfx}{mtag}.html")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
     log.info("Галерея: %s (%.1f MB)", out, out.stat().st_size / 1e6)
