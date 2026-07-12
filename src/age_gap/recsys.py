@@ -44,10 +44,15 @@ class BayesianLinearHead:
     def cov(self) -> np.ndarray:
         return np.linalg.inv(self.lam)
 
-    def update(self, x: np.ndarray, residual: float) -> None:
-        """Один свайп/оценка: rank-1 апдейт апостериора."""
-        self.lam += np.outer(x, x) / self.noise
-        self.b += x * float(residual) / self.noise
+    def update(self, x: np.ndarray, residual: float, weight: float = 1.0) -> None:
+        """Один свайп/оценка: rank-1 апдейт апостериора.
+
+        ``weight`` — вес наблюдения. Для IPS передавайте 1/propensity (с клиппингом):
+        так снимается смещение экспозиции, когда показ был не случайным.
+        """
+        w = float(weight)
+        self.lam += w * np.outer(x, x) / self.noise
+        self.b += w * x * float(residual) / self.noise
         self.n += 1
 
     def update_batch(self, X: np.ndarray, r: np.ndarray) -> None:
