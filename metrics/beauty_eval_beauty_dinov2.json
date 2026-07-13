@@ -1,11 +1,11 @@
 {
   "weights": "beauty_dinov2.pt",
   "backbone": "dinov2",
-  "n_decisive_pairs": 215,
-  "n_pairs_used": 215,
-  "pairwise_accuracy": 0.6884,
+  "n_decisive_pairs": 1179,
+  "n_pairs_used": 1179,
+  "pairwise_accuracy": 0.6158,
   "beauty_range": [
-    2.3,
+    2.17,
     4.35,
     3.34
   ],
