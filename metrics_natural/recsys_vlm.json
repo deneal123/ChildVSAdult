@@ -1,0 +1,131 @@
+{
+  "A_фраза ↔ ОЦЕНКА: топ +15": {
+    "a person with red lipstick": 0.1891,
+    "a well lit photo": 0.1588,
+    "a sexy person": 0.1532,
+    "a person with full lips": 0.153,
+    "a beautiful person": 0.1527,
+    "a confident person": 0.1504,
+    "a person who looks like a model": 0.142,
+    "a cute person": 0.1326,
+    "a person with clear skin": 0.1278,
+    "a close-up of a face": 0.122,
+    "a selfie": 0.1215,
+    "a heavily filtered photo": 0.1213,
+    "a slim person": 0.1118,
+    "a person wearing makeup": 0.1113,
+    "a teenager": 0.109
+  },
+  "A_фраза ↔ ОЦЕНКА: топ −15": {
+    "a person with short hair": -0.0486,
+    "a person in casual clothing": -0.0574,
+    "a person facing the camera directly": -0.0743,
+    "a person looking down": -0.079,
+    "a person with a big nose": -0.0861,
+    "a side profile of a person": -0.0899,
+    "a person with a thin face": -0.0905,
+    "a chubby person": -0.0916,
+    "an unkempt person": -0.1017,
+    "a plain-looking person": -0.1093,
+    "a person with a small nose": -0.1108,
+    "a person with hair covering their face": -0.1125,
+    "a person with styled hair": -0.1146,
+    "a person looking away": -0.1272,
+    "a middle-aged person": -0.1443
+  },
+  "A_фраза ↔ КАДРОВЫЙ остаток: топ +10": {
+    "a person with red lipstick": 0.0919,
+    "a cute person": 0.0747,
+    "a teenager": 0.0379,
+    "a person with freckles": 0.0324,
+    "a well lit photo": 0.0301,
+    "a sexy person": 0.0267,
+    "a happy person": 0.0265,
+    "a person with messy hair": 0.0231,
+    "a person with large eyes": 0.0227,
+    "a heavily filtered photo": 0.0217
+  },
+  "A_фраза ↔ КАДРОВЫЙ остаток: топ −10": {
+    "a person with a big nose": -0.1277,
+    "a person looking down": -0.135,
+    "a well-groomed person": -0.1376,
+    "a person with a thin face": -0.1378,
+    "a photo taken indoors": -0.1388,
+    "a plain-looking person": -0.1438,
+    "a middle-aged person": -0.1463,
+    "a person with a small nose": -0.1473,
+    "a side profile of a person": -0.1546,
+    "a person looking away": -0.1601
+  },
+  "предсказательно (GroupKFold)": {
+    "emb (baseline)": {
+      "taste": 0.5582,
+      "между людьми": 0.658,
+      "ВНУТРИ человека": 0.3555,
+      "dim": 3328
+    },
+    "emb + CLIP-зонд (109 фраз)": {
+      "taste": 0.5609,
+      "между людьми": 0.6585,
+      "ВНУТРИ человека": 0.3439,
+      "dim": 3439
+    },
+    "ТОЛЬКО CLIP-зонд": {
+      "taste": 0.4987,
+      "между людьми": 0.5844,
+      "ВНУТРИ человека": 0.3107,
+      "dim": 111
+    },
+    "emb + BLIP-подписи": {
+      "taste": 0.5474,
+      "между людьми": 0.6305,
+      "ВНУТРИ человека": 0.371,
+      "dim": 4096
+    },
+    "ТОЛЬКО BLIP-подписи": {
+      "taste": 0.2804,
+      "между людьми": 0.2736,
+      "ВНУТРИ человека": 0.2029,
+      "dim": 768
+    }
+  },
+  "B_слова BLIP: чаще у ТОПА": {
+    "blonde": 2.32,
+    "dress": 2.11,
+    "posing": 2.03,
+    "purple": 1.9,
+    "taking": 1.85,
+    "jacket": 1.76,
+    "self": 1.7,
+    "camera": 1.49,
+    "eyes": 1.39,
+    "curly": 1.32,
+    "tank": 1.25,
+    "sweater": 1.22
+  },
+  "B_слова BLIP: чаще у НИЗА": {
+    "blue": 0.84,
+    "pink": 0.83,
+    "grey": 0.83,
+    "window": 0.8,
+    "table": 0.77,
+    "laptop": 0.72,
+    "chair": 0.69,
+    "gray": 0.61,
+    "frng": 0.53,
+    "tattoo": 0.49,
+    "hoodie": 0.41,
+    "short": 0.29
+  },
+  "B_уникальных подписей": {
+    "всего": 2339,
+    "уникальных": 1553,
+    "доля": 0.664
+  },
+  "_ref": {
+    "taste_база": 0.5582,
+    "внутриперс_база": 0.3555,
+    "внутриперс_потолок": 0.715,
+    "предрегистрация": "CLIP-зонд = линейная проекция CLIP-эмбеддинга -> предсказательный прирост ожидается НУЛЕВОЙ по построению"
+  }
+}
