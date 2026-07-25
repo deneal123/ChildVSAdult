@@ -36,7 +36,7 @@
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Cross-age face verification---deciding whether two photographs taken years apart depict the same person---is hard, and longitudinal training data are scarce. We ask a \emph{data-centric} question: can the supervision for age invariance be obtained without a manually labeled longitudinal dataset? We show that multi-photo ``then/now'' social-media posts supply weak \emph{same-person} longitudinal pairs with no manual identity/age labels (a large-language model parses captions and embedding clustering forms persons; we audit these components, including a small manual validation), and that fine-tuning a deliberately weak recognizer on them induces \emph{transferable, targeted} large-gap robustness. On the external benchmark FG-NET, large-gap ($\geq$25-year) ROC-AUC rises \textbf{from 0.736 to 0.848} ($+$0.112 $\pm$ 0.001 over three seeds; DeLong $p<10^{-19}$), at no measurable cost on easy benchmarks (LFW accuracy $+$0.004, LFW TAR@FAR$=$0.1\% $+$0.002; AgeDB-30 $-$0.008)---a gain concentrated on the large-gap regime rather than a trade-off. Our central, bounded claim is that, within this weak/medium-backbone attribution protocol, the \emph{data source}---not the choice among the objectives we test---accounts for most of the gain: a pair-contrastive objective matches an ArcFace-margin one (0.848 vs.\ 0.851). The gain is driven by the same-person pairing (explicit caption age anchors add only $+$0.009) and is mechanistically tied to removing an age shortcut. Supporting evidence in the paper: superiority over a real re-aging model under a gap-parity control; bidirectional transfer to an independent non-VK platform (Reddit); data efficiency ($\approx$96\% of the gain at 10\% of identities); an apparent-demographic audit; calibration; and a curation finding that about half of the raw ``positives'' were near-duplicate frames inflating internal metrics.
+Cross-age face verification---deciding whether two photographs taken years apart depict the same person---is hard, and longitudinal training data are scarce. We ask a \emph{data-centric} question: can the supervision for age invariance be obtained without a manually labeled longitudinal dataset? We show that multi-photo ``then/now'' social-media posts supply weak \emph{same-person} longitudinal pairs with no manual identity/age labels (a large-language model parses captions and embedding clustering forms persons; we audit these components, including a small manual validation), and that fine-tuning a deliberately weak recognizer on them induces \emph{transferable, targeted} large-gap robustness. On the external benchmark FG-NET, large-gap ($\geq$25-year) ROC-AUC rises \textbf{from 0.736 to 0.848} ($+$0.112 $\pm$ 0.001 over three seeds; DeLong $p<10^{-19}$), at no measurable cost on easy benchmarks (LFW accuracy $+$0.004, LFW TAR@FAR$=$0.1\% $+$0.002; AgeDB-30 $-$0.008)---a gain concentrated on the large-gap regime rather than a trade-off. We further show that the standard \emph{random-impostor} protocol understates this task: at a 25-year gap a person is less similar to themselves than to the most similar same-age stranger (median ArcFace cosine 0.232 vs.\ 0.289), and a frozen state-of-the-art recognizer (AdaFace IR-101) falls from 0.961 to 0.376~[0.356,\,0.394] ROC-AUC---\emph{below chance}---once impostors are look-alikes rather than random. Our central, bounded claim is that, within this weak/medium-backbone attribution protocol, the \emph{data source}---not the choice among the objectives we test---accounts for most of the gain: a pair-contrastive objective matches an ArcFace-margin one (0.848 vs.\ 0.851). The gain is driven by the same-person pairing (explicit caption age anchors add only $+$0.009) and is mechanistically tied to removing an age shortcut. Supporting evidence in the paper: superiority over a real re-aging model under a gap-parity control; bidirectional transfer to an independent non-VK platform (Reddit); data efficiency ($\approx$96\% of the gain at 10\% of identities); an apparent-demographic audit; calibration; and a curation finding that about half of the raw ``positives'' were near-duplicate frames inflating internal metrics.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -279,40 +279,36 @@ our.25+ & 0.640 & \textbf{0.838} & 0.549 & 0.622 \\
 \subsection{Headroom Curve and the Strong-Backbone Regime}\label{sec:res-headroom}
 The gain reproduces on FaceNet, ArcFace iResNet, and AdaFace IR-50/IR-101 (three loss families, two architectures) and \emph{monotonically decreases with frozen strength} (Table~\ref{tab:headroom}, Fig.~\ref{fig:headroom}); a clean depth control (AdaFace IR-50 $\rightarrow$ IR-101) confirms it. Strong saturated backbones do not improve and forget slightly under fine-tuning; a gentler learning rate (1e-5) approximately halves the forgetting but does not convert it into a gain. The contribution is therefore specific to weak and medium backbones with cross-age headroom---a limitation we state explicitly (Sec.~\ref{sec:limitations}).
 
-\textbf{The headroom curve is measured against \emph{random} impostors.} Our test negatives are
-random cross-identity pairs (plus a small age-controlled subset), which modern backbones separate
-trivially: frozen AdaFace IR-101 reaches \texttt{our.25+} $=$ 0.968 and FG-NET large-gap 0.957,
-above anything our pipeline attains. This also validates by measurement, rather than merely
-asserts, the attribution argument of Sec.~\ref{sec:method}: on this task strong embeddings really
-are near-perfect, so an adapter on top of them would have nothing to attribute. Re-mining the
-negatives as \emph{look-alikes} (same apparent gender, $|\Delta\text{age}|\leq5$~years, ranked by
-cosine similarity under an independent miner that is not among the evaluated models) restores
-difficulty (Table~\ref{tab:lookalike}): IR-101 falls to 0.705 at rank-10 and 0.474 at rank-1. A
-second miner from a different loss family reproduces the curve to within 0.03 and preserves the
-model ordering at every level, so the difficulty axis is a property of the task, not of the miner.
-Our mined pairs continue to help a weak backbone across the whole curve ($+$0.20 to $+$0.26 on the
-25+ slice), and the distance to frozen SOTA narrows at the hard end ($-$0.145 at random vs.\
-$-$0.070 at rank-1, paired bootstrap over anchors), but it does not close: frozen IR-101 stays
-significantly ahead at every difficulty level. The correct reading of Table~\ref{tab:headroom} is
-therefore that strong backbones are not improved by \emph{our} supervision---not that they have no
-cross-age headroom.
+\textbf{The random-impostor protocol understates the task.} Our test negatives are random cross-identity pairs, which modern backbones separate trivially: frozen AdaFace IR-101 reaches \texttt{our.25+} $=$ 0.968. That validates by measurement, rather than merely asserts, the attribution argument of Sec.~\ref{sec:method}: under this protocol strong embeddings really are near-perfect, so an adapter on top of them would have nothing to attribute. The reason is visible in the raw similarities. Median ArcFace cosine is 0.456 for positives below 10 years, 0.307 at 10--25 years and 0.232 at 25$+$, against 0.012 for random negatives---but \textbf{0.289} for the most similar same-gender, same-apparent-age impostor. \emph{At a 25-year gap a person is less similar to themselves than to the most similar same-age stranger.} Re-mining the negatives accordingly (same apparent gender, $|\Delta\text{age}|\leq5$~years, ranked by an independent miner outside the evaluated set) collapses every modern recognizer we test (Table~\ref{tab:lookalike}): frozen IR-101 falls from 0.961 to \textbf{0.376}~[0.356,\,0.394] at rank-1, \emph{significantly below chance}. This is not a labeling artifact: the mined impostors are 0.00\% same-person under the identity clustering, and the benchmark carries zero identity leakage across splits, zero same-person negatives (0/31\,865), 99.1\% LLM-verified single-person groups among those surviving into positives (92.8\% before curation removes multi-person groups) and 0.00\% near-duplicates (Sec.~\ref{sec:data-curation}). A second miner from a different loss family reproduces the curve to within 0.03 and preserves the model ordering at every level, so the difficulty axis belongs to the task, not to the miner. Our mined pairs still help a weak backbone across the whole curve ($+$0.20 to $+$0.28 on the 25$+$ slice) and the distance to frozen SOTA narrows at the hard end ($-$0.145 at random vs.\ $-$0.070 at rank-1, paired bootstrap), but it does not close. The correct reading of Table~\ref{tab:headroom} is therefore that strong backbones are not improved by \emph{our} supervision---not that they lack cross-age headroom, and not that the task is solved.
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Look-alike negatives restore difficulty (25$+$ ROC-AUC; $n_{\text{pos}}=141$,
-$n_{\text{neg}}=4762$; rank $=$ impostor rank under an independent miner).}
+\caption{Look-alike impostors break modern face recognition (25$+$ ROC-AUC; rank $=$ impostor
+rank under an independent miner). \emph{Top:} frozen recognizers on the \emph{full} 25$+$ set
+($n_{\text{pos}}\!=\!1208$, $n_{\text{neg}}\!=\!31\,590$), valid because no frozen model has seen
+any of our data. \emph{Bottom:} the effect of our supervision, necessarily test-only
+($n_{\text{pos}}\!=\!141$, $n_{\text{neg}}\!=\!4762$). The blocks use different impostor pools and
+are \emph{not} comparable across blocks: rank-$k$ difficulty grows with pool size.}
 \label{tab:lookalike}
 \centering
 \footnotesize
 \begin{tabular}{@{}lccc@{}}
 \toprule
-Negatives & AdaFace IR-101 & FaceNet frozen & FaceNet $+$pairs \\
+\multicolumn{4}{@{}l}{\emph{Frozen recognizers, full 25$+$ set}} \\
+Negatives & AdaFace IR-101 & ArcFace r100 & AdaFace IR-50 \\
 \midrule
-random (as in Table~\ref{tab:main}) & 0.956 & 0.568 & 0.811 \\
-rank-200 & 0.922 & 0.492 & 0.759 \\
-rank-50 & 0.835 & 0.381 & 0.657 \\
-rank-10 & \textbf{0.705} & 0.305 & 0.562 \\
-rank-1 & \textbf{0.474} & 0.203 & 0.404 \\
+random & 0.961 & 0.941 & 0.908 \\
+rank-50 & 0.727 & 0.677 & 0.560 \\
+rank-10 & 0.603 & 0.565 & 0.437 \\
+rank-1 & \textbf{0.376} & \textbf{0.362} & \textbf{0.258} \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Our supervision, test split only}} \\
+Negatives & FaceNet frozen & FaceNet $+$pairs & $\Delta$ \\
+\midrule
+random & 0.568 & 0.811 & $+$0.243 \\
+rank-50 & 0.381 & 0.657 & $+$0.276 \\
+rank-10 & 0.305 & 0.562 & $+$0.257 \\
+rank-1 & 0.203 & 0.404 & $+$0.201 \\
 \bottomrule
 \end{tabular}
 \end{table}
