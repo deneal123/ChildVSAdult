@@ -1,0 +1,33 @@
+{
+  "adaface_ir101:frozen": {
+    "n_pos": 5107.0,
+    "n_neg": 5107.0,
+    "HARD overall": 0.7933978284718767,
+    "HARD overall n_pos": 5107.0,
+    "HARD 25+": 0.4876767055149667,
+    "HARD 25+ n_pos": 154.0
+  },
+  "arcface_r100:frozen": {
+    "n_pos": 5107.0,
+    "n_neg": 5107.0,
+    "HARD overall": 0.7659829789364847,
+    "HARD overall n_pos": 5107.0,
+    "HARD 25+": 0.42718804594661264,
+    "HARD 25+ n_pos": 154.0
+  },
+  "adaface_ir50:frozen": {
+    "n_pos": 5107.0,
+    "n_neg": 5107.0,
+    "HARD overall": 0.6826103488345299,
+    "HARD overall n_pos": 5107.0,
+    "HARD 25+": 0.32501481287461315,
+    "HARD 25+ n_pos": 154.0
+  },
+  "_ref_easy_negatives": {
+    "adaface_ir101 our.25+": 0.9675,
+    "arcface_r100 our.25+": 0.942,
+    "adaface_ir50 our.25+": 0.9308,
+    "наш дообученный FaceNet our.25+": 0.838,
+    "майнер": "w600k_r50 (независим от оцениваемых; одно семейство с r100 — оговорка)"
+  }
+}
