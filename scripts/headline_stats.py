@@ -125,8 +125,9 @@ def main() -> None:
               f"large_gap={out['fgnet.large_gap'][mname]['auc']}")
 
     # --- LFW / AgeDB-30 / CALFW ---
+    lfw_a, lfw_b, lfw_iss, lfw_rgb = bx.load_lfw()   # rgb=False, если выровненный кеш
     benches = [
-        ("LFW", bx.load_lfw(), True),
+        ("LFW", (lfw_a, lfw_b, lfw_iss), lfw_rgb),
         ("AgeDB-30", bx.load_bin(resolve_path("data", "external", "agedb_30.bin")), False),
         ("CALFW", bx.load_bin(resolve_path("data", "external", "calfw.bin")), False),
     ]

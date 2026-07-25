@@ -1,7 +1,8 @@
 """Оценка face-бэкбона на ВНЕШНЕМ известном бенчмарке верификации.
 
 Поддержаны:
-- LFW через sklearn.fetch_lfw_pairs (канонический, автозагрузка) — протокол 10-fold accuracy;
+- LFW: выровненный кеш data/external/lfw_aligned.npz (см. scripts/build_lfw_aligned.py);
+  fallback — sklearn.fetch_lfw_pairs, но БЕЗ выравнивания (ArcFace/AdaFace на нём рушатся);
 - insightface .bin (agedb_30.bin / calfw.bin / lfw.bin) — если файл положен в data/external/
   (cross-age бенчмарки). Формат: pickle (список jpeg-байтов + список issame).
 
@@ -17,6 +18,7 @@ import cv2
 import numpy as np
 import torch
 
+from age_gap.common.io import data_path
 from age_gap.common.logging import get_logger
 from age_gap.evaluation.metrics import eer, roc_auc, tar_at_far
 from age_gap.models.facenet import preprocess_bgr, preprocess_rgb
@@ -24,8 +26,26 @@ from age_gap.models.facenet import preprocess_bgr, preprocess_rgb
 log = get_logger(__name__)
 
 
-def load_lfw(subset: str = "10_folds") -> tuple[list, list, np.ndarray]:
-    """LFW-пары через sklearn. Возвращает (images_a_rgb, images_b_rgb, issame)."""
+def load_lfw(subset: str = "10_folds") -> tuple[list, list, np.ndarray, bool]:
+    """LFW-пары. Возвращает (images_a, images_b, issame, rgb).
+
+    Приоритет — выровненный кеш data/external/lfw_aligned.npz (5-точечный norm_crop 112px, тот же
+    пайплайн, что и для наших кропов; строится scripts/build_lfw_aligned.py). Он в BGR.
+
+    Fallback — sklearn ``fetch_lfw_pairs`` (RGB), но это funneled-изображения БЕЗ выравнивания:
+    ArcFace/AdaFace на них рушатся (r100: LFW 0.83 при AgeDB-30 0.98, что невозможно, т.к.
+    AgeDB-30 сложнее). Пока кеш не построен, метрики LFW сравнивать между бэкбонами нельзя.
+    """
+    cached = Path(str(data_path("data_dir", "external", "lfw_aligned.npz")))
+    if cached.exists():
+        z = np.load(cached)
+        a = [z["a"][i] for i in range(z["a"].shape[0])]
+        b = [z["b"][i] for i in range(z["b"].shape[0])]
+        issame = z["issame"].astype(np.int64)
+        log.info("LFW(выровненный кеш): пар=%d (pos=%d)", len(a), int(issame.sum()))
+        return a, b, issame, False
+    log.warning("LFW БЕЗ ВЫРАВНИВАНИЯ (sklearn fallback) — числа занижены и несравнимы между "
+                "бэкбонами; постройте scripts/build_lfw_aligned.py")
     from sklearn.datasets import fetch_lfw_pairs
 
     data = fetch_lfw_pairs(subset=subset, color=True, resize=1.0)
@@ -36,8 +56,8 @@ def load_lfw(subset: str = "10_folds") -> tuple[list, list, np.ndarray]:
     pairs = pairs.astype(np.uint8)
     a = [pairs[i, 0] for i in range(pairs.shape[0])]
     b = [pairs[i, 1] for i in range(pairs.shape[0])]
-    log.info("LFW(%s): пар=%d (pos=%d)", subset, len(a), int(issame.sum()))
-    return a, b, issame
+    log.info("LFW(%s, sklearn/невыровненный): пар=%d (pos=%d)", subset, len(a), int(issame.sum()))
+    return a, b, issame, True
 
 
 def load_bin(path: Path | str) -> tuple[list, list, np.ndarray]:
@@ -129,8 +149,8 @@ def evaluate(scores: np.ndarray, labels: np.ndarray) -> dict[str, float]:
 def evaluate_lfw(
     backbone: torch.nn.Module, device: str, subset: str = "10_folds"
 ) -> dict[str, float]:
-    a, b, issame = load_lfw(subset)
-    scores = pair_scores(backbone, a, b, device, rgb=True)
+    a, b, issame, rgb = load_lfw(subset)
+    scores = pair_scores(backbone, a, b, device, rgb=rgb)
     return evaluate(scores, issame)
 
 
