@@ -87,7 +87,10 @@ def main() -> None:
 
     dst = data_path("data_dir", "external", "lfw_aligned.npz")
     dst.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(dst, a=np.stack(A), b=np.stack(B), issame=issame)
+    # miss_rate пишем в сам кеш: load_lfw() отказывается использовать кеш с высокой
+    # долей промахов детектора (так первый, сломанный прогон не сможет тихо утечь в метрики)
+    np.savez_compressed(dst, a=np.stack(A), b=np.stack(B), issame=issame,
+                        miss_rate=np.float64(miss / (2 * pairs.shape[0])))
     total = 2 * pairs.shape[0]
     log.info("готово: %s | без детекта %d/%d (%.1f%%)", dst, miss, total, 100 * miss / total)
     print(f"OK: {dst} (без детекта {miss}/{total})")

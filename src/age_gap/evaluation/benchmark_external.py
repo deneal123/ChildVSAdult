@@ -39,8 +39,19 @@ def load_lfw(subset: str = "10_folds") -> tuple[list, list, np.ndarray, bool]:
     cached = Path(str(data_path("data_dir", "external", "lfw_aligned.npz")))
     if cached.exists():
         z = np.load(cached)
-        a = [z["a"][i] for i in range(z["a"].shape[0])]
-        b = [z["b"][i] for i in range(z["b"].shape[0])]
+        mr = float(z["miss_rate"]) if "miss_rate" in z else float("nan")
+        if mr > 0.05:                      # детектор промахнулся на >5% лиц -> кеш негоден
+            raise RuntimeError(
+                f"lfw_aligned.npz негоден: детектор промахнулся на {mr:.1%} лиц. "
+                "Пересоберите: uv run python scripts/build_lfw_aligned.py")
+        if np.isnan(mr):                   # кеш собран до появления поля miss_rate
+            log.warning("lfw_aligned.npz без miss_rate (старый формат) — проверьте, что LFW-точность "
+                        "сильного бэкбона ~0.99, иначе пересоберите кеш")
+        # ВАЖНО: сначала материализуем массив, потом режем. z["a"][i] в цикле распаковывал бы
+        # весь сжатый массив на КАЖДОЙ итерации (6000 раз -> OOM).
+        za, zb = z["a"], z["b"]
+        a = list(za)
+        b = list(zb)
         issame = z["issame"].astype(np.int64)
         log.info("LFW(выровненный кеш): пар=%d (pos=%d)", len(a), int(issame.sum()))
         return a, b, issame, False
