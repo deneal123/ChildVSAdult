@@ -93,6 +93,10 @@ def main() -> None:
                     default=["adaface_ir101", "arcface_r100", "adaface_ir50"])
     ap.add_argument("--crops", default="faces")
     ap.add_argument("--max-age-diff", type=float, default=5.0)
+    ap.add_argument("--miner", default=None,
+                    help="бэкбон-майнер вместо кешированного w600k_r50 (контроль на смещение "
+                         "семейства майнера; НЕ должен входить в --backbones)")
+    ap.add_argument("--out", default="hardneg_curve.json")
     args = ap.parse_args()
 
     device = torch_device()
@@ -105,7 +109,17 @@ def main() -> None:
         grp[r["face_b"]] = r["identity_group_b"]
     ga = {r["face_id"]: (float(r["age_est"]), int(r["gender"]))
           for r in read_jsonl(data_path("data_dir", "interim", "face_genderage.jsonl"))}
-    mine = load_embeddings()
+    if args.miner:
+        if args.miner in {sp.partition(":")[0] for sp in args.backbones}:
+            raise SystemExit(f"майнер {args.miner} входит в оцениваемые — циркулярность")
+        mb = make_backbone(args.miner, pretrained=True).to(device).eval()
+        mb.crops_dir = args.crops
+        mine = _embed_faces(mb, sorted(grp), args.crops, device)
+        del mb
+        torch.cuda.empty_cache()
+        log.info("майнер: %s (пересчитан), лиц=%d", args.miner, len(mine))
+    else:
+        mine = load_embeddings()               # кешированный w600k_r50
     pool = [f for f in grp if f in mine and f in ga]
     M = np.stack([mine[f] for f in pool]).astype(np.float32)
     M /= np.linalg.norm(M, axis=1, keepdims=True) + 1e-9
@@ -181,12 +195,12 @@ def main() -> None:
         torch.cuda.empty_cache()
 
     out["_note"] = {
-        "майнер": "w600k_r50 — независим от оцениваемых; одного семейства с ArcFace r100",
+        "майнер": args.miner or "w600k_r50 (кеш)",
         "смысл": "rank1 = самый похожий импостер (состязательный отбор), random = как в статье",
         "контроль": "если порядок моделей сохраняется как на лёгких негативах, "
                     "смещение майнера не определяет результат",
     }
-    dst = data_path("metrics_dir", "hardneg_curve.json")
+    dst = data_path("metrics_dir", args.out)
     dst.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     log.info("записано: %s", dst)
 
