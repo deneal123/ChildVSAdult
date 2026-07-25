@@ -286,7 +286,7 @@ Metric & Frozen & $+$pairs & $+$pairs$+$hard-neg \\
 \midrule
 FG-NET large-gap & 0.736 & 0.848 & \textbf{0.868\,$\pm$\,0.004} \\
 FG-NET ROC & 0.896 & 0.923 & 0.912\,$\pm$\,0.003 \\
-LFW accuracy & 0.969 & 0.950 & 0.925\,$\pm$\,0.005 \\
+LFW accuracy & 0.964 & 0.968 & 0.925\,$\pm$\,0.009 \\
 AgeDB-30 ROC & 0.953 & 0.946 & 0.911\,$\pm$\,0.013 \\
 CALFW ROC & 0.948 & 0.949 & 0.898\,$\pm$\,0.015 \\
 \bottomrule
@@ -310,7 +310,7 @@ Data source $>$ objective choice & contrastive/ArcFace/CosFace coincide (0.848/0
 Real pairs $>$ synthetic aging & real 0.848 vs.\ gap-matched FRAN 0.759; native-res control & this protocol \\
 Mechanism is age-shortcut removal & age-matched negatives collapse frozen to $\approx$0.52; $+$pairs recovers to 0.838 & internal 25+ test \\
 Source generalizes beyond platform & VK$\to$Reddit $+$0.031; child$\leftrightarrow$adult FG-NET $+$0.129 & not platform-agnostic \\
-Targeted, not general gain & easy-benchmark low-FAR degrades (LFW TAR@0.1\% $0.858\!\rightarrow\!0.575$) & scope to large-gap retrieval \\
+Targeted, not general gain & concentrated on the large-gap subset; easy benchmarks flat (LFW TAR@0.1\% $0.814\!\rightarrow\!0.816$) & scope to large-gap retrieval \\
 $\approx$half of raw positives were near-duplicates & $-$52\% positive count, stable across dedup 0.93--0.97 & curation finding \\
 \bottomrule
 \end{tabular}

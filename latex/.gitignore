@@ -20,11 +20,13 @@ _attic/
 # inside conference/aaai-27/en/.
 shared/vendor/
 
-# journal-1-tnnls submission bundle: the self-contained manuscript/ + supplement/
-# archives are DERIVED from en/ + shared/ (rebuild per submission/SUBMISSION.md).
-# The unique artifacts (title_page_en.docx, SUBMISSION.md) are tracked.
+# Submission bundles: the self-contained manuscript/ + supplement/ archives are DERIVED
+# from en/ + shared/ (rebuild with `python latex/build_submission.py <paper>`).
+# The unique artifacts (title_page_en.docx, SUBMISSION.md, strip_comments.py) are tracked.
 papers/journal-1-tnnls/submission/manuscript/
 papers/journal-1-tnnls/submission/supplement/
+papers/journal-1-tbiom/submission/manuscript/
+papers/journal-1-tbiom/submission/supplement/
 
 # MS Office lock/owner temp files (created while a .docx is open in Word)
 ~$*

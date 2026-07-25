@@ -48,7 +48,7 @@ Claim & Evidence (main paper) & Status \\
 Mined ``then/now'' pairs improve large-gap ($\geq$25\,y) cross-age verification &
 FG-NET large-gap ROC-AUC $0.736\!\to\!0.848$; DeLong $p{=}1.4{\times}10^{-20}$, $\Delta$AUC 95\% CI $[{+}0.088,{+}0.135]$; internal 25+ $p{=}1.7{\times}10^{-34}$ (Sec.~V-A) & Est. \\
 The gain is \emph{targeted}, not a uniform verification gain &
-AgeDB-30 $-0.008$ ($p{=}4{\times}10^{-6}$), CALFW null ($p{=}0.95$), LFW TAR@FAR$=$0.1\% $0.858\!\to\!0.575$ (Sec.~V-A, Sec.~VI) & Est. \\
+AgeDB-30 $-0.008$ ($p{=}4{\times}10^{-6}$), CALFW null ($p{=}0.95$), LFW TAR@FAR$=$0.1\% $0.814\!\to\!0.816$ (Sec.~V-A, Sec.~VI) & Est. \\
 The same-person pairing, not the caption age anchor, drives the gain &
 Ablation: explicit age anchors add only $+0.009$ on the 25+ bucket (Sec.~V-A) & Est. \\
 Real mined pairs outperform synthetic aging &
@@ -70,7 +70,7 @@ VK$\to$Reddit overall ROC-AUC $0.718\!\to\!0.749$; Reddit$\to$VK FG-NET large-ga
 The contribution is specific to weak/medium backbones &
 Strong saturated backbones show null/negative gains (Sec.~V-C) & Bounded (limitation) \\
 Platform-agnostic / cross-cultural generalization & one platform family, then/now format; single non-VK test & Open \\
-Drop-in upgrade to a general-purpose verifier & low-FAR easy-benchmark operating points degrade & Open (excluded) \\
+Drop-in upgrade to a general-purpose verifier & the gain is concentrated on the large-gap subset; easy benchmarks are flat & Open (excluded) \\
 Human-grade label-noise guarantee & automatic cross-checks $+$ a small manual validation (100 posts; S\ref{sec:audit}); no multi-annotator $\kappa$ & Bounded \\
 Full SOTA-pipeline parity & only the shared margin objective is trained, not method-specific add-ons & Open (by design) \\
 Legal/ethical clearance for biometric processing & research basis stated; formal approval pending (Sec.~VIII) & Open (author/IRB) \\
@@ -134,7 +134,7 @@ useful cross-age identity supervision. Permitted applied analogues are limited t
 consent-based, human-in-the-loop settings (Sec.~VIII).\\
 \textbf{Out of scope / forbidden.} Mass identification, surveillance, de-anonymization, automated
 decisions, any processing of minors' data without a legal basis, and use as a general-purpose verifier
-(low-FAR easy-benchmark performance degrades).\\
+(the gain is concentrated on the large-gap subset rather than uniform).\\
 \textbf{Training data.} Public multi-photo ``then/now'' posts (VK communities; an independent Reddit
 board for the cross-platform test). Supervision is manual-label-free; ages and group integrity come
 from an LLM caption parser; persons from embedding clustering. Apparent-attribute skew: 76.7\%
