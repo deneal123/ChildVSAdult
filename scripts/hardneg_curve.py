@@ -95,6 +95,11 @@ def main() -> None:
     ap.add_argument("--tuned-suffix", default="pairs",
                     help="какой чекпойнт брать для :tuned -> bb_<name>_<suffix>.pt")
     ap.add_argument("--max-age-diff", type=float, default=5.0)
+    ap.add_argument("--splits", nargs="+", default=["test"],
+                    help="сплиты для бенчмарка. ЗАМОРОЖЕННЫЕ модели не видели НИ ОДНОГО нашего "
+                         "примера, поэтому для них корректно train val test (n позитивов 25+: "
+                         "154 -> 1226, интервалы уже в ~2.8 раза). Для НАШИХ дообученных моделей "
+                         "допустим только test.")
     ap.add_argument("--miner", default=None,
                     help="бэкбон-майнер вместо кешированного w600k_r50 (контроль на смещение "
                          "семейства майнера; НЕ должен входить в --backbones)")
@@ -102,8 +107,12 @@ def main() -> None:
     args = ap.parse_args()
 
     device = torch_device()
+    tuned = [sp for sp in args.backbones if sp.endswith(":tuned")]
+    if tuned and set(args.splits) != {"test"}:
+        raise SystemExit(f"дообученные модели {tuned} нельзя оценивать вне test — "
+                         f"они видели train (и val через early stopping)")
     pairs = [r for r in read_jsonl(data_path("data_dir", "processed", "pairs.jsonl"))
-             if r.get("split") == "test"]
+             if r.get("split") in set(args.splits)]
     pos = [r for r in pairs if r["label"] == 1]
     grp: dict[str, str] = {}
     for r in pairs:
