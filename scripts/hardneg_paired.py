@@ -62,9 +62,9 @@ def _embed_faces(backbone, face_ids, crops_dir, device, batch=64):
     return out
 
 
-def _load(spec, device, crops):
+def _load(spec, device, crops, suffix="pairs"):
     name, _, kind = spec.partition(":")
-    bb = (load_finetuned(data_path("models_dir", f"bb_{name}_pairs.pt"), device)
+    bb = (load_finetuned(data_path("models_dir", f"bb_{name}_{suffix}.pt"), device)
           if kind == "tuned" else make_backbone(name, pretrained=True).to(device).eval())
     bb.crops_dir = crops
     return bb
@@ -76,6 +76,8 @@ def main() -> None:
     ap.add_argument("--a", default="facenet:tuned", help="наша модель")
     ap.add_argument("--b", default="adaface_ir101", help="замороженная SOTA")
     ap.add_argument("--crops", default="faces")
+    ap.add_argument("--tuned-suffix", default="pairs",
+                    help="какой чекпойнт брать для :tuned -> bb_<name>_<suffix>.pt")
     ap.add_argument("--max-age-diff", type=float, default=5.0)
     ap.add_argument("--n-boot", type=int, default=2000)
     args = ap.parse_args()
@@ -124,7 +126,7 @@ def main() -> None:
 
     E = {}
     for spec in (args.a, args.b):
-        bb = _load(spec, device, args.crops)
+        bb = _load(spec, device, args.crops, args.tuned_suffix)
         E[spec] = _embed_faces(bb, need, args.crops, device)
         del bb
         torch.cuda.empty_cache()
@@ -161,7 +163,7 @@ def main() -> None:
         log.info("%-8s %s=%.4f  %s=%.4f  Δ=%+.4f [%+.4f,%+.4f]  P(Δ>0)=%.3f",
                  tag, args.a, pa, args.b, pb_, pa - pb_, lo, hi, (d > 0).mean())
 
-    dst = data_path("metrics_dir", "hardneg_paired.json")
+    dst = data_path("metrics_dir", f"hardneg_paired{'_' + args.tuned_suffix if args.tuned_suffix != 'pairs' else ''}.json")
     dst.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     log.info("записано: %s", dst)
 

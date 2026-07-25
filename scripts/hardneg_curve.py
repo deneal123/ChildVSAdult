@@ -92,6 +92,8 @@ def main() -> None:
     ap.add_argument("--backbones", nargs="+",
                     default=["adaface_ir101", "arcface_r100", "adaface_ir50"])
     ap.add_argument("--crops", default="faces")
+    ap.add_argument("--tuned-suffix", default="pairs",
+                    help="какой чекпойнт брать для :tuned -> bb_<name>_<suffix>.pt")
     ap.add_argument("--max-age-diff", type=float, default=5.0)
     ap.add_argument("--miner", default=None,
                     help="бэкбон-майнер вместо кешированного w600k_r50 (контроль на смещение "
@@ -163,7 +165,7 @@ def main() -> None:
         # "name" -> замороженный; "name:tuned" -> наш дообученный на парах bb_<name>_pairs.pt
         name, _, kind = spec.partition(":")
         if kind == "tuned":
-            ckpt = data_path("models_dir", f"bb_{name}_pairs.pt")
+            ckpt = data_path("models_dir", f"bb_{name}_{args.tuned_suffix}.pt")
             if not ckpt.exists():
                 log.warning("нет чекпойнта %s — пропуск", ckpt)
                 continue
