@@ -49,11 +49,32 @@ apply.
 The Russian mirror in `../ru/` deliberately keeps all six figures inline: it is not a submission,
 has no page limit, and has no supplement of its own to hold them.
 
-**3. Confirm nothing is under review elsewhere.** The AAAI-27 version in `latex/conference/aaai-27/`
-shares content with this manuscript. T-BIOM requires the work not be under review elsewhere, so the
-AAAI version must not be in review while this submission is active. An earlier version was submitted
-to and **rejected** by another IEEE journal — a rejected manuscript was never published, so the
-"Previously Published" slots do not apply; the cover letter discloses this anyway.
+**3. T-BIOM and AAAI-27 cannot be in review at the same time.** This is not a formatting question —
+the two versions report the same work, and T-BIOM's rules bar parallel review twice over:
+
+> "Every manuscript submitted to TBIOM must … Not be previously published or under review elsewhere."
+
+> "Extensions of conference papers may be submitted to TBIOM, though **not whilst the conference
+> version is in review**."
+
+So the extension route does not create a loophole either. AAAI has its own dual-submission policy;
+check the AAAI-27 CFP text directly before relying on anything here. Two legal orders exist:
+
+- **T-BIOM first** (recommended): submit here, hold the AAAI version. The TNNLS AE called the
+  contribution "a valuable dataset and data curation contribution" while faulting the "advance in
+  neural network learning methods" — an AI-methods conference is likely to repeat exactly that.
+- **AAAI first, then T-BIOM as an extension:** submit to AAAI, *wait for the decision*, then submit
+  here citing the conference paper and explaining the extension. The 30%-new-material rule is met
+  with room to spare: the journal version has 7396 words and 20 tables/figures against the
+  conference version's 4019 and 9, i.e. ~46% of it is material the conference paper does not carry.
+  Cost: the journal submission idles for months.
+
+Either way the ethics blocker (item 1) applies — AAAI reviews ethics too, and non-consensual
+biometric data on identifiable people is precisely the category that gets flagged there.
+
+An earlier version was submitted to and **rejected** by another IEEE journal. A rejected manuscript
+was never published, so the "Previously Published" slots do not apply; the cover letter discloses it
+anyway.
 
 ## Rebuilding the bundle
 
