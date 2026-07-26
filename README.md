@@ -16,19 +16,16 @@
 
 **Главный результат (кратко).** Дообучение слабого обучаемого backbone на наших VK-парах учит
 кросс-возрастной инвариантности, и она **переносится на внешний бенчмарк** (FG-NET large-gap
-0.736 → 0.887, +0.15) почти без потери общего качества (LFW −0.018). Реальные same-post пары
-решительно превосходят синтетическое старение. Подробности и все таблицы — в
-[docs/Results.md](docs/Results.md).
+0.736 → 0.848, +0.112) без измеримых потерь на лёгких бенчмарках (LFW +0.004). Реальные
+same-post пары решительно превосходят синтетическое старение. Отдельный результат: со схожими
+импостерами замороженные современные распознаватели падают ниже случайного (AdaFace IR-101
+0.961 → 0.376). Подробности и все таблицы — в статье (`latex/papers/journal-1-tbiom/`).
 
 ## Документация
 
-| Файл | Назначение |
-| --- | --- |
-| [docs/Results.md](docs/Results.md) | Таблицы экспериментов и проверок гипотез. |
-| [docs/Protocol.md](docs/Protocol.md) | Датированный журнал работ (что и как делали). |
-| [docs/Observations.md](docs/Observations.md) | Наблюдения, факты, баги. |
-| [docs/TODO.md](docs/TODO.md) | Список задач + научный бэклог гипотез. |
-| [docs/SKILL.md](docs/SKILL.md) | Правила и политика безопасности. |
+Рабочие журналы (`docs/`) не публикуются. Всё, что нужно для понимания и воспроизведения,
+находится в статье и её дополнении: `latex/papers/journal-1-tbiom/` (протокол, статистика,
+этика и governance, воспроизводимость) и в машиночитаемых метриках `metrics*/`.
 
 ---
 
@@ -86,7 +83,7 @@ uv pip install --reinstall onnxruntime-gpu   # вытеснить CPU-onnxruntim
 **Секреты** — `src/age_gap/settings/.env`:
 
 - `VK_TOKEN=...` — токен VK для парсинга (`wall.get` работает с сервисным; `wall.getById` /
-  `wall.getComments` — только не-сервисный, см. [Observations](docs/Observations.md));
+  `wall.getComments` — только не-сервисный);
 - `GIGACHAT_SECRET=...` — доступ к GigaChat для LLM-извлечения возраста. Параметры модели/эндпоинтов
   — в `settings.toml` (`[default.gigachat]`), сертификат — `settings/certs/`.
 
@@ -175,7 +172,6 @@ src/age_gap/
   infrastructure/  GigaChat-клиент (chat/embeddings, retry, async)
 scripts/           CLI этапов конвейера, аудита возраста, оценки и экспериментов
 tests/             юнит-тесты (regex/слэш, привязка, пары, сплит, метрики, backbone, aging, LLM-кэш)
-docs/              Results.md, Protocol.md, Observations.md, TODO.md, SKILL.md
 ```
 
 ---
@@ -192,4 +188,4 @@ uv run ruff check . && uv run mypy && uv run pytest -q
 > Кросс-платформенный перенос подтверждён на независимом **не-VK** источнике (Reddit
 > r/PastAndPresentPics: overall ROC-AUC frozen 0.718 → +pairs 0.749); HTML-скрейпер old.reddit —
 > `scripts/ingest_reddit.py --mode html` (англ. подписи + восстановление коллажей; см.
-> [docs/Protocol.md](docs/Protocol.md)). Дальнейшая внешняя валидация полезна.
+> статью). Дальнейшая внешняя валидация полезна.

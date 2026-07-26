@@ -107,7 +107,7 @@ def main() -> None:
         "contains_raw_images": False,
         "contains_captions_or_pii": False,
         "note": "De-identified research release. No raw faces/posts/IDs. Salt not published. "
-        "Minors (apparent age<18) excluded. Research-only; see docs/DATA_GOVERNANCE.md.",
+        "Minors (apparent age<18) excluded. Research-only; governance and release policy are described in the accompanying paper.",
     }
     (out_dir / "manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"

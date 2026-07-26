@@ -32,3 +32,7 @@ src/age_gap/settings/certs/
 reports/
 # beauty research branch: SCUT caches + model weights
 data_beauty/
+
+# Внутренние рабочие журналы (Results/Protocol/Observations/TODO/deep-research).
+# Не публикуются: содержание статьи самодостаточно, а governance описан в её разделе Ethics.
+docs/

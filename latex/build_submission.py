@@ -62,7 +62,11 @@ def build(paper: str) -> bool:
     main_tex = _localize((en / "main.tex").read_text(encoding="utf-8"))
     (man / "main.tex").write_text(main_tex, encoding="utf-8", newline="\n")
     shutil.copy2(LATEX / "shared" / "refs.bib", man / "refs.bib")
-    for fig in _figures(main_tex):
+    used = set(_figures(main_tex))
+    for stale in (man / "figures").glob("*.pdf"):      # фигуры могли переехать в дополнение —
+        if stale.name not in used:                     # старые копии удаляем, иначе поедут в архив
+            stale.unlink()
+    for fig in sorted(used):
         s = LATEX / "shared" / "figures" / fig
         if s.exists():
             shutil.copy2(s, man / "figures" / fig)
@@ -77,10 +81,13 @@ def build(paper: str) -> bool:
         (supp / "supplement.tex").write_text(supp_tex, encoding="utf-8", newline="\n")
         # дополнение тоже может содержать фигуры (в T-BIOM туда вынесены четыре кривые,
         # чтобы рукопись уложилась в 10 страниц) -> копируем их рядом с ним
-        supp_figs = _figures(supp_tex)
+        supp_figs = set(_figures(supp_tex))
         if supp_figs:
             (supp / "figures").mkdir(exist_ok=True)
-            for fig in supp_figs:
+            for stale in (supp / "figures").glob("*.pdf"):
+                if stale.name not in supp_figs:
+                    stale.unlink()
+            for fig in sorted(supp_figs):
                 s = LATEX / "shared" / "figures" / fig
                 if s.exists():
                     shutil.copy2(s, supp / "figures" / fig)
