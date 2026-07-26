@@ -7,11 +7,9 @@
 %% NOT SHOWN TO REVIEWERS (portal: "will not be shown to Peer Reviewers"), so it is written for
 %% the Editor-in-Chief / Associate Editor.
 %%
-%% !! BEFORE SUBMITTING: the ethics paragraph below must be completed with the actual IRB decision.
-%%    The manuscript currently states that no ethics-committee protocol has been filed. T-BIOM asks
-%%    at submission time whether review-board approval was obtained, so an approval or a documented
-%%    exemption from the HSE University ethics board is required first. Do not submit with the
-%%    placeholder in place.
+%% !! BEFORE SUBMITTING: fill in the date on which the exemption request was actually sent to the
+%%    HSE ethics committee (see ethics_request_hse.md). Do NOT invent a date. The same placeholder
+%%    appears in ../en/main.tex and ../ru/main_ru.tex and must be filled there too.
 %% Build: pdflatex cover_letter
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=25mm]{geometry}
@@ -68,14 +66,21 @@ non-VK replication (Reddit).
 
 \vspace{3mm}
 \noindent\textbf{2. Human subjects and ethical review.}
-%% >>> REPLACE THIS PARAGRAPH WITH THE ACTUAL DECISION BEFORE SUBMITTING <<<
-\emph{[To be completed: name of the institution, name of the IRB/ethics board that issued the
-approval or the exemption, and the date. The manuscript's Ethical Approval subsection must be
-updated to match. The submission form requires this at upload time.]}
-The study analyses previously posted public images with no intervention, no contact with subjects
-and no deployment; the released artifacts are de-identified; minors are excluded as subjects. The
-manuscript states transparently which safeguards are in place and which consents we do not hold,
-rather than asserting full compliance.
+The study analyses images that their subjects had already published on public community walls,
+retrieved through the platform's official API. There is no interaction or intervention with any
+person, no individual is identified or contacted, no system is deployed, minors are excluded as
+subjects, and the released artifacts contain no raw faces, no raw posts and no recoverable
+identifiers. On that basis the study was not submitted for prospective institutional review, and the
+manuscript states this affirmatively together with the reasoning --- which IEEE policy accepts in
+place of an approval reference (``\dots or include an explanation as to why such a review was not
+conducted''). We do not resolve the counter-consideration in our own favour: the images are
+biometric and the individuals remain identifiable, which is why our release policy is restrictive
+rather than open, and why we have \emph{also} requested a formal determination from our university's
+ethics committee (requested \textbf{[fill in the date before submitting]}). We will forward that
+determination to the editor as soon as it is issued, and we will abide by it rather than by our own
+reading. \emph{Consent:} the subjects cannot feasibly be contacted, so individual consent for
+participation and for publication was not obtained; the manuscript explains this, as IEEE policy
+likewise permits (``\dots or explain why consent was not obtained'').
 
 \vspace{3mm}
 \noindent\textbf{3. Originality and prior submissions.}

@@ -1,6 +1,6 @@
 # T-BIOM submission — what goes into which slot
 
-**Blockers first — do not upload until both are resolved.** See "Before you submit" below.
+**Read "Before you submit" first** — one item still needs a decision from you, and one date must be filled in.
 
 ## Slot-by-slot
 
@@ -9,6 +9,7 @@
 | **Main Manuscript** *(required, 1 file)* | a ZIP of the **contents** of `manuscript/` — so `main.tex` sits at the ZIP root, together with `refs.bib`, `main.bbl`, `IEEEtran.cls` and `figures/` | `submission/manuscript/` |
 | **Conflict of Interest** *(required, 1 file)* | `coi.pdf` | `submission/coi.tex` |
 | **Cover letter / Comments** *(nominally optional — for us **required**)* | `cover_letter.pdf` | `submission/cover_letter.tex` |
+| — *(not a portal slot)* | `ethics_request_hse.md` — send to the HSE ethics committee, then fill its date into the three placeholders | `submission/ethics_request_hse.md` |
 | **Supplementary Material for Review** *(optional)* | `supplement.pdf` | `submission/supplement/` |
 | **LaTeX Supplementary File** *(optional)* | `supplement.tex` — only if the portal asks for the supplement source separately | `submission/supplement/` |
 | Main Document — Tracked Changes | — | first submission, nothing to track |
@@ -29,15 +30,24 @@ Notes that follow from T-BIOM's Information for Authors:
 
 ## Before you submit
 
-**1. Ethics review — unresolved.** The submission form asks whether the research involved a
-human-subjects dataset collected during the research (for us: yes) and, if so, whether approval was
-obtained from a review board. Only two answers are accepted: approval (with institution, board name
-and date, which must also appear in the manuscript) or a documented exemption (with the reasoning,
-likewise in the manuscript). The manuscript currently states the opposite — *"No formal
-ethics-committee protocol has been filed for this study to date"* (Sec. Ethical Approval and Legal
-Basis). **Obtain an approval or a written exemption from the HSE University ethics board first**,
-then update both that subsection and the placeholder paragraph in `cover_letter.tex`. This cannot be
-resolved by rewording.
+**1. Ethics review — submittable now, but a date must be filled in.** IEEE policy (PSPB 8.1.1.B/E)
+accepts, in place of an approval reference, *"an explanation as to why such a review was not
+conducted"* — and likewise *"or explain why consent was not obtained"*. The manuscript now gives
+that explanation affirmatively (no interaction or intervention; subjects' own public posts; nobody
+identified, contacted, profiled or ranked; nothing deployed; minors excluded; no raw faces, posts or
+recoverable identifiers released), states the counter-consideration rather than resolving it in our
+favour (the images are biometric and the people remain identifiable), and says a formal
+determination has been requested from the university ethics committee.
+
+The old wording — *"No formal ethics-committee protocol has been filed ... the authors will obtain
+[one] should a venue or reviewer require one"* — was the actual problem: it read as an unfulfilled
+promise and contradicted whichever answer you give on the submission form. It is gone.
+
+**What you must still do:** send the exemption request in `ethics_request_hse.md` (it asks the HSE
+committee for an *exemption determination*, not a full protocol — much faster), then fill the real
+date into the three placeholders: `../en/main.tex`, `../ru/main_ru.tex` and `cover_letter.tex`.
+**Do not invent a date.** On the portal, answer the human-subjects question truthfully and paste the
+manuscript's explanation into the reasoning box.
 
 **2. Page count — resolved, now 10 pp.** Regular papers are limited to 10 pages. The manuscript was
 11 pp, so four figures that merely re-plotted data from adjacent tables (headroom curve, data-scaling
@@ -90,5 +100,5 @@ cd latex/papers/journal-1-tbiom/submission && pdflatex coi && pdflatex cover_let
 `IEEEtran.cls`, strips LaTeX comments, compiles `pdflatex; bibtex; pdflatex; pdflatex`, and fails
 loudly on compile errors or undefined/multiply-defined references.
 
-Current state: `main.pdf` 10 pp, `supplement.pdf` 3 pp, `coi.pdf` 1 p, `cover_letter.pdf` 2 pp —
+Current state: `main.pdf` 10 pp, `supplement.pdf` 4 pp, `coi.pdf` 1 p, `cover_letter.pdf` 2 pp —
 0 errors, 0 broken references.

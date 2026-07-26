@@ -155,7 +155,7 @@ not-yet-human-audited noise.
 
 
 \section{Figures Referenced from the Main Paper}\label{sec:figs}
-These four plots duplicate data already tabulated in the main paper (headroom curve, data-scaling law, objective comparison and the apparent-attribute fairness audit); they are placed here so the manuscript stays within the 10-page limit for regular papers. No number appears here that is not in the main paper's tables.
+These five plots duplicate data already tabulated in the main paper (headroom curve, data-scaling law, objective comparison, apparent-attribute fairness audit and the external-benchmark summary); they are placed here so the manuscript stays within the 10-page limit for regular papers. No number appears here that is not in the main paper's tables.
 
 \begin{figure}[!t]
 \centering
@@ -183,6 +183,13 @@ These four plots duplicate data already tabulated in the main paper (headroom cu
 \includegraphics[width=\columnwidth]{fig_fairness.pdf}
 \caption{Apparent-demographic audit: frozen vs.\ $+$pairs ROC-AUC across apparent gender/age strata. Every stratum improves; the largest gain is for the youngest (0--17) group, where the frozen baseline is weakest. Error bars are the 95\% paired-bootstrap CI of the gain and $n$ is positive pairs per stratum (the sparse 45+ stratum, $n{=}153$, has a correspondingly wide interval).}
 \label{fig:fairness}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_external.pdf}
+\caption{External generalization. The $+$pairs gain over the frozen baseline (with 95\% CIs) holds across three independent evaluations---FG-NET large-gap, a child$\leftrightarrow$adult FG-NET subset, and the cross-platform Reddit set---each well above chance. The gain is largest on the in-protocol FG-NET sets and smaller (but positive) on the noisier cross-platform Reddit set.}
+\label{fig:external}
 \end{figure}
 
 \end{document}
