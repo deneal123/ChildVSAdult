@@ -10,6 +10,8 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\graphicspath{{../../../shared/figures/}}
 \usepackage[hidelinks]{hyperref}
 
 \newcommand{\dgr}{$\leftrightarrow$}
@@ -150,5 +152,37 @@ shared on request under a brief research-use agreement; the de-identified datase
 \textbf{Caveats.} The gain is targeted to the large-gap regime and to weak/medium backbones; external
 validity beyond the then/now format is not established; the automatic supervision carries residual,
 not-yet-human-audited noise.
+
+
+\section{Figures Referenced from the Main Paper}\label{sec:figs}
+These four plots duplicate data already tabulated in the main paper (headroom curve, data-scaling law, objective comparison and the apparent-attribute fairness audit); they are placed here so the manuscript stays within the 10-page limit for regular papers. No number appears here that is not in the main paper's tables.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_headroom.pdf}
+\caption{Headroom curve: the $+$pairs gain on FG-NET large-gap shrinks monotonically as the frozen backbone strengthens, crossing zero for strong saturated models.}
+\label{fig:headroom}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_scaling.pdf}
+\caption{Data-scaling law: external (FG-NET large-gap) and internal (our.25+) ROC-AUC vs.\ the number of training identities (log scale). Roughly 96\% of the gain is reached at 10\% of identities; shaded bands are $\pm$1 std over three seeds and dashed lines are the frozen baselines.}
+\label{fig:scaling}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_sota.pdf}
+\caption{Objective comparison: contrastive, ArcFace and CosFace coincide on cross-age transfer; SphereFace (hardest to optimize, no $\lambda$-annealing) trails. ArcFace/CosFace forget slightly less on easy benchmarks.}
+\label{fig:sota}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_fairness.pdf}
+\caption{Apparent-demographic audit: frozen vs.\ $+$pairs ROC-AUC across apparent gender/age strata. Every stratum improves; the largest gain is for the youngest (0--17) group, where the frozen baseline is weakest. Error bars are the 95\% paired-bootstrap CI of the gain and $n$ is positive pairs per stratum (the sparse 45+ stratum, $n{=}153$, has a correspondingly wide interval).}
+\label{fig:fairness}
+\end{figure}
 
 \end{document}

@@ -39,10 +39,15 @@ Basis). **Obtain an approval or a written exemption from the HSE University ethi
 then update both that subsection and the placeholder paragraph in `cover_letter.tex`. This cannot be
 resolved by rewording.
 
-**2. Page count — 11 pp against a 10 pp limit.** Regular papers are up to 10 pages; pages beyond that
-are subject to IEEE Mandatory Overlength Page Charges. This predates the July 2026 corrections (the
-pre-correction source also compiled to 11 pp). Options: trim a subsection, move a table to the
-supplement, or accept the MOPC. Decide before uploading.
+**2. Page count — resolved, now 10 pp.** Regular papers are limited to 10 pages. The manuscript was
+11 pp, so four figures that merely re-plotted data from adjacent tables (headroom curve, data-scaling
+law, objective comparison, fairness audit) were moved to the supplement, which has no page limit.
+Their references now read "Table~X; plotted in the supplement". **No number was removed** — every
+value those plots showed is still tabulated in the main paper. No Mandatory Overlength Page Charges
+apply.
+
+The Russian mirror in `../ru/` deliberately keeps all six figures inline: it is not a submission,
+has no page limit, and has no supplement of its own to hold them.
 
 **3. Confirm nothing is under review elsewhere.** The AAAI-27 version in `latex/conference/aaai-27/`
 shares content with this manuscript. T-BIOM requires the work not be under review elsewhere, so the
@@ -64,5 +69,5 @@ cd latex/papers/journal-1-tbiom/submission && pdflatex coi && pdflatex cover_let
 `IEEEtran.cls`, strips LaTeX comments, compiles `pdflatex; bibtex; pdflatex; pdflatex`, and fails
 loudly on compile errors or undefined/multiply-defined references.
 
-Current state: `main.pdf` 11 pp, `supplement.pdf` 2 pp, `coi.pdf` 1 p, `cover_letter.pdf` 2 pp —
+Current state: `main.pdf` 10 pp, `supplement.pdf` 3 pp, `coi.pdf` 1 p, `cover_letter.pdf` 2 pp —
 0 errors, 0 broken references.

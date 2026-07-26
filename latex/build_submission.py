@@ -73,9 +73,19 @@ def build(paper: str) -> bool:
         shutil.copy2(cls, man / "IEEEtran.cls")
 
     if (en / "supplement.tex").exists():
-        (supp / "supplement.tex").write_text(
-            _localize((en / "supplement.tex").read_text(encoding="utf-8")),
-            encoding="utf-8", newline="\n")
+        supp_tex = _localize((en / "supplement.tex").read_text(encoding="utf-8"))
+        (supp / "supplement.tex").write_text(supp_tex, encoding="utf-8", newline="\n")
+        # дополнение тоже может содержать фигуры (в T-BIOM туда вынесены четыре кривые,
+        # чтобы рукопись уложилась в 10 страниц) -> копируем их рядом с ним
+        supp_figs = _figures(supp_tex)
+        if supp_figs:
+            (supp / "figures").mkdir(exist_ok=True)
+            for fig in supp_figs:
+                s = LATEX / "shared" / "figures" / fig
+                if s.exists():
+                    shutil.copy2(s, supp / "figures" / fig)
+                else:
+                    print(f"    ! нет фигуры дополнения {fig}")
 
     # вырезаем комментарии (защита от деанонимизации через исходник)
     strip = sub / "strip_comments.py"
