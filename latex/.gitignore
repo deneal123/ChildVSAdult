@@ -27,6 +27,10 @@ papers/journal-1-tnnls/submission/manuscript/
 papers/journal-1-tnnls/submission/supplement/
 papers/journal-1-tbiom/submission/manuscript/
 papers/journal-1-tbiom/submission/supplement/
+# COI и сопроводительное письмо: .tex отслеживаем, сборочный мусор и PDF — нет
+papers/journal-1-tbiom/submission/*.aux
+papers/journal-1-tbiom/submission/*.log
+papers/journal-1-tbiom/submission/*.pdf
 
 # MS Office lock/owner temp files (created while a .docx is open in Word)
 ~$*

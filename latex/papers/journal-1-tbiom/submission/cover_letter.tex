@@ -1,0 +1,106 @@
+%% Cover letter — the "Cover letter / Comments" slot is nominally optional, but for THIS
+%% submission it is effectively mandatory: T-BIOM's Information for Authors requires that a
+%% dataset which is not available to the research community "must be clearly explained and
+%% justified in the submission AND IN THE COVER LETTER". Our dataset is biometric and cannot be
+%% redistributed, so that justification lives here.
+%%
+%% NOT SHOWN TO REVIEWERS (portal: "will not be shown to Peer Reviewers"), so it is written for
+%% the Editor-in-Chief / Associate Editor.
+%%
+%% !! BEFORE SUBMITTING: the ethics paragraph below must be completed with the actual IRB decision.
+%%    The manuscript currently states that no ethics-committee protocol has been filed. T-BIOM asks
+%%    at submission time whether review-board approval was obtained, so an approval or a documented
+%%    exemption from the HSE University ethics board is required first. Do not submit with the
+%%    placeholder in place.
+%% Build: pdflatex cover_letter
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{parskip}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent
+To the Editor-in-Chief,\\
+IEEE Transactions on Biometrics, Behavior, and Identity Science
+
+\vspace{3mm}
+\noindent
+\textbf{Manuscript:} Cross-Age Face Verification from Mined Same-Person Social-Media Pairs:
+A Naturally-Supervised Longitudinal Signal\\
+\textbf{Type:} Regular paper
+
+\vspace{4mm}
+\noindent
+Dear Editor,
+
+We submit the manuscript above for consideration as a regular paper. Below we disclose, proactively,
+the three points on which this submission departs from the journal's default expectations.
+
+\vspace{3mm}
+\noindent\textbf{1. The dataset is not released to the general research community, and why.}
+T-BIOM's Information for Authors states that where the main results rest on a dataset that is not
+available to the community, this must be explained and justified. Our results rest on face images
+mined from public social-media ``then/now'' posts. We do \emph{not} redistribute them, for reasons
+we consider dispositive rather than convenient:
+
+\begin{itemize}
+\item The data are biometric. Under Russia's 152-FZ (as amended by 519-FZ, 2020) public posting does
+      not constitute authorization for dissemination, and Art.~11 requires written consent for
+      biometric data used to identify a person. Under the GDPR a face processed for unique
+      identification is special-category data (Art.~9), and the ``manifestly made public'' exception
+      is read narrowly. We hold no written consent, and the subjects cannot feasibly be contacted.
+\item Redistributing such a corpus would create exactly the artifact the paper argues against: a
+      public, non-consensual biometric database of identifiable individuals across decades of their
+      lives.
+\end{itemize}
+
+\noindent What we do release instead, so the work remains verifiable and reusable:
+the complete mining, curation, training and evaluation code; all configurations and random seeds;
+the de-identified benchmark protocol (pair lists by salted identifier, with age gaps and split
+assignment, containing no images and no recoverable identities); a datasheet for the dataset; and
+all reported metrics as machine-readable files. Every number in the manuscript is reproducible from
+these artifacts given re-collection under the reader's own legal basis, and the external results
+(LFW, AgeDB-30, CALFW, FG-NET) are reproducible outright, since those datasets are public.
+Reconstruction from a public source is additionally demonstrated in the paper by an independent
+non-VK replication (Reddit).
+
+\vspace{3mm}
+\noindent\textbf{2. Human subjects and ethical review.}
+%% >>> REPLACE THIS PARAGRAPH WITH THE ACTUAL DECISION BEFORE SUBMITTING <<<
+\emph{[To be completed: name of the institution, name of the IRB/ethics board that issued the
+approval or the exemption, and the date. The manuscript's Ethical Approval subsection must be
+updated to match. The submission form requires this at upload time.]}
+The study analyses previously posted public images with no intervention, no contact with subjects
+and no deployment; the released artifacts are de-identified; minors are excluded as subjects. The
+manuscript states transparently which safeguards are in place and which consents we do not hold,
+rather than asserting full compliance.
+
+\vspace{3mm}
+\noindent\textbf{3. Originality and prior submissions.}
+The manuscript is original, is not published elsewhere, and is not under review at any other venue.
+It is not an extension of a published conference paper, so the 30\% new-material rule for
+conference extensions does not apply. An earlier version was submitted to, and rejected by, another
+IEEE journal; that manuscript was never published, and the present version differs substantially:
+the evaluation of the LFW forgetting control was found to be defective and has been corrected (the
+previously reported accuracy cost and low-FAR degradation were artifacts of an unaligned evaluation
+path and do not survive correction), and a new analysis shows that the standard random-impostor
+protocol understates the task -- with look-alike impostors, frozen state-of-the-art recognizers fall
+below chance on the 25-year-gap subset.
+
+\vspace{3mm}
+\noindent
+We confirm that all authors have approved the submission and the author list, and that the figures,
+tables and reported results accurately reflect the experimental work. The authors declare no
+conflict of interest.
+
+\vspace{6mm}
+\noindent
+Sincerely,\\
+Danil~F.~Volkhin (corresponding author)\\
+Ivan~S.~Kopylov\\
+National Research University Higher School of Economics (HSE University), Moscow, Russia\\
+deneal123@mail.ru
+
+\end{document}
