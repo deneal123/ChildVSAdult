@@ -9,7 +9,8 @@
 | **Main Manuscript** *(required, 1 file)* | a ZIP of the **contents** of `manuscript/` — so `main.tex` sits at the ZIP root, together with `refs.bib`, `main.bbl`, `IEEEtran.cls` and `figures/` | `submission/manuscript/` |
 | **Conflict of Interest** *(required, 1 file)* | `coi.pdf` | `submission/coi.tex` |
 | **Cover letter / Comments** *(nominally optional — for us **required**)* | `cover_letter.pdf` | `submission/cover_letter.tex` |
-| — *(not a portal slot)* | `ethics_request_hse.md` — send to the HSE ethics committee, then fill its date into the three placeholders | `submission/ethics_request_hse.md` |
+| — *(not a portal slot)* | `ethics_request_hse.md` — file with the HSE ethics committee **before** submitting | `submission/ethics_request_hse.md` |
+| — *(not a portal slot)* | `portal_answers.md` — ready-to-paste answers for the form's ethics/COI questions | `submission/portal_answers.md` |
 | **Supplementary Material for Review** *(optional)* | `supplement.pdf` | `submission/supplement/` |
 | **LaTeX Supplementary File** *(optional)* | `supplement.tex` — only if the portal asks for the supplement source separately | `submission/supplement/` |
 | Main Document — Tracked Changes | — | first submission, nothing to track |
@@ -43,11 +44,13 @@ The old wording — *"No formal ethics-committee protocol has been filed ... the
 [one] should a venue or reviewer require one"* — was the actual problem: it read as an unfulfilled
 promise and contradicted whichever answer you give on the submission form. It is gone.
 
-**What you must still do:** send the exemption request in `ethics_request_hse.md` (it asks the HSE
-committee for an *exemption determination*, not a full protocol — much faster), then fill the real
-date into the three placeholders: `../en/main.tex`, `../ru/main_ru.tex` and `cover_letter.tex`.
-**Do not invent a date.** On the portal, answer the human-subjects question truthfully and paste the
-manuscript's explanation into the reasoning box.
+**What you must still do:** have the exemption request in `ethics_request_hse.md` filed with the HSE
+committee (it asks for an *exemption determination*, not a full protocol — much faster) **before**
+you press submit, because the manuscript states the request has been made. No date appears anywhere
+in the manuscript or the cover letter, on purpose: a date in a published paper cannot be corrected
+if the request is actually filed on a different day, so both documents instead promise the
+committee's decision **together with its filing date**. Ready-to-paste answers for the portal form
+are in `portal_answers.md`.
 
 **2. Page count — resolved, now 10 pp.** Regular papers are limited to 10 pages. The manuscript was
 11 pp, so four figures that merely re-plotted data from adjacent tables (headroom curve, data-scaling
