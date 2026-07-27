@@ -1,6 +1,7 @@
 # T-BIOM submission — what goes into which slot
 
-**Read "Before you submit" first** — one item still needs a decision from you, and one date must be filled in.
+**DO NOT SUBMIT YET.** The AAAI-27 version (paper #7133) is currently **under review**, which bars a
+T-BIOM submission outright — see item 3. The bundle is ready and waits for the AAAI decision.
 
 ## Slot-by-slot
 
@@ -62,32 +63,34 @@ apply.
 The Russian mirror in `../ru/` deliberately keeps all six figures inline: it is not a submission,
 has no page limit, and has no supplement of its own to hold them.
 
-**3. T-BIOM and AAAI-27 cannot be in review at the same time.** This is not a formatting question —
-the two versions report the same work, and T-BIOM's rules bar parallel review twice over:
+**3. BLOCKING: the AAAI-27 version is under review right now.** Paper #7133 is in review at AAAI-27
+(confirmed by the program chairs' reciprocal-reviewing notice of 26 July 2026, which also states the
+paper will not be desk-rejected on nomination grounds). T-BIOM's rules bar a submission twice over
+while that is true:
 
 > "Every manuscript submitted to TBIOM must … Not be previously published or under review elsewhere."
 
 > "Extensions of conference papers may be submitted to TBIOM, though **not whilst the conference
 > version is in review**."
 
-So the extension route does not create a loophole either. AAAI has its own dual-submission policy;
-check the AAAI-27 CFP text directly before relying on anything here. Two legal orders exist:
+So the extension route is not a loophole either. **The order is now decided by fact, not preference:
+AAAI first.** What follows:
 
-- **T-BIOM first** (recommended): submit here, hold the AAAI version. The TNNLS AE called the
-  contribution "a valuable dataset and data curation contribution" while faulting the "advance in
-  neural network learning methods" — an AI-methods conference is likely to repeat exactly that.
-- **AAAI first, then T-BIOM as an extension:** submit to AAAI, *wait for the decision*, then submit
-  here citing the conference paper and explaining the extension. The 30%-new-material rule is met
-  with room to spare: the journal version has 7396 words and 20 tables/figures against the
-  conference version's 4019 and 9, i.e. ~46% of it is material the conference paper does not carry.
-  Cost: the journal submission idles for months.
+- **Wait for the AAAI-27 decision.** Do not submit here in the meantime, and do not describe the
+  T-BIOM version as "not under review elsewhere" until that is true.
+- **If AAAI accepts:** this becomes an *extension of a published conference paper*. Then the rules
+  change — the manuscript must cite the AAAI paper, explain the extension, and carry ≥30% new
+  material. We clear that comfortably: 7396 words and 20 tables/figures here against 4019 and 9
+  there, i.e. ~46% of this version is material the conference paper does not carry (13 tables exist
+  only here). The cover letter's originality paragraph and the "Previously Published" slots must
+  both be rewritten at that point — they currently say the opposite.
+- **If AAAI rejects:** submit here as-is; a rejected manuscript was never published, so the
+  originality paragraph stands unchanged.
 
-Either way the ethics blocker (item 1) applies — AAAI reviews ethics too, and non-consensual
-biometric data on identifiable people is precisely the category that gets flagged there.
+Either way the ethics item (1) still applies — AAAI reviews ethics too.
 
-An earlier version was submitted to and **rejected** by another IEEE journal. A rejected manuscript
-was never published, so the "Previously Published" slots do not apply; the cover letter discloses it
-anyway.
+An earlier version was also submitted to and **rejected** by another IEEE journal (TNNLS). That one
+is settled: rejected ≠ published, and the cover letter discloses it.
 
 ## Rebuilding the bundle
 
