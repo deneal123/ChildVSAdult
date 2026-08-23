@@ -75,6 +75,8 @@ def create_app(settings: Settings | None = None, service: PromService | None = N
             min_image_side=0,
             min_blur_variance=0,
             worker_poll_seconds=1,
+            worker_lease_seconds=60,
+            worker_max_attempts=3,
             service_version=__version__,
         )
     app = FastAPI(title="prom internal API", version=settings.service_version, lifespan=lifespan, docs_url=None, redoc_url=None)

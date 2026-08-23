@@ -1,3 +1,3 @@
--- Schema is materialised by `prom-migrate` from src/prom_service/db.py.
--- The migration boundary is intentionally restricted to prom_* tables in the application's PostgreSQL database.
--- This file documents the initial production migration and is kept with the source revision deployed with it.
+-- 001_initial is materialised by `prom-migrate` from src/prom_service/db.py and recorded in
+-- prom_schema_migrations. The migration boundary is restricted to prom_* tables in the
+-- application's PostgreSQL database. Application startup never calls schema creation.

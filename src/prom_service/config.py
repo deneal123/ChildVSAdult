@@ -20,6 +20,8 @@ class Settings:
     min_image_side: int
     min_blur_variance: float
     worker_poll_seconds: float
+    worker_lease_seconds: int
+    worker_max_attempts: int
     service_version: str
 
     @classmethod
@@ -43,5 +45,7 @@ class Settings:
             min_image_side=int(os.getenv("PROM_MIN_IMAGE_SIDE", "160")),
             min_blur_variance=float(os.getenv("PROM_MIN_BLUR_VARIANCE", "12")),
             worker_poll_seconds=float(os.getenv("PROM_WORKER_POLL_SECONDS", "1")),
+            worker_lease_seconds=int(os.getenv("PROM_WORKER_LEASE_SECONDS", "60")),
+            worker_max_attempts=int(os.getenv("PROM_WORKER_MAX_ATTEMPTS", "3")),
             service_version=os.getenv("PROM_SERVICE_VERSION", "1.0.0"),
         )

@@ -18,7 +18,7 @@ class PromService:
     engine: InferenceEngine
 
     def process_one_job(self) -> bool:
-        job = self.db.claim_job()
+        job = self.db.claim_job(self.fetcher.settings.worker_lease_seconds)
         if job is None:
             return False
         try:
@@ -34,9 +34,19 @@ class PromService:
             )
         except MediaError:
             # Do not persist image URLs or exception contents; they can contain signed query parameters.
-            self.db.fail_job(job, "media_rejected")
+            self.db.fail_job(
+                job,
+                "media_rejected",
+                retryable=False,
+                max_attempts=self.fetcher.settings.worker_max_attempts,
+            )
         except Exception:  # noqa: BLE001 - the durable job must become observable as failed
-            self.db.fail_job(job, "inference_failed")
+            self.db.fail_job(
+                job,
+                "inference_failed",
+                retryable=True,
+                max_attempts=self.fetcher.settings.worker_max_attempts,
+            )
         return True
 
     def duplicate_check(self, profile_id: str, account_id: str, image_url: str) -> tuple[float, bool]:
@@ -69,23 +79,36 @@ class PromService:
     def swipe(self, event_id: str, viewer_id: str, candidate_id: str, reaction: str, impression_id: str) -> tuple[bool, bool]:
         projection = self.artifacts.projection
         representation = self.db.get_representation(candidate_id)
-        model: UserModel | None = None
-        updated = False
-        if projection and representation and representation.status == "ready" and representation.recommendation_embedding:
-            stored = self.db.get_user_model(viewer_id)
+
+        def update_model(stored: UserModel | None) -> UserModel | None:
+            if not (
+                projection
+                and representation
+                and representation.status == "ready"
+                and representation.recommendation_embedding
+            ):
+                return None
             if stored and stored.projection_version == projection.version:
-                state = BayesianState.from_payload(stored.precision, stored.information, stored.n_observations)
+                state = BayesianState.from_payload(
+                    stored.precision, stored.information, stored.n_observations
+                )
             else:
                 state = BayesianState.empty(len(projection.components))
             state.update(project(representation.recommendation_embedding, projection), reaction)
             precision, information, n_observations = state.payload()
-            model = UserModel(
+            return UserModel(
                 viewer_id=viewer_id,
                 projection_version=projection.version,
                 precision=precision,
                 information=information,
                 n_observations=n_observations,
             )
-            updated = True
-        applied = self.db.record_swipe(event_id, viewer_id, candidate_id, reaction, impression_id, model)
-        return applied, applied and updated
+
+        return self.db.record_swipe(
+            event_id,
+            viewer_id,
+            candidate_id,
+            reaction,
+            impression_id,
+            update_model,
+        )

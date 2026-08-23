@@ -1,11 +1,22 @@
 from __future__ import annotations
 
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
-from sqlalchemy import JSON, DateTime, ForeignKey, Integer, String, Text, create_engine, select
+from sqlalchemy import (
+    JSON,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    create_engine,
+    or_,
+    select,
+    text,
+)
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 
@@ -44,6 +55,7 @@ class ProcessingJob(Base):
     source_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(24), default="pending", index=True)
     attempts: Mapped[int] = mapped_column(Integer, default=0)
+    lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True, index=True)
     error_code: Mapped[str | None] = mapped_column(String(64), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
@@ -80,6 +92,13 @@ class AuditEvent(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
+class SchemaMigration(Base):
+    __tablename__ = "prom_schema_migrations"
+
+    version: Mapped[str] = mapped_column(String(64), primary_key=True)
+    applied_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
 class OwnershipConflict(ValueError):
     pass
 
@@ -98,8 +117,24 @@ class Database:
         self.engine = create_engine(url, pool_pre_ping=True)
         self.sessions = sessionmaker(self.engine, expire_on_commit=False)
 
-    def create_schema(self) -> None:
+    def apply_migrations(self) -> list[str]:
+        """Apply registered, forward-only prom migrations.
+
+        The first migration creates only the isolated ``prom_*`` tables. Further migrations are
+        added explicitly to this registry; a deployed database never relies on application startup
+        to mutate schema.
+        """
         Base.metadata.create_all(self.engine)
+        with self.session() as session:
+            applied = {row.version for row in session.execute(select(SchemaMigration)).scalars()}
+            if "001_initial" not in applied:
+                session.add(SchemaMigration(version="001_initial"))
+                return ["001_initial"]
+        return []
+
+    def create_schema(self) -> None:
+        """Compatibility helper used only by tests."""
+        self.apply_migrations()
 
     @contextmanager
     def session(self) -> Iterator[Session]:
@@ -145,11 +180,17 @@ class Database:
         with self.session() as session:
             return session.get(Representation, profile_id)
 
-    def claim_job(self) -> ClaimedJob | None:
+    def claim_job(self, lease_seconds: int) -> ClaimedJob | None:
         with self.session() as session:
+            now = utcnow()
             statement = (
                 select(ProcessingJob)
-                .where(ProcessingJob.status == "pending")
+                .where(
+                    or_(
+                        ProcessingJob.status == "pending",
+                        (ProcessingJob.status == "processing") & (ProcessingJob.lease_until < now),
+                    )
+                )
                 .order_by(ProcessingJob.id)
                 .with_for_update(skip_locked=True)
                 .limit(1)
@@ -163,6 +204,7 @@ class Database:
                 return None
             job.status = "processing"
             job.attempts += 1
+            job.lease_until = now + timedelta(seconds=lease_seconds)
             return ClaimedJob(job.id, job.profile_id, job.account_id, job.photo_version, job.source_url)
 
     def complete_job(
@@ -182,6 +224,7 @@ class Database:
             if representation.photo_version != job.photo_version:
                 item.status = "superseded"
                 item.source_url = None
+                item.lease_until = None
                 return
             representation.recommendation_embedding = recommendation_embedding
             representation.face_template = face_template
@@ -192,21 +235,26 @@ class Database:
             representation.error_code = None
             item.status = "succeeded"
             item.source_url = None
+            item.lease_until = None
             session.add(AuditEvent(event_type="representation_ready", subject_id=job.profile_id))
 
-    def fail_job(self, job: ClaimedJob, error_code: str) -> None:
+    def fail_job(self, job: ClaimedJob, error_code: str, retryable: bool, max_attempts: int) -> None:
         with self.session() as session:
             item = session.get(ProcessingJob, job.id)
             representation = session.get(Representation, job.profile_id)
             if not item or item.status != "processing":
                 return
-            item.source_url = None
+            should_retry = retryable and item.attempts < max_attempts and bool(item.source_url)
             item.error_code = error_code
-            item.status = "failed"
+            item.lease_until = None
+            item.status = "pending" if should_retry else "failed"
+            if not should_retry:
+                item.source_url = None
             if representation and representation.photo_version == job.photo_version:
-                representation.status = "failed"
-                representation.error_code = error_code
-            session.add(AuditEvent(event_type="representation_failed", subject_id=job.profile_id))
+                representation.status = "pending" if should_retry else "failed"
+                representation.error_code = None if should_retry else error_code
+            event_type = "representation_retry" if should_retry else "representation_failed"
+            session.add(AuditEvent(event_type=event_type, subject_id=job.profile_id))
 
     def ready_representations(self, candidate_ids: list[str]) -> dict[str, Representation]:
         if not candidate_ids:
@@ -230,13 +278,20 @@ class Database:
         candidate_id: str,
         reaction: str,
         impression_id: str,
-        model: UserModel | None,
-    ) -> bool:
-        """Persist event and state together. True means this event was newly applied."""
+        update_model: Callable[[UserModel | None], UserModel | None],
+    ) -> tuple[bool, bool]:
+        """Persist event and preference state in one serialised transaction."""
         try:
             with self.session() as session:
+                if self.engine.dialect.name == "postgresql":
+                    # Serialises first-event creation and every later posterior update per viewer.
+                    session.execute(text("SELECT pg_advisory_xact_lock(hashtext(:viewer_id))"), {"viewer_id": viewer_id})
                 if session.get(SwipeEvent, event_id):
-                    return False
+                    return False, False
+                existing = session.execute(
+                    select(UserModel).where(UserModel.viewer_id == viewer_id).with_for_update()
+                ).scalar_one_or_none()
+                model = update_model(existing)
                 session.add(
                     SwipeEvent(
                         event_id=event_id,
@@ -247,7 +302,6 @@ class Database:
                     )
                 )
                 if model is not None:
-                    existing = session.get(UserModel, viewer_id)
                     if existing is None:
                         session.add(model)
                     else:
@@ -256,10 +310,10 @@ class Database:
                         existing.information = model.information
                         existing.n_observations = model.n_observations
                 session.add(AuditEvent(event_type="swipe_recorded", subject_id=viewer_id))
-            return True
+            return True, model is not None
         except IntegrityError:
             # Concurrent delivery of the same event is harmless and must not update twice.
-            return False
+            return False, False
 
     def erase_account(self, account_id: str) -> int:
         with self.session() as session:

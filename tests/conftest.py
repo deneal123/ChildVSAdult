@@ -43,6 +43,8 @@ def settings(tmp_path: Path) -> Settings:
         min_image_side=160,
         min_blur_variance=12,
         worker_poll_seconds=0.01,
+        worker_lease_seconds=1,
+        worker_max_attempts=3,
         service_version="test",
     )
 
