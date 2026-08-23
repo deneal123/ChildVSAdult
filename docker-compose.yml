@@ -1,19 +1,34 @@
 services:
+  prom-model-init:
+    build:
+      context: .
+      target: model-init
+    env_file: ${PROM_ENV_FILE:-.env}
+    volumes:
+      - prom-model-artifacts:/app/models
+    command: ["prom-model-init"]
+    restart: "no"
+
   prom-migrate:
     build: .
     env_file: ${PROM_ENV_FILE:-.env}
     volumes:
-      - ./models:/app/models:ro
+      - prom-model-artifacts:/app/models:ro
     command: ["prom-migrate"]
+    depends_on:
+      prom-model-init:
+        condition: service_completed_successfully
     restart: "no"
 
   prom-api:
     build: .
     env_file: ${PROM_ENV_FILE:-.env}
     volumes:
-      - ./models:/app/models:ro
+      - prom-model-artifacts:/app/models:ro
     command: ["prom-api"]
     depends_on:
+      prom-model-init:
+        condition: service_completed_successfully
       prom-migrate:
         condition: service_completed_successfully
     ports:
@@ -34,9 +49,11 @@ services:
     build: .
     env_file: ${PROM_ENV_FILE:-.env}
     volumes:
-      - ./models:/app/models:ro
+      - prom-model-artifacts:/app/models:ro
     command: ["prom-worker"]
     depends_on:
+      prom-model-init:
+        condition: service_completed_successfully
       prom-migrate:
         condition: service_completed_successfully
     read_only: true
@@ -45,3 +62,6 @@ services:
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
+
+volumes:
+  prom-model-artifacts:

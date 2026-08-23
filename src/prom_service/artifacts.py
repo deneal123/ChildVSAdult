@@ -22,6 +22,7 @@ class ModelSpec:
     image_size: int
     mean: tuple[float, float, float]
     std: tuple[float, float, float]
+    color_order: str
 
 
 @dataclass(frozen=True)
@@ -84,6 +85,9 @@ def _spec(root: Path, payload: Any, label: str) -> ModelSpec:
     image_size = int(payload.get("image_size", 0))
     if image_size < 32:
         raise ArtifactError(f"{label}.image_size must be at least 32")
+    color_order = str(payload.get("color_order", "rgb")).lower()
+    if color_order not in {"rgb", "bgr"}:
+        raise ArtifactError(f"{label}.color_order must be rgb or bgr")
     return ModelSpec(
         path=path,
         sha256=expected.lower(),
@@ -92,6 +96,7 @@ def _spec(root: Path, payload: Any, label: str) -> ModelSpec:
         image_size=image_size,
         mean=mean,
         std=std,
+        color_order=color_order,
     )
 
 

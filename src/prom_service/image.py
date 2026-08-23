@@ -99,6 +99,8 @@ class InferenceEngine:
     @staticmethod
     def _input(image: Image.Image, spec: ModelSpec) -> np.ndarray:
         pixels = np.asarray(image.resize((spec.image_size, spec.image_size)), dtype=np.float32) / 255.0
+        if spec.color_order == "bgr":
+            pixels = pixels[..., ::-1]
         normalized = (pixels - np.asarray(spec.mean, dtype=np.float32)) / np.asarray(spec.std, dtype=np.float32)
         return np.ascontiguousarray(np.transpose(normalized, (2, 0, 1))[None, ...])
 

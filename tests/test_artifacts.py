@@ -20,7 +20,14 @@ def test_manifest_requires_matching_checksums(tmp_path):
     vision.write_bytes(b"vision")
     face.write_bytes(b"face")
     np.savez(projection, mean=np.zeros(3), components=np.eye(2, 3), scale=np.ones(3))
-    spec = {"input": "input", "output": "output", "image_size": 224, "mean": [0, 0, 0], "std": [1, 1, 1]}
+    spec = {
+        "input": "input",
+        "output": "output",
+        "image_size": 224,
+        "mean": [0, 0, 0],
+        "std": [1, 1, 1],
+        "color_order": "rgb",
+    }
     manifest = {
         "version": "v1",
         "vision": {**spec, "path": vision.name, "sha256": _digest(vision)},

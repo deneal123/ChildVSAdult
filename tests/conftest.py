@@ -59,6 +59,7 @@ def artifacts(tmp_path: Path) -> ModelArtifacts:
         image_size=224,
         mean=(0.0, 0.0, 0.0),
         std=(1.0, 1.0, 1.0),
+        color_order="rgb",
     )
     return ModelArtifacts(
         version="test-model-v1",

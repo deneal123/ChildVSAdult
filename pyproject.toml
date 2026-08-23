@@ -25,12 +25,19 @@ dev = [
     "ruff>=0.8,<1",
     "httpx>=0.27,<1",
 ]
+model-init = [
+    "torch>=2.5,<2.6",
+    "huggingface-hub>=0.26,<1",
+    "onnx>=1.16,<2",
+    "transformers>=4.45,<5",
+]
 
 [project.scripts]
 prom-api = "prom_service.app:run"
 prom-worker = "prom_service.worker:run"
 prom-migrate = "prom_service.migrate:main"
 prom-verify-artifacts = "prom_service.artifacts:main"
+prom-model-init = "prom_service.model_init:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
