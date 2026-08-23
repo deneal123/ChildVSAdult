@@ -1,0 +1,3 @@
+-- Schema is materialised by `prom-migrate` from src/prom_service/db.py.
+-- The migration boundary is intentionally restricted to prom_* tables in the application's PostgreSQL database.
+-- This file documents the initial production migration and is kept with the source revision deployed with it.

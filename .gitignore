@@ -4,35 +4,31 @@ __pycache__/
 dist/
 build/
 .venv/
-*.ckpt
-*.pt
-*.pth
-/models/
-runs/*/
-!runs/.gitkeep
+models/*
+!models/README.md
+!models/manifest.example.json
+*.onnx
+*.npz
 *.log
 *.csv
 .pytest_cache/
 .cache/
 .claude/
-SKILL.md
-TODO.md
-deep-research-report.md
 .ruff_cache
 .mypy_cache
-cache/
-data/
-data_reddit/
-data_natural/
 logs/
-splits/
 .env
-src/age_gap/settings/certs/
-# Локальные отчёты ветки engagement: могут содержать кропы лиц (base64). Никогда не коммитить.
-reports/
-# beauty research branch: SCUT caches + model weights
-data_beauty/
+coverage.xml
+htmlcov/
 
-# Внутренние рабочие журналы (Results/Protocol/Observations/TODO/deep-research).
-# Не публикуются: содержание статьи самодостаточно, а governance описан в её разделе Ethics.
-docs/
+# Local remnants from the research branch. They are deliberately absent from prom.
+/data/
+/data_*/
+/docs/
+/latex/
+/metrics/
+/metrics_natural/
+/release/
+/reports/
+/splits/
+/src/age_gap/

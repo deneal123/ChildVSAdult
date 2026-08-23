@@ -1,0 +1,26 @@
+{
+  "version": "2026-08-23",
+  "vision": {
+    "path": "vision.onnx",
+    "sha256": "replace-with-sha256",
+    "input": "input",
+    "output": "output",
+    "image_size": 224,
+    "mean": [0.48145466, 0.4578275, 0.40821073],
+    "std": [0.26862954, 0.26130258, 0.27577711]
+  },
+  "face": {
+    "path": "face.onnx",
+    "sha256": "replace-with-sha256",
+    "input": "input",
+    "output": "output",
+    "image_size": 112,
+    "mean": [0.5, 0.5, 0.5],
+    "std": [0.5, 0.5, 0.5]
+  },
+  "projection": {
+    "path": "projection.npz",
+    "sha256": "replace-with-sha256",
+    "version": "consented-bootstrap-v1"
+  }
+}
