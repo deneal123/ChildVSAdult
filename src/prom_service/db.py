@@ -165,6 +165,8 @@ class Database:
                 representation.photo_version = photo_version
                 representation.status = "pending"
                 representation.error_code = None
+            # PostgreSQL enforces the job foreign key immediately; make a new representation visible first.
+            session.flush()
             session.add(
                 ProcessingJob(
                     profile_id=profile_id,
@@ -321,13 +323,14 @@ class Database:
                 select(Representation).where(Representation.account_id == account_id)
             ).scalars().all()
             profile_ids = [row.profile_id for row in representations]
-            for row in representations:
-                session.delete(row)
             if profile_ids:
                 for job in session.execute(
                     select(ProcessingJob).where(ProcessingJob.profile_id.in_(profile_ids))
                 ).scalars():
                     session.delete(job)
+                session.flush()
+            for row in representations:
+                session.delete(row)
             session.get(UserModel, account_id) and session.delete(session.get(UserModel, account_id))
             for event in session.execute(select(SwipeEvent).where(SwipeEvent.viewer_id == account_id)).scalars():
                 session.delete(event)

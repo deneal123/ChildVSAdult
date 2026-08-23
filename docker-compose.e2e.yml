@@ -1,0 +1,47 @@
+services:
+  prom-e2e-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: prom_e2e
+      POSTGRES_USER: prom_e2e
+      POSTGRES_PASSWORD: prom_e2e
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prom_e2e -d prom_e2e"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  prom-e2e:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://prom_e2e:prom_e2e@prom-e2e-db:5432/prom_e2e
+      PROM_INTERNAL_TOKEN: e2e-internal-token
+      PROM_MODEL_MANIFEST: /app/models/manifest.json
+      PROM_ALLOWED_MEDIA_HOSTS: media.e2e.invalid
+      PROM_MEDIA_MAX_BYTES: "1048576"
+      PROM_MEDIA_TIMEOUT_SECONDS: "2"
+      PROM_MIN_IMAGE_SIDE: "160"
+      PROM_MIN_BLUR_VARIANCE: "12"
+      PROM_WORKER_POLL_SECONDS: "0.01"
+      PROM_WORKER_LEASE_SECONDS: "60"
+      PROM_WORKER_MAX_ATTEMPTS: "3"
+      PROM_SERVICE_VERSION: e2e
+      PYTHONPATH: /e2e-src
+    volumes:
+      - prom-model-artifacts:/app/models:ro
+      - ./scripts:/e2e:ro
+      - ./src:/e2e-src:ro
+    command: ["python", "/e2e/e2e_synthetic.py"]
+    depends_on:
+      prom-model-init:
+        condition: service_completed_successfully
+      prom-e2e-db:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"

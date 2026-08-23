@@ -47,3 +47,13 @@ Copy `.env.example` to the deployment secret store and run
 must finish successfully before migration, API or worker starts. `docker-compose.yml` intentionally does not
 create a PostgreSQL instance: it connects to the application's managed database using its own
 `prom_*` tables.
+
+## Synthetic end-to-end check
+
+The repository contains no personal images in its test path. To run the production image against a disposable
+PostgreSQL instance, real ONNX artifacts and a deterministic synthetic JPEG, use:
+
+```powershell
+$env:PROM_ENV_FILE = '.env.example'
+docker compose -f docker-compose.yml -f docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from prom-e2e prom-e2e
+```
