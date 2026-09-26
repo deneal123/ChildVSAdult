@@ -28,6 +28,7 @@ from torch.utils.data import DataLoader
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.evaluation.benchmark_external import load_bin, pair_scores
 from age_gap.evaluation.fgnet import load_pairs as load_fgnet_pairs
 from age_gap.evaluation.fgnet import prepare_crops
@@ -290,14 +291,24 @@ def main() -> None:
     parser.add_argument("--tuned", default=None, help="default models/bb_<backbone>_seed42.pt")
     parser.add_argument("--large-gap", type=int, default=25, help="FG-NET / internal large gap")
     parser.add_argument("--perms", type=int, default=10000)
+    parser.add_argument(
+        "--manifest-only", action="store_true", help="bind existing metrics to current inputs"
+    )
     args = parser.parse_args()
 
     _sanity_check()
 
-    device = torch_device()
     models = data_path("models_dir")
     bb = args.backbone
     tuned_ckpt = Path(args.tuned) if args.tuned else Path(str(models / f"bb_{bb}_seed42.pt"))
+    dst = Path(str(data_path("metrics_dir", "delong_tests.json")))
+    if args.manifest_only:
+        results = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, results, tuned_ckpt, args)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
+
+    device = torch_device()
     log.info("frozen=%s (pretrained), tuned=%s, device=%s", bb, tuned_ckpt, device)
 
     frozen = make_backbone(bb, pretrained=True).to(device).eval()
@@ -332,12 +343,49 @@ def main() -> None:
     imask = (i_lab == 0) | ((i_lab == 1) & (i_gap >= args.large_gap))
     results["internal_25plus"] = _record(i_sf[imask], i_st[imask], i_lab[imask], args.perms)
 
-    dst = data_path("metrics_dir", "delong_tests.json")
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    _write_manifest(dst, results, tuned_ckpt, args)
 
     _print_table(results)
     print(f"\nwrote {dst}")
+
+
+def _write_manifest(
+    dst: Path,
+    results: dict[str, dict[str, float | list[float]]],
+    tuned_ckpt: Path,
+    args: argparse.Namespace,
+) -> None:
+    ext = Path(str(data_path("data_dir", "external")))
+    inputs = [
+        tuned_ckpt,
+        Path(str(data_path("metrics_dir", "model_inventory.json"))),
+        Path(str(data_path("data_dir", "processed", "pairs.jsonl"))),
+        *[
+            path
+            for path in (
+                ext / "fgnet_crops.npz",
+                ext / "agedb_30.bin",
+                ext / "calfw.bin",
+            )
+            if path.is_file()
+        ],
+    ]
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="correlated-roc-delong-and-paired-permutation",
+        parameters={
+            "backbone": args.backbone,
+            "tuned_checkpoint": str(tuned_ckpt),
+            "large_gap_years": args.large_gap,
+            "permutation_replicates": args.perms,
+            "manifest_only": args.manifest_only,
+        },
+        metrics=results,
+        inputs=inputs,
+        outputs=[dst],
+    )
 
 
 def _print_table(results: dict[str, dict[str, float | list[float]]]) -> None:

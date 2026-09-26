@@ -41,6 +41,9 @@ gpu = [
 ml = [
     "torch>=2.0.0",
     "torchvision>=0.27.0",
+    # Upstream metadata still caps torch/torchvision at old releases; the pure-Python
+    # InceptionResnetV1 used here is runtime-tested with the locked CUDA stack below.
+    "facenet-pytorch==2.6.0",
     "pandas>=2.0.0",
     "plotly>=5.18.0",
     # Использовались транзитивно; ветка engagement (регрессия/кластеризация/отчёт) требует явно.
@@ -64,6 +67,12 @@ ml = [
 # onnxruntime (cpu) и onnxruntime-gpu предоставляют один и тот же модуль — нельзя ставить вместе.
 [tool.uv]
 conflicts = [[{ extra = "cpu" }, { extra = "gpu" }]]
+override-dependencies = [
+    "torch>=2.12.0",
+    "torchvision>=0.27.0",
+    "numpy>=2.2.0",
+    "Pillow>=10.0",
+]
 
 [dependency-groups]
 dev = [

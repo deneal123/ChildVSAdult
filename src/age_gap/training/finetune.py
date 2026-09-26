@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
+from time import monotonic
 from typing import Any
 
 import cv2
@@ -19,6 +20,7 @@ from torch.utils.data import DataLoader, Dataset
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl, resolve_path
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import Pair
 from age_gap.evaluation.metrics import roc_auc
 from age_gap.models.backbones import make_backbone
@@ -147,6 +149,8 @@ def finetune(
     crops_dir: str = "faces",
     ckpt_out: Path | None = None,
     seed: int = 42,
+    pairs_file: str | None = None,
+    checkpoint_selection: str = "best_val",
 ) -> Path:
     """Дообучить backbone на наших train-парах; отбор по val-AUC (наш val). Возвращает чекпойнт.
 
@@ -155,6 +159,10 @@ def finetune(
     crops_dir: подкаталог кропов (например "faces_mtcnn" для MTCNN-выравнивания facenet).
     gap_weight>0 — age-anchor regularization: позитивы с большим возрастным разрывом весят больше.
     """
+    if checkpoint_selection not in {"best_val", "last_epoch"}:
+        raise ValueError("checkpoint_selection must be 'best_val' or 'last_epoch'")
+    if epochs < 1:
+        raise ValueError("epochs must be positive")
     ckpt_out = ckpt_out or data_path("models_dir", "facenet_finetuned.pt")
     torch.manual_seed(seed)
     device = torch_device()
@@ -162,9 +170,15 @@ def finetune(
     backbone = make_backbone(backbone_name, pretrained=True).to(device)
     prep = _bb_prep(backbone)
     train_ds = ImagePairDataset(
-        split="train", gap_weight=gap_weight, preprocess=prep, crops_dir=crops_dir
+        split="train",
+        pairs_file=pairs_file,
+        gap_weight=gap_weight,
+        preprocess=prep,
+        crops_dir=crops_dir,
     )
-    val_ds = ImagePairDataset(split="val", preprocess=prep, crops_dir=crops_dir)
+    val_ds = ImagePairDataset(
+        split="val", pairs_file=pairs_file, preprocess=prep, crops_dir=crops_dir
+    )
     if len(train_ds) == 0:
         raise RuntimeError("Пустой train-сплит: сначала постройте пары и сплит")
 
@@ -182,39 +196,133 @@ def finetune(
     loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
 
     meta = {"backbone": backbone_name, "crops_dir": crops_dir}
+    history: list[dict[str, float | int]] = []
     best_auc = -1.0
+    best_epoch = 0
+    final_state: dict[str, torch.Tensor] = {}
     best_state = {k: v.detach().cpu().clone() for k, v in backbone.state_dict().items()}
     no_improve = 0
     for epoch in range(1, epochs + 1):
         backbone.train()
+        epoch_started = monotonic()
         total = 0.0
-        for ta, tb, y, w in loader:
+        grad_total = 0.0
+        batches = 0
+        progress_every = max(1, len(loader) // 10)
+        for batch_index, (ta, tb, y, w) in enumerate(loader, start=1):
             ta, tb, y, w = ta.to(device), tb.to(device), y.to(device), w.to(device)
             opt.zero_grad()
             loss = loss_fn(backbone(ta), backbone(tb), y, weights=w)
             loss.backward()
+            grad_sq = sum(
+                float(torch.sum(param.grad.detach() ** 2))
+                for param in params
+                if param.grad is not None
+            )
+            grad_total += grad_sq**0.5
+            batches += 1
             opt.step()
             total += float(loss.detach()) * len(y)
+            if batch_index % progress_every == 0 or batch_index == len(loader):
+                log.info(
+                    "epoch %d/%d batch %d/%d (%.0f%%, %.0fs)",
+                    epoch,
+                    epochs,
+                    batch_index,
+                    len(loader),
+                    100 * batch_index / len(loader),
+                    monotonic() - epoch_started,
+                )
         avg = total / len(train_ds)
         auc = _val_auc(backbone, val_ds, device, batch_size)
+        history.append(
+            {
+                "epoch": epoch,
+                "training_loss": avg,
+                "validation_auc": auc,
+                "mean_gradient_norm": grad_total / max(batches, 1),
+                "epoch_seconds": monotonic() - epoch_started,
+            }
+        )
         if not np.isnan(auc) and auc > best_auc + 1e-4:
             best_auc = auc
+            best_epoch = epoch
             best_state = {k: v.detach().cpu().clone() for k, v in backbone.state_dict().items()}
             no_improve = 0
             # Сохраняем лучшее сразу — длинный GPU-прогон переживёт обрыв.
-            ckpt_out.parent.mkdir(parents=True, exist_ok=True)
-            torch.save({"state_dict": best_state, **meta}, ckpt_out)
+            if checkpoint_selection == "best_val":
+                ckpt_out.parent.mkdir(parents=True, exist_ok=True)
+                torch.save({"state_dict": best_state, "history": history, **meta}, ckpt_out)
         else:
             no_improve += 1
         log.info(
             "epoch %d/%d loss=%.4f val_auc=%.4f (best=%.4f)", epoch, epochs, avg, auc, best_auc
         )
-        if not np.isnan(auc) and no_improve >= patience:
+        if checkpoint_selection == "last_epoch":
+            # Fixed-budget studies select the model after every requested epoch.
+            # Persist each completed epoch so an interrupted run leaves an
+            # identifiable checkpoint that the runner will refuse to reuse
+            # without the completed manifest.
+            final_state = {
+                k: v.detach().cpu().clone() for k, v in backbone.state_dict().items()
+            }
+            ckpt_out.parent.mkdir(parents=True, exist_ok=True)
+            torch.save(
+                {
+                    "state_dict": final_state,
+                    "history": history,
+                    "selected_epoch": epoch,
+                    "checkpoint_selection": checkpoint_selection,
+                    **meta,
+                },
+                ckpt_out,
+            )
+        if checkpoint_selection == "best_val" and not np.isnan(auc) and no_improve >= patience:
             log.info("Early stop на эпохе %d", epoch)
             break
 
     ckpt_out.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"state_dict": best_state, **meta}, ckpt_out)
+    if checkpoint_selection == "best_val":
+        selected_state = best_state
+        selected_epoch = best_epoch or int(history[-1]["epoch"])
+    else:
+        selected_state = final_state
+        selected_epoch = int(history[-1]["epoch"])
+    torch.save(
+        {
+            "state_dict": selected_state,
+            "history": history,
+            "selected_epoch": selected_epoch,
+            "checkpoint_selection": checkpoint_selection,
+            **meta,
+        },
+        ckpt_out,
+    )
+    pairs_path = Path(
+        resolve_path(pairs_file or str(data_path("data_dir", "processed", "pairs.jsonl")))
+    )
+    write_experiment_manifest(
+        ckpt_out.with_suffix(".manifest.json"),
+        experiment="pair-contrastive-backbone-finetune",
+        parameters={
+            "backbone": backbone_name,
+            "epochs_requested": epochs,
+            "learning_rate": lr,
+            "batch_size": batch_size,
+            "margin": margin,
+            "patience": patience,
+            "trainable_scope": trainable_scope,
+            "gap_weight": gap_weight,
+            "crops_dir": crops_dir,
+            "seed": seed,
+            "pairs_file": str(pairs_path),
+            "checkpoint_selection": checkpoint_selection,
+            "selected_epoch": selected_epoch,
+        },
+        metrics={"best_validation_auc": best_auc, "selected_epoch": selected_epoch, "history": history},
+        inputs=[pairs_path],
+        outputs=[ckpt_out],
+    )
     log.info("Fine-tuned %s сохранён -> %s (best_val_auc=%.4f)", backbone_name, ckpt_out, best_auc)
     return ckpt_out
 
@@ -236,6 +344,7 @@ def evaluate_our_split(
     split: str = "test",
     batch_size: int = 64,
     large_gap_threshold: int = 25,
+    pairs_file: str | None = None,
 ) -> dict[str, float]:
     """Метрики на НАШЕМ cross-age сплите: overall + бакет больших разрывов (25+).
 
@@ -243,7 +352,10 @@ def evaluate_our_split(
     """
     crops_dir = getattr(backbone, "crops_dir", "faces")
     ds = ImagePairDataset(
-        split=split, preprocess=_bb_prep(backbone), crops_dir=crops_dir
+        split=split,
+        pairs_file=pairs_file,
+        preprocess=_bb_prep(backbone),
+        crops_dir=crops_dir,
     )
     if len(ds) == 0:
         return {}

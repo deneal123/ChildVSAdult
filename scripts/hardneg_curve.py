@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -33,6 +34,7 @@ import torch
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.evaluation.metrics import roc_auc
 from age_gap.models.backbones import make_backbone
 from age_gap.models.embeddings import load_embeddings
@@ -104,13 +106,23 @@ def main() -> None:
                     help="бэкбон-майнер вместо кешированного w600k_r50 (контроль на смещение "
                          "семейства майнера; НЕ должен входить в --backbones)")
     ap.add_argument("--out", default="hardneg_curve.json")
+    ap.add_argument(
+        "--manifest-only", action="store_true", help="bind an existing curve to current inputs"
+    )
     args = ap.parse_args()
 
-    device = torch_device()
     tuned = [sp for sp in args.backbones if sp.endswith(":tuned")]
     if tuned and set(args.splits) != {"test"}:
         raise SystemExit(f"дообученные модели {tuned} нельзя оценивать вне test — "
                          f"они видели train (и val через early stopping)")
+    dst = Path(str(data_path("metrics_dir", args.out)))
+    if args.manifest_only:
+        out = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, out, args)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
+
+    device = torch_device()
     pairs = [r for r in read_jsonl(data_path("data_dir", "processed", "pairs.jsonl"))
              if r.get("split") in set(args.splits)]
     pos = [r for r in pairs if r["label"] == 1]
@@ -211,9 +223,45 @@ def main() -> None:
         "контроль": "если порядок моделей сохраняется как на лёгких негативах, "
                     "смещение майнера не определяет результат",
     }
-    dst = data_path("metrics_dir", args.out)
     dst.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    _write_manifest(dst, out, args)
     log.info("записано: %s", dst)
+
+
+def _write_manifest(dst: Path, metrics: dict, args: argparse.Namespace) -> None:
+    models = Path(str(data_path("models_dir")))
+    tuned_checkpoints = [
+        models / f"bb_{spec.partition(':')[0]}_{args.tuned_suffix}.pt"
+        for spec in args.backbones
+        if spec.endswith(":tuned")
+    ]
+    inputs = [
+        Path(str(data_path("metrics_dir", "model_inventory.json"))),
+        Path(str(data_path("data_dir", "processed", "pairs.jsonl"))),
+        Path(str(data_path("data_dir", "interim", "face_genderage.jsonl"))),
+        *tuned_checkpoints,
+    ]
+    if args.miner is None:
+        inputs.append(Path(str(data_path("embeddings_cache_dir", "baseline_arcface.npz"))))
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="lookalike-impostor-difficulty-curve",
+        parameters={
+            "backbones": args.backbones,
+            "crops": args.crops,
+            "tuned_suffix": args.tuned_suffix,
+            "max_age_difference": args.max_age_diff,
+            "splits": args.splits,
+            "miner": args.miner or "cached InsightFace w600k_r50",
+            "ranks": RANKS,
+            "bootstrap_replicates": 1000,
+            "bootstrap_seed": 0,
+            "manifest_only": args.manifest_only,
+        },
+        metrics=metrics,
+        inputs=inputs,
+        outputs=[dst],
+    )
 
 
 if __name__ == "__main__":

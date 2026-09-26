@@ -82,6 +82,49 @@ def cluster_groups(
     return {gid: root_to_min[uf.find(gid)] for gid in groups_order}
 
 
+def cluster_groups_sweep(
+    face_ids: list[str],
+    embeddings: np.ndarray,
+    group_by_face: dict[str, str],
+    thresholds: list[float],
+    chunk: int = 2048,
+) -> dict[float, dict[str, str]]:
+    """Compute exact group components for several thresholds with one similarity sweep."""
+    if not thresholds:
+        return {}
+    ordered_thresholds = sorted(set(thresholds))
+    groups_order: list[str] = list(dict.fromkeys(group_by_face[face] for face in face_ids))
+    unions = {threshold: _UnionFind(groups_order) for threshold in ordered_thresholds}
+    groups = [group_by_face[face] for face in face_ids]
+    minimum = ordered_thresholds[0]
+    n_faces = len(face_ids)
+    for start in range(0, n_faces, chunk):
+        block = embeddings[start : start + chunk] @ embeddings.T
+        for block_index, row in enumerate(block):
+            index = start + block_index
+            for other in np.nonzero(row >= minimum)[0]:
+                # Each undirected edge is needed once; self-edges and within-group edges add nothing.
+                if other <= index or groups[index] == groups[int(other)]:
+                    continue
+                similarity = float(row[other])
+                for threshold in ordered_thresholds:
+                    if similarity < threshold:
+                        break
+                    unions[threshold].union(groups[index], groups[int(other)])
+
+    results: dict[float, dict[str, str]] = {}
+    for threshold, union in unions.items():
+        root_to_min: dict[str, str] = {}
+        for group_id in groups_order:
+            root = union.find(group_id)
+            if root not in root_to_min or group_id < root_to_min[root]:
+                root_to_min[root] = group_id
+        results[threshold] = {
+            group_id: root_to_min[union.find(group_id)] for group_id in groups_order
+        }
+    return results
+
+
 def run(
     groups_file: str | None = None,
     embeddings_file: str | None = None,

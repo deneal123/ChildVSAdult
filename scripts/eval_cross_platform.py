@@ -29,6 +29,7 @@ from torch.utils.data import DataLoader
 
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.evaluation.metrics import bootstrap_auc_ci, eer, roc_auc, tar_at_far
 from age_gap.models.backbones import make_backbone
 from age_gap.training.finetune import ImagePairDataset, _bb_prep, load_finetuned
@@ -66,6 +67,35 @@ def _metrics(s: np.ndarray, y: np.ndarray, gaps: np.ndarray, thr: int = 25) -> d
     return m
 
 
+def _aggregate(models: dict[str, dict]) -> dict[str, dict[str, float | int]]:
+    """Mean/std over fine-tuned checkpoints; per-checkpoint CIs remain authoritative."""
+    rows = [value for key, value in models.items() if key != "frozen"]
+    out: dict[str, dict[str, float | int]] = {}
+    if not rows:
+        return out
+    scalar_keys = sorted(
+        key
+        for key in set.intersection(*(set(row) for row in rows))
+        if isinstance(rows[0][key], (int, float)) and not key.startswith("n_")
+    )
+    for key in scalar_keys:
+        values = np.asarray([float(row[key]) for row in rows], dtype=float)
+        out[key] = {
+            "mean": float(values.mean()),
+            "std": float(values.std(ddof=1)) if len(values) > 1 else 0.0,
+            "n_seeds": len(values),
+        }
+    for key in ("overall_ci95", "large_gap_ci95"):
+        widths = [float(row[key][1] - row[key][0]) for row in rows if key in row]
+        if widths:
+            out[f"{key}_width"] = {
+                "mean": float(np.mean(widths)),
+                "max": float(np.max(widths)),
+                "n_seeds": len(widths),
+            }
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Cross-platform transfer eval on a held-out pairs set")
     ap.add_argument("--pairs", default=str(data_path("data_dir", "processed", "pairs.jsonl")),
@@ -92,7 +122,8 @@ def main() -> None:
     for c in args.ckpts:
         models[Path(c).stem] = load_finetuned(Path(c), DEV)
 
-    results: dict[str, dict] = {"pairs": args.pairs, "split": args.split, "models": {}}
+    results: dict[str, object] = {"pairs": args.pairs, "split": args.split, "models": {}}
+    model_results: dict[str, dict] = results["models"]  # type: ignore[assignment]
     for name, bb in models.items():
         crops_dir = getattr(bb, "crops_dir", "faces")
         ds = ImagePairDataset(
@@ -101,11 +132,28 @@ def main() -> None:
         if len(ds) == 0:
             raise SystemExit(f"{name}: pairs set empty (check crops exist for {args.pairs})")
         m = _metrics(_score(bb, ds), np.asarray(ds.labels), np.asarray(ds.gaps))
-        results["models"][name] = m
+        model_results[name] = m
         print(name, m)
 
+    results["fine_tuned_aggregate"] = _aggregate(model_results)
+
     dst = data_path("metrics_dir", f"cross_platform_{args.tag}.json")
-    dst.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    dst.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="cross-platform-transfer",
+        parameters={
+            "tag": args.tag,
+            "split": args.split,
+            "backbone": args.backbone,
+            "large_gap_threshold": 25,
+            "bootstrap_resamples": 2000,
+            "checkpoint_count": len(args.ckpts),
+        },
+        metrics=results,
+        inputs=[Path(args.pairs), *(Path(item) for item in args.ckpts)],
+        outputs=[dst],
+    )
     print(f"wrote {dst}")
 
 

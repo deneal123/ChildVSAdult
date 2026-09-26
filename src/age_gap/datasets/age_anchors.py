@@ -37,6 +37,7 @@ _ORDERED = re.compile(r"в\s*(\d{1,2})\b\D{0,25}?(?:и|,)\s*(?:сейчас\s*)?
 # минувших дней»). Вся подпись = последовательность 1-2-значных чисел через «/». Засчитываем
 # только если число чисел совпадает с числом фото (отсекает даты: 18/06/2021 -> 2021 невалиден).
 _SLASH_SEQ = re.compile(r"\s*(\d{1,2}(?:\s*/\s*\d{1,2})+)\s*")
+_SLASH_LIKE = re.compile(r"\s*\d+(?:\s*/\s*\d+)+\s*")
 
 _AGE_UNIT_RE = re.compile(_AGE_UNIT)
 _AGE_BARE_RE = re.compile(_AGE_BARE)
@@ -75,6 +76,11 @@ class RegexAgeExtractor:
         labels = self._slash_sequence(text, n_photos)
         if labels:
             return labels
+        # A numeric slash-only caption is either a positional age sequence or
+        # an ambiguous/date-like value.  If validation above failed, do not
+        # reinterpret its numbers through the English-caption fallback.
+        if _SLASH_LIKE.fullmatch(text):
+            return []
 
         labels = self._left_right(text)
         if labels:

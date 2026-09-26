@@ -63,7 +63,14 @@ class FaceDetector:
                 ctx_id,
                 providers,
             )
-            app = FaceAnalysis(name=self.model_name, providers=providers)
+            # This wrapper exposes detection only. Without ``allowed_modules``,
+            # FaceAnalysis also runs recognition and gender/age models for every
+            # image, wasting compute and creating an undocumented dependency.
+            app = FaceAnalysis(
+                name=self.model_name,
+                allowed_modules=["detection"],
+                providers=providers,
+            )
             app.prepare(ctx_id=ctx_id, det_size=(self.det_size, self.det_size))
             self._app = app
         return self._app

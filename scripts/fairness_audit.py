@@ -10,10 +10,12 @@ frozen vs дообученный backbone по стратам: важно, чт�
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.evaluation.fairness import compute_face_attributes, print_audit, stratified_audit
 from age_gap.models.backbones import make_backbone
 from age_gap.training.finetune import load_finetuned
@@ -53,6 +55,35 @@ def main() -> None:
 
     result = stratified_audit(frozen, tuned, device, attrs, split=args.split)
     print_audit(result)
+    output = Path(str(data_path("metrics_dir", "fairness_audit.json")))
+    payload = {
+        "backbone": bb,
+        "checkpoint": tuned_ckpt.name,
+        "split": args.split,
+        "attribute_semantics": "apparent gender and apparent age of face_a",
+        "bootstrap_replicates": 1000,
+        "bootstrap_seed": 0,
+        "strata": result,
+    }
+    output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    attribute_cache = Path(str(data_path("data_dir", "interim", "face_genderage.jsonl")))
+    model_inventory = Path(str(data_path("metrics_dir", "model_inventory.json")))
+    write_experiment_manifest(
+        output.with_suffix(".manifest.json"),
+        experiment="apparent-attribute-stratified-paired-gain",
+        parameters={
+            "backbone": bb,
+            "checkpoint": tuned_ckpt.name,
+            "split": args.split,
+            "bootstrap_replicates": 1000,
+            "bootstrap_seed": 0,
+            "attribute_source": "InsightFace buffalo_l genderage.onnx",
+        },
+        metrics=payload,
+        inputs=[Path(pairs_file), attribute_cache, model_inventory, tuned_ckpt],
+        outputs=[output],
+    )
+    print(f"wrote {output}")
 
 
 if __name__ == "__main__":

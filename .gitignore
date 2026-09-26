@@ -30,6 +30,8 @@ splits/
 src/age_gap/settings/certs/
 # Локальные отчёты ветки engagement: могут содержать кропы лиц (base64). Никогда не коммитить.
 reports/
+# Derived IEEE portal artifacts (PDF/source ZIP/manifests are rebuilt locally).
+latex/papers/*/submission/upload/
 # beauty research branch: SCUT caches + model weights
 data_beauty/
 

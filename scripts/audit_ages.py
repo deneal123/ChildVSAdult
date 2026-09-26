@@ -21,6 +21,7 @@ from pathlib import Path
 
 from age_gap.common.io import append_jsonl, data_path, read_jsonl, resolve_path
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import AgeLabel, RawPost
 from age_gap.datasets.age_anchors import RegexAgeExtractor
 from age_gap.datasets.llm_age_extractor import (
@@ -179,10 +180,31 @@ def main() -> None:
 
     report_path = Path(resolve_path(str(data_path("data_dir", "interim", "age_audit_report.jsonl"))))
     stats = _report(cache_path, report_path)
+    total = stats["total"]
+    metrics = {
+        **stats,
+        "agreement_pct": 100.0 * (stats["agree_empty"] + stats["agree_ages"]) / total,
+        "llm_filled_pct": 100.0 * stats["llm_filled"] / total,
+        "llm_missed_pct": 100.0 * stats["llm_missed"] / total,
+        "age_mismatch_pct": 100.0 * stats["age_mismatch"] / total,
+    }
+    metrics_path = Path(str(data_path("metrics_dir", "age_extraction_audit.json")))
+    metrics_path.write_text(
+        json.dumps(metrics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    write_experiment_manifest(
+        metrics_path.with_suffix(".manifest.json"),
+        experiment="llm-vs-regex-age-extraction-audit",
+        parameters={"uses_cached_llm_outputs": True, "human_ground_truth": False},
+        metrics=metrics,
+        inputs=[cache_path],
+        outputs=[metrics_path, report_path],
+    )
     print("\n=== LLM vs regex (парсинг возраста) ===")
     for k, v in stats.items():
         print(f"  {k:<14} {v}")
     print(f"отчёт о расхождениях -> {report_path}")
+    print(f"агрегаты + provenance -> {metrics_path}")
 
     if args.apply:
         _apply(cache_path)

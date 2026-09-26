@@ -13,11 +13,13 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 from collections import Counter
 from pathlib import Path
 
 from age_gap.common.io import append_jsonl, data_path, read_jsonl, resolve_path
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import IdentityGroup, RawPost
 from age_gap.datasets.group_validator import (
     NOISY,
@@ -150,10 +152,29 @@ def main() -> None:
 
     cats = _report(cache_path)
     total = sum(cats.values())
+    metrics = {
+        "total": total,
+        "categories": dict(cats),
+        "percentages": {key: 100.0 * value / total for key, value in cats.items()},
+        "human_ground_truth": False,
+    }
+    metrics_path = Path(str(data_path("metrics_dir", "group_integrity_audit.json")))
+    metrics_path.write_text(
+        json.dumps(metrics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    write_experiment_manifest(
+        metrics_path.with_suffix(".manifest.json"),
+        experiment="llm-group-integrity-corpus-audit",
+        parameters={"uses_cached_llm_outputs": True, "human_ground_truth": False},
+        metrics=metrics,
+        inputs=[cache_path],
+        outputs=[metrics_path],
+    )
     print("\n=== категории постов (целостность групп) ===")
     for cat, n in cats.most_common():
         print(f"  {cat:<14} {n:>6} ({100 * n / total:.1f}%)")
     print(f"  всего {total}")
+    print(f"  агрегаты + provenance -> {metrics_path}")
 
     if args.apply:
         _apply(cache_path)

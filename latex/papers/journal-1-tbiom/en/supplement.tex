@@ -25,9 +25,10 @@
 
 \noindent This supplement collects material that supports, but need not occupy, the main paper:
 (S\ref{sec:claims}) an explicit claims-vs-evidence map; (S\ref{sec:audit}) a consolidated audit of
-the automatic (LLM / clustering / dedup) supervision components plus a small manual validation
-(100 posts), with a large multi-annotator audit left beyond this study's resources; and
-(S\ref{sec:card}) a model / data card. Section and table
+the automatic (LLM / clustering / dedup) supervision components and the protocol required for a
+future preregistered multi-annotator audit; (S\ref{sec:quality}) the data-quality funnel and
+distributions; (S\ref{sec:card}) a model/data card; (S\ref{sec:published}) the non-comparable
+published-results map; and (S\ref{sec:figs}) secondary tables and figures. Section and table
 references of the form ``Sec.~V'' or ``Table~X'' point to the main paper.
 
 \section{Claims vs.\ Evidence}\label{sec:claims}
@@ -47,56 +48,66 @@ established / out of scope.}
 \toprule
 Claim & Evidence (main paper) & Status \\
 \midrule
-Mined ``then/now'' pairs improve large-gap ($\geq$25\,y) cross-age verification &
-FG-NET large-gap ROC-AUC $0.736\!\to\!0.848$; DeLong $p{=}1.4{\times}10^{-20}$, $\Delta$AUC 95\% CI $[{+}0.088,{+}0.135]$; internal 25+ $p{=}1.7{\times}10^{-34}$ (Sec.~V-A) & Est. \\
+Mined ``then/now'' pairs improve large-gap ($\geq$25\,y) cross-age verification under endpoint-age matching &
+FG-NET 25+ ROC-AUC $0.802\!\to\!0.8490{\pm}0.0016$; three paired subject CIs for the gain exclude zero on the same 75 subjects (Sec.~V-A); benchmark-overlap adjudication remains pending & Bounded \\
 The gain is \emph{targeted}, not a uniform verification gain &
 AgeDB-30 $-0.008$ ($p{=}4{\times}10^{-6}$), CALFW null ($p{=}0.95$), LFW TAR@FAR$=$0.1\% $0.814\!\to\!0.816$ (Sec.~V-A, Sec.~VI) & Est. \\
-The same-person pairing, not the caption age anchor, drives the gain &
-Ablation: explicit age anchors add only $+0.009$ on the 25+ bucket (Sec.~V-A) & Est. \\
+Explicit caption age anchors add little within the tested same-post ablation &
+Pre-clean ablation: age anchors add $+0.009$ on the original 25+ bucket (Sec.~V-A); this does not isolate the causal source effect & Bounded \\
+Long-gap pairs outperform short-gap pairs under a partial within-VK control &
+Fixed 10-epoch LOW/CROSS comparison: FG-NET endpoint-matched $\Delta$AUC $+0.0257{\pm}0.0009$ over three seeds; endpoint covariates and generic/noise controls remain unmatched (S\ref{sec:matched-source}) & Bounded \\
 Real mined pairs outperform synthetic aging &
 $+$real $0.848$ vs.\ FRAN $0.727$ and gap-matched FRAN-gm $0.759$ ($+0.089$); native-resolution control (Sec.~V-B) & Est. \\
 The effect reproduces across objective / architecture / source &
 3 loss families, 2 architectures, 2 communities; ArcFace $0.851\approx$ contrastive $0.848$; sub-center ArcFace $0.851$ (Sec.~V-C/E) & Est. \\
 A noise-robust objective adds nothing on curated pairs &
 Sub-center ArcFace ($K{=}3$) $\equiv$ vanilla ArcFace on FG-NET large-gap (Sec.~V-E) & Est. \\
-The mechanism is removal of an age shortcut &
-Under age-matched negatives frozen falls $0.640\!\to\!0.517$ ($\approx$chance); pairs restore $0.838$ (Sec.~V-D) & Est. \\
-The supervision is data-efficient &
-${\approx}96\%$ of the gain at 10\% of identities (Sec.~V-C) & Est. \\
+Endpoint-age-matched negatives preserve a bounded weak-backbone AUC gain, not a uniform operating-point gain &
+On 154/154 balanced internal pairs, FaceNet ROC-AUC $0.768\!\to\!0.833$ ($\Delta=+0.065$, paired subject 95\% CI $[+0.005,+0.130]$), but TAR@FAR$=$1\% $0.325\!\to\!0.253$; age-gap-only AUC 0.500 (Sec.~V-D) & Bounded. \\
+An earlier scaling sweep suggested data efficiency &
+${\approx}96\%$ of the recorded gain at 10\% of identities, but intermediate checkpoints were overwritten and a schema-v2 rerun is pending (Sec.~V-C) & Exploratory. \\
 No apparent-demographic stratum degrades; errors fall everywhere &
 Stratified AUC (all CIs $>0$); FMR/FNMR at 1\% FMR: FNMR down in every stratum (Sec.~V-G) & Est. \\
 About half of the raw ``positives'' were near-duplicates &
 $65{,}897\!\to\!31{,}865$ ($-52\%$), stable over cosine $0.93$--$0.97$ (Sec.~III, Table~XI) & Est. \\
 The gain transfers beyond the originating platform, in \emph{both} directions &
-VK$\to$Reddit overall ROC-AUC $0.718\!\to\!0.749$; Reddit$\to$VK FG-NET large-gap $0.736\!\to\!0.783$ ($+0.047$ from a 220-person source); small, noisy sets (Sec.~V-H) & Bounded \\
+VK$\to$Reddit overall ROC-AUC $0.718\!\to\!0.757{\pm}0.008$; Reddit$\to$VK FG-NET large-gap $0.736\!\to\!0.779{\pm}0.004$ (three seeds; 220-person source); small, noisy sets (Sec.~V-H) & Bounded \\
 The contribution is specific to weak/medium backbones &
-Strong saturated backbones show null/negative gains (Sec.~V-C) & Bounded (limitation) \\
+An exploratory one-seed curve shows null/negative strong-backbone gains; the preregistered mechanism matrix is incomplete (Sec.~V-C) & Open (experiment pending) \\
 Platform-agnostic / cross-cultural generalization & one platform family, then/now format; single non-VK test & Open \\
 Drop-in upgrade to a general-purpose verifier & the gain is concentrated on the large-gap subset; easy benchmarks are flat & Open (excluded) \\
-Human-grade label-noise guarantee & automatic cross-checks $+$ a small manual validation (100 posts; S\ref{sec:audit}); no multi-annotator $\kappa$ & Bounded \\
-Full SOTA-pipeline parity & only the shared margin objective is trained, not method-specific add-ons & Open (by design) \\
-Legal/ethical clearance for biometric processing & research basis stated; formal approval pending (Sec.~VIII) & Open (author/IRB) \\
+Human-grade label-noise guarantee & corpus-scale automatic cross-checks only; preregistered multi-annotator audit not yet completed (S\ref{sec:audit}) & Open \\
+Full SOTA-pipeline parity & common-protocol MTLFace and CACon complete over three seeds; published protocols remain non-comparable & Bounded \\
+Legal/ethical clearance for biometric processing & formal institutional determination not yet obtained (Sec.~VIII) & Open (institutional gate) \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
 \section{Consolidated Audit of the Automatic Supervision}\label{sec:audit}
 The supervision is \emph{naturally} (not human-) supervised, so its automatic components are potential
-hidden label noise. Table~\ref{tab:auditfull} consolidates the cross-checks reported across the main
-paper into a single view, in the structure a reviewer would expect, and states explicitly which rows
-are \emph{automatic cross-checks} (available at corpus scale) and which are checked against \emph{human
-ground truth}. We additionally ran a \emph{small} manual validation (one annotator; 100 posts and
-sampled pairs/merges) that broadly confirms the automatic pipeline (Table~\ref{tab:auditfull}, lower
-block); a large multi-annotator audit with inter-annotator $\kappa$ remains labor-intensive and beyond
-this study's resources. We do not treat the LLM-vs-regex agreement as accuracy against a human reference;
-the ``Reference'' column makes the distinction.
+hidden label noise. Table~\ref{tab:auditfull} consolidates the corpus-scale automatic cross-checks
+reported across the main paper. None of these rows is accuracy against human ground truth. Before
+resubmission, the pipeline requires the prepared audit by two independent annotators on held-out
+samples of age extraction, group integrity, positive pairs, cluster merges and near-duplicate removals.
+The frozen pack contains 400 items per target, independent random orders, opaque copied-image names,
+a separately held source/automatic-decision key and an adjudication template; it was generated only
+after thresholds were fixed. For age extraction, the pack
+reconstructs the original post and photo order (rather than inheriting a caption after cross-post person
+merging), identifies a zero-based target image, and forbids appearance-based age estimation.
+The aggregate validator artifact \texttt{metrics/human\_audit\_pack\_validation.json} confirms
+2,000 tasks per annotator, five 400-item strata, 5,112 checksum-valid opaque image copies and zero
+source-identifier, automatic-decision or cross-stratum source-image leaks. Group integrity is balanced
+between 200 automatically accepted and 200 automatically rejected pre-prune groups. The dedup stratum
+contains 272 automatic near-duplicate and 128 automatic distinct-photo decisions spanning cosine
+0.963--0.976 around the 0.97 production threshold; all 5,112 source images are disjoint. Downstream intervals use source-component cluster
+resampling (equivalent to item resampling for this fully disjoint pack). The validator
+artifact contains no images or row-level task content.
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.25}
-\caption{Consolidated audit of the automatic supervision. ``Reference'' states what the metric is
-measured against: an automatic cross-check (upper block, corpus scale) or human ground truth from a small
-manual validation (lower block; 100 posts $+$ sampled pairs/merges, one annotator). $n$ is the audited
-population. A large multi-annotator audit with $\kappa$ remains beyond resources.}
+\caption{Consolidated corpus-scale checks of the automatic supervision. ``Reference'' identifies the
+automatic comparator or proxy; none of these measurements uses human ground truth. $n$ is the checked
+population. A preregistered multi-annotator audit remains required before resubmission.}
 \label{tab:auditfull}
 \centering
 \footnotesize
@@ -104,28 +115,76 @@ population. A large multi-annotator audit with $\kappa$ remains beyond resources
 \toprule
 Audit target & $n$ & Reference & Result \\
 \midrule
-Age extraction (LLM vs.\ regex) & 33{,}697 captions & automatic cross-check & $72.8\%$ agree; on the $27.2\%$ disagreements the LLM is favored ($+10.8\%$ filled, $-2.5\%$ missed); Table~III \\
+Age extraction (LLM vs.\ regex) & 33{,}697 captions & automatic cross-check & $78.1\%$ exact/both-empty agreement; $15.5\%$ different non-empty ages, $3.4\%$ LLM-only, $3.0\%$ regex-only; Table~III \\
 Group integrity (LLM classifier) & 33{,}697 posts & automatic (LLM) & $92.8\%$ single-person, $6.0\%$ multi-person, $1.0\%$ unknown, $0.2\%$ meme; Table~IV \\
 Multi-person noise detector (within-person gender consistency) & multi-photo groups & automatic proxy & $2{,}919$ groups with consistency $<0.6$ flagged as probable multi-person \\
 Near-duplicate inflation (within-person dedup) & $65{,}897$ raw positives & automatic (embedding) & $-52\%$ ($\to 31{,}865$); stable for cosine $0.93$--$0.97$; Table~XI \\
 Person-clustering recurrence & 27{,}487 post-groups & automatic (embedding) & $21{,}848$ persons ($\approx20\%$ cross-post recurrence); conservative cosine $0.85$ merge \\
-\midrule
-\multicolumn{4}{@{}l}{\textbf{Small manual validation} (one annotator; 100 posts $+$ sampled pairs/merges)} \\
-Age extraction vs.\ human & 100 captions & human gold & exact-age $89\%$, within $\pm1$\,y $95\%$ (regex $71\%$ exact); MAE $0.5$\,y \\
-Group integrity (single vs.\ multi) & 100 posts & human gold & LLM precision $0.96$, recall $0.93$ \\
-Same-person positive pairs & 200 pairs & human gold & precision $0.96$ ($8/200$ different-person) \\
-Cluster merges (cosine $\geq 0.85$) & 100 merges & human gold & $95\%$ correct \\
-Near-duplicate removals & 100 removed & human gold & $93\%$ genuine duplicates \\
+Independent embedding sensitivity & 27{,}487 post-groups & FaceNet/CASIA sweep & $21{,}484$ persons at cosine $0.85$ (1.7\% below ArcFace); dedup reduction 52.1--53.4\% at cosine $0.90$--$0.97$ \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
-The automatic rows are reproducible from the released code and aggregates. The manual-validation rows
-are a \emph{small} single-annotator spot-check (no inter-annotator $\kappa$): they indicate residual
-error at the few-percent level and corroborate, but do not certify, the automatic pipeline. A large
-stratified multi-annotator audit (post $\to$ group $\to$ cluster $\to$ pair, with a confusion matrix and
-$\kappa$) remains labor-intensive and beyond this study's resources, and the residual noise is
-acknowledged as a limitation.
+The rows are reproducible from the released code and aggregate artifacts but establish internal
+consistency only. They do not establish human-validated label precision. The held-out pack and scorer
+are complete, but both independent response files and adjudication remain external human work. Before
+annotation, predictions were frozen for the GigaChat pipeline, deterministic regex and a fully local
+character-ngram ridge baseline trained on 32{,}279 non-audit automatic anchors (all audit rows excluded;
+regex coverage on the audit pack is 59.0\%). These weak targets make the local model a reproducibility
+comparator, not ground truth. The scorer reports system-specific coverage, exact match, within-one-year
+accuracy and age MAE; Cohen's $\kappa$; precision/recall/F1 when both automatic decisions are sampled;
+and PPV for accept-only positive/merge strata, all with bootstrap 95\% confidence intervals. No quantitative
+human-validation claim is made until both response files and adjudication are frozen.
+
+The machine-readable artifact index, \texttt{metrics/publication\_artifact\_index.json}, enumerates
+experiment manifests, their commands, parameters, git state and output checksums. It fails closed by
+listing missing expected manifests, checksum mismatches and incomplete semantic campaign gates; the working index is therefore not marked
+complete while the strong-backbone and remaining legacy-table reruns are still open.
+
+\paragraph{Strong-backbone matrix protocol.}
+The confirmatory AdaFace IR-101/WebFace12M study crosses learning rate
+$\{10^{-6},10^{-5}\}$, trainable scope $\{\text{head},\text{tail},\text{full}\}$ and
+$\{\text{random},\text{look-alike}\}$ negatives over seeds 42/1/2. Head denotes the final
+BN--FC--BN output layer; tail additionally unfreezes the last residual body block; full unfreezes the
+entire backbone. Each run uses at most eight epochs with patience three on the matching internal
+validation AUC and records training loss, mean gradient norm, external/internal verification metrics,
+linear CKA, mean cosine drift, identity separability and an age-gap linear-probe MAE. The interpretation
+is fixed before reading the complete matrix: a random-impostor ceiling requires near-perfect frozen
+random AUC but does not imply task-level ceiling when look-alike AUC is low; insufficient plasticity is
+supported only if widening scope or increasing LR increases representation change and restores transfer;
+catastrophic forgetting requires broad external degradation rather than a task-specific large-gap drop.
+The full per-seed trajectories and deltas are machine-readable; a negative fine-tuning result is retained.
+
+\section{Data-Quality Funnel and Distributions}\label{sec:quality}
+The machine-generated funnel distinguishes 93{,}580 raw photo objects from 84{,}147 processed face
+records: the earlier manuscript conflated these quantities. Of the face records, 49{,}606 are usable
+and 34{,}541 rejected (21{,}664 unresolved multi-face images, 9{,}772 blurred, 2{,}363 no detection,
+742 too small). Table~\ref{tab:qualitydist} compares central quality statistics. Pose values are
+landmark-derived proxies, not calibrated head-pose angles.
+
+\begin{table}[!t]
+\caption{Retained vs. rejected face-record distributions (median [5th, 95th percentile]).}
+\label{tab:qualitydist}
+\centering
+\footnotesize
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Measure & Retained & Rejected \\
+\midrule
+Image width (px) & 960 [450, 1920] & 960 [478, 2048] \\
+Face width (px) & 247 [78, 688] & 185 [0, 621] \\
+Laplacian blur variance & 152 [37, 1174] & 53 [0, 1298] \\
+Detection score & 0.836 [0.717, 0.898] & 0.828 [0, 0.900] \\
+Quality score & 0.820 [0.700, 0.936] & 0.743 [0, 0.913] \\
+Yaw proxy (absolute) & 0.092 [0.007, 0.441] & 0.079 [0.006, 0.444] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The apparent-age distribution over usable faces has 5/25/50/75/95 percentiles
+$4/21/24/27/38$ years. Among 24{,}089 positives with an explicit gap, the corresponding gap
+percentiles are $1/4/9/14/25$ years; bucket counts are 7{,}135 (0--4), 5{,}694 (5--9), 5{,}642
+(10--14), 4{,}392 (15--24), and 1{,}226 (25+).
 
 \section{Model / Data Card}\label{sec:card}
 \noindent\textbf{Model.} A deliberately weak trainable face recognizer (FaceNet, Inception-ResNet-v1,
@@ -141,33 +200,179 @@ decisions, any processing of minors' data without a legal basis, and use as a ge
 board for the cross-platform test). Supervision is manual-label-free; ages and group integrity come
 from an LLM caption parser; persons from embedding clustering. Apparent-attribute skew: 76.7\%
 apparent-female. Raw images are \emph{not} released.\\
-\textbf{Evaluation data.} External: FG-NET (large-gap $\geq$25\,y subset), AgeDB-30, CALFW, LFW. Internal:
+\textbf{Evaluation data.} External: CACD-VS (official identity-disjoint 10 folds), FG-NET (large-gap $\geq$25\,y subset), AgeDB-30, CALFW, LFW. Internal:
 a curated cross-age test (5{,}107 positives with controlled negatives). Cross-platform: 1{,}575 Reddit
 positive pairs.\\
 \textbf{Metrics.} ROC-AUC (primary: FG-NET large-gap), EER, TAR@FAR, FMR/FNMR by stratum, bootstrap and
 identity-level bootstrap CIs, DeLong and paired-permutation tests.\\
-\textbf{Ethical considerations.} Biometric special-category data; no individual consent; minors present
-in the child\dgr adult regime and withheld from release; weights and embeddings are biometric templates
-shared on request under a brief research-use agreement; the de-identified dataset is available on request, and formal ethics documentation will be provided if required (Sec.~VIII).\\
+\textbf{Ethical considerations.} Biometric data; no individual consent; minors present in aggregate
+analyses. No faces, row-level protocol, embeddings or corpus-derived weights are currently offered.
+The drafted DUA and controlled-access procedure are conditional on institutional and legal approval;
+if approval excludes a category, it and all dependent results will be removed (Sec.~VIII).\\
 \textbf{Caveats.} The gain is targeted to the large-gap regime and to weak/medium backbones; external
 validity beyond the then/now format is not established; the automatic supervision carries residual,
-not-yet-human-audited noise.
+not-yet-human-audited noise. A checksum-pinned dependency audit could not compute an exact
+pretraining/benchmark identity intersection: the distributed CASIA/WebFace checkpoints have no
+complete identity manifests, while the local verification protocols expose no compatible real-name
+mapping (FG-NET has benchmark-local numeric subject IDs only). Overlap, particularly for celebrity
+benchmarks and web-scale pretraining, therefore cannot be excluded and is not reported as zero.
 
+\section{Published Cross-Age Results}\label{sec:published}
+Table~\ref{tab:published} transcribes headline results from the primary publications. It is a literature
+map, \emph{not} a controlled comparison: the methods use different backbones, training sets, image
+preprocessing and evaluation protocols. In particular, FG-NET leave-one-out identification (LOIO),
+megaface-style identification (MF1) and verification accuracy on fixed pair protocols answer different
+questions. Missing cells mean that the primary paper did not report that benchmark under the named
+protocol. Our complete three-seed common-backbone MTLFace and CACon experiments are reported
+separately and never mixed with this table.
+
+\begin{table*}[!t]
+\caption{Published results from the cited primary papers (\%). These numbers are not directly
+comparable across rows. Acc. = verification accuracy; LOIO/MF1 = the respective FG-NET identification
+protocol. A dash denotes not reported under that protocol.}
+\label{tab:published}
+\centering
+\footnotesize
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Method & AgeDB-30 Acc. & CALFW Acc. & CACD-VS Acc. & FG-NET LOIO & FG-NET MF1 \\
+\midrule
+OE-CNN~\cite{wang2018oecnn} & -- & -- & 99.20 & -- & 58.21 \\
+DAL~\cite{wang2019dal} & -- & -- & 99.40 & 94.50 & 57.92 \\
+MTLFace~\cite{huang2021mtlface} & 96.23 & 95.62 & 99.55 & 94.78 & 57.18 \\
+CACon~\cite{wang2024cacon} & -- & -- & -- & 94.61 & 64.37 \\
+CDD-AFL~\cite{wu2024cddafl} & -- & 94.50 & 99.50 & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[!t]
+\caption{Controlled common-protocol full-method reproduction (mean$\pm$SD over three seeds). The
+ArcFace-R50/CASIA backbone, identity-safe split and eight-epoch budget are fixed. All entries are
+ROC-AUC except LFW, which is accuracy. This is not an exact reproduction of published large-scale systems.}
+\label{tab:controlled-sota}
+\centering
+\footnotesize
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Method & LFW & AgeDB-30 & CALFW & CACD-VS & FG-NET & FG 25+ & Internal 25+ \\
+\midrule
+MTLFace & .9541$\pm$.0011 & .9287$\pm$.0006 & .9289$\pm$.0003 & .9920$\pm$.0000 & .9138$\pm$.0001 & .8378$\pm$.0013 & .8338$\pm$.0024 \\
+CACon & .9539$\pm$.0008 & .8970$\pm$.0003 & .9191$\pm$.0002 & .9907$\pm$.0001 & .8767$\pm$.0011 & .7751$\pm$.0015 & .6953$\pm$.0026 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table}[!t]
+\caption{Data-scaling law (FaceNet, curated; validation/test fixed; mean $\pm$ std over three seeds).}
+\label{tab:supp-scaling}
+\centering
+\footnotesize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Train fraction & \# identities & FG-NET large-gap & our.25+ \\
+\midrule
+frozen & 0 & 0.736 & 0.640 \\
+0.10 & $\approx$1{,}500 & 0.846\,$\pm$\,0.002 & 0.816\,$\pm$\,0.003 \\
+0.25 & $\approx$3{,}750 & 0.852\,$\pm$\,0.000 & 0.842\,$\pm$\,0.002 \\
+0.50 & $\approx$7{,}499 & 0.856\,$\pm$\,0.005 & 0.845\,$\pm$\,0.002 \\
+1.00 & $\approx$14{,}998 & 0.848\,$\pm$\,0.001 & 0.835\,$\pm$\,0.003 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table*}[!t]
+\caption{Apparent gender/age strata (FaceNet, curated; 95\% paired-bootstrap CI of the gain).}
+\label{tab:supp-strata}
+\centering
+\footnotesize
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Stratum & $n_{\text{pos}}$ & Frozen & $+$pairs & Gain & 95\% CI \\
+\midrule
+overall & 5{,}107 & 0.836 & 0.916 & $+$0.080 & [$+$0.075, $+$0.086] \\
+apparent F & 3{,}790 & 0.840 & 0.923 & $+$0.084 & [$+$0.077, $+$0.090] \\
+apparent M & 1{,}317 & 0.838 & 0.897 & $+$0.059 & [$+$0.048, $+$0.071] \\
+age 0--17 & 1{,}123 & 0.750 & 0.880 & \textbf{$+$0.130} & [$+$0.113, $+$0.146] \\
+age 18--29 & 3{,}159 & 0.872 & 0.936 & $+$0.064 & [$+$0.058, $+$0.069] \\
+age 30--44 & 672 & 0.822 & 0.893 & $+$0.070 & [$+$0.054, $+$0.087] \\
+age 45+ & 153 & 0.859 & 0.893 & $+$0.034 & [$+$0.004, $+$0.064] \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table}[!t]
+\caption{Hard-negative mining (FaceNet, curated; external benchmarks). $+$hard-neg is mean $\pm$ std over three seeds.}
+\label{tab:supp-hardneg}
+\centering
+\footnotesize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Metric & Frozen & $+$pairs & $+$pairs$+$hard-neg \\
+\midrule
+FG-NET large-gap & 0.736 & 0.848 & \textbf{0.868\,$\pm$\,0.004} \\
+FG-NET ROC & 0.896 & 0.923 & 0.912\,$\pm$\,0.003 \\
+LFW accuracy & 0.969 & 0.950 & 0.925\,$\pm$\,0.005 \\
+AgeDB-30 ROC & 0.953 & 0.946 & 0.911\,$\pm$\,0.012 \\
+CALFW ROC & 0.948 & 0.949 & 0.898\,$\pm$\,0.015 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{Partial Matched-Source Control}\label{sec:matched-source}
+
+LOW (1--2-year positive gap) and CROSS ($\geq$25-year positive gap) are mined from
+the same VK source. Each arm contains 500 training persons, 1{,}096 unique
+positive images, and 600 positive plus 600 negative training pairs. Every
+negative is drawn from the arm's own positive pool with the anchor endpoint
+age matched where available. The backbone (FaceNet/CASIA), initial weights,
+trainable head, learning rate $3\times10^{-5}$, batch size 64, 10 epochs,
+preprocessing and held-out FG-NET pairs are shared. We choose the \emph{last}
+epoch in both arms; the earlier best-validation comparison selected LOW epoch 1
+versus CROSS epoch 10 and is not used for fixed-step inference.
+
+\begin{table}[!t]
+\caption{Fixed-epoch VK LOW/CROSS control on the endpoint-age-matched FG-NET
+25+ protocol (215 positive/215 negative pairs, 75 subjects). CIs resample
+subjects on both sides of a pair; all seeds reuse the same people.}
+\label{tab:matched-source}
+\centering
+\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Seed & LOW AUC & CROSS AUC & $\Delta$ AUC & Paired 95\% CI \\
+\midrule
+1 & 0.8209 & 0.8463 & +0.0254 & [+0.0073,+0.0444] \\
+2 & 0.8205 & 0.8455 & +0.0251 & [+0.0079,+0.0429] \\
+42 & 0.8203 & 0.8471 & +0.0268 & [+0.0062,+0.0452] \\
+Mean $\pm$ SD & 0.8206$\pm$0.0003 & 0.8463$\pm$0.0008 & +0.0257$\pm$0.0009 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The gain is not a fully causal estimate for longitudinal data: endpoint-age
+and quality covariates differ between arms, candidate-person selection may
+matter, and a licensed generic-face source plus shuffled/co-occurrence noise
+arms are not yet available. Possible mined-train/benchmark identity matches
+also require blinded adjudication. The manifest-backed local evidence is
+\texttt{metrics/matched\_agegap\_fixed10\_last/summary.json} and its six run
+records; no face crops or biometric templates are part of the submission.
 
 \section{Figures Referenced from the Main Paper}\label{sec:figs}
-These five plots duplicate data already tabulated in the main paper (headroom curve, data-scaling law, objective comparison, apparent-attribute fairness audit and the external-benchmark summary); they are placed here so the manuscript stays within the 10-page limit for regular papers. No number appears here that is not in the main paper's tables.
+These five plots visualize the headroom, data-scaling, objective, apparent-attribute and external-benchmark results. Secondary scaling/fairness/hard-negative tables are kept here so the main manuscript remains focused and within the 10-page limit.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_headroom.pdf}
-\caption{Headroom curve: the $+$pairs gain on FG-NET large-gap shrinks monotonically as the frozen backbone strengthens, crossing zero for strong saturated models.}
+\caption{Exploratory one-seed headroom curve: the $+$pairs gain on FG-NET large-gap declines overall but not monotonically as the frozen backbone strengthens. This plot motivates the preregistered mechanism matrix; it does not by itself establish saturation or distinguish ceiling, plasticity and forgetting.}
 \label{fig:headroom}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_scaling.pdf}
-\caption{Data-scaling law: external (FG-NET large-gap) and internal (our.25+) ROC-AUC vs.\ the number of training identities (log scale). Roughly 96\% of the gain is reached at 10\% of identities; shaded bands are $\pm$1 std over three seeds and dashed lines are the frozen baselines.}
+\caption{Exploratory scaling sweep: external (FG-NET large-gap) and internal (our.25+) ROC-AUC vs.\ training identities (log scale). The recorded 10\% point reaches roughly 96\% of the gain, but intermediate checkpoints were overwritten; shaded bands show the recorded seed variation, not yet a fully checkpoint-verifiable result.}
 \label{fig:scaling}
 \end{figure}
 
@@ -188,7 +393,7 @@ These five plots duplicate data already tabulated in the main paper (headroom cu
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_external.pdf}
-\caption{External generalization. The $+$pairs gain over the frozen baseline (with 95\% CIs) holds across three independent evaluations---FG-NET large-gap, a child$\leftrightarrow$adult FG-NET subset, and the cross-platform Reddit set---each well above chance. The gain is largest on the in-protocol FG-NET sets and smaller (but positive) on the noisier cross-platform Reddit set.}
+\caption{External generalization. The $+$pairs gain over the frozen baseline (with 95\% CIs) is observed in three evaluations---FG-NET large-gap, a child$\leftrightarrow$adult subset of the same FG-NET corpus, and a separate cross-platform Reddit source---each well above chance. The gain is largest on the in-protocol FG-NET sets and smaller (but positive) on the noisier cross-platform Reddit set.}
 \label{fig:external}
 \end{figure}
 

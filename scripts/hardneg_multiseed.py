@@ -11,6 +11,7 @@ backed up and RESTORED in a finally block, so the main data is never left mutate
 
 from __future__ import annotations
 
+import argparse
 import json
 import shutil
 from pathlib import Path
@@ -19,6 +20,7 @@ import numpy as np
 
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.datasets.hard_negatives import run as mine_hard
 from age_gap.datasets.splits import run as split_run
 from age_gap.evaluation.external_suite import eval_all
@@ -30,23 +32,45 @@ KEYS = ["fgnet.large_gap", "fgnet.roc", "LFW.acc", "agedb_30.roc", "calfw.roc"]
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Three-seed hard-negative training audit")
+    parser.add_argument("--epochs", type=int, default=10)
+    parser.add_argument("--lr", type=float, default=3e-5)
+    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument(
+        "--manifest-only",
+        action="store_true",
+        help="bind an existing result and its checkpoints without retraining",
+    )
+    args = parser.parse_args()
     device = torch_device()
     models = data_path("models_dir")
     pairs = Path(str(data_path("data_dir", "processed", "pairs.jsonl")))
     splits = Path(str(data_path("splits_dir", "group_splits.jsonl")))
     bak_p = pairs.with_suffix(".jsonl.hnbak")
     bak_s = splits.with_suffix(".jsonl.hnbak")
+    dst = Path(str(data_path("metrics_dir", "hardneg_multiseed.json")))
+    checkpoints = [Path(str(models / f"bb_facenet_hardneg_s{s}.pt")) for s in SEEDS]
+    if args.manifest_only:
+        agg = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, agg, pairs, splits, checkpoints, args, mined_count=None)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
     shutil.copy(str(pairs), str(bak_p))
     shutil.copy(str(splits), str(bak_s))
 
     try:
-        added = mine_hard(top_k=5)
+        added = mine_hard(top_k=args.top_k)
         print(f"mined hard negatives: {added}")
         split_run()  # keeps hard negatives in train, balances negatives 1:1
 
         per_seed: list[dict] = []
-        for s in SEEDS:
-            ck = finetune(seed=s, ckpt_out=Path(str(models / f"bb_facenet_hardneg_s{s}.pt")))
+        for s, checkpoint in zip(SEEDS, checkpoints, strict=True):
+            ck = finetune(
+                epochs=args.epochs,
+                lr=args.lr,
+                seed=s,
+                ckpt_out=checkpoint,
+            )
             res = eval_all(load_finetuned(ck, device), device)
             per_seed.append({k: res.get(k) for k in KEYS})
             print(f"seed {s}: fgnet.large_gap = {res.get('fgnet.large_gap'):.4f}")
@@ -57,7 +81,6 @@ def main() -> None:
             "std": {k: float(np.std([r[k] for r in per_seed])) for k in KEYS},
             "per_seed": per_seed,
         }
-        dst = data_path("metrics_dir", "hardneg_multiseed.json")
         dst.write_text(json.dumps(agg, indent=2), encoding="utf-8")
         print(f"wrote {dst}")
         m, sd = agg["mean"]["fgnet.large_gap"], agg["std"]["fgnet.large_gap"]
@@ -66,6 +89,35 @@ def main() -> None:
         shutil.move(str(bak_p), str(pairs))
         shutil.move(str(bak_s), str(splits))
         print("restored canonical pairs.jsonl + group_splits.jsonl")
+    _write_manifest(dst, agg, pairs, splits, checkpoints, args, mined_count=added)
+
+
+def _write_manifest(
+    dst: Path,
+    metrics: dict,
+    pairs: Path,
+    splits: Path,
+    checkpoints: list[Path],
+    args: argparse.Namespace,
+    *,
+    mined_count: int | None,
+) -> None:
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="hard-negative-training-multiseed",
+        parameters={
+            "backbone": "facenet",
+            "seeds": SEEDS,
+            "epochs": args.epochs,
+            "learning_rate": args.lr,
+            "top_k": args.top_k,
+            "mined_count": mined_count,
+            "manifest_only": args.manifest_only,
+        },
+        metrics=metrics,
+        inputs=[pairs, splits, *checkpoints],
+        outputs=[dst],
+    )
 
 
 if __name__ == "__main__":

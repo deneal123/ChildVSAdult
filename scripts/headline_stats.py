@@ -12,8 +12,10 @@ already-trained checkpoints (frozen + models/bb_facenet_seed42.pt).
 
 from __future__ import annotations
 
+import argparse
 import json
 from collections import defaultdict
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -21,6 +23,7 @@ import torch
 
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl, resolve_path
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import Pair
 from age_gap.evaluation import benchmark_external as bx
 from age_gap.evaluation import fgnet as fg
@@ -107,6 +110,18 @@ def _score_internal(model: torch.nn.Module, pcmap: dict[str, str]):
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Headline operating points and bootstrap CIs")
+    parser.add_argument(
+        "--manifest-only", action="store_true", help="bind existing metrics to current inputs"
+    )
+    args = parser.parse_args()
+    dst = Path(str(data_path("metrics_dir", "headline_stats.json")))
+    if args.manifest_only:
+        out = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, out, manifest_only=True)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
+
     print(f"device={DEV}, n_boot={NBOOT}")
     frozen = make_backbone("facenet", pretrained=True).to(DEV).eval()
     frozen.crops_dir = "faces"  # type: ignore[attr-defined]
@@ -156,10 +171,45 @@ def main() -> None:
         print(f"  internal {mname}: overall={out['our.overall'][mname]['auc']} "
               f"25+={out['our.25+'][mname]['auc']}")
 
-    dst = data_path("metrics_dir", "headline_stats.json")
     dst.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
+    _write_manifest(dst, out, manifest_only=False)
     print(f"\nwrote {dst}")
     print(json.dumps(out, indent=2, ensure_ascii=False))
+
+
+def _write_manifest(dst: Path, out: dict, *, manifest_only: bool) -> None:
+    external = Path(str(data_path("data_dir", "external")))
+    checkpoint = Path(resolve_path("models", "bb_facenet_seed42.pt"))
+    inputs = [
+        checkpoint,
+        Path(str(data_path("data_dir", "processed", "pairs.jsonl"))),
+        Path(str(data_path("data_dir", "processed", "person_clusters.jsonl"))),
+        *[
+            path
+            for path in (
+                external / "lfw_aligned.npz",
+                external / "agedb_30.bin",
+                external / "calfw.bin",
+                external / "fgnet_crops.npz",
+            )
+            if path.is_file()
+        ],
+    ]
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="headline-operating-points-and-bootstrap",
+        parameters={
+            "backbone": "facenet",
+            "checkpoint": checkpoint.name,
+            "bootstrap_replicates": NBOOT,
+            "bootstrap_seed": 0,
+            "large_gap_years": 25,
+            "manifest_only": manifest_only,
+        },
+        metrics=out,
+        inputs=inputs,
+        outputs=[dst],
+    )
 
 
 if __name__ == "__main__":

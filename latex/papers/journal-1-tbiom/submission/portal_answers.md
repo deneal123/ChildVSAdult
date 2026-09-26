@@ -1,8 +1,8 @@
-# Ответы в форме подачи T-BIOM — готовые формулировки
+# Ответы в форме подачи T-BIOM — заполнить после решения этического комитета
 
-Всё ниже согласовано с текстом рукописи (разд. «Ethical Approval and Legal Basis» и
-«De-identification and Release Policy») и с сопроводительным письмом. Требование IEEE: то, что
-написано в поле формы, **должно также присутствовать в самой статье** — оно присутствует.
+Это рабочий шаблон, а не готовые ответы для текущей подачи. До получения официального решения
+комитета нельзя выбирать exemption и нельзя утверждать, что запрос уже подан. После решения текст
+поля, manuscript и cover letter должны содержать одинаковые название органа, решение, дату и номер.
 
 ---
 
@@ -16,45 +16,41 @@
 
 ## 2. «Was approval obtained from a relevant review board (or local/regional equivalent)?»
 
-**Ответ: «Not applicable. This research is exempt.»** (второй из двух доступных вариантов —
-первый, «Yes», требует ссылки на уже полученное одобрение, которого у нас пока нет).
+**До решения комитета ответ не выбран; подавать рукопись нельзя.**
 
-### Текст для поля обоснования — вставить как есть
+- Если комитет выдаст approval — выбрать `Yes` и дословно перенести реквизиты решения.
+- Если комитет официально определит exemption — выбрать соответствующий вариант и перенести
+  реквизиты определения.
+- Если комитет не разрешит использование части данных — исключить её и пересчитать результаты до
+  заполнения формы.
 
-> This study was not conducted under institutional review board oversight, and we state the reason
-> here, as IEEE policy permits in place of an approval reference (PSPB Operations Manual 8.1.1.B/E:
-> "or include an explanation as to why such a review was not conducted").
+### Черновик фактического описания — дополнить решением комитета
+
+> This study was not placed under institutional review board oversight before the retrospective
+> analysis. A formal retrospective determination was subsequently obtained from [OFFICIAL BOARD],
+> decision [APPROVAL OR EXEMPTION], reference [REFERENCE], dated [DATE].
 >
 > The research involves no interaction and no intervention with any person. It is a retrospective
-> analysis of photographs that the subjects had themselves already published on public community
-> walls of a social network, retrieved through the platform's official API. No individual is
-> identified, contacted, profiled or ranked; no model or decision system is deployed; minors are
-> excluded as subjects. No released artifact contains raw face images, raw posts or recoverable
-> identifiers: the public release is limited to code, configurations, a de-identified pair protocol
-> using salted identifier hashes, and aggregate metrics. Trained weights and embeddings are not
-> released publicly, because a face embedding is itself a comparable biometric template; they are
-> shared with bona-fide researchers on request under a research-use agreement.
+> analysis of photographs already published in public social-media communities. No individual is
+> contacted or ranked; no model or decision system is deployed. Images depicting minors were included
+> in aggregate research analyses; their use and any required exclusion/recomputation follow the exact
+> scope and conditions of the institutional determination. No public artifact contains face images,
+> captions, source identifiers, row-level pair records, embeddings or corpus-derived weights. The
+> public release is limited to non-sensitive code, configurations, aggregate metrics and provenance
+> manifests. Any controlled access is conditional on the institutional decision and written journal
+> acceptance of the documented DUA, secure-processing and deletion procedure.
 >
-> On the usual criteria for secondary analysis of already-public material without intervention, we
-> consider the study exempt from prospective review. We state the counter-consideration rather than
-> resolving it in our own favour: the images are biometric and the individuals in them remain
-> identifiable, which is why our release policy is restrictive rather than open.
+> The authors do not self-declare the study exempt. The images are biometric and the individuals in
+> them remain identifiable, which is why the institutional determination governs and the release
+> policy is restrictive rather than open.
 >
-> Consent: because the data are drawn from public posts with no feasible channel to contact the
-> subjects, individual informed consent for participation and for publication was not obtained. The
-> manuscript explains this, as IEEE policy likewise permits ("or explain why consent was not
-> obtained"), and relies on the scientific-research basis (GDPR Art. 6(1)(f) and 9(2)(j) with Art. 89
-> safeguards; analogous research handling under Russia's 152-FZ) together with the de-identification
-> safeguards described in the manuscript.
+> Consent: individual informed consent for participation and publication was not obtained. The
+> submission states this directly and reports the committee's decision and safeguards without the
+> authors independently asserting a legal basis. No corpus face example is published unless both the
+> committee determination and the relevant rights permit it.
 >
-> A formal determination on exemption has been requested from the ethics committee of National
-> Research University Higher School of Economics (HSE University), Moscow, Russia. It will be
-> forwarded to the Editor, together with its filing date, as soon as it is issued, and that
-> determination — not the authors' own reading — governs.
->
-> Institution: National Research University Higher School of Economics (HSE University), Moscow,
-> Russia. Ethics body: HSE University ethics committee. Status as of submission: exemption
-> determination requested, decision pending; the committee's document will be supplied on request.
+> Institution: [OFFICIAL INSTITUTION]. Ethics body: [OFFICIAL BOARD]. Decision: [DECISION].
+> Reference: [REFERENCE]. Date: [DATE].
 
 ## 3. Conflict of interest
 
@@ -64,22 +60,19 @@
 
 ## 4. Previously published
 
-**Ничего не загружать.** Работа не является расширением *опубликованной* конференционной статьи.
-Более ранняя версия подавалась в другой журнал IEEE и была **отклонена** — отклонённая рукопись не
-считается опубликованной, поэтому слоты «Previously Published» не применяются. Факт всё равно
-раскрыт в сопроводительном письме (п. 3), чтобы редактор узнал об этом от нас, а не со стороны.
+**Ничего не загружать как previously published**, если к моменту подачи не появилось связанной
+публикации. Более ранняя версия подавалась именно в T-BIOM под номером
+`TBIOM-2026-07-0222` и получила окончательный отказ; она не опубликована. Предыдущий номер и
+существенные изменения раскрываются в cover letter, а internal response matrix прикладывается при
+наличии подходящего portal slot для новой подачи.
 
 ## 5. Дополнительно — не спрашивают, но проверьте
 
-- **СЕЙЧАС ПОДАВАТЬ НЕЛЬЗЯ.** Версия для AAAI-27 (статья #7133) находится **на рецензии**, а
-  T-BIOM прямо запрещает подачу работы, которая рецензируется в другом месте. Ждём решения AAAI.
-  Если AAAI примет — ответ на вопрос «Previously published» меняется на **«Yes»**, статью нужно
-  будет процитировать и объяснить расширение (у нас ~46% нового материала); если отклонит — всё
-  ниже остаётся в силе. См. SUBMISSION.md, п. 3.
-- **Даты запроса нигде нет — и это сознательно.** Дата в опубликованной статье необратима: если
-  руководитель подаст запрос другим числом, расхождение с документом уже не исправить. Вместо этого
-  и статья, и письмо обещают предоставить **сам документ комиссии вместе с его датой**. Если
-  редактор попросит дату — она берётся из документа.
-- **Единственное требование к очерёдности:** фраза «определение запрошено» должна быть истинной в
-  момент нажатия «submit». То есть запрос в комиссию подаётся **до** подачи статьи, даже если
-  решение придёт много позже. Порядок «отправил научруку → он подал в комиссию → подаём статью».
+- **Перед подачей заново проверить статус всех связанных конференционных/журнальных рукописей.**
+  Нельзя подавать T-BIOM, пока существенно пересекающаяся работа находится на рецензии где-либо ещё.
+  Если связанная работа принята или опубликована, ответ «Previously published», ссылки и описание
+  нового материала пересматриваются по фактическому состоянию; заранее заданный процент не использовать.
+- **Все реквизиты комиссии брать только из официального документа.** Название органа, формулировка
+  решения, номер и дата должны дословно совпадать в portal, manuscript, supplement и cover letter.
+- **Для подачи требуется уже полученное решение, а не только отправленный запрос.** До него нельзя
+  выбирать approval/exemption, заявлять охват несовершеннолетних или обещать конкретный режим доступа.

@@ -14,8 +14,10 @@ from __future__ import annotations
 
 import json
 from math import comb
+from pathlib import Path
 
 from age_gap.common.io import data_path, read_jsonl
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import IdentityGroup
 from age_gap.datasets.dedup import find_redundant_faces
 from age_gap.models.embeddings import load_embeddings
@@ -24,9 +26,10 @@ THRESHOLDS = [0.93, 0.95, 0.97, 0.98, 0.99]
 
 
 def main() -> None:
-    pre = str(data_path("data_dir", "processed", "identity_groups.jsonl.pre_prune_bak"))
+    pre = Path(str(data_path("data_dir", "processed", "identity_groups.jsonl.pre_prune_bak")))
+    embeddings_path = Path(str(data_path("embeddings_cache_dir", "baseline_arcface.npz")))
     groups = [IdentityGroup.from_dict(r) for r in read_jsonl(pre)]
-    emb = load_embeddings(None)
+    emb = load_embeddings(embeddings_path)
 
     def positives(red: dict[str, list[str]]) -> int:
         total = 0
@@ -49,6 +52,14 @@ def main() -> None:
 
     dst = data_path("metrics_dir", "sensitivity_dedup.json")
     dst.write_text(json.dumps(out, indent=2), encoding="utf-8")
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="deduplication-threshold-sensitivity",
+        parameters={"thresholds": THRESHOLDS, "embedding_model": "buffalo_l/w600k_r50.onnx"},
+        metrics=out,
+        inputs=[pre, embeddings_path],
+        outputs=[dst],
+    )
     print(f"wrote {dst}")
 
 

@@ -125,6 +125,13 @@ class FaceCrop:
     num_faces_in_image: int = 0
     is_usable: bool = False
     reject_reason: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    face_width: float | None = None
+    face_height: float | None = None
+    blur_var: float | None = None
+    pose_yaw_proxy: float | None = None
+    pose_roll_rad: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

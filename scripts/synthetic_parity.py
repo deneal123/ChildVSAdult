@@ -22,6 +22,7 @@ import numpy as np
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import Pair
 from age_gap.evaluation.external_suite import eval_all, print_table
 from age_gap.models.aging import FRANAging
@@ -47,6 +48,9 @@ def main() -> None:
     parser.add_argument("--backbone", default="facenet")
     parser.add_argument("--epochs", type=int, default=10)
     parser.add_argument("--skip-train", action="store_true", help="reuse facenet_syn_fran_parity.pt")
+    parser.add_argument(
+        "--manifest-only", action="store_true", help="bind existing metrics and checkpoints"
+    )
     args = parser.parse_args()
 
     device = torch_device()
@@ -62,6 +66,13 @@ def main() -> None:
     )
 
     ckpt = Path(str(models / "facenet_syn_fran_parity.pt"))
+    dst = Path(str(data_path("metrics_dir", "synthetic_parity.json")))
+    fixed = Path(str(models / "facenet_syn_fran.pt"))
+    if args.manifest_only:
+        payload = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, payload, models, bb, ckpt, fixed, args)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
     if not args.skip_train:
         ckpt = train_synthetic(epochs=args.epochs, aging=FRANAging(real_gaps=gaps), ckpt_out=ckpt)
 
@@ -70,7 +81,6 @@ def main() -> None:
         "+real": eval_all(load_finetuned(Path(str(models / f"bb_{bb}_seed42.pt")), device), device),
     }
     order = ["frozen", "+real"]
-    fixed = Path(str(models / "facenet_syn_fran.pt"))
     if fixed.exists():
         results["+syn_fran_fixed"] = eval_all(load_finetuned(fixed, device), device)
         order.append("+syn_fran_fixed")
@@ -78,7 +88,6 @@ def main() -> None:
     order.append("+syn_fran_parity")
 
     print_table(results, order)
-    dst = data_path("metrics_dir", "synthetic_parity.json")
     payload = {
         "gap_stats": {
             "n": len(gaps),
@@ -89,7 +98,39 @@ def main() -> None:
         "models": results,
     }
     dst.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    _write_manifest(dst, payload, models, bb, ckpt, fixed, args)
     print(f"wrote {dst}")
+
+
+def _write_manifest(
+    dst: Path,
+    payload: dict,
+    models: Path,
+    backbone: str,
+    checkpoint: Path,
+    fixed_checkpoint: Path,
+    args: argparse.Namespace,
+) -> None:
+    pairs_file = Path(str(data_path("data_dir", "processed", "pairs.jsonl")))
+    real_ckpt = Path(str(models / f"bb_{backbone}_seed42.pt"))
+    input_files = [pairs_file, real_ckpt, checkpoint]
+    if fixed_checkpoint.exists():
+        input_files.append(fixed_checkpoint)
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="synthetic-ageing-gap-parity",
+        parameters={
+            "backbone": backbone,
+            "epochs": args.epochs,
+            "skip_train": args.skip_train,
+            "manifest_only": args.manifest_only,
+            "synthetic_model": "FRAN",
+            "gap_protocol": "sample real positive training-pair age-gap distribution",
+        },
+        metrics=payload,
+        inputs=input_files,
+        outputs=[dst],
+    )
 
 
 if __name__ == "__main__":

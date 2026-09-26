@@ -35,6 +35,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Frozen vs fine-tuned facenet on benchmarks")
     parser.add_argument("--epochs", type=int, default=8)
     parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--train-only",
+        action="store_true",
+        help="write checkpoint/manifest without running the external suite",
+    )
     parser.add_argument(
         "--trainable",
         choices=["head", "tail", "full"],
@@ -49,13 +55,23 @@ def main() -> None:
     device = torch_device()
     ckpt_out = Path(args.ckpt) if args.ckpt else None
 
-    print("== Zero-shot (frozen casia-webface) ==")
-    zero = _eval_all(FaceNetBackbone(pretrained="casia-webface").to(device).eval(), device)
+    zero = None
+    if not args.train_only:
+        print("== Zero-shot (frozen casia-webface) ==")
+        zero = _eval_all(FaceNetBackbone(pretrained="casia-webface").to(device).eval(), device)
 
     ckpt = finetune(
-        epochs=args.epochs, lr=args.lr, trainable_scope=args.trainable, ckpt_out=ckpt_out
+        epochs=args.epochs,
+        lr=args.lr,
+        trainable_scope=args.trainable,
+        ckpt_out=ckpt_out,
+        seed=args.seed,
     )
+    if args.train_only:
+        print(f"checkpoint: {ckpt}")
+        return
     after = _eval_all(load_finetuned(ckpt, device), device)
+    assert zero is not None
 
     # Сводная таблица Δ.
     def g(d, k, m):

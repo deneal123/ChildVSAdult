@@ -23,10 +23,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import re
 import shutil
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 
 LATEX = Path(__file__).resolve().parent
@@ -46,6 +49,151 @@ def _figures(tex: str) -> list[str]:
 def _run(cmd: list[str], cwd: Path) -> subprocess.CompletedProcess:
     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors="replace",
                           check=False)
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _check_nonblank_pages(pdf: Path, pages: int) -> None:
+    """Fail when the portal-facing PDF contains a textually empty page."""
+    if not shutil.which("pdftotext"):
+        print("    ! pdftotext не найден — проверка пустых страниц пропущена")
+        return
+    for page in range(1, pages + 1):
+        result = _run(
+            ["pdftotext", "-f", str(page), "-l", str(page), str(pdf), "-"],
+            pdf.parent,
+        )
+        if result.returncode or not result.stdout.strip():
+            raise RuntimeError(f"пустая или нечитаемая страница {page}: {pdf}")
+
+
+def _check_source_privacy(paths: list[Path]) -> None:
+    """Reject obvious row identifiers or secrets in portal-facing textual sources."""
+    patterns = {
+        "private corpus row/photo identifier": re.compile(
+            r"(?:vk_|reddit_)?-?\d{5,}_\d{5,}", re.IGNORECASE
+        ),
+        "credential/token marker": re.compile(
+            r"(?:vk1\.a\.|bearer\s+[a-z0-9._-]{20,}|client_secret\s*[=:])",
+            re.IGNORECASE,
+        ),
+        "machine-specific absolute path": re.compile(
+            r"(?<![a-z0-9])(?:[a-z]:[\\/]|/(?:home|users)/[^/\s]+/)", re.IGNORECASE
+        ),
+    }
+    for path in paths:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for label, pattern in patterns.items():
+            if pattern.search(text):
+                raise RuntimeError(f"{label} found in portal-facing source: {path}")
+
+
+def _package_uploads(
+    sub: Path, page_counts: dict[str, int], *, include_experiment_index: bool = False
+) -> None:
+    """Create portal artifacts without mixing PDFs, sources, or build logs."""
+    man, supp = sub / "manuscript", sub / "supplement"
+    upload = sub / "upload"
+    upload.mkdir(exist_ok=True)
+    managed = {
+        "main.pdf",
+        "supplement.pdf",
+        "manuscript-source.zip",
+        "artifact-manifest.json",
+    }
+    for name in managed:
+        target = upload / name
+        if target.exists():
+            target.unlink()
+
+    shutil.copy2(man / "main.pdf", upload / "main.pdf")
+    if (supp / "supplement.pdf").exists():
+        shutil.copy2(supp / "supplement.pdf", upload / "supplement.pdf")
+
+    source_files = ["main.tex", "main.bbl", "refs.bib", "IEEEtran.cls"]
+    figures = sorted((man / "figures").glob("*.pdf"))
+    source_paths = [man / name for name in source_files]
+    if (supp / "supplement.tex").exists():
+        source_paths.append(supp / "supplement.tex")
+    experiment_index = (
+        LATEX.parent / "metrics" / "publication_artifact_index.json"
+        if include_experiment_index
+        else None
+    )
+    supplement_source = supp / "supplement.tex"
+    if experiment_index is not None and supplement_source.is_file():
+        supplement_text = supplement_source.read_text(encoding="utf-8")
+        if "publication\\_artifact\\_index.json" in supplement_text and not experiment_index.is_file():
+            raise FileNotFoundError(
+                "supplement references metrics/publication_artifact_index.json, but it is missing"
+            )
+    if experiment_index is not None and experiment_index.is_file():
+        source_paths.append(experiment_index)
+    _check_source_privacy(source_paths)
+    risky_figure_names = [
+        figure.name
+        for figure in [*figures, *(supp / "figures").glob("*.pdf")]
+        if re.search(r"face|photo|crop|person|sample|example", figure.stem, re.IGNORECASE)
+    ]
+    if risky_figure_names:
+        raise RuntimeError(f"potentially identifying figure names require manual review: {risky_figure_names}")
+    with zipfile.ZipFile(upload / "manuscript-source.zip", "w", zipfile.ZIP_DEFLATED) as archive:
+        for name in source_files:
+            path = man / name
+            if not path.exists():
+                raise FileNotFoundError(f"нет обязательного файла submission: {path}")
+            archive.write(path, name)
+        for figure in figures:
+            archive.write(figure, f"figures/{figure.name}")
+        if experiment_index is not None and experiment_index.is_file():
+            archive.write(experiment_index, "artifacts/publication_artifact_index.json")
+
+    for stem, pages in page_counts.items():
+        _check_nonblank_pages(upload / f"{stem}.pdf", pages)
+
+    artifacts = []
+    for path in sorted(upload.iterdir()):
+        if path.name == "artifact-manifest.json" or not path.is_file():
+            continue
+        artifacts.append(
+            {
+                "file": path.name,
+                "bytes": path.stat().st_size,
+                "sha256": _sha256(path),
+                "pages": page_counts.get(path.stem),
+            }
+        )
+    (upload / "artifact-manifest.json").write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "privacy_checks": {
+                    "text_sources_scanned_for_row_ids_and_secret_markers": True,
+                    "machine_specific_absolute_paths_rejected": True,
+                    "source_archive_allowed_members": [
+                        "tex",
+                        "bbl",
+                        "bib",
+                        "cls",
+                        "figures/*.pdf",
+                        "artifacts/publication_artifact_index.json",
+                    ],
+                },
+                "artifacts": artifacts,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(f"    upload: {upload} (PDF и source ZIP разделены, build-логи исключены)")
 
 
 def build(paper: str) -> bool:
@@ -107,6 +255,7 @@ def build(paper: str) -> bool:
         print("    ! strip_comments.py не найден — исходник НЕ анонимизирован")
 
     ok = True
+    page_counts: dict[str, int] = {}
     for d, stem in [(man, "main"), (supp, "supplement")]:
         if not (d / f"{stem}.tex").exists():
             continue
@@ -121,6 +270,25 @@ def build(paper: str) -> bool:
         ok &= status == "OK"
         print(f"    {stem}.pdf: {status}, страниц {pages.group(1) if pages else '?'}"
               f"{f', битых ссылок {bad}' if bad else ''}")
+        if pages:
+            page_counts[stem] = int(pages.group(1))
+    if ok:
+        include_experiment_index = paper == "journal-1-tbiom"
+        if include_experiment_index:
+            index_builder = LATEX.parent / "scripts" / "build_publication_artifact_index.py"
+            index_result = _run([sys.executable, str(index_builder)], LATEX.parent)
+            if index_result.returncode:
+                raise RuntimeError(
+                    "не удалось обновить publication artifact index:\n"
+                    + index_result.stdout
+                    + index_result.stderr
+                )
+            print("    artifact index обновлён непосредственно перед упаковкой")
+        _package_uploads(
+            sub,
+            page_counts,
+            include_experiment_index=include_experiment_index,
+        )
     print(f"[{paper}] -> {sub}")
     return ok
 

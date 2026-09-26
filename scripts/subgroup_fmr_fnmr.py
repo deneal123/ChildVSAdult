@@ -30,6 +30,7 @@ import numpy as np
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import Pair
 from age_gap.evaluation.fairness import _age_band, _encode_faces, compute_face_attributes
 from age_gap.models.backbones import make_backbone
@@ -127,14 +128,24 @@ def main() -> None:
     parser.add_argument("--tuned", default=None, help="default models/bb_<backbone>_seed42.pt")
     parser.add_argument("--split", default="test")
     parser.add_argument("--far", type=float, default=0.01)
+    parser.add_argument(
+        "--manifest-only", action="store_true", help="bind existing metrics to current inputs"
+    )
     args = parser.parse_args()
 
-    device = torch_device()
     models = data_path("models_dir")
     bb = args.backbone
     tuned_ckpt = Path(args.tuned) if args.tuned else Path(str(models / f"bb_{bb}_seed42.pt"))
-
+    dst = Path(str(data_path("metrics_dir", "subgroup_fmr_fnmr.json")))
     pairs_file = str(data_path("data_dir", "processed", "pairs.jsonl"))
+    if args.manifest_only:
+        payload = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, payload, tuned_ckpt, Path(pairs_file), args)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
+
+    device = torch_device()
+
     pairs = [Pair.from_dict(r) for r in read_jsonl(pairs_file) if r.get("split") == args.split]
     face_ids = sorted({p.face_a for p in pairs} | {p.face_b for p in pairs})
     log.info("split=%s: pairs=%d, unique faces=%d", args.split, len(pairs), len(face_ids))
@@ -199,19 +210,53 @@ def main() -> None:
         }
 
     payload = {
+        "backbone": bb,
+        "checkpoint": tuned_ckpt.name,
+        "split": args.split,
         "far_target": args.far,
+        "n_pairs": len(kept),
         "threshold_frozen": thr_frozen,
         "threshold_tuned": thr_tuned,
         "global_frozen": {"fmr": g_fmr_f, "fnmr": g_fnmr_f},
         "global_tuned": {"fmr": g_fmr_t, "fnmr": g_fnmr_t},
         "strata": result,
     }
-    dst = data_path("metrics_dir", "subgroup_fmr_fnmr.json")
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    _write_manifest(dst, payload, tuned_ckpt, Path(pairs_file), args)
 
     _print_table(args.far, thr_frozen, thr_tuned, result)
     print(f"\nwrote {dst}")
+
+
+def _write_manifest(
+    dst: Path,
+    payload: dict,
+    tuned_ckpt: Path,
+    pairs_file: Path,
+    args: argparse.Namespace,
+) -> None:
+    attribute_cache = Path(str(data_path("data_dir", "interim", "face_genderage.jsonl")))
+    manifest_inputs = [tuned_ckpt, pairs_file]
+    if attribute_cache.is_file():
+        manifest_inputs.append(attribute_cache)
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="subgroup-fmr-fnmr",
+        parameters={
+            "backbone": args.backbone,
+            "checkpoint": tuned_ckpt.name,
+            "split": args.split,
+            "far_target": args.far,
+            "attribute_source": "InsightFace buffalo_l genderage.onnx",
+            "attribute_semantics": "apparent gender and apparent age of face_a",
+            "threshold_protocol": "one global threshold per model, reused across strata",
+            "manifest_only": args.manifest_only,
+        },
+        metrics=payload,
+        inputs=manifest_inputs,
+        outputs=[dst],
+    )
 
 
 def _print_table(

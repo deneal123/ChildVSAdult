@@ -4,18 +4,18 @@
 %% justified in the submission AND IN THE COVER LETTER". Our dataset is biometric and cannot be
 %% redistributed, so that justification lives here.
 %%
-%% NOT SHOWN TO REVIEWERS (portal: "will not be shown to Peer Reviewers"), so it is written for
-%% the Editor-in-Chief / Associate Editor.
+%% Editorial cover letter. Verify the portal's current reviewer-visibility setting at upload time.
 %%
-%% !! BEFORE SUBMITTING: fill in the date on which the exemption request was actually sent to the
-%%    HSE ethics committee (see ethics_request_hse.md). Do NOT invent a date. The same placeholder
-%%    appears in ../en/main.tex and ../ru/main_ru.tex and must be filled there too.
+%% !! BEFORE SUBMITTING: replace every \pending field with the official committee wording and the
+%%    access route actually accepted by the committee and editor. Do not infer or invent a decision.
+%%    The same facts must match main.tex, supplement.tex and portal_answers.md exactly.
 %% Build: pdflatex cover_letter
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=25mm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{parskip}
 \pagestyle{empty}
+\newcommand{\pending}[1]{\textbf{[PENDING: #1]}}
 
 \begin{document}
 
@@ -33,66 +33,68 @@ A Naturally-Supervised Longitudinal Signal\\
 \noindent
 Dear Editor,
 
-We submit the manuscript above for consideration as a regular paper. Below we disclose, proactively,
-the three points on which this submission departs from the journal's default expectations.
+We submit the manuscript above for consideration as a substantially revised new regular-paper
+submission. We disclose the previous T-BIOM submission, the human-participant determination and the
+restricted data-access position below.
 
 \vspace{3mm}
-\noindent\textbf{1. The dataset is not released to the general research community, and why.}
-T-BIOM's Information for Authors states that where the main results rest on a dataset that is not
-available to the community, this must be explained and justified. Our results rest on face images
-mined from public social-media ``then/now'' posts. We do \emph{not} redistribute them, for reasons
-we consider dispositive rather than convenient:
+\noindent\textbf{1. Human-participant review and consent.}
+The study retrospectively processes face images and captions from public social-media ``then/now''
+posts. The corpus includes images depicting minors, biometric templates are computed for research,
+and individual consent was not obtained. No interaction, intervention, deployment or automated
+decision about a person occurs. HSE University's \pending{official committee name} issued
+\pending{decision / determination wording} on \pending{date}, reference \pending{number}. The study,
+manuscript and release package follow the scope and conditions of that determination; specifically,
+\pending{state whether retrospective data, minors, annotation, controlled access and publication of
+examples are covered}. Any category outside that scope has been excluded and all dependent results
+recomputed. We provide the determination and the point-by-point compliance mapping with the
+submission.
+
+\vspace{3mm}
+\noindent\textbf{2. Dataset availability and verification.}
+The social-media images, captions, original identifiers, biometric templates and corpus-derived model
+weights are not publicly released. Public posting is not treated as permission to assemble and
+redistribute a longitudinal biometric database. Subject to the committee determination above and
+written confirmation from the journal, we propose \pending{approved controlled-access arrangement},
+governed by a data-use agreement, identity verification, purpose limitation, secure processing and a
+documented deletion procedure. If the journal does not accept that route, claims depending on data
+that cannot be independently examined will be removed rather than described as reproducible.
+
+The public submission package contains only non-sensitive source code, configurations, aggregate
+machine-readable results, provenance manifests and external-benchmark protocols permitted by their
+licenses. It contains no faces, captions, source identifiers, biometric templates or secrets. The
+external evaluations on LFW, AgeDB-30, CALFW, CACD-VS and FG-NET can be reproduced independently
+from their respective licensed/public resources. Three-seed bidirectional transfer to an independent
+non-VK source is reported as cross-platform evidence, not as cross-cultural or universal validation.
+
+\vspace{3mm}
+\noindent\textbf{3. Previous T-BIOM submission and substantial changes.}
+An earlier version was submitted to T-BIOM as manuscript \texttt{TBIOM-2026-07-0222} and received a
+final rejection. This is a new submission, not a revision under that record. The earlier manuscript
+was not published and the work is not under review elsewhere. The present version makes substantive,
+review-driven changes:
 
 \begin{itemize}
-\item The data are biometric. Under Russia's 152-FZ (as amended by 519-FZ, 2020) public posting does
-      not constitute authorization for dissemination, and Art.~11 requires written consent for
-      biometric data used to identify a person. Under the GDPR a face processed for unique
-      identification is special-category data (Art.~9), and the ``manifestly made public'' exception
-      is read narrowly. We hold no written consent, and the subjects cannot feasibly be contacted.
-\item Redistributing such a corpus would create exactly the artifact the paper argues against: a
-      public, non-consensual biometric database of identifiable individuals across decades of their
-      lives.
+\item an official institutional determination and a conditional data-governance/access plan replace
+      the earlier author-only ethics rationale;
+\item canonical CACD-VS 10-fold verification and larger three-seed bidirectional cross-source tests
+      broaden external validation;
+\item complete common-backbone, common-split, three-seed MTLFace and CACon reproductions are separated
+      from a published-number literature table;
+\item a three-seed learning-rate $\times$ trainable-scope $\times$ negative-type AdaFace IR-101 study
+      tests ceiling, plasticity and catastrophic forgetting with loss, gradient, CKA, representation
+      drift, identity-separability and age-probe diagnostics;
+\item the data funnel, retained/rejected quality distributions, independent embedding sensitivity,
+      and pretraining-overlap limitation are documented with manifests; a held-out $5\times400$
+      blinded-audit pack and scorer are prepared, and the final submission will incorporate both
+      independent response files and adjudication rather than illustrative values;
+\item the LFW alignment defect in the earlier analysis was corrected, and every claim now states the
+      observed benchmark-dependent trade-off rather than a no-cost gain.
 \end{itemize}
 
-\noindent What we do release instead, so the work remains verifiable and reusable:
-the complete mining, curation, training and evaluation code; all configurations and random seeds;
-the de-identified benchmark protocol (pair lists by salted identifier, with age gaps and split
-assignment, containing no images and no recoverable identities); a datasheet for the dataset; and
-all reported metrics as machine-readable files. Every number in the manuscript is reproducible from
-these artifacts given re-collection under the reader's own legal basis, and the external results
-(LFW, AgeDB-30, CALFW, FG-NET) are reproducible outright, since those datasets are public.
-Reconstruction from a public source is additionally demonstrated in the paper by an independent
-non-VK replication (Reddit).
-
-\vspace{3mm}
-\noindent\textbf{2. Human subjects and ethical review.}
-The study analyses images that their subjects had already published on public community walls,
-retrieved through the platform's official API. There is no interaction or intervention with any
-person, no individual is identified or contacted, no system is deployed, minors are excluded as
-subjects, and the released artifacts contain no raw faces, no raw posts and no recoverable
-identifiers. On that basis the study was not submitted for prospective institutional review, and the
-manuscript states this affirmatively together with the reasoning --- which IEEE policy accepts in
-place of an approval reference (``\dots or include an explanation as to why such a review was not
-conducted''). We do not resolve the counter-consideration in our own favour: the images are
-biometric and the individuals remain identifiable, which is why our release policy is restrictive
-rather than open, and why we have \emph{also} requested a formal determination from our university's
-ethics committee. We will forward that determination, together with its filing date, to the editor as soon as it is issued; we omit a date here so that nothing in the record can drift from the document itself. We will abide by that
-determination to the editor as soon as it is issued, and we will abide by it rather than by our own
-reading. \emph{Consent:} the subjects cannot feasibly be contacted, so individual consent for
-participation and for publication was not obtained; the manuscript explains this, as IEEE policy
-likewise permits (``\dots or explain why consent was not obtained'').
-
-\vspace{3mm}
-\noindent\textbf{3. Originality and prior submissions.}
-The manuscript is original, is not published elsewhere, and is not under review at any other venue.
-It is not an extension of a published conference paper, so the 30\% new-material rule for
-conference extensions does not apply. An earlier version was submitted to, and rejected by, another
-IEEE journal; that manuscript was never published, and the present version differs substantially:
-the evaluation of the LFW forgetting control was found to be defective and has been corrected (the
-previously reported accuracy cost and low-FAR degradation were artifacts of an unaligned evaluation
-path and do not survive correction), and a new analysis shows that the standard random-impostor
-protocol understates the task -- with look-alike impostors, frozen state-of-the-art recognizers fall
-below chance on the 25-year-gap subset.
+An internal point-by-point matrix maps every Co-EIC, AE and reviewer comment to the change, evidence
+artifact and manuscript location; we will upload it if the new-submission portal provides an
+appropriate response slot.
 
 \vspace{3mm}
 \noindent

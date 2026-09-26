@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -25,6 +26,7 @@ import torch
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl
 from age_gap.common.logging import get_logger
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.evaluation.metrics import roc_auc
 from age_gap.models.backbones import make_backbone
 from age_gap.models.embeddings import load_embeddings
@@ -80,7 +82,24 @@ def main() -> None:
                     help="какой чекпойнт брать для :tuned -> bb_<name>_<suffix>.pt")
     ap.add_argument("--max-age-diff", type=float, default=5.0)
     ap.add_argument("--n-boot", type=int, default=2000)
+    ap.add_argument(
+        "--manifest-only", action="store_true", help="bind an existing result to current inputs"
+    )
     args = ap.parse_args()
+
+    dst = Path(
+        str(
+            data_path(
+                "metrics_dir",
+                f"hardneg_paired{'_' + args.tuned_suffix if args.tuned_suffix != 'pairs' else ''}.json",
+            )
+        )
+    )
+    if args.manifest_only:
+        out = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, out, args)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
 
     device = torch_device()
     pairs = [r for r in read_jsonl(data_path("data_dir", "processed", "pairs.jsonl"))
@@ -163,9 +182,42 @@ def main() -> None:
         log.info("%-8s %s=%.4f  %s=%.4f  Δ=%+.4f [%+.4f,%+.4f]  P(Δ>0)=%.3f",
                  tag, args.a, pa, args.b, pb_, pa - pb_, lo, hi, (d > 0).mean())
 
-    dst = data_path("metrics_dir", f"hardneg_paired{'_' + args.tuned_suffix if args.tuned_suffix != 'pairs' else ''}.json")
     dst.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    _write_manifest(dst, out, args)
     log.info("записано: %s", dst)
+
+
+def _write_manifest(dst: Path, metrics: dict, args: argparse.Namespace) -> None:
+    models = Path(str(data_path("models_dir")))
+    tuned_checkpoints = [
+        models / f"bb_{spec.partition(':')[0]}_{args.tuned_suffix}.pt"
+        for spec in (args.a, args.b)
+        if spec.endswith(":tuned")
+    ]
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="paired-lookalike-impostor-model-comparison",
+        parameters={
+            "model_a": args.a,
+            "model_b": args.b,
+            "crops": args.crops,
+            "tuned_suffix": args.tuned_suffix,
+            "max_age_difference": args.max_age_diff,
+            "bootstrap_replicates": args.n_boot,
+            "bootstrap_seed": 0,
+            "ranks": RANKS,
+            "manifest_only": args.manifest_only,
+        },
+        metrics=metrics,
+        inputs=[
+            Path(str(data_path("metrics_dir", "model_inventory.json"))),
+            Path(str(data_path("data_dir", "processed", "pairs.jsonl"))),
+            Path(str(data_path("data_dir", "interim", "face_genderage.jsonl"))),
+            Path(str(data_path("embeddings_cache_dir", "baseline_arcface.npz"))),
+            *tuned_checkpoints,
+        ],
+        outputs=[dst],
+    )
 
 
 if __name__ == "__main__":

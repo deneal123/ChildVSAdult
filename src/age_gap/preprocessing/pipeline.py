@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 
 import cv2
+import numpy as np
 
 from age_gap.common.io import PROJECT_ROOT, data_path, read_jsonl, resolve_path
 from age_gap.common.logging import get_logger
@@ -27,6 +28,18 @@ log = get_logger(__name__)
 # «Тогда/сейчас»-коллаж: 1 кадр с 2 лицами одного человека -> позитивная пара. Кадры с >2
 # лицами (групповые) слишком неоднозначны -> отбраковка целиком.
 MAX_FACES_PER_IMAGE = 2
+
+
+def _pose_proxies(landmarks: list[list[float]]) -> tuple[float | None, float | None]:
+    """Return deterministic yaw/roll proxies from the detector's five landmarks."""
+    if len(landmarks) < 5:
+        return None, None
+    points = np.asarray(landmarks, dtype=float)
+    eye_center = (points[0] + points[1]) / 2
+    eye_distance = np.linalg.norm(points[1] - points[0]) + 1e-6
+    yaw = float((points[2][0] - eye_center[0]) / eye_distance)
+    roll = float(np.arctan2(points[1][1] - points[0][1], points[1][0] - points[0][0]))
+    return yaw, roll
 
 
 def process_photo(
@@ -55,10 +68,30 @@ def process_photo(
     num_faces = len(detected)
     if num_faces == 0:
         log.info("Фото %s: лицо не найдено (reject=no_face_detected)", photo_id)
-        return [FaceCrop(face_id=f0, photo_id=photo_id, num_faces_in_image=0, is_usable=False, reject_reason="no_face_detected")]
+        return [
+            FaceCrop(
+                face_id=f0,
+                photo_id=photo_id,
+                num_faces_in_image=0,
+                is_usable=False,
+                reject_reason="no_face_detected",
+                image_width=image.shape[1],
+                image_height=image.shape[0],
+            )
+        ]
     if num_faces > MAX_FACES_PER_IMAGE:
         log.info("Фото %s: лиц=%d > %d (reject=too_many_faces)", photo_id, num_faces, MAX_FACES_PER_IMAGE)
-        return [FaceCrop(face_id=f0, photo_id=photo_id, num_faces_in_image=num_faces, is_usable=False, reject_reason="too_many_faces")]
+        return [
+            FaceCrop(
+                face_id=f0,
+                photo_id=photo_id,
+                num_faces_in_image=num_faces,
+                is_usable=False,
+                reject_reason="too_many_faces",
+                image_width=image.shape[1],
+                image_height=image.shape[0],
+            )
+        ]
 
     h, w = image.shape[:2]
     crops: list[FaceCrop] = []
@@ -69,6 +102,7 @@ def process_photo(
         face_region = image[y1:y2, x1:x2]
         # num_faces_in_image=1: качество оценивается ПО ЛИЦУ; коллаж больше не повод для реджекта.
         q = assess(face_region, face_size=min(face.width, face.height), det_score=face.det_score, num_faces_in_image=1)
+        yaw, roll = _pose_proxies(face.kps)
         crop_path: str | None = None
         if q.is_usable:
             aligned = align_face(image, face.kps)
@@ -89,6 +123,13 @@ def process_photo(
                 num_faces_in_image=num_faces,
                 is_usable=q.is_usable,
                 reject_reason=q.reject_reason,
+                image_width=w,
+                image_height=h,
+                face_width=float(face.width),
+                face_height=float(face.height),
+                blur_var=q.blur_var,
+                pose_yaw_proxy=yaw,
+                pose_roll_rad=roll,
             )
         )
     return crops

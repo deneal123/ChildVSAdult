@@ -47,13 +47,20 @@ def eer(scores: np.ndarray, labels: np.ndarray) -> float:
     if len(pos) == 0 or len(neg) == 0:
         return float("nan")
 
-    thresholds = np.unique(scores)
-    best = 1.0
-    for t in thresholds:
-        far = float((neg >= t).mean())  # негативы, ошибочно принятые
-        frr = float((pos < t).mean())  # позитивы, ошибочно отклонённые
-        best = min(best, max(far, frr))
-    return best
+    # Evaluate every unique threshold in O(n log n), at the end of each
+    # equal-score block. The previous implementation rescanned all scores for
+    # every threshold (O(n^2)), making bootstrap confidence intervals impractical.
+    order = np.argsort(scores, kind="mergesort")[::-1]
+    sorted_scores = scores[order]
+    sorted_labels = labels[order]
+    cumulative_pos = np.cumsum(sorted_labels == 1)
+    cumulative_neg = np.cumsum(sorted_labels == 0)
+    block_ends = np.flatnonzero(
+        np.r_[sorted_scores[:-1] != sorted_scores[1:], True]
+    )
+    far = cumulative_neg[block_ends] / len(neg)
+    frr = 1.0 - cumulative_pos[block_ends] / len(pos)
+    return float(np.min(np.maximum(far, frr)))
 
 
 def tar_at_far(scores: np.ndarray, labels: np.ndarray, far_target: float) -> float:

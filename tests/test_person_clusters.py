@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from age_gap.datasets.person_clusters import cluster_groups
+from age_gap.datasets.person_clusters import cluster_groups, cluster_groups_sweep
 
 
 def test_merges_groups_with_high_sim_face():
@@ -35,3 +35,20 @@ def test_person_id_is_min_group_id():
     gbf = {"f0": "B", "f1": "A"}  # сливаются -> person_id = "A" (минимальный)
     g2p = cluster_groups(face_ids, emb, gbf, merge_threshold=0.85)
     assert g2p["A"] == "A" and g2p["B"] == "A"
+
+
+def test_threshold_sweep_matches_independent_runs():
+    rng = np.random.default_rng(7)
+    emb = rng.normal(size=(12, 6)).astype(np.float32)
+    emb /= np.linalg.norm(emb, axis=1, keepdims=True)
+    face_ids = [f"f{index}" for index in range(len(emb))]
+    group_by_face = {face_id: f"g{index // 2}" for index, face_id in enumerate(face_ids)}
+    thresholds = [0.2, 0.5, 0.8]
+
+    swept = cluster_groups_sweep(face_ids, emb, group_by_face, thresholds, chunk=3)
+
+    for threshold in thresholds:
+        expected = cluster_groups(
+            face_ids, emb, group_by_face, merge_threshold=threshold, chunk=3
+        )
+        assert swept[threshold] == expected

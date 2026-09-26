@@ -98,7 +98,14 @@ def build_groups(
             if not post_faces:
                 continue
 
-            age_labels = _map_ages(post.caption, post_faces, extractor)
+            seq_by_photo = {photo.photo_id: index for index, photo in enumerate(photos_sorted)}
+            age_labels = _map_ages(
+                post.caption,
+                post_faces,
+                seq_by_photo,
+                len(photos_sorted),
+                extractor,
+            )
             group = IdentityGroup(
                 identity_group_id=post.post_id,
                 source_post_id=post.post_id,
@@ -117,15 +124,19 @@ def build_groups(
 def _map_ages(
     caption: str,
     post_faces: list[FaceCrop],
+    seq_by_photo: dict[str, int],
+    total_photos: int,
     extractor: AgeExtractor,
 ) -> list[AgeLabel]:
-    """Сопоставить возрасты лицам по ГЛОБАЛЬНОЙ позиции (порядок фото + слева направо внутри кадра).
+    """Сопоставить возрасты лицам по позиции фото, сохраняя пропуски фильтрации.
 
-    post_faces уже в глобальном порядке. position_N / first / left / second / right -> индекс в
-    post_faces. Для коллажа «тогда/сейчас»: left=раньше=post_faces[0], right=позже=post_faces[1].
+    ``position_N`` относится к исходной позиции фото, а не к индексу среди
+    оставшихся usable-лиц. Это не сдвигает метки, если лицо на промежуточном
+    фото было отбраковано. ``first/left`` и ``second/right`` сохраняют
+    глобальную семантику для двухпанельных коллажей.
     """
     n = len(post_faces)
-    raw_labels = extractor.extract(caption, n)  # n = число лиц-слотов (для коллажа = число лиц кадра)
+    raw_labels = extractor.extract(caption, total_photos)
     if not raw_labels:
         return []
 
@@ -148,7 +159,14 @@ def _map_ages(
     mapped: list[AgeLabel] = []
     for label in raw_labels:
         pos = _ref_position(label.photo_reference)
-        face = post_faces[pos] if (pos is not None and 0 <= pos < n) else None
+        face = None
+        if label.photo_reference.startswith("position_") and pos is not None:
+            face = next(
+                (candidate for candidate in post_faces if seq_by_photo.get(candidate.photo_id) == pos),
+                None,
+            )
+        elif pos is not None and 0 <= pos < n:
+            face = post_faces[pos]
         mapped.append(
             AgeLabel(
                 face_id=face.face_id if face else None,

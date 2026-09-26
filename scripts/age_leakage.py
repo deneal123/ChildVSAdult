@@ -8,10 +8,12 @@ genderage берётся из кэша (CPU); энкод — на GPU. См. eva
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path, read_jsonl
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.common.schemas import Pair
 from age_gap.evaluation.age_leakage import print_leakage, summarize
 from age_gap.evaluation.fairness import _age_band, _encode_faces, compute_face_attributes
@@ -43,6 +45,40 @@ def main() -> None:
         emb = _encode_faces(backbone, device, face_ids)
         rows.append(summarize(name, emb, face_bucket, pairs))
     print_leakage(rows)
+    output = Path(str(data_path("metrics_dir", "age_leakage.json")))
+    payload = {
+        "backbone": bb,
+        "split": split,
+        "probe_seeds": [42, 1, 2],
+        "probe_train_fraction": 0.7,
+        "age_bands": ["0-17", "18-29", "30-44", "45+"],
+        "rows": rows,
+    }
+    output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    attribute_cache = Path(str(data_path("data_dir", "interim", "face_genderage.jsonl")))
+    model_inventory = Path(str(data_path("metrics_dir", "model_inventory.json")))
+    write_experiment_manifest(
+        output.with_suffix(".manifest.json"),
+        experiment="apparent-age-leakage-linear-probe",
+        parameters={
+            "backbone": bb,
+            "split": split,
+            "probe_seeds": [42, 1, 2],
+            "probe_train_fraction": 0.7,
+            "probe_model": "standardized multinomial logistic regression",
+            "attribute_source": "InsightFace buffalo_l genderage.onnx",
+        },
+        metrics=payload,
+        inputs=[
+            Path(pairs_file),
+            attribute_cache,
+            model_inventory,
+            Path(str(models / f"bb_{bb}_seed42.pt")),
+            Path(str(models / f"bb_{bb}_disentangle.pt")),
+        ],
+        outputs=[output],
+    )
+    print(f"wrote {output}")
 
 
 if __name__ == "__main__":

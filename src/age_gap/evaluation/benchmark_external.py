@@ -124,11 +124,18 @@ def pair_scores(
     return (ea * eb).sum(axis=1)
 
 
-def accuracy_10fold(scores: np.ndarray, labels: np.ndarray, folds: int = 10) -> float:
+def accuracy_10fold(
+    scores: np.ndarray,
+    labels: np.ndarray,
+    folds: int = 10,
+    fold_ids: np.ndarray | None = None,
+) -> float:
     """LFW-протокол: порог подбирается на 9 фолдах, точность считается на 10-м; среднее."""
     n = len(scores)
     idx = np.arange(n)
-    fold_id = idx % folds
+    fold_id = idx % folds if fold_ids is None else np.asarray(fold_ids)
+    if len(fold_id) != n:
+        raise ValueError("fold_ids must have one value per pair")
     thresholds = np.linspace(scores.min(), scores.max(), 400)
     accs: list[float] = []
     for f in range(folds):
@@ -146,6 +153,67 @@ def accuracy_10fold(scores: np.ndarray, labels: np.ndarray, folds: int = 10) -> 
     return float(np.mean(accs))
 
 
+def _accuracy_fold_values(
+    scores: np.ndarray, labels: np.ndarray, fold_ids: np.ndarray
+) -> list[float]:
+    values: list[float] = []
+    thresholds = np.linspace(scores.min(), scores.max(), 400)
+    for fold in sorted(np.unique(fold_ids)):
+        train = fold_ids != fold
+        test = fold_ids == fold
+        train_predictions = scores[train, None] >= thresholds[None, :]
+        train_accuracy = (train_predictions == (labels[train, None] == 1)).mean(axis=0)
+        best_threshold = thresholds[int(np.argmax(train_accuracy))]
+        values.append(float(((scores[test] >= best_threshold) == (labels[test] == 1)).mean()))
+    return values
+
+
+def _bootstrap_cacd_intervals(
+    scores: np.ndarray,
+    labels: np.ndarray,
+    fold_ids: np.ndarray,
+    *,
+    n_boot: int = 1000,
+    seed: int = 0,
+) -> dict[str, list[float]]:
+    """Stratified pair bootstrap plus a fold bootstrap for protocol accuracy."""
+    rng = np.random.default_rng(seed)
+    positive = scores[labels == 1]
+    negative = scores[labels == 0]
+    auc_values: list[float] = []
+    eer_values: list[float] = []
+    tar_01_values: list[float] = []
+    tar_001_values: list[float] = []
+    for _ in range(n_boot):
+        pos = positive[rng.integers(0, len(positive), len(positive))]
+        neg = negative[rng.integers(0, len(negative), len(negative))]
+        sample_scores = np.concatenate([pos, neg])
+        sample_labels = np.concatenate(
+            [np.ones(len(pos), dtype=np.int64), np.zeros(len(neg), dtype=np.int64)]
+        )
+        auc_values.append(roc_auc(sample_scores, sample_labels))
+        eer_values.append(eer(sample_scores, sample_labels))
+        tar_01_values.append(tar_at_far(sample_scores, sample_labels, 0.01))
+        tar_001_values.append(tar_at_far(sample_scores, sample_labels, 0.001))
+
+    fold_values = np.asarray(_accuracy_fold_values(scores, labels, fold_ids))
+    accuracy_values = [
+        float(fold_values[rng.integers(0, len(fold_values), len(fold_values))].mean())
+        for _ in range(n_boot)
+    ]
+
+    def interval(values: list[float]) -> list[float]:
+        return [float(value) for value in np.percentile(values, [2.5, 97.5])]
+
+    return {
+        "accuracy_10fold_ci95": interval(accuracy_values),
+        "roc_auc_ci95": interval(auc_values),
+        "eer_ci95": interval(eer_values),
+        "tar@far=0.01_ci95": interval(tar_01_values),
+        "tar@far=0.001_ci95": interval(tar_001_values),
+    }
+
+
 def evaluate(scores: np.ndarray, labels: np.ndarray) -> dict[str, float]:
     return {
         "n_pairs": float(len(labels)),
@@ -155,6 +223,32 @@ def evaluate(scores: np.ndarray, labels: np.ndarray) -> dict[str, float]:
         "tar@far=0.01": tar_at_far(scores, labels, 0.01),
         "tar@far=0.001": tar_at_far(scores, labels, 0.001),
     }
+
+
+def load_cacd_vs(path: Path | str) -> tuple[list, list, np.ndarray, np.ndarray]:
+    """Load the aligned CACD-VS cache and its canonical identity-disjoint folds."""
+    cache = np.load(path)
+    miss_rate = float(cache["miss_rate"])
+    if miss_rate > 0.05:
+        raise RuntimeError(f"CACD-VS cache has excessive detector miss rate: {miss_rate:.1%}")
+    return (
+        list(cache["a"]),
+        list(cache["b"]),
+        cache["issame"].astype(np.int64),
+        cache["fold_ids"].astype(np.int64),
+    )
+
+
+def evaluate_cacd_vs(
+    backbone: torch.nn.Module, device: str, path: Path | str
+) -> dict[str, float | list[float]]:
+    """Canonical CACD-VS evaluation: supplied 10 folds, AUC, EER, and TAR@FAR."""
+    first, second, labels, fold_ids = load_cacd_vs(path)
+    scores = pair_scores(backbone, first, second, device, rgb=False)
+    metrics = evaluate(scores, labels)
+    metrics["accuracy_10fold"] = accuracy_10fold(scores, labels, fold_ids=fold_ids)
+    metrics.update(_bootstrap_cacd_intervals(scores, labels, fold_ids))
+    return metrics
 
 
 def evaluate_lfw(

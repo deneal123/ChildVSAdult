@@ -14,12 +14,15 @@
   → верификация и метрики в разбивке по возрастному разрыву
 ```
 
-**Главный результат (кратко).** Дообучение слабого обучаемого backbone на наших VK-парах учит
-кросс-возрастной инвариантности, и она **переносится на внешний бенчмарк** (FG-NET large-gap
-0.736 → 0.848, +0.112) без измеримых потерь на лёгких бенчмарках (LFW +0.004). Реальные
-same-post пары решительно превосходят синтетическое старение. Отдельный результат: со схожими
-импостерами замороженные современные распознаватели падают ниже случайного (AdaFace IR-101
-0.961 → 0.376). Подробности и все таблицы — в статье (`latex/papers/journal-1-tbiom/`).
+**Главный результат (кратко).** Дообучение слабого FaceNet на извлечённых VK-парах улучшило
+FG-NET large-gap ROC-AUC с 0.736 до 0.848 при старом протоколе случайных импостеров.
+После сопоставления возраста *обоих концов* негативной пары результат на FG-NET 25+ составил
+0.802 → 0.848 (парный subject-level прирост +0.046; 95% CI [0.006, 0.091]). Внутренний
+endpoint-age-matched тест тоже показывает рост ROC-AUC, но TAR при FAR=1% ухудшается; на
+AgeDB-30 есть небольшое статистически значимое снижение ROC-AUC. Сравнение с равноценным
+контрольным источником и аудит пересечений train–benchmark ещё не завершены, поэтому эти
+результаты не доказывают причинное преимущество именно longitudinal-источника. Подробности —
+в статье (`latex/papers/journal-1-tbiom/`); внутренний журнал результатов не публикуется.
 
 ## Документация
 
@@ -72,11 +75,15 @@ uv sync --extra cpu
 
 ```bash
 uv sync --extra gpu --extra ml
-uv pip install --reinstall onnxruntime-gpu   # вытеснить CPU-onnxruntime, который тянет insightface
+uv pip install --reinstall onnxruntime-gpu==1.26.0  # версия из uv.lock; вытеснить CPU wheel
+# после этого: uv run --no-sync ...  или напрямую .venv/Scripts/python.exe ...
 ```
 
 > `onnxruntime` и `onnxruntime-gpu` делят один Python-модуль и не уживаются вместе; insightface
 > жёстко зависит от CPU-`onnxruntime`, поэтому после sync нужен `--reinstall onnxruntime-gpu`.
+> Обычный `uv run` может синхронизировать транзитивный CPU wheel обратно; для GPU-команд используйте
+> `uv run --no-sync` после указанной переустановки. При обновлении lock замените `1.26.0` на
+> зафиксированную там версию `onnxruntime-gpu`.
 > Устройство выбирается автоматически (`[default.compute].device = "auto"`, см.
 > [common/device.py](src/age_gap/common/device.py)); можно задать `"cpu"`/`"cuda"`.
 
@@ -146,6 +153,23 @@ uv run python scripts/synthetic_baseline.py --epochs 10 --aging both
 uv run python scripts/backbones_benchmark.py --epochs 10 --lr 3e-5
 uv run python scripts/align_mtcnn.py                                  # MTCNN-кропы для facenet
 uv run python scripts/backbones_benchmark.py --backbones facenet --crops faces_mtcnn
+
+# Ревизионный пакет T-BIOM: CACD-VS, blinded audit, SOTA и strong-backbone matrix.
+# После GPU-установки используйте --no-sync, чтобы uv не заменил onnxruntime-gpu CPU-wheel'ом.
+uv run --no-sync python scripts/build_cacd_vs.py
+uv run --no-sync python scripts/eval_cacd_vs.py --backbone adaface_ir101
+uv run --no-sync python scripts/eval_cacd_vs.py --checkpoints models/bb_facenet_seed42.pt models/bb_facenet_seed1.pt models/bb_facenet_seed2.pt
+uv run --no-sync python scripts/build_blinded_audit.py --n 400
+uv run --no-sync python scripts/build_age_audit_baselines.py
+# После двух независимых ответов и adjudication:
+uv run --no-sync python scripts/score_blinded_audit.py
+uv run --no-sync python scripts/sota_common_protocol.py --methods mtlface cacon --epochs 8
+uv run --no-sync python scripts/strong_backbone_study.py --epochs 8
+uv run --no-sync python scripts/independent_embedding_audit.py
+uv run --no-sync python scripts/model_inventory.py
+uv run --no-sync python scripts/pretraining_overlap_audit.py
+$env:ENV_FOR_DYNACONF='reddit'; uv run --no-sync python scripts/eval_cross_platform.py --ckpts models/bb_facenet_seed42.pt models/bb_facenet_seed1.pt models/bb_facenet_seed2.pt --tag vk2reddit
+Remove-Item Env:ENV_FOR_DYNACONF; uv run --no-sync python scripts/cross_source.py --ckpts models/bb_reddit_src_s42.pt models/bb_reddit_src_s1.pt models/bb_reddit_src_s2.pt --tag reddit2vk
 
 # (опц.) Adapter поверх замороженного ArcFace; apparent-age из комментариев (нужен не-сервисный токен):
 uv run python scripts/train_adapter.py --epochs 60 --gap-weight 2.0

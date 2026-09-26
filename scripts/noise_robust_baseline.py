@@ -19,6 +19,7 @@ from pathlib import Path
 
 from age_gap.common.device import torch_device
 from age_gap.common.io import data_path
+from age_gap.common.manifest import write_experiment_manifest
 from age_gap.evaluation.external_suite import eval_all, print_table
 from age_gap.models.backbones import make_backbone
 from age_gap.training.arcface_train import train_arcface
@@ -32,12 +33,22 @@ def main() -> None:
     parser.add_argument("--scale", type=float, default=32.0)
     parser.add_argument("--sub-centers", type=int, default=3)
     parser.add_argument("--skip-train", action="store_true", help="reuse bb_<bb>_arcface_sc<k>.pt")
+    parser.add_argument(
+        "--manifest-only", action="store_true", help="bind existing metrics and checkpoints"
+    )
     args = parser.parse_args()
 
     device = torch_device()
     models = data_path("models_dir")
     bb = args.backbone
     k = args.sub_centers
+    ck = Path(str(models / f"bb_{bb}_arcface_sc{k}.pt"))
+    dst = Path(str(data_path("metrics_dir", "noise_robust_baseline.json")))
+    if args.manifest_only:
+        results = json.loads(dst.read_text(encoding="utf-8"))
+        _write_manifest(dst, results, models, bb, ck, args)
+        print(f"wrote {dst.with_suffix('.manifest.json')}")
+        return
 
     # Comparators reuse already-trained checkpoints; only the sub-center model is (re)trained.
     results = {
@@ -47,7 +58,6 @@ def main() -> None:
     }
     order = ["frozen", "+pairs", "+arcface"]
 
-    ck = Path(str(models / f"bb_{bb}_arcface_sc{k}.pt"))
     if not args.skip_train:
         ck = train_arcface(
             backbone_name=bb, loss_type="arcface", epochs=args.epochs, scale=args.scale,
@@ -58,9 +68,37 @@ def main() -> None:
     order.append(tag)
 
     print_table(results, order)
-    dst = data_path("metrics_dir", "noise_robust_baseline.json")
     dst.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    _write_manifest(dst, results, models, bb, ck, args)
     print(f"wrote {dst}")
+
+
+def _write_manifest(
+    dst: Path,
+    results: dict,
+    models: Path,
+    backbone: str,
+    checkpoint: Path,
+    args: argparse.Namespace,
+) -> None:
+    pairs_file = Path(str(data_path("data_dir", "processed", "pairs.jsonl")))
+    pair_ckpt = Path(str(models / f"bb_{backbone}_seed42.pt"))
+    arcface_ckpt = Path(str(models / f"bb_{backbone}_arcface.pt"))
+    write_experiment_manifest(
+        dst.with_suffix(".manifest.json"),
+        experiment="subcenter-arcface-noise-robust-comparator",
+        parameters={
+            "backbone": backbone,
+            "epochs": args.epochs,
+            "scale": args.scale,
+            "sub_centers": args.sub_centers,
+            "skip_train": args.skip_train,
+            "manifest_only": args.manifest_only,
+        },
+        metrics=results,
+        inputs=[pairs_file, pair_ckpt, arcface_ckpt, checkpoint],
+        outputs=[dst],
+    )
 
 
 if __name__ == "__main__":
