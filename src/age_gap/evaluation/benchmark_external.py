@@ -118,10 +118,17 @@ def pair_scores(
     каждый backbone приводит их к своему входу через ``preprocess``.
     """
     prep = _preprocess_fn(backbone)
-    ba = torch.from_numpy(np.stack([prep(im, bgr=not rgb) for im in images_a]))
-    bb = torch.from_numpy(np.stack([prep(im, bgr=not rgb) for im in images_b]))
-    ea, eb = _embed(backbone, ba, device), _embed(backbone, bb, device)
-    return (ea * eb).sum(axis=1)
+    if len(images_a) != len(images_b):
+        raise ValueError("pair endpoint lists must have the same length")
+    scores = []
+    # Match _embed's batch size while bounding host memory: larger benchmarks
+    # must not materialize all preprocessed images at once (gigabytes per end).
+    for start in range(0, len(images_a), 128):
+        ba = torch.from_numpy(np.stack([prep(im, bgr=not rgb) for im in images_a[start:start + 128]]))
+        bb = torch.from_numpy(np.stack([prep(im, bgr=not rgb) for im in images_b[start:start + 128]]))
+        ea, eb = _embed(backbone, ba, device), _embed(backbone, bb, device)
+        scores.append((ea * eb).sum(axis=1))
+    return np.concatenate(scores) if scores else np.empty(0, dtype=np.float32)
 
 
 def accuracy_10fold(

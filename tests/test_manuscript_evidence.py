@@ -261,10 +261,12 @@ def test_cacd_vs_results_match_machine_readable_artifacts() -> None:
     main = MAIN.read_text(encoding="utf-8")
 
     assert f"{frozen['accuracy_10fold']:.4f}" in main
-    assert f"{frozen['roc_auc']:.4f}" in main
+    historical = SUPPLEMENT.read_text(encoding="utf-8")
+    assert f"{frozen['roc_auc']:.4f}" in historical
     assert f"{frozen['eer']:.4f}" in main
-    for key in ("accuracy_10fold", "roc_auc", "eer"):
+    for key in ("accuracy_10fold", "eer"):
         assert f"{tuned[key]['mean']:.4f}" in main
+    assert f"{tuned['roc_auc']['mean']:.4f}" in historical
 
 
 def test_common_protocol_sota_table_matches_machine_readable_artifacts() -> None:

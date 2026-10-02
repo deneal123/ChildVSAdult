@@ -27,6 +27,8 @@ INCLUDE = (
     "fgnet_endpoint_subject_stats.manifest.json",
     "fgnet_endpoint_subject_stats_s*.manifest.json",
     "fgnet_endpoint_multiseed.manifest.json",
+    "fgnet_retrieval_*/fgnet_retrieval_study.manifest.json",
+    "comparator_fgnet_endpoint_age_matched.manifest.json",
     "internal_endpoint_age_matched.manifest.json",
     "delong_tests.manifest.json",
     "synthetic_parity.manifest.json",
@@ -48,6 +50,7 @@ INCLUDE = (
     "cacd_vs/*.manifest.json",
     "sota_common_protocol/*.manifest.json",
     "strong_backbone_study/*.manifest.json",
+    "strong_backbone_fixed8_bn_frozen_*/*.manifest.json",
     "matched_agegap_arms/*.manifest.json",
     "matched_agegap_fixed10_last/*.manifest.json",
 )
@@ -145,6 +148,17 @@ def main() -> None:
         if not entry["input_integrity"]["valid"] or not entry["output_integrity"]["valid"]
     ]
     incomplete_experiments: list[str] = []
+    for campaign_dir in sorted(METRICS.glob("strong_backbone_fixed8_bn_frozen_*")):
+        corrected_summary = campaign_dir / "summary.json"
+        if not corrected_summary.is_file():
+            incomplete_experiments.append(f"{campaign_dir.name}: corrected campaign summary missing")
+            continue
+        corrected_campaign = json.loads(corrected_summary.read_text(encoding="utf-8")).get("campaign", {})
+        if not corrected_campaign.get("complete", False):
+            incomplete_experiments.append(
+                f"{campaign_dir.name}: incomplete ({corrected_campaign.get('completed_runs', 0)}/"
+                f"{corrected_campaign.get('expected_runs', 36)} runs)"
+            )
     strong_summary = METRICS / "strong_backbone_study" / "summary.json"
     if not strong_summary.is_file():
         incomplete_experiments.append("strong-backbone summary missing")

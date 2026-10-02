@@ -149,7 +149,7 @@ def _aggregate(
         aggregates = {}
         for metric in metric_names:
             values = [row["metrics"].get(metric) for row in cell]
-            numeric = [float(value) for value in values if value is not None]
+            numeric = [float(value) for value in values if isinstance(value, (int, float)) and np.isfinite(value)]
             if numeric:
                 aggregates[metric] = {
                     "mean": float(np.mean(numeric)),
@@ -202,6 +202,10 @@ def _aggregate(
             "metric_deltas": delta_aggregates,
             "training_trajectory": trajectory,
             "best_validation_epochs": best_epochs,
+            "selected_epochs": [row.get("selected_epoch") for row in cell],
+            "executed_epochs": [row.get("epochs_executed", len(row.get("training_history", []))) for row in cell],
+            "checkpoint_selection": [row.get("checkpoint_selection", "legacy best_val") for row in cell],
+            "batchnorm_policy": [row.get("batchnorm_policy", "legacy adapt_all") for row in cell],
         }
     destination = result_dir / "summary.json"
     _write_json(destination, _finite(summary))
@@ -404,17 +408,24 @@ def main() -> None:
         ),
     )
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--result-dir", type=Path, help="separate corrected campaign metrics from legacy runs")
+    parser.add_argument("--checkpoint-selection", choices=["best_val", "last_epoch"], default="best_val")
+    parser.add_argument("--batchnorm-policy", choices=["adapt_all", "frozen_all"], default="adapt_all")
     parser.add_argument(
         "--repair-manifests",
         action="store_true",
         help="rewrite manifests for completed runs with current provenance inputs; do not train",
     )
     args = parser.parse_args()
+    if args.result_dir is None and (
+        args.checkpoint_selection != "best_val" or args.batchnorm_policy != "adapt_all"
+    ):
+        parser.error("changed training protocol requires a separate --result-dir")
 
     variants = prepare_pair_variants()
     models_dir = Path(str(data_path("models_dir", "strong_backbone_study")))
     run_models_dir = args.checkpoint_dir or models_dir
-    result_dir = Path(str(data_path("metrics_dir", "strong_backbone_study")))
+    result_dir = args.result_dir or Path(str(data_path("metrics_dir", "strong_backbone_study")))
     models_dir.mkdir(parents=True, exist_ok=True)
     run_models_dir.mkdir(parents=True, exist_ok=True)
     result_dir.mkdir(parents=True, exist_ok=True)
@@ -443,13 +454,17 @@ def main() -> None:
 
     for negative_type in args.negatives:
         pairs = variants[negative_type]
+        baseline_pairs = variants["random"] if args.result_dir is not None else pairs
+        cell_provenance_inputs = provenance_inputs + (
+            [baseline_pairs] if baseline_pairs != pairs else []
+        )
         frozen_path = result_dir / f"frozen_{negative_type}.json"
         if frozen_path.exists():
             frozen_metrics = json.loads(frozen_path.read_text(encoding="utf-8"))["metrics"]
         else:
             print(f"[baseline] frozen {negative_type}")
             frozen_model = make_backbone(BACKBONE, pretrained=True).to(device).eval()
-            frozen_metrics = _finite(eval_all(frozen_model, device, pairs_file=str(pairs)))
+            frozen_metrics = _finite(eval_all(frozen_model, device, pairs_file=str(baseline_pairs)))
             _write_json(
                 frozen_path,
                 {"backbone": BACKBONE, "negative_type": negative_type, "metrics": frozen_metrics},
@@ -459,7 +474,7 @@ def main() -> None:
                 experiment="strong-backbone-frozen-baseline",
                 parameters={"backbone": BACKBONE, "negative_type": negative_type},
                 metrics=frozen_metrics,
-                inputs=[pairs, *provenance_inputs],
+                inputs=[pairs, *cell_provenance_inputs],
                 outputs=[frozen_path],
             )
             del frozen_model
@@ -486,9 +501,12 @@ def main() -> None:
                                 "epochs": args.epochs,
                                 "patience": args.patience,
                                 "batch_size": args.batch_size,
+                                **({"checkpoint_selection": args.checkpoint_selection,
+                                    "batchnorm_policy": args.batchnorm_policy}
+                                   if args.result_dir is not None else {}),
                             },
                             pairs=pairs,
-                            provenance_inputs=provenance_inputs,
+                            provenance_inputs=cell_provenance_inputs,
                             result_path=result_path,
                             run_id=run_id,
                         )
@@ -525,10 +543,15 @@ def main() -> None:
                         ckpt_out=checkpoint,
                         seed=seed,
                         pairs_file=str(pairs),
+                        checkpoint_selection=args.checkpoint_selection,
+                        batchnorm_policy=args.batchnorm_policy,
                     )
                     frozen = make_backbone(BACKBONE, pretrained=True).to(device).eval()
                     tuned = load_finetuned(checkpoint, device)
-                    metrics = eval_all(tuned, device, pairs_file=str(pairs))
+                    # All training-negative variants use the same canonical held-out pairs.
+                    # Legacy per-variant test metrics are deliberately not used for new cells.
+                    evaluation_pairs = variants["random"] if args.result_dir is not None else pairs
+                    metrics = eval_all(tuned, device, pairs_file=str(evaluation_pairs))
                     validation = ImagePairDataset(
                         "val", pairs_file=str(pairs), preprocess=tuned.preprocess
                     )
@@ -538,6 +561,8 @@ def main() -> None:
                         validation,
                         device,
                         batch_size=args.batch_size,
+                        seed=seed,
+                        split_label="val",
                     )
                     checkpoint_data = torch.load(checkpoint, map_location="cpu", weights_only=False)
                     result = _finite(
@@ -549,6 +574,11 @@ def main() -> None:
                             "learning_rate": learning_rate,
                             "seed": seed,
                             "epochs": args.epochs,
+                            "epochs_executed": len(checkpoint_data.get("history", [])),
+                            "selected_epoch": checkpoint_data.get("selected_epoch"),
+                            "checkpoint_selection": args.checkpoint_selection,
+                            "batchnorm_policy": args.batchnorm_policy,
+                            "evaluation_pair_source": str(evaluation_pairs),
                             "metrics": {**metrics, **diagnostics},
                             "frozen_metrics": frozen_metrics,
                             "metric_deltas": {
@@ -572,9 +602,12 @@ def main() -> None:
                             "epochs": args.epochs,
                             "patience": args.patience,
                             "batch_size": args.batch_size,
+                            **({"checkpoint_selection": args.checkpoint_selection,
+                                "batchnorm_policy": args.batchnorm_policy}
+                               if args.result_dir is not None else {}),
                         },
                         metrics=result["metrics"],
-                        inputs=[pairs, *provenance_inputs],
+                        inputs=[pairs, *cell_provenance_inputs],
                         outputs=[checkpoint, result_path],
                     )
                     completed_now += 1

@@ -20,6 +20,8 @@ TODO.md
 deep-research-report.md
 .ruff_cache
 .mypy_cache
+.work/
+metrics/**/private/
 cache/
 data/
 data_reddit/

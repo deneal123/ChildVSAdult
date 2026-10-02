@@ -31,6 +31,30 @@ distributions; (S\ref{sec:card}) a model/data card; (S\ref{sec:published}) the n
 published-results map; and (S\ref{sec:figs}) secondary tables and figures. Section and table
 references of the form ``Sec.~V'' or ``Table~X'' point to the main paper.
 
+\section{Historical Protocol Comparisons}\label{sec:legacy-main}
+These are secondary historical comparisons, not the corrected FG-NET primary endpoint.
+\begin{table*}[!t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Historical random-impostor comparisons: weak FaceNet frozen vs.\ $+$pairs, three seeds, curated data. These FG-NET rows are not the corrected primary endpoint (main paper's corrected endpoint table). Pre-clean gain is shown for reference.}
+\label{tab:legacy-main}
+\centering
+\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Metric & Frozen & $+$pairs (mean $\pm$ std) & Gain & (Pre-clean gain) \\
+\midrule
+FG-NET large-gap & 0.7361 & 0.8484 $\pm$ 0.0007 & \textbf{$+$0.1124} & $+$0.1215 \\
+FG-NET ROC & 0.8955 & 0.9230 $\pm$ 0.0006 & $+$0.0275 & $+$0.0277 \\
+our.25+ (internal) & 0.6403 & 0.8348 $\pm$ 0.0027 & \textbf{$+$0.1946} & $+$0.1677 \\
+our.overall (internal) & 0.8363 & 0.9163 $\pm$ 0.0009 & $+$0.0801 & $+$0.0764 \\
+LFW accuracy & 0.9640 & 0.9679 $\pm$ 0.0002 & $+$0.0039 & n/a \\
+AgeDB-30 ROC & 0.9530 & 0.9462 $\pm$ 0.0013 & $-$0.0068 & $-$0.0155 \\
+CALFW ROC & 0.9482 & 0.9489 $\pm$ 0.0014 & $+$0.0007 & $-$0.0030 \\
+CACD-VS ROC & 0.9948 & 0.9947 $\pm$ 0.0002 & $-$0.0001 & n/a \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 \section{Claims vs.\ Evidence}\label{sec:claims}
 Table~\ref{tab:claims} maps every substantive claim to its evidence and its scope, separating what
 is \emph{established within the attribution protocol} from what is \emph{not established}. The intent

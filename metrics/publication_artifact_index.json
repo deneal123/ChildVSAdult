@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "T-BIOM publication experiments only; no face data or biometric templates",
-  "entry_count": 74,
+  "entry_count": 77,
   "missing_expected_manifests": [
     "age_leakage.manifest.json",
     "fairness_audit.manifest.json",
@@ -11,6 +11,7 @@
   ],
   "invalid_input_or_output_manifests": [],
   "incomplete_experiments": [
+    "strong_backbone_fixed8_bn_frozen_20261002: corrected campaign summary missing",
     "strong-backbone campaign incomplete (12/36 runs)"
   ],
   "complete": false,
@@ -447,6 +448,139 @@
       },
       "output_integrity": {
         "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/comparator_fgnet_endpoint_age_matched.manifest.json",
+      "manifest_sha256": "871817d1d6eac0daca0c8b4c854700d65b7b819edcd0abc616b7628a4d9c5886",
+      "experiment": "comparator-fgnet-endpoint-age-matched-reevaluation",
+      "created_at_utc": "2026-10-02T18:54:36.620693+00:00",
+      "command": [
+        "scripts/reevaluate_comparators_fgnet.py"
+      ],
+      "parameters": {
+        "protocol": "endpoint_age_matched",
+        "backbone": "arcface_r50_casia",
+        "epochs": 8,
+        "seeds": [
+          42,
+          1,
+          2
+        ],
+        "endpoint_age_tolerance": 2,
+        "negative_seed": 42,
+        "bootstrap_seed": 0,
+        "n_boot": 2000,
+        "device": "cpu",
+        "torch_threads": 2
+      },
+      "git": {
+        "commit": "383ba7347fab0352c00ecb9fd1028ec8754832c2",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/external/fgnet_crops.npz",
+          "bytes": 24471952,
+          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+        },
+        {
+          "path": "models/arcface_r50_casia.pth",
+          "bytes": 175710586,
+          "sha256": "6c111ba31adcbfd40ae8d8e0075c2c7e1fe7eefe41ec835948040717a5a8d70e"
+        },
+        {
+          "path": "metrics/model_inventory.json",
+          "bytes": 4937,
+          "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+        },
+        {
+          "path": "models/sota_common_protocol/mtlface_arcface_r50_casia_e8_s42.pt",
+          "bytes": 175200094,
+          "sha256": "6bc6ade996181eedcf3fb452f3a92fdead148fb36e49962558e569eb16f59168"
+        },
+        {
+          "path": "metrics/sota_common_protocol/mtlface_arcface_r50_casia_e8_s42.manifest.json",
+          "bytes": 2175,
+          "sha256": "37f85a38f7f745c9db0ff9acdc5ff5741e51d27c38e23ccf9d762bb4fb5c2738"
+        },
+        {
+          "path": "models/sota_common_protocol/mtlface_arcface_r50_casia_e8_s1.pt",
+          "bytes": 175199609,
+          "sha256": "8fd21e1557066fa87f6d357753de0c73b1e74d0ef7c9ad52594309632160727e"
+        },
+        {
+          "path": "metrics/sota_common_protocol/mtlface_arcface_r50_casia_e8_s1.manifest.json",
+          "bytes": 2214,
+          "sha256": "bb4055586ba8e0e8148f9d009e0cf0ebe15a0ba1c5cceb8a54fe77e207cae209"
+        },
+        {
+          "path": "models/sota_common_protocol/mtlface_arcface_r50_casia_e8_s2.pt",
+          "bytes": 175199609,
+          "sha256": "a0ea08bfce18661197d1eac73a5e189893fc6c10be569d139e3641f095d77fbc"
+        },
+        {
+          "path": "metrics/sota_common_protocol/mtlface_arcface_r50_casia_e8_s2.manifest.json",
+          "bytes": 2208,
+          "sha256": "45a178e6d02a1620c2fd059142fc6f79304727249df26c7676b96377b3cf967e"
+        },
+        {
+          "path": "models/sota_common_protocol/cacon_arcface_r50_casia_e8_s42.pt",
+          "bytes": 174670592,
+          "sha256": "958c11a6663dd927dcbf8d2eab520961c1000d3a78a8c24a0a38768004ad68d9"
+        },
+        {
+          "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s42.manifest.json",
+          "bytes": 2359,
+          "sha256": "aa62c1ecffac0a4059c45cb54f9691c5ae3927d1a446c5c351562dba1427bbf0"
+        },
+        {
+          "path": "models/sota_common_protocol/cacon_arcface_r50_casia_e8_s1.pt",
+          "bytes": 174670111,
+          "sha256": "477ec7676a8307e84bef406a16c4a6d66e6bebce4fa1c6ec880e6af3f681a871"
+        },
+        {
+          "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s1.manifest.json",
+          "bytes": 2371,
+          "sha256": "9dc58a697789e417a06230eb9c370f4a7467e8f4ad89b8226b555c35457d8e0d"
+        },
+        {
+          "path": "models/sota_common_protocol/cacon_arcface_r50_casia_e8_s2.pt",
+          "bytes": 174670111,
+          "sha256": "f8658315eb40cbd14b236abcc9cbdd938e5e69a1079006a121876dbe9dc9e559"
+        },
+        {
+          "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s2.manifest.json",
+          "bytes": 2352,
+          "sha256": "a02e4033b0827f799e8853aee9bf931f791d4b6afdd0592afb5b5efcf23314b7"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/comparator_fgnet_endpoint_age_matched.json",
+          "bytes": 28409,
+          "sha256": "e12aec6d2a531b562a3bfbb2428f545c89890dde5cc4b8b7edb449a4991dbbcc"
+        },
+        {
+          "path": "data/interim/comparator_fgnet_embeddings/fgnet_comparator_embeddings.npz",
+          "bytes": 8668292,
+          "sha256": "887a08282dc59a65a20a485437c787a2904b4a6fa17c6bfb816cd045ab324555"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 15,
+        "missing": [],
+        "checksum_mismatch": [],
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
         "valid": true
@@ -1001,6 +1135,168 @@
       "private_output_count": 0,
       "input_integrity": {
         "checked": 3,
+        "missing": [],
+        "checksum_mismatch": [],
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/fgnet_retrieval_20261002/fgnet_retrieval_study.manifest.json",
+      "manifest_sha256": "a1ac80a0d5a385d617ddce1e0a2be40fbd8c94171bbc2f1c20182cce1ac63a32",
+      "experiment": "fgnet-oldest-gallery-cross-age-retrieval",
+      "created_at_utc": "2026-10-02T18:40:44.431452+00:00",
+      "command": [
+        "scripts/fgnet_retrieval_study.py",
+        "--output-dir",
+        "metrics/fgnet_retrieval_20261002",
+        "--expect-protocol-hash",
+        "ef87f910d7f77e635b71860029a4b2b5d6c717e9b3fb7d81a5f14b256ff24729"
+      ],
+      "parameters": {
+        "protocol_name": "fgnet_oldest_gallery_cross_age_retrieval_v1",
+        "protocol_hash": "ef87f910d7f77e635b71860029a4b2b5d6c717e9b3fb7d81a5f14b256ff24729",
+        "protocol_seed": 42,
+        "dev_fraction": 0.5,
+        "gallery_rule": "max_age__lowest_original_index",
+        "query_rule": "age_strictly_less_than_selected_gallery_age",
+        "tie_break": "stable_ranking_by_gallery_index",
+        "preprocessing": {
+          "function": "age_gap.models.facenet.preprocess_bgr",
+          "input_size": 160,
+          "channel_order": "RGB",
+          "normalization": "(x - 127.5) / 128",
+          "source_crop_format": "BGR uint8 112x112",
+          "shared_between_frozen_and_tuned": true
+        },
+        "n_boot": 2000,
+        "batch_size": 32,
+        "cpu_threads": 2,
+        "device": "cpu",
+        "network_calls": false,
+        "gallery_resampling": false,
+        "training_identity_independence": "unverified",
+        "provenance": {
+          "base_weights": {
+            "path_name": "20180408-102900-casia-webface.pt",
+            "declared_training_data": "CASIA-WebFace",
+            "source": "facenet-pytorch InceptionResnetV1 pretrained=casia-webface"
+          },
+          "tuned_checkpoints": {
+            "1": {
+              "source": "facenet-pytorch InceptionResnetV1 pretrained=casia-webface",
+              "role": "weak trainable backbone",
+              "declared_training_data": "CASIA-WebFace"
+            },
+            "2": {
+              "source": "facenet-pytorch InceptionResnetV1 pretrained=casia-webface",
+              "role": "weak trainable backbone",
+              "declared_training_data": "CASIA-WebFace"
+            },
+            "42": {
+              "source": "facenet-pytorch InceptionResnetV1 pretrained=casia-webface",
+              "role": "weak trainable backbone",
+              "declared_training_data": "CASIA-WebFace"
+            }
+          },
+          "tuned_training_pairs": "pairs.jsonl",
+          "tuned_training_pairs_sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d",
+          "model_inventory": "model_inventory.json",
+          "model_inventory_read": true,
+          "checkpoint_training_manifest_status": "legacy training manifests absent; current pairs are a declared source, not independently bound training provenance",
+          "benchmark_source_sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7",
+          "training_identity_independence": "unverified",
+          "note": "Declared provenance is reported as-is; identity/image overlap with FG-NET is not adjudicated."
+        }
+      },
+      "git": {
+        "commit": "383ba7347fab0352c00ecb9fd1028ec8754832c2",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/external/fgnet_crops.npz",
+          "bytes": 24471952,
+          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+        },
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/private/protocol_plan.json",
+          "bytes": 11366,
+          "sha256": "7e9d56e922b986e419ef9d0f44b9641e540a2fb4b9ee0270e5d5c5df6e716e0f"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/private/retrieval_plan.jsonl",
+          "bytes": 46258,
+          "sha256": "0816c5ccbc8efb5d1829029a4467bf70be379df5a2ee874dbfca0020dca35ddc"
+        },
+        {
+          "path": "metrics/model_inventory.json",
+          "bytes": 4937,
+          "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+        },
+        {
+          "path": "data/processed/pairs.jsonl",
+          "bytes": 23882451,
+          "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_frozen.npz",
+          "bytes": 1231535,
+          "sha256": "f09b9a7cca728221f4b547edb6206ac15947d34b1b2ee364d71a2ec16ae0385b"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_tuned_seed1.npz",
+          "bytes": 1231417,
+          "sha256": "3ef8263c6251b6363931a3c18d5add3261c883365eac1a102dabca982ff79e9d"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_tuned_seed2.npz",
+          "bytes": 1231606,
+          "sha256": "5e1127c3df76015a45a231092e98cd608f1191ee9e749a488856679f2d0bb40c"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_tuned_seed42.npz",
+          "bytes": 1231561,
+          "sha256": "1c37dd720f071d8111402766378c75f16fccc5e2f1c7950ae8a553b33e0d8d71"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/fgnet_retrieval_20261002/fgnet_retrieval_study.json",
+          "bytes": 129274,
+          "sha256": "af1e21ab126c43624a9346e7ddecc1fffac89be8747f3cfafc15df381d27f6b7"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 13,
         "missing": [],
         "checksum_mismatch": [],
         "valid": true
@@ -4426,6 +4722,74 @@
       "private_output_count": 0,
       "input_integrity": {
         "checked": 11,
+        "missing": [],
+        "checksum_mismatch": [],
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/strong_backbone_fixed8_bn_frozen_20261002/frozen_random.manifest.json",
+      "manifest_sha256": "c1d7a9f1dfe8dcf940eaa2a8a14f8ce61a689e61a77fa0cbcc2e2de43c1bcc50",
+      "experiment": "strong-backbone-frozen-baseline",
+      "created_at_utc": "2026-10-02T18:48:52.778599+00:00",
+      "command": [
+        "scripts/strong_backbone_study.py",
+        "--result-dir",
+        "metrics/strong_backbone_fixed8_bn_frozen_20261002",
+        "--checkpoint-dir",
+        "models/strong_backbone_fixed8_bn_frozen_20261002",
+        "--checkpoint-selection",
+        "last_epoch",
+        "--batchnorm-policy",
+        "frozen_all",
+        "--scopes",
+        "full",
+        "head",
+        "tail"
+      ],
+      "parameters": {
+        "backbone": "adaface_ir101",
+        "negative_type": "random"
+      },
+      "git": {
+        "commit": "383ba7347fab0352c00ecb9fd1028ec8754832c2",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/processed/pairs.jsonl",
+          "bytes": 23882451,
+          "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+        },
+        {
+          "path": "models/adaface_ir101.pt",
+          "bytes": 261111273,
+          "sha256": "e312d79222d28027f146ed495e182e48fe0dddf404cdbbdabcccdbdd07cc3758"
+        },
+        {
+          "path": "metrics/model_inventory.json",
+          "bytes": 4937,
+          "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/strong_backbone_fixed8_bn_frozen_20261002/frozen_random.json",
+          "bytes": 615,
+          "sha256": "8097282f7e5f38304245b7cde14dcd9383e99b1f34eb2f4eba10dedc7e0474ac"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
         "valid": true

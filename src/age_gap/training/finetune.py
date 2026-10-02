@@ -61,6 +61,7 @@ class ImagePairDataset(Dataset):
         self._prep: PreprocessFn = preprocess or _facenet_prep
         # (crop_a, crop_b, label, age_gap, weight)
         self._items: list[tuple[Path, Path, int, int, float]] = []
+        self._identity_groups: list[str | None] = []
         for row in read_jsonl(pairs_file):
             p = Pair.from_dict(row)
             if split is not None and p.split != split:
@@ -70,6 +71,11 @@ class ImagePairDataset(Dataset):
                 gap = p.age_gap if p.age_gap is not None else -1
                 w = _pair_weight(p.label, p.age_gap, gap_weight)
                 self._items.append((ca, cb, p.label, gap, w))
+                self._identity_groups.append(
+                    p.identity_group_a
+                    if p.label == 1 and p.identity_group_a == p.identity_group_b
+                    else None
+                )
         log.info(
             "ImagePairDataset(split=%s, crops=%s): пар=%d (gap_weight=%.1f)",
             split,
@@ -88,6 +94,11 @@ class ImagePairDataset(Dataset):
     @property
     def gaps(self) -> list[int]:
         return [it[3] for it in self._items]
+
+    @property
+    def identity_groups(self) -> list[str | None]:
+        """Positive-pair identity groups aligned to usable rows; unknowns stay unknown."""
+        return list(self._identity_groups)
 
     def __getitem__(self, idx: int):
         ca, cb, y, _gap, w = self._items[idx]
@@ -137,6 +148,16 @@ def _set_trainable(backbone: torch.nn.Module, scope: str) -> None:
         param.requires_grad = any(t in name for t in trainable)
 
 
+def _apply_batchnorm_policy(backbone: torch.nn.Module, policy: str) -> None:
+    """Freeze running statistics explicitly; affine parameters keep their scope setting."""
+    if policy not in {"adapt_all", "frozen_all"}:
+        raise ValueError("batchnorm_policy must be adapt_all or frozen_all")
+    if policy == "frozen_all":
+        for module in backbone.modules():
+            if isinstance(module, torch.nn.modules.batchnorm._BatchNorm):
+                module.eval()
+
+
 def finetune(
     epochs: int = 8,
     lr: float = 1e-4,
@@ -151,6 +172,7 @@ def finetune(
     seed: int = 42,
     pairs_file: str | None = None,
     checkpoint_selection: str = "best_val",
+    batchnorm_policy: str = "adapt_all",
 ) -> Path:
     """Дообучить backbone на наших train-парах; отбор по val-AUC (наш val). Возвращает чекпойнт.
 
@@ -163,6 +185,8 @@ def finetune(
         raise ValueError("checkpoint_selection must be 'best_val' or 'last_epoch'")
     if epochs < 1:
         raise ValueError("epochs must be positive")
+    if batchnorm_policy not in {"adapt_all", "frozen_all"}:
+        raise ValueError("batchnorm_policy must be adapt_all or frozen_all")
     ckpt_out = ckpt_out or data_path("models_dir", "facenet_finetuned.pt")
     torch.manual_seed(seed)
     device = torch_device()
@@ -195,7 +219,8 @@ def finetune(
     loss_fn = ContrastivePairLoss(margin=margin)
     loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
 
-    meta = {"backbone": backbone_name, "crops_dir": crops_dir}
+    meta = {"backbone": backbone_name, "crops_dir": crops_dir,
+            "batchnorm_policy": batchnorm_policy}
     history: list[dict[str, float | int]] = []
     best_auc = -1.0
     best_epoch = 0
@@ -204,6 +229,7 @@ def finetune(
     no_improve = 0
     for epoch in range(1, epochs + 1):
         backbone.train()
+        _apply_batchnorm_policy(backbone, batchnorm_policy)
         epoch_started = monotonic()
         total = 0.0
         grad_total = 0.0
@@ -318,6 +344,8 @@ def finetune(
             "pairs_file": str(pairs_path),
             "checkpoint_selection": checkpoint_selection,
             "selected_epoch": selected_epoch,
+            "epochs_executed": len(history),
+            "batchnorm_policy": batchnorm_policy,
         },
         metrics={"best_validation_auc": best_auc, "selected_epoch": selected_epoch, "history": history},
         inputs=[pairs_path],

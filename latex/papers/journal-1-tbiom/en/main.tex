@@ -222,32 +222,26 @@ Provenance, rights and governance fields are stored per item (source, origin URL
 \textbf{Curated dataset.} All headline experiments are on the curated data of Sec.~\ref{sec:data-curation}: 21{,}427 person groups, 40{,}586 faces, 31{,}865 positives; split train 22{,}179 / val 4{,}579 / test 5{,}107 with balanced negatives per split.
 
 \section{Results}\label{sec:results}
-\subsection{Main Effect and Supervision-Source Ablation}\label{sec:res-main}
-The weak FaceNet, softly fine-tuned on our pairs, raises FG-NET large-gap ROC-AUC \textbf{0.802 $\rightarrow$ 0.849} under endpoint-age-matched impostors (Sec.~\ref{sec:res-main}). Under the original random-impostor protocol it rises 0.736 $\rightarrow$ 0.848 ($+$0.112 $\pm$ 0.001), while easy LFW does not degrade at all ($+$0.004) and AgeDB-30/CALFW move negligibly (Table~\ref{tab:main}). A pre-clean ablation tests the contribution of explicit caption-derived age anchors among same-post pairs: these add only \textbf{$+$0.009} on the original 25+ bucket. This does not by itself isolate the source effect. The method is \emph{weakly supervised by naturally occurring same-post co-occurrence} (not by manual identity/age labels), with explicit age supervision contributing only marginally in this ablation.
-
+% BEGIN GENERATED FGNET ENDPOINT TABLE
 \begin{table*}[!t]
-\renewcommand{\arraystretch}{1.2}
-\caption{Main Result: Weak FaceNet Frozen vs.\ $+$pairs, Three Seeds, Curated Data. Pre-clean gain shown for reference.}
-\label{tab:main}
-\centering
-\footnotesize
-\begin{tabular}{@{}lcccc@{}}
+\caption{Corrected FG-NET endpoint-age-matched evaluation (FaceNet). Means and standard deviations cover three training seeds; the paired subject-bootstrap interval is for seed 42, not for the seed mean. All seeds reuse the same subjects. Legacy checkpoint training manifests are absent; train--benchmark identity overlap remains under review.}
+\label{tab:endpoint}
+\centering\footnotesize
+\begin{tabular}{@{}lccccc@{}}
 \toprule
-Metric & Frozen & $+$pairs (mean $\pm$ std) & Gain & (Pre-clean gain) \\
+Stratum & Pairs / subjects & Frozen AUC & Tuned AUC & Gain & Gain 95\% CI (s42) \\
 \midrule
-FG-NET large-gap & 0.7361 & 0.8484 $\pm$ 0.0007 & \textbf{$+$0.1124} & $+$0.1215 \\
-FG-NET ROC & 0.8955 & 0.9230 $\pm$ 0.0006 & $+$0.0275 & $+$0.0277 \\
-our.25+ (internal) & 0.6403 & 0.8348 $\pm$ 0.0027 & \textbf{$+$0.1946} & $+$0.1677 \\
-our.overall (internal) & 0.8363 & 0.9163 $\pm$ 0.0009 & $+$0.0801 & $+$0.0764 \\
-LFW accuracy & 0.9640 & 0.9679 $\pm$ 0.0002 & $+$0.0039 & n/a \\
-AgeDB-30 ROC & 0.9530 & 0.9462 $\pm$ 0.0013 & $-$0.0068 & $-$0.0155 \\
-CALFW ROC & 0.9482 & 0.9489 $\pm$ 0.0014 & $+$0.0007 & $-$0.0030 \\
-CACD-VS ROC & 0.9948 & 0.9947 $\pm$ 0.0002 & $-$0.0001 & n/a \\
+25+ years (primary) & 430 / 75 & 0.8023 & 0.8490 $\pm$ 0.0016 & $+0.0467\pm0.0016$ & $[+0.0060,+0.0906]$ \\
+Overall & 5308 / 82 & 0.8870 & 0.9202 $\pm$ 0.0005 & $+0.0332\pm0.0005$ & $[+0.0149,+0.0504]$ \\
 \bottomrule
 \end{tabular}
 \end{table*}
+% END GENERATED FGNET ENDPOINT TABLE
+\subsection{Main Effect and Supervision-Source Ablation}\label{sec:res-main}
+The weak FaceNet, softly fine-tuned on our pairs, raises FG-NET large-gap ROC-AUC \textbf{0.802 $\rightarrow$ 0.849} under endpoint-age-matched impostors (Sec.~\ref{sec:res-main}). Under the original random-impostor protocol it rises 0.736 $\rightarrow$ 0.848 ($+$0.112 $\pm$ 0.001), while easy LFW accuracy increases ($+$0.004), AgeDB-30 declines and CALFW changes little (historical comparisons in the supplement). A pre-clean ablation tests the contribution of explicit caption-derived age anchors among same-post pairs: these add only \textbf{$+$0.009} on the original 25+ bucket. This does not by itself isolate the source effect. The method is \emph{weakly supervised by naturally occurring same-post co-occurrence} (not by manual identity/age labels), with explicit age supervision contributing only marginally in this ablation.
 
-The gain is statistically robust (std $\leq$ 0.003) and survives curation; the internal cross-age gain even \emph{grows} on the harder curated test (our.25+ $+$0.195) because curation lowers the frozen baseline to 0.640 while $+$pairs recovers to 0.835. CACD-VS is effectively unchanged in threshold-free AUC but exposes the same targeted trade-off at fixed operating points: 10-fold accuracy decreases from 0.9793 to 0.9700$\pm$0.0027 and EER rises from 0.0220 to 0.0313$\pm$0.0013.
+
+The historical comparisons show low training-seed variability (std $\leq$ 0.003), which is not a confidence interval over subjects. Under that protocol, the internal cross-age gain grows after curation (our.25+ $+$0.195): the frozen baseline falls to 0.640 while $+$pairs recovers to 0.835. CACD-VS is effectively unchanged in threshold-free AUC but exposes a trade-off at fixed operating points: 10-fold accuracy decreases from 0.9793 to 0.9700$\pm$0.0027 and EER rises from 0.0220 to 0.0313$\pm$0.0013.
 
 Bootstrap confidence intervals (seed 42) describe the original random-impostor endpoint: FG-NET large-gap rises from 0.736~[0.70, 0.78] to 0.848~[0.82, 0.88] with \emph{non-overlapping} 95\% CIs; the equal-error rate falls by about 35\% (0.335$\to$0.219) and TAR@FAR$=$1\% \textbf{nearly doubles} (0.21$\to$0.39). On the internal 25+ test the gain holds under the more conservative \emph{identity-level} bootstrap (resampling persons, not pairs): $+$pairs 0.838~[0.80, 0.88] vs.\ frozen 0.640~[0.59, 0.69], an interval wider than the pair-level one as expected when pairs share identities. External operating points and pair-level intervals are in Table~\ref{tab:stats}; the internal identity-level interval is given in text. Because bootstrap-CI overlap ignores the samples the two models share, we test the original random-impostor endpoint with DeLong's test for two \emph{correlated} ROC curves~\cite{delong1988}: on FG-NET large-gap $z=9.3$, $p=1.4\times10^{-20}$ ($\Delta$AUC 95\% CI $[+0.088,+0.135]$), and on the internal 25+ test $p=1.7\times10^{-34}$; a $10^4$-fold paired permutation test agrees ($p<10^{-4}$). The same test confirms the gain is \emph{targeted}: AgeDB-30 shows a small but significant decrease ($-$0.008, $p=4\times10^{-6}$) and CALFW is statistically unchanged ($p=0.95$).
 
@@ -255,7 +249,7 @@ Bootstrap confidence intervals (seed 42) describe the original random-impostor e
 
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Original random-impostor protocol: operating points and pair-level 95\% bootstrap CIs (FaceNet frozen vs.\ $+$pairs, seed 42). All values are ROC-AUC unless noted; LFW is shown as ROC-AUC for consistency (its 10-fold accuracy is in Table~\ref{tab:main}). The internal identity-level interval is reported in the text, not this table.}
+\caption{Original random-impostor protocol: operating points and pair-level 95\% bootstrap CIs (FaceNet frozen vs.\ $+$pairs, seed 42). All values are ROC-AUC unless noted; LFW is shown as ROC-AUC for consistency (its historical 10-fold accuracy is in the supplement). The internal identity-level interval is reported in the text, not this table.}
 \label{tab:stats}
 \centering
 \footnotesize
@@ -278,7 +272,7 @@ Replacing real positives with synthetically aged versions---a domain proxy and a
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.15}
-\caption{Real vs.\ Synthetic Positives (FaceNet, Curated Data, Seed 42). FRAN-gm matches the synthetic age-gap to the real-pair distribution (median 9~y); the cruder domain proxy reaches 0.761 / 0.594. The 0.838 internal AUC is a single-seed result; Table~\ref{tab:main} reports the three-seed mean 0.8348.}
+\caption{Real vs.\ Synthetic Positives (FaceNet, Curated Data, Seed 42). FRAN-gm matches the synthetic age-gap to the real-pair distribution (median 9~y); the cruder domain proxy reaches 0.761 / 0.594. The 0.838 internal AUC is a single-seed result; the supplement reports the historical three-seed mean 0.8348.}
 \label{tab:synth}
 \centering
 \footnotesize
@@ -295,14 +289,13 @@ our.25+ & 0.640 & \textbf{0.838} & 0.549 & 0.622 \\
 \subsection{Headroom Curve and the Strong-Backbone Regime}\label{sec:res-headroom}
 An earlier exploratory one-seed curve across FaceNet, ArcFace iResNet and AdaFace IR-50/IR-101 shows an overall, non-monotone decline in gain as frozen-model strength increases (Table~\ref{tab:headroom}; plotted in the supplement). This observation motivates---but does not replace---the preregistered three-seed learning-rate $\times$ trainable-scope $\times$ negative-type matrix. Until that matrix and its gradient/CKA/drift/separability/age-probe diagnostics are complete, we do \emph{not} label the behavior ``saturation'' or choose among ceiling, insufficient plasticity and catastrophic forgetting. The exploratory curve bounds the present claim to weak/medium backbones; it is not mechanistic evidence.
 
-\textbf{The random-impostor protocol understates the task.} Our test negatives are random cross-identity pairs, which modern backbones separate trivially: frozen AdaFace IR-101 reaches \texttt{our.25+} $=$ 0.968. That validates by measurement, rather than merely asserts, the attribution argument of Sec.~\ref{sec:method}: under this protocol strong embeddings really are near-perfect, so an adapter on top of them would have nothing to attribute. The reason is visible in the raw similarities. Median ArcFace cosine is 0.456 for positives below 10 years, 0.307 at 10--25 years and 0.232 at 25$+$, against 0.012 for random negatives---but \textbf{0.289} for the most similar same-gender, same-apparent-age impostor. \emph{At a 25-year gap a person is less similar to themselves than to the most similar same-age stranger.} Re-mining the negatives accordingly (same apparent gender, $|\Delta\text{age}|\leq5$~years, ranked by an independent miner outside the evaluated set) collapses every modern recognizer we test (Table~\ref{tab:lookalike}): frozen IR-101 falls from 0.961 to \textbf{0.376}~[0.356,\,0.394] at rank-1, \emph{significantly below chance}. This is not a labeling artifact: the mined impostors are 0.00\% same-person under the identity clustering, and the benchmark carries zero identity leakage across splits, zero same-person negatives (0/31\,865), 99.1\% LLM-verified single-person groups among those surviving into positives (92.8\% before curation removes multi-person groups) and 0.00\% near-duplicates (Sec.~\ref{sec:data-curation}). A second miner from a different loss family reproduces the curve to within 0.03 and preserves the model ordering at every level, so the difficulty axis belongs to the task, not to the miner. Our mined pairs still help a weak backbone across the whole curve ($+$0.20 to $+$0.28 on the 25$+$ slice) and the distance to frozen SOTA narrows at the hard end ($-$0.145 at random vs.\ $-$0.070 at rank-1, paired bootstrap), but it does not close. The correct reading of Table~\ref{tab:headroom} is therefore that strong backbones are not improved by \emph{our} supervision---not that they lack cross-age headroom, and not that the task is solved.
+\textbf{The random-impostor protocol understates the task.} Our test negatives are random cross-identity pairs, which modern backbones separate trivially: frozen AdaFace IR-101 reaches \texttt{our.25+} $=$ 0.968. That validates by measurement, rather than merely asserts, the attribution argument of Sec.~\ref{sec:method}: under this protocol strong embeddings really are near-perfect, so an adapter on top of them would have nothing to attribute. The reason is visible in the raw similarities. Median ArcFace cosine is 0.456 for positives below 10 years, 0.307 at 10--25 years and 0.232 at 25$+$, against 0.012 for random negatives---but \textbf{0.289} for the most similar same-gender, same-apparent-age impostor. \emph{At a 25-year gap a person is less similar to themselves than to the most similar same-age stranger.} Re-mining the negatives accordingly (same apparent gender, $|\Delta\text{age}|\leq5$~years, ranked by an independent miner outside the evaluated set) collapses every modern recognizer we test (Table~\ref{tab:lookalike}): frozen IR-101 falls from 0.961 to \textbf{0.376}~[0.356,\,0.394] at rank-1, \emph{significantly below chance}. Automated checks find no same-cluster negatives (0/31\,865) and no recorded identity-group IDs crossing splits; 99.1\% of groups retained in positives are classified as single-person by the LLM (92.8\% before curation). These are automated consistency checks, not human-verified identity purity: missed merges, labeling errors and train--benchmark overlaps remain under blinded review (Sec.~\ref{sec:data-curation}). A second miner from a different loss family reproduces the curve to within 0.03 and preserves the model ordering at every level, so the difficulty axis belongs to the task, not to the miner. Our mined pairs still help a weak backbone across the whole curve ($+$0.20 to $+$0.28 on the 25$+$ slice) and the distance to frozen SOTA narrows at the hard end ($-$0.145 at random vs.\ $-$0.070 at rank-1, paired bootstrap), but it does not close. The correct reading of Table~\ref{tab:headroom} is therefore that strong backbones are not improved by \emph{our} supervision---not that they lack cross-age headroom, and not that the task is solved.
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
 \caption{Look-alike impostors break modern face recognition (25$+$ ROC-AUC; rank $=$ impostor
 rank under an independent miner). \emph{Top:} frozen recognizers on the \emph{full} 25$+$ set
-($n_{\text{pos}}\!=\!1208$, $n_{\text{neg}}\!=\!31\,590$), valid because no frozen model has seen
-any of our data. \emph{Bottom:} the effect of our supervision, necessarily test-only
+($n_{\text{pos}}\!=\!1208$, $n_{\text{neg}}\!=\!31\,590$), with no fine-tuning on mined pairs; pretraining overlap is unresolved. \emph{Bottom:} the effect of our supervision, necessarily test-only
 ($n_{\text{pos}}\!=\!141$, $n_{\text{neg}}\!=\!4762$). The blocks use different impostor pools and
 are \emph{not} comparable across blocks: rank-$k$ difficulty grows with pool size.}
 \label{tab:lookalike}
@@ -379,7 +372,7 @@ We train the canonical modern-FR margin objectives---ArcFace-, CosFace- and Sphe
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
-\caption{Objective Comparison (FaceNet, Curated Data, Seed 42): contrastive, ArcFace and CosFace coincide under the original random-impostor FG-NET large-gap protocol; SphereFace (no $\lambda$-annealing) trails on our sparse few-shot identities. The 0.838 internal AUC is single-seed; Table~\ref{tab:main} reports 0.8348 as a three-seed mean.}
+\caption{Objective Comparison (FaceNet, Curated Data, Seed 42): contrastive, ArcFace and CosFace coincide under the original random-impostor FG-NET large-gap protocol; SphereFace (no $\lambda$-annealing) trails on our sparse few-shot identities. The 0.838 internal AUC is single-seed; the supplement reports 0.8348 as a historical three-seed mean.}
 \label{tab:objective}
 \centering
 \footnotesize
