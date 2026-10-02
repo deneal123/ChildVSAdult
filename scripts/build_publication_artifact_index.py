@@ -28,8 +28,11 @@ INCLUDE = (
     "fgnet_endpoint_subject_stats_s*.manifest.json",
     "fgnet_endpoint_multiseed.manifest.json",
     "fgnet_retrieval_*/fgnet_retrieval_study.manifest.json",
+    "fgnet_retrieval_*/retrieval_presentation.manifest.json",
+    "fgnet_error_breakdown/fgnet_error_breakdown.manifest.json",
     "comparator_fgnet_endpoint_age_matched.manifest.json",
     "internal_endpoint_age_matched.manifest.json",
+    "lfw_bound_cache_*/lfw_bound_cache.manifest.json",
     "delong_tests.manifest.json",
     "synthetic_parity.manifest.json",
     "sota_objectives.manifest.json",
@@ -61,23 +64,39 @@ def _resolve_record(record: dict[str, Any]) -> Path:
     return path if path.is_absolute() else PROJECT_ROOT / path
 
 
+def _private_record(record: dict[str, Any]) -> bool:
+    path = str(record.get("path", "")).replace("\\", "/").lower()
+    return (path.startswith("data/interim/faces/") or "/private/" in path
+            or Path(path).suffix in {".jpg", ".jpeg", ".png", ".npy", ".npz"}
+            or bool(PRIVATE_ROW_ID.search(path)))
+
+
 def _record_integrity(records: list[dict[str, Any]]) -> dict[str, Any]:
     checked = 0
     missing: list[str] = []
     mismatched: list[str] = []
+    private_missing = private_mismatched = 0
     for record in records:
         path = _resolve_record(record)
         if not path.is_file():
-            missing.append(str(record["path"]))
+            if _private_record(record):
+                private_missing += 1
+            else:
+                missing.append(str(record["path"]))
             continue
         checked += 1
         if sha256_file(path) != record.get("sha256"):
-            mismatched.append(str(record["path"]))
+            if _private_record(record):
+                private_mismatched += 1
+            else:
+                mismatched.append(str(record["path"]))
     return {
         "checked": checked,
         "missing": missing,
         "checksum_mismatch": mismatched,
-        "valid": not missing and not mismatched,
+        "private_missing_count": private_missing,
+        "private_checksum_mismatch_count": private_mismatched,
+        "valid": not missing and not mismatched and private_missing == 0 and private_mismatched == 0,
     }
 
 
@@ -101,11 +120,7 @@ def _public_value(value: Any) -> Any:
 
 def _public_records(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     """Keep private per-crop identifiers/checksums in local manifests, not the upload index."""
-    def private(record: dict[str, Any]) -> bool:
-        path = str(record.get("path", "")).replace("\\", "/").lower()
-        return path.startswith("data/interim/faces/") or bool(PRIVATE_ROW_ID.search(path))
-
-    public = [record for record in records if not private(record)]
+    public = [record for record in records if not _private_record(record)]
     return _public_value(public), len(records) - len(public)
 
 
@@ -140,7 +155,7 @@ def main() -> None:
             }
         entries.append(entry)
 
-    found_names = {path.name for path in manifest_paths if path.parent == METRICS}
+    found_names = {path.relative_to(METRICS).as_posix() for path in manifest_paths}
     missing_expected = sorted(name for name in expected_literal if name not in found_names)
     invalid = [
         entry["manifest"]

@@ -1,5 +1,5 @@
 %% supplement.tex -- supplementary material for the IEEE T-BIOM submission.
-%% Standalone; compile: pdflatex supplement
+%% Standalone; compile: pdflatex, bibtex, pdflatex twice.
 \documentclass[journal]{IEEEtran}
 
 \usepackage[T1]{fontenc}
@@ -33,6 +33,9 @@ references of the form ``Sec.~V'' or ``Table~X'' point to the main paper.
 
 \section{Historical Protocol Comparisons}\label{sec:legacy-main}
 These are secondary historical comparisons, not the corrected FG-NET primary endpoint.
+The reported LFW accuracies use legacy interleaved splits rather than official contiguous
+View-2 folds; official-fold evaluation is pending. Its legacy aligned cache also lacks
+verified person/row provenance, so its existing intervals must not be called subject-level.
 \begin{table*}[!t]
 \renewcommand{\arraystretch}{1.2}
 \caption{Historical random-impostor comparisons: weak FaceNet frozen vs.\ $+$pairs, three seeds, curated data. These FG-NET rows are not the corrected primary endpoint (main paper's corrected endpoint table). Pre-clean gain is shown for reference.}
@@ -68,7 +71,7 @@ established / out of scope.}
 \label{tab:claims}
 \centering
 \footnotesize
-\begin{tabular}{@{}p{0.40\textwidth}p{0.42\textwidth}c@{}}
+\begin{tabular}{@{}p{0.38\textwidth}p{0.40\textwidth}p{0.16\textwidth}@{}}
 \toprule
 Claim & Evidence (main paper) & Status \\
 \midrule
@@ -80,7 +83,7 @@ Explicit caption age anchors add little within the tested same-post ablation &
 Pre-clean ablation: age anchors add $+0.009$ on the original 25+ bucket (Sec.~V-A); this does not isolate the causal source effect & Bounded \\
 Long-gap pairs outperform short-gap pairs under a partial within-VK control &
 Fixed 10-epoch LOW/CROSS comparison: FG-NET endpoint-matched $\Delta$AUC $+0.0257{\pm}0.0009$ over three seeds; endpoint covariates and generic/noise controls remain unmatched (S\ref{sec:matched-source}) & Bounded \\
-Real mined pairs outperform synthetic aging &
+Real mined pairs outperform the tested FRAN controls under the historical protocol &
 $+$real $0.848$ vs.\ FRAN $0.727$ and gap-matched FRAN-gm $0.759$ ($+0.089$); native-resolution control (Sec.~V-B) & Est. \\
 The effect reproduces across objective / architecture / source &
 3 loss families, 2 architectures, 2 communities; ArcFace $0.851\approx$ contrastive $0.848$; sub-center ArcFace $0.851$ (Sec.~V-C/E) & Est. \\
@@ -90,8 +93,8 @@ Endpoint-age-matched negatives preserve a bounded weak-backbone AUC gain, not a 
 On 154/154 balanced internal pairs, FaceNet ROC-AUC $0.768\!\to\!0.833$ ($\Delta=+0.065$, paired subject 95\% CI $[+0.005,+0.130]$), but TAR@FAR$=$1\% $0.325\!\to\!0.253$; age-gap-only AUC 0.500 (Sec.~V-D) & Bounded. \\
 An earlier scaling sweep suggested data efficiency &
 ${\approx}96\%$ of the recorded gain at 10\% of identities, but intermediate checkpoints were overwritten and a schema-v2 rerun is pending (Sec.~V-C) & Exploratory. \\
-No apparent-demographic stratum degrades; errors fall everywhere &
-Stratified AUC (all CIs $>0$); FMR/FNMR at 1\% FMR: FNMR down in every stratum (Sec.~V-G) & Est. \\
+Apparent-demographic gains are observed under the historical internal protocol &
+Stratified internal AUC (all gain CIs $>0$) and the historical threshold audit (Sec.~V-G); this does not establish improvement in every external error stratum & Bounded \\
 About half of the raw ``positives'' were near-duplicates &
 $65{,}897\!\to\!31{,}865$ ($-52\%$), stable over cosine $0.93$--$0.97$ (Sec.~III, Table~XI) & Est. \\
 The gain transfers beyond the originating platform, in \emph{both} directions &
@@ -164,20 +167,32 @@ The machine-readable artifact index, \texttt{metrics/publication\_artifact\_inde
 experiment manifests, their commands, parameters, git state and output checksums. It fails closed by
 listing missing expected manifests, checksum mismatches and incomplete semantic campaign gates; the working index is therefore not marked
 complete while the strong-backbone and remaining legacy-table reruns are still open.
+A separate \texttt{publication-evidence.zip} contains eight selected aggregate results,
+sanitized manifest projections and a checksum certificate distinguishing original from
+exported bytes. Direct original inputs and outputs are verified locally; private records
+are represented by counts, not redistributed. This is partial aggregate evidence, not
+full experiment reproducibility or clearance of the outstanding publication gates.
 
 \paragraph{Strong-backbone matrix protocol.}
 The confirmatory AdaFace IR-101/WebFace12M study crosses learning rate
 $\{10^{-6},10^{-5}\}$, trainable scope $\{\text{head},\text{tail},\text{full}\}$ and
 $\{\text{random},\text{look-alike}\}$ negatives over seeds 42/1/2. Head denotes the final
 BN--FC--BN output layer; tail additionally unfreezes the last residual body block; full unfreezes the
-entire backbone. Each run uses at most eight epochs with patience three on the matching internal
-validation AUC and records training loss, mean gradient norm, external/internal verification metrics,
-linear CKA, mean cosine drift, identity separability and an age-gap linear-probe MAE. The interpretation
+entire backbone. The ongoing fixed-budget campaign requests eight epochs and selects the last
+epoch, without validation-based early stopping. BatchNorm running statistics are frozen in every
+scope; affine parameters follow the declared trainable scope. Requested, executed and selected epochs
+are recorded separately. Earlier best-validation checkpoints with adaptive BatchNorm are exploratory,
+not cells of this confirmatory matrix. Both negative arms use the same held-out evaluation pairs.
+The pipeline records training loss, mean gradient norm, external/internal verification metrics,
+linear CKA, mean cosine drift, identity separability and an identity-group-disjoint age-gap
+linear-probe MAE with an intercept and constant-predictor controls. Validation-loss trajectories and
+evaluation on corrected endpoint-age-matched FG-NET remain to be completed. The interpretation
 is fixed before reading the complete matrix: a random-impostor ceiling requires near-perfect frozen
 random AUC but does not imply task-level ceiling when look-alike AUC is low; insufficient plasticity is
 supported only if widening scope or increasing LR increases representation change and restores transfer;
 catastrophic forgetting requires broad external degradation rather than a task-specific large-gap drop.
-The full per-seed trajectories and deltas are machine-readable; a negative fine-tuning result is retained.
+Completed cells will provide machine-readable per-seed trajectories and deltas; the full matrix
+is not yet available, and a negative fine-tuning result will be retained.
 
 \section{Data-Quality Funnel and Distributions}\label{sec:quality}
 The machine-generated funnel distinguishes 93{,}580 raw photo objects from 84{,}147 processed face
@@ -224,7 +239,7 @@ decisions, any processing of minors' data without a legal basis, and use as a ge
 board for the cross-platform test). Supervision is manual-label-free; ages and group integrity come
 from an LLM caption parser; persons from embedding clustering. Apparent-attribute skew: 76.7\%
 apparent-female. Raw images are \emph{not} released.\\
-\textbf{Evaluation data.} External: CACD-VS (official identity-disjoint 10 folds), FG-NET (large-gap $\geq$25\,y subset), AgeDB-30, CALFW, LFW. Internal:
+\textbf{Evaluation data.} External: CACD-VS (official 10-fold pair protocol; no person IDs in local files), FG-NET (large-gap $\geq$25\,y subset), AgeDB-30, CALFW, LFW. Internal:
 a curated cross-age test (5{,}107 positives with controlled negatives). Cross-platform: 1{,}575 Reddit
 positive pairs.\\
 \textbf{Metrics.} ROC-AUC (primary: FG-NET large-gap), EER, TAR@FAR, FMR/FNMR by stratum, bootstrap and
@@ -271,9 +286,11 @@ CDD-AFL~\cite{wu2024cddafl} & -- & 94.50 & 99.50 & -- & -- \\
 \end{table*}
 
 \begin{table*}[!t]
-\caption{Controlled common-protocol full-method reproduction (mean$\pm$SD over three seeds). The
-ArcFace-R50/CASIA backbone, identity-safe split and eight-epoch budget are fixed. All entries are
-ROC-AUC except LFW, which is accuracy. This is not an exact reproduction of published large-scale systems.}
+\caption{Historical controlled common-protocol full-method reproduction (mean$\pm$SD over three seeds).
+ArcFace-R50/CASIA, recorded person-group split and eight-epoch requested budget are fixed.
+FG-NET columns use legacy random impostors; the corrected endpoint-age-matched results follow.
+All entries are ROC-AUC except LFW accuracy. Identity purity still awaits human review.
+This is not an exact reproduction of published large-scale systems.}
 \label{tab:controlled-sota}
 \centering
 \footnotesize
@@ -287,6 +304,113 @@ CACon & .9539$\pm$.0008 & .8970$\pm$.0003 & .9191$\pm$.0002 & .9907$\pm$.0001 & 
 \end{tabular}
 \end{table*}
 
+% BEGIN GENERATED FGNET COMPARATORS
+\begin{table*}[!t]
+\caption{Corrected endpoint-age-matched FG-NET, common ArcFace-R50/CASIA backbone and eight-epoch requested budget. AUC/EER/TAR are means$\pm$SD across training seeds. Gain CI and leave-one-subject-out (LOSO) gain range are for seed 42 versus frozen, not intervals of seed means. Resampling accounts for both pair endpoints; all seeds reuse the same subjects. Low-FAR TAR is a descriptive ROC operating point, not a dev-calibrated deployment threshold. Train--benchmark identity independence remains unverified. These are controlled reimplementations, not leaderboard reproductions.}
+\label{tab:fgnet-comparators}
+\centering\footnotesize
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Stratum & Model & AUC & EER & TAR@FAR=1\% & Gain 95\% CI (s42) & LOSO range (s42) \\
+\midrule
+Overall & Frozen R50 & 0.8808 & 0.2008 & 0.4058 & -- & -- \\
+Overall & MTLFace & 0.9107$\pm$0.0002 & 0.1657$\pm$0.0014 & 0.5325$\pm$0.0035 & $[+0.0151,+0.0449]$ & $[+0.0270,+0.0324]$ \\
+Overall & CACon & 0.8706$\pm$0.0009 & 0.2126$\pm$0.0016 & 0.4141$\pm$0.0073 & $[-0.0196,-0.0009]$ & $[-0.0121,-0.0093]$ \\
+25+ & Frozen R50 & 0.8180 & 0.2698 & 0.2140 & -- & -- \\
+25+ & MTLFace & 0.8327$\pm$0.0012 & 0.2372$\pm$0.0047 & 0.1969$\pm$0.0071 & $[-0.0169,+0.0460]$ & $[+0.0104,+0.0223]$ \\
+25+ & CACon & 0.7995$\pm$0.0027 & 0.2682$\pm$0.0027 & 0.1969$\pm$0.0107 & $[-0.0443,+0.0126]$ & $[-0.0218,-0.0129]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED FGNET COMPARATORS
+
+\section{Fixed-Gallery Retrieval}\label{sec:supp-retrieval}
+We choose one oldest image for each of 82 FG-NET identities as a fixed gallery. Younger,
+image-disjoint queries are assigned to dev/test using a prespecified split (41 gallery identities
+assigned to each side, with eligible queries from 39 dev and 41 test identities) before scoring.
+Ties at the maximum age are excluded; test has 285 queries, including
+57 with a gap of at least 25 years. Gallery identities are necessarily shared with genuine queries;
+dev identities can act as test-gallery distractors. Confidence intervals resample query subjects
+conditional on this gallery, not a new population of galleries. No threshold or model selection is
+performed on test ranks. All training seeds reuse the same query identities.
+
+% BEGIN GENERATED FGNET RETRIEVAL
+\begin{table*}[!t]
+\caption{FaceNet fixed-gallery FG-NET retrieval. Per-seed results and paired query-subject bootstrap intervals for Recall@1 gain; gallery is fixed, not resampled. The 25+ Recall@1 gain intervals include zero. Identities are shared across gallery/query as required for genuine retrieval, but images are disjoint. Dev/test query identities were split before scoring. Legacy training manifests are absent and mined-train overlap is unresolved: these are bounded small-gallery results, not evidence of independent large-scale archival search.}
+\label{tab:fgnet-retrieval}
+\centering\footnotesize
+\begin{tabular}{@{}llccccc c@{}}
+\toprule
+Stratum & Model & Queries & Recall@1 & Recall@5 & Recall@10 & MRR & R@1 gain 95\% CI \\
+\midrule
+Overall & Frozen & 285 & 0.4982 & 0.6877 & 0.7754 & 0.5931 & -- \\
+Overall & Tuned s1 & 285 & 0.5860 & 0.8211 & 0.9018 & 0.6891 & $[+0.0328,+0.1438]$ \\
+Overall & Tuned s2 & 285 & 0.5579 & 0.8070 & 0.8947 & 0.6692 & $[+0.0076,+0.1107]$ \\
+Overall & Tuned s42 & 285 & 0.5719 & 0.8070 & 0.9053 & 0.6770 & $[+0.0192,+0.1259]$ \\
+25+ & Frozen & 57 & 0.3158 & 0.5614 & 0.6140 & 0.4357 & -- \\
+25+ & Tuned s1 & 57 & 0.3684 & 0.6316 & 0.7895 & 0.4931 & $[-0.0851,+0.1579]$ \\
+25+ & Tuned s2 & 57 & 0.3684 & 0.5965 & 0.7895 & 0.4893 & $[-0.0833,+0.1600]$ \\
+25+ & Tuned s42 & 57 & 0.3684 & 0.6316 & 0.7895 & 0.4945 & $[-0.0785,+0.1552]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED FGNET RETRIEVAL
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_fgnet_retrieval_cmc.pdf}
+\caption{Fixed-gallery FG-NET test CMC through rank 50 (82 gallery identities, 285 queries).
+Curves are generated from cached per-seed ranks, not fitted or selected on test results.
+This is not an independent corpus from the verification endpoint. The gallery is not
+resampled; query-subject intervals and unresolved training independence are in
+Table~\ref{tab:fgnet-retrieval}.}
+\label{fig:fgnet-retrieval-cmc}
+\end{figure}
+
+\section{Development-Calibrated Verification Errors}\label{sec:supp-errors}
+This diagnostic uses the same prespecified person split as retrieval, but constructs
+endpoint-age-matched verification positives and negatives separately within each split.
+It is a secondary protocol, not the main full FG-NET endpoint: dev retains 279 of 281
+eligible positives (39 queried subjects); test retains 282 of 285 (41 subjects), with
+one unique impostor per retained positive and identical exact-gap distributions across
+classes. Development negative scores alone set thresholds; test scores cannot influence
+matching, cutpoints or calibration. Test intervals hold the dev threshold fixed and thus
+exclude calibration uncertainty. No deployment-level low-FAR guarantee follows from these
+small samples. In particular, 279 dev negatives cannot resolve the nominal 0.1\% point.
+
+% BEGIN GENERATED FGNET ERRORS
+\begin{table*}[!t]
+\caption{FG-NET test errors at separately dev-calibrated per-model nominal FMR=1\% thresholds, strict score$>$threshold. FA/FR are false accepts/rejects; the observed test FMR need not equal the nominal target. FNMR intervals are both-endpoint subject-bootstrap percentile intervals conditional on the fixed dev threshold; calibration uncertainty is excluded. Blur cutpoints are dev-only, pair sharpness is the lesser endpoint Laplacian variance. Zero-event empirical intervals are not reliable risk bounds. Full exact-year, blur and per-seed results, including the under-resolved nominal 0.1\% point, are in the aggregate artifact; unlabelled pose/scan/collage stay unknown. Training independence is unverified.}
+\label{tab:fgnet-errors}
+\centering\footnotesize
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Stratum & Model & FA / negatives & FR / positives & FMR & FNMR & FNMR 95\% CI \\
+\midrule
+Overall & Frozen & 3/282 & 149/282 & 0.0106 & 0.5284 & $[+0.4327,+0.6272]$ \\
+Overall & Tuned s1 & 4/282 & 141/282 & 0.0142 & 0.5000 & $[+0.4135,+0.5931]$ \\
+Overall & Tuned s2 & 2/282 & 143/282 & 0.0071 & 0.5071 & $[+0.4235,+0.5971]$ \\
+Overall & Tuned s42 & 2/282 & 148/282 & 0.0071 & 0.5248 & $[+0.4364,+0.6206]$ \\
+25+ & Frozen & 0/57 & 40/57 & 0.0000 & 0.7018 & $[+0.5322,+0.8704]$ \\
+25+ & Tuned s1 & 0/57 & 37/57 & 0.0000 & 0.6491 & $[+0.4385,+0.8537]$ \\
+25+ & Tuned s2 & 0/57 & 37/57 & 0.0000 & 0.6491 & $[+0.4478,+0.8367]$ \\
+25+ & Tuned s42 & 0/57 & 38/57 & 0.0000 & 0.6667 & $[+0.4615,+0.8710]$ \\
+Child-to-adult & Frozen & 0/39 & 33/39 & 0.0000 & 0.8462 & $[+0.7073,+0.9722]$ \\
+Child-to-adult & Tuned s1 & 0/39 & 32/39 & 0.0000 & 0.8205 & $[+0.6364,+0.9697]$ \\
+Child-to-adult & Tuned s2 & 0/39 & 32/39 & 0.0000 & 0.8205 & $[+0.6315,+0.9714]$ \\
+Child-to-adult & Tuned s42 & 0/39 & 32/39 & 0.0000 & 0.8205 & $[+0.6250,+0.9730]$ \\
+Blur: low sharpness & Frozen & 0/75 & 41/71 & 0.0000 & 0.5775 & $[+0.4103,+0.7500]$ \\
+Blur: low sharpness & Tuned s42 & 0/75 & 42/71 & 0.0000 & 0.5915 & $[+0.4667,+0.7334]$ \\
+Blur: middle & Frozen & 1/89 & 46/91 & 0.0112 & 0.5055 & $[+0.3571,+0.6512]$ \\
+Blur: middle & Tuned s42 & 0/89 & 45/91 & 0.0000 & 0.4945 & $[+0.3333,+0.6596]$ \\
+Blur: high sharpness & Frozen & 2/118 & 62/120 & 0.0169 & 0.5167 & $[+0.3889,+0.6441]$ \\
+Blur: high sharpness & Tuned s42 & 2/118 & 61/120 & 0.0169 & 0.5083 & $[+0.3876,+0.6226]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED FGNET ERRORS
+
+\section{Historical Scaling and Additional Diagnostics}
 \begin{table}[!t]
 \caption{Data-scaling law (FaceNet, curated; validation/test fixed; mean $\pm$ std over three seeds).}
 \label{tab:supp-scaling}
@@ -363,6 +487,7 @@ subjects on both sides of a pair; all seeds reuse the same people.}
 \label{tab:matched-source}
 \centering
 \footnotesize
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 Seed & LOW AUC & CROSS AUC & $\Delta$ AUC & Paired 95\% CI \\
@@ -373,6 +498,7 @@ Seed & LOW AUC & CROSS AUC & $\Delta$ AUC & Paired 95\% CI \\
 Mean $\pm$ SD & 0.8206$\pm$0.0003 & 0.8463$\pm$0.0008 & +0.0257$\pm$0.0009 & --- \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 The gain is not a fully causal estimate for longitudinal data: endpoint-age
@@ -380,7 +506,7 @@ and quality covariates differ between arms, candidate-person selection may
 matter, and a licensed generic-face source plus shuffled/co-occurrence noise
 arms are not yet available. Possible mined-train/benchmark identity matches
 also require blinded adjudication. The manifest-backed local evidence is
-\texttt{metrics/matched\_agegap\_fixed10\_last/summary.json} and its six run
+\path{metrics/matched_agegap_fixed10_last/summary.json} and its six run
 records; no face crops or biometric templates are part of the submission.
 
 \section{Figures Referenced from the Main Paper}\label{sec:figs}
@@ -417,8 +543,11 @@ These five plots visualize the headroom, data-scaling, objective, apparent-attri
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_external.pdf}
-\caption{External generalization. The $+$pairs gain over the frozen baseline (with 95\% CIs) is observed in three evaluations---FG-NET large-gap, a child$\leftrightarrow$adult subset of the same FG-NET corpus, and a separate cross-platform Reddit source---each well above chance. The gain is largest on the in-protocol FG-NET sets and smaller (but positive) on the noisier cross-platform Reddit set.}
+\caption{Historical random-impostor external results, not the corrected endpoint-age-matched FG-NET headline. The $+$pairs gain over the frozen baseline (with the historical 95\% CIs) is shown for FG-NET large-gap, a child$\leftrightarrow$adult subset of the same FG-NET corpus, and a separate cross-platform Reddit source. The two FG-NET estimates are dependent; these gains must not be substituted for corrected-protocol results.}
 \label{fig:external}
 \end{figure}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../../../shared/refs}
 
 \end{document}

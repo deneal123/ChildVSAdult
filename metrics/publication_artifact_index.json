@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "T-BIOM publication experiments only; no face data or biometric templates",
-  "entry_count": 77,
+  "entry_count": 79,
   "missing_expected_manifests": [
     "age_leakage.manifest.json",
     "fairness_audit.manifest.json",
@@ -59,12 +59,16 @@
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -88,13 +92,7 @@
         "branch": "research",
         "dirty": true
       },
-      "inputs": [
-        {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
           "path": "metrics/cacd_vs/adaface_ir101_frozen.json",
@@ -102,18 +100,22 @@
           "sha256": "e7183429a5533533f8ff5ce7e95876b7c29ef71a29c3ad88188720e5bafb8dd0"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -141,11 +143,6 @@
       },
       "inputs": [
         {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        },
-        {
           "path": "models/bb_facenet_seed1.pt",
           "bytes": 115977225,
           "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
@@ -158,18 +155,22 @@
           "sha256": "92c228197103b0f5d254ad125bb11e286cdb4f2a7a444dc699a086b39af84cbf"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -197,11 +198,6 @@
       },
       "inputs": [
         {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        },
-        {
           "path": "models/bb_facenet_seed2.pt",
           "bytes": 115977225,
           "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
@@ -214,18 +210,22 @@
           "sha256": "c120091ab224b269be5ba1292c69c81b94c412836169b55a55d5edce30bb1dda"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -253,11 +253,6 @@
       },
       "inputs": [
         {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        },
-        {
           "path": "models/bb_facenet_seed42.pt",
           "bytes": 115977947,
           "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
@@ -270,18 +265,22 @@
           "sha256": "511651042b060e134e6de9594e4a9b9082e22ef0f2efcac95fced38791910756"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -307,13 +306,7 @@
         "branch": "research",
         "dirty": true
       },
-      "inputs": [
-        {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
           "path": "metrics/cacd_vs/facenet_frozen.json",
@@ -321,18 +314,22 @@
           "sha256": "74d51d368aa4edfca747cc0b63468ed38b4808a383ab5105c51ba54e9f49ca37"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -386,12 +383,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -421,11 +422,6 @@
       },
       "inputs": [
         {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        },
-        {
           "path": "models/strong_backbone_study/random_head_lr1e-06_s42.pt",
           "bytes": 261177989,
           "sha256": "04b3265ecdacb8d69c436c26d9a894227dffe1e7c95e2a9fdac3f7ae6c10882b"
@@ -438,18 +434,22 @@
           "sha256": "5f29b96dccc69482c8a3292a465401e94f11f59f9992e0e66f22f1cd812c0f3c"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -483,11 +483,6 @@
         "dirty": true
       },
       "inputs": [
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
         {
           "path": "models/arcface_r50_casia.pth",
           "bytes": 175710586,
@@ -564,25 +559,24 @@
           "path": "metrics/comparator_fgnet_endpoint_age_matched.json",
           "bytes": 28409,
           "sha256": "e12aec6d2a531b562a3bfbb2428f545c89890dde5cc4b8b7edb449a4991dbbcc"
-        },
-        {
-          "path": "data/interim/comparator_fgnet_embeddings/fgnet_comparator_embeddings.npz",
-          "bytes": 8668292,
-          "sha256": "887a08282dc59a65a20a485437c787a2904b4a6fa17c6bfb816cd045ab324555"
         }
       ],
-      "private_input_count": 0,
-      "private_output_count": 0,
+      "private_input_count": 1,
+      "private_output_count": 1,
       "input_integrity": {
         "checked": 15,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -648,12 +642,16 @@
         "checked": 4,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -715,12 +713,16 @@
         "checked": 4,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -796,12 +798,16 @@
         "checked": 7,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -843,11 +849,6 @@
           "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "data/external/agedb_30.bin",
           "bytes": 76525089,
           "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
@@ -865,18 +866,22 @@
           "sha256": "0751e4f8dd833b768799cd0a94475e9ae4b6aee5eec1528c4bdc1ad63643c63a"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -948,12 +953,16 @@
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -988,11 +997,6 @@
           "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "metrics/model_inventory.json",
           "bytes": 4937,
           "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
@@ -1005,18 +1009,22 @@
           "sha256": "456c167d81342a325250b0429ed336fecbed98894b32ad7534d49127c2c46c1a"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1051,11 +1059,6 @@
           "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "metrics/model_inventory.json",
           "bytes": 4937,
           "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
@@ -1068,18 +1071,22 @@
           "sha256": "13acc398849bd876af6cc2825342149c96a6592dd946b011b8e315cf73a9a3d2"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1114,11 +1121,6 @@
           "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "metrics/model_inventory.json",
           "bytes": 4937,
           "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
@@ -1131,18 +1133,138 @@
           "sha256": "78fd797164913d1b7cd06b30089d798e78ddcfaeef42ff04f2a6c96494184266"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/fgnet_error_breakdown/fgnet_error_breakdown.manifest.json",
+      "manifest_sha256": "e45e088bb6eda5d2673f12269b94868cce8d26797f0b32557ca87524240ef2df",
+      "experiment": "fgnet-endpoint-age-matched-error-breakdown",
+      "created_at_utc": "2026-10-02T19:22:09.597587+00:00",
+      "command": [
+        "scripts/fgnet_error_breakdown.py",
+        "--execute",
+        "--n-boot",
+        "2000",
+        "--threads",
+        "2"
+      ],
+      "parameters": {
+        "protocol_hash": "ef87f910d7f77e635b71860029a4b2b5d6c717e9b3fb7d81a5f14b256ff24729",
+        "acceptance_convention": "strict>",
+        "far_targets": [
+          0.01,
+          0.001
+        ],
+        "endpoint_age_tolerance": 2,
+        "n_boot": 2000,
+        "bootstrap_seed": 42,
+        "protocol_seed": 42,
+        "training_seeds": [
+          1,
+          2,
+          42
+        ],
+        "batch_size": 32,
+        "preprocessing": {
+          "function": "age_gap.models.facenet.preprocess_bgr",
+          "input_size": 160,
+          "channel_order": "RGB",
+          "normalization": "(x - 127.5) / 128",
+          "source_crop_format": "BGR uint8 112x112",
+          "shared_between_frozen_and_tuned": true
+        },
+        "threads": 2,
+        "device": "cpu",
+        "network_calls": false,
+        "training_identity_independence": "unverified"
+      },
+      "git": {
+        "commit": "0572dfe17bb789af373951cfc747588a3aebc3cd",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/fgnet_retrieval_study.json",
+          "bytes": 129274,
+          "sha256": "af1e21ab126c43624a9346e7ddecc1fffac89be8747f3cfafc15df381d27f6b7"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/fgnet_retrieval_study.manifest.json",
+          "bytes": 6257,
+          "sha256": "a1ac80a0d5a385d617ddce1e0a2be40fbd8c94171bbc2f1c20182cce1ac63a32"
+        },
+        {
+          "path": "scripts/fgnet_error_breakdown.py",
+          "bytes": 49708,
+          "sha256": "a0f6fc9650ca48f969658eee51adb72cd5b4e41cadd720ab918cdc42cc54a858"
+        },
+        {
+          "path": "scripts/fgnet_retrieval_study.py",
+          "bytes": 56767,
+          "sha256": "0296a630b9416d57d1bc91bb4a1e2695b3aeabf750a7772ad7b8362e3d64ca8f"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/fgnet_error_breakdown/fgnet_error_breakdown.json",
+          "bytes": 1676136,
+          "sha256": "4634466f84ae38a528448fa71935e9905fabf68ba4c251c838daf71d8ca5de44"
+        }
+      ],
+      "private_input_count": 5,
+      "private_output_count": 12,
+      "input_integrity": {
+        "checked": 13,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 13,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1221,11 +1343,6 @@
       },
       "inputs": [
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -1246,16 +1363,6 @@
           "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
         },
         {
-          "path": "metrics/fgnet_retrieval_20261002/private/protocol_plan.json",
-          "bytes": 11366,
-          "sha256": "7e9d56e922b986e419ef9d0f44b9641e540a2fb4b9ee0270e5d5c5df6e716e0f"
-        },
-        {
-          "path": "metrics/fgnet_retrieval_20261002/private/retrieval_plan.jsonl",
-          "bytes": 46258,
-          "sha256": "0816c5ccbc8efb5d1829029a4467bf70be379df5a2ee874dbfca0020dca35ddc"
-        },
-        {
           "path": "metrics/model_inventory.json",
           "bytes": 4937,
           "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
@@ -1264,26 +1371,6 @@
           "path": "data/processed/pairs.jsonl",
           "bytes": 23882451,
           "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
-        },
-        {
-          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_frozen.npz",
-          "bytes": 1231535,
-          "sha256": "f09b9a7cca728221f4b547edb6206ac15947d34b1b2ee364d71a2ec16ae0385b"
-        },
-        {
-          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_tuned_seed1.npz",
-          "bytes": 1231417,
-          "sha256": "3ef8263c6251b6363931a3c18d5add3261c883365eac1a102dabca982ff79e9d"
-        },
-        {
-          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_tuned_seed2.npz",
-          "bytes": 1231606,
-          "sha256": "5e1127c3df76015a45a231092e98cd608f1191ee9e749a488856679f2d0bb40c"
-        },
-        {
-          "path": "metrics/fgnet_retrieval_20261002/private/private_embeddings_tuned_seed42.npz",
-          "bytes": 1231561,
-          "sha256": "1c37dd720f071d8111402766378c75f16fccc5e2f1c7950ae8a553b33e0d8d71"
         }
       ],
       "outputs": [
@@ -1293,18 +1380,86 @@
           "sha256": "af1e21ab126c43624a9346e7ddecc1fffac89be8747f3cfafc15df381d27f6b7"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 7,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 13,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/fgnet_retrieval_20261002/retrieval_presentation.manifest.json",
+      "manifest_sha256": "e905702898bad92d5a24f1a00a1135a1453c184a9f2fbeecba1160cf2f7067fd",
+      "experiment": "fgnet-fixed-gallery-cmc",
+      "created_at_utc": "2026-10-02T19:25:20.823277+00:00",
+      "command": [
+        "scripts/render_fgnet_evidence.py",
+        "retrieval",
+        "--plot",
+        "--check",
+        "latex/papers/journal-1-tbiom/en/supplement.tex"
+      ],
+      "parameters": {
+        "protocol_hash": "ef87f910d7f77e635b71860029a4b2b5d6c717e9b3fb7d81a5f14b256ff24729",
+        "scope": "fixed gallery; overlap unresolved"
+      },
+      "git": {
+        "commit": "0572dfe17bb789af373951cfc747588a3aebc3cd",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/fgnet_retrieval_20261002/fgnet_retrieval_study.json",
+          "bytes": 129274,
+          "sha256": "af1e21ab126c43624a9346e7ddecc1fffac89be8747f3cfafc15df381d27f6b7"
+        },
+        {
+          "path": "metrics/fgnet_retrieval_20261002/fgnet_retrieval_study.manifest.json",
+          "bytes": 6257,
+          "sha256": "a1ac80a0d5a385d617ddce1e0a2be40fbd8c94171bbc2f1c20182cce1ac63a32"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "latex/shared/figures/fig_fgnet_retrieval_cmc.pdf",
+          "bytes": 15409,
+          "sha256": "1c1bf88b42af8f7970be1835f87a3dd07494e47fcf013403c028c14973f2e276"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 3,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1346,12 +1501,16 @@
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1420,11 +1579,6 @@
           "path": "models/bb_facenet_seed42.pt",
           "bytes": 115977947,
           "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
-        },
-        {
-          "path": "cache/embeddings/baseline_arcface.npz",
-          "bytes": 102874027,
-          "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
         }
       ],
       "outputs": [
@@ -1434,18 +1588,22 @@
           "sha256": "a6070a3376c97533b519ccdee3e2834f19ad45973acfef527a72816bbd25fd01"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 5,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1513,11 +1671,6 @@
           "path": "data/interim/face_genderage.jsonl",
           "bytes": 3357793,
           "sha256": "e09ae22c379b40d375dbf0c1e327724cb6fe4b82cadd8d654a5fe03bcef952e7"
-        },
-        {
-          "path": "cache/embeddings/baseline_arcface.npz",
-          "bytes": 102874027,
-          "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
         }
       ],
       "outputs": [
@@ -1527,18 +1680,22 @@
           "sha256": "e02510948dd336723e3ce4443c4d9ad4a08ade1ff4c1517b72e987ae22656dcc"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 4,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1628,12 +1785,16 @@
         "checked": 4,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1704,12 +1865,16 @@
         "checked": 5,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1766,11 +1931,6 @@
           "sha256": "e09ae22c379b40d375dbf0c1e327724cb6fe4b82cadd8d654a5fe03bcef952e7"
         },
         {
-          "path": "cache/embeddings/baseline_arcface.npz",
-          "bytes": 102874027,
-          "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
-        },
-        {
           "path": "models/bb_facenet_pairs_clean.pt",
           "bytes": 115981621,
           "sha256": "9b7ceee8e66dfe975081c928aaa2b24fdf547d3abf68b5c73cc7b38f063405a9"
@@ -1783,18 +1943,22 @@
           "sha256": "6f69594c94835af321f6bea27ddad78ec9c512fa2288b2838ef10f788b597264"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 5,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1837,11 +2001,6 @@
           "sha256": "6493732524a969919602f078c2afdda381268eb30b9c12fdc2743bb5ba3e56a8"
         },
         {
-          "path": "data/external/lfw_aligned.npz",
-          "bytes": 393528172,
-          "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
-        },
-        {
           "path": "data/external/agedb_30.bin",
           "bytes": 76525089,
           "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
@@ -1850,11 +2009,6 @@
           "path": "data/external/calfw.bin",
           "bytes": 74157257,
           "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
-        },
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
         }
       ],
       "outputs": [
@@ -1864,18 +2018,22 @@
           "sha256": "1831846be4d724831fb8ce40358e939101e5c96048b84b10626be173ecbbaa6e"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 2,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 7,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -1944,16 +2102,6 @@
           "sha256": "8f2aa3b12ffcf997c6924dde98209c28c226b864da7baaf0051ceef357f1a397"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
-          "path": "data/external/lfw_aligned.npz",
-          "bytes": 393528172,
-          "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
-        },
-        {
           "path": "data/external/agedb_30.bin",
           "bytes": 76525089,
           "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
@@ -1971,18 +2119,22 @@
           "sha256": "0dad528751697d17398eb29eed3b4b7ff0395e965f1be04b92f915538ecd1458"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 2,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 11,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2065,12 +2217,16 @@
         "checked": 8,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2103,13 +2259,7 @@
         "branch": "research",
         "dirty": true
       },
-      "inputs": [
-        {
-          "path": "cache/embeddings/independent_facenet.npz",
-          "bytes": 102874027,
-          "sha256": "9a1ddaf56a6332f8e686fe5cc25a65bbe812362f1924bcbb390c7c88459da07c"
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
           "path": "metrics/independent_embedding_audit.json",
@@ -2117,18 +2267,22 @@
           "sha256": "c8729d8f7bdb0decdd782fd492f94da7cac6f12c9e7f2858dba3e661ef0c3b0c"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2172,11 +2326,6 @@
           "sha256": "62c8f9d7d0779de0b7d7078066851c8641497d266676c40501f2205175a55c1e"
         },
         {
-          "path": "cache/embeddings/baseline_arcface.npz",
-          "bytes": 102874027,
-          "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
-        },
-        {
           "path": "models/bb_facenet_seed42.pt",
           "bytes": 115977947,
           "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
@@ -2199,18 +2348,22 @@
           "sha256": "3937e042528ad43ce39b73123f17217ac4da4a94e9134e9c22ca7b36f17aef7f"
         }
       ],
-      "private_input_count": 375,
+      "private_input_count": 376,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 381,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2262,11 +2415,6 @@
           "sha256": "53d9f7a33752d0eecc617e93f231add09590fd30c2891c79a8b652dff162be0c"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -2289,18 +2437,22 @@
           "sha256": "0ec368d066dd4bc1061e6d759a61a61bae7aa091bd4a8f17b055e45bd5d62606"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2352,11 +2504,6 @@
           "sha256": "55691d974e10698272e988446aebefad2d76010d03b5bf326c7aaf359b426acc"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -2379,18 +2526,22 @@
           "sha256": "b76b07975dc3f20bd4a5e24b6dc2204f44f4dd70567148ff20a0ed1463c2d75b"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2442,11 +2593,6 @@
           "sha256": "b2f4f9fd5454c418b3d2890f08ea1aa121093f4d27425aeffa9be76ed9549820"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -2469,18 +2615,22 @@
           "sha256": "3382bcdcaa33ad756cfe3182784c403f1af4a9e270d50fbc63eeb87ef11b2d3f"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2532,11 +2682,6 @@
           "sha256": "2b5285e85b404d802ff8da16b67d788e83137c61cd058949068854721fed48f2"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -2559,18 +2704,22 @@
           "sha256": "0f3effdd5df7a5783a40f7539adf1ec730f288dd4688b69518edf7ac99feae96"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2622,11 +2771,6 @@
           "sha256": "f0e5b4c507a78889d70ad7e2be898503da8bb05e7ea40aaf5abdb80ff1cc07c0"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -2649,18 +2793,22 @@
           "sha256": "35394f8162ad990871c38ebca0a3161a160451fc60ac0248531b09dc8e061282"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2712,11 +2860,6 @@
           "sha256": "ba0e511f71e951a749c1004e9a5d7c8a524ed86d681b5d90bcf4c325464e2d65"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -2739,18 +2882,22 @@
           "sha256": "4089be132f7fe7c73c4df323789532244c4dd455b83b27828a5239fc3db36723"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2805,11 +2952,6 @@
           "path": "data/interim/matched_agegap_arms/cross_arm.jsonl",
           "bytes": 7746594,
           "sha256": "8435c42e9babe0d7995ad4e2c7092f1a5e79d84f994477a22fd662702beb2cac"
-        },
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
         },
         {
           "path": "data/processed/person_clusters.jsonl",
@@ -2924,18 +3066,22 @@
           "sha256": "0f0ce35334bfb548751bea87146794a5ad78fae4be9c39ce33fa528ed3dd59b5"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 24,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -2996,11 +3142,6 @@
           "sha256": "68a20e4fb97b368172b50eabb8b108e860977c44b73d8515dbac62d6cbb0ec44"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -3023,18 +3164,22 @@
           "sha256": "ec4b4aa80b86384cee088c761a23ca4dd84e46e042ada9056fd646a22c5c1318"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3095,11 +3240,6 @@
           "sha256": "2632a33bb3a37207442c0cd6b86d7300a43f965c4e0af44b25bb6cf054a178ee"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -3122,18 +3262,22 @@
           "sha256": "275f5227b22115ec702433466de7d4bd09a2a05ddf1e052624901de0c39e457e"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3194,11 +3338,6 @@
           "sha256": "984a53207acadfabece0ca617475e586cdbdd3339055dad1097f8c77e735ad9f"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -3221,18 +3360,22 @@
           "sha256": "5aea01853ed084d6a84a313a49f777729b6e5a56c92ee95a387bcb37f5478870"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3293,11 +3436,6 @@
           "sha256": "4d9d2eef62a071dc454b4cde375b2f023e409c0019d73200bc0aa76efd54466c"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -3320,18 +3458,22 @@
           "sha256": "9b18c82b3287856a9e856bbf79af95fc973339cb8fdcc0536ca33b21abadf582"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3392,11 +3534,6 @@
           "sha256": "43124b089aa2222a01b8d2777bdc1cab90af249e8aa4063e6bf64dbd40f70580"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -3419,18 +3556,22 @@
           "sha256": "6523d1cb18323b96811610f5b96769821d490fb30970061d398d94b6944b3117"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3491,11 +3632,6 @@
           "sha256": "a5c542b7699eea34457299019a6931ee82e3b22683ec0fedb7dfb16fc72502b3"
         },
         {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
           "path": "<external-artifact>/20180408-102900-casia-webface.pt",
           "bytes": 115887415,
           "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
@@ -3518,18 +3654,22 @@
           "sha256": "70e193cb49e94c4313dc8d73c3abd89712286e500a3e586503c99b45a2b05e53"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3586,11 +3726,6 @@
           "path": "data/interim/matched_agegap_arms/cross_arm.jsonl",
           "bytes": 7746594,
           "sha256": "8435c42e9babe0d7995ad4e2c7092f1a5e79d84f994477a22fd662702beb2cac"
-        },
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
         },
         {
           "path": "data/processed/person_clusters.jsonl",
@@ -3705,18 +3840,22 @@
           "sha256": "e3edcb84c0762164e21652e3e24cf3d043c719248132b57a5993ea1fa47a50ba"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 24,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3807,12 +3946,16 @@
         "checked": 11,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3873,12 +4016,16 @@
         "checked": 4,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3905,11 +4052,6 @@
           "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
         },
         {
-          "path": "data/external/lfw_aligned.npz",
-          "bytes": 393528172,
-          "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
-        },
-        {
           "path": "data/external/agedb_30.bin",
           "bytes": 76525089,
           "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
@@ -3918,16 +4060,6 @@
           "path": "data/external/calfw.bin",
           "bytes": 74157257,
           "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
-        },
-        {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
-        },
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
         }
       ],
       "outputs": [
@@ -3937,18 +4069,22 @@
           "sha256": "e5f46e228b7f92baba3af18047375fbda862700e3dd346ae3bb928e75e6edee5"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 3,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -3980,11 +4116,6 @@
           "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
           "bytes": 14059077,
           "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
-        },
-        {
-          "path": "cache/embeddings/baseline_arcface.npz",
-          "bytes": 102874027,
-          "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
         }
       ],
       "outputs": [
@@ -3994,18 +4125,22 @@
           "sha256": "76b53972e172bb9f878c57ccc67065074e0d37d64b8941916377ebe70006320f"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4071,12 +4206,16 @@
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4142,12 +4281,16 @@
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4213,12 +4356,16 @@
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4284,12 +4431,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4350,12 +4501,16 @@
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4416,12 +4571,16 @@
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4482,12 +4641,16 @@
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4548,12 +4711,16 @@
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4619,12 +4786,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4686,11 +4857,6 @@
           "sha256": "4395885cec22b8b5101ca806acca1f7f21e9808bd1fae962f822e1db778c9062"
         },
         {
-          "path": "data/external/lfw_aligned.npz",
-          "bytes": 393528172,
-          "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
-        },
-        {
           "path": "data/external/agedb_30.bin",
           "bytes": 76525089,
           "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
@@ -4699,16 +4865,6 @@
           "path": "data/external/calfw.bin",
           "bytes": 74157257,
           "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
-        },
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
-        {
-          "path": "data/external/cacd_vs_aligned.npz",
-          "bytes": 265802876,
-          "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
         }
       ],
       "outputs": [
@@ -4718,18 +4874,22 @@
           "sha256": "d10f91d79413c658464ae550a100d320b2abbe91057ce3937f0ef03116dcfd62"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 3,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 11,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4792,12 +4952,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -4826,11 +4990,6 @@
         "dirty": true
       },
       "inputs": [
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
         {
           "path": "models/adaface_ir101.pt",
           "bytes": 261111273,
@@ -5044,18 +5203,22 @@
           "sha256": "5de9ece543bf6cc9152c8bd6200ffb1889e9980f9ef92afae869cff9c9ea9833"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 42,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5086,11 +5249,6 @@
         "dirty": true
       },
       "inputs": [
-        {
-          "path": "data/external/fgnet_crops.npz",
-          "bytes": 24471952,
-          "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
-        },
         {
           "path": "models/adaface_ir101.pt",
           "bytes": 261111273,
@@ -5124,18 +5282,22 @@
           "sha256": "048294c05767795fbe2814c3842603ef3b0babd7b020f36535f45fbeea75fe58"
         }
       ],
-      "private_input_count": 0,
+      "private_input_count": 1,
       "private_output_count": 0,
       "input_integrity": {
         "checked": 6,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5192,12 +5354,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5259,12 +5425,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5326,12 +5496,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5393,12 +5567,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5460,12 +5638,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5527,12 +5709,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5594,12 +5780,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5661,12 +5851,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5728,12 +5922,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5795,12 +5993,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5862,12 +6064,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5929,12 +6135,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -5996,12 +6206,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -6079,12 +6293,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -6199,12 +6417,16 @@
         "checked": 15,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -6262,12 +6484,16 @@
         "checked": 3,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     },
@@ -6328,12 +6554,16 @@
         "checked": 4,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       },
       "output_integrity": {
         "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
         "valid": true
       }
     }

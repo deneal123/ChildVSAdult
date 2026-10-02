@@ -269,6 +269,13 @@ def test_cacd_vs_results_match_machine_readable_artifacts() -> None:
     assert f"{tuned['roc_auc']['mean']:.4f}" in historical
 
 
+def test_cacd_person_fold_disjointness_is_not_claimed_without_person_metadata() -> None:
+    for source in (MAIN, SUPPLEMENT):
+        text = source.read_text(encoding="utf-8")
+        assert "identity-disjoint 10-fold CACD" not in text
+        assert "official identity-disjoint 10 folds" not in text
+
+
 def test_common_protocol_sota_table_matches_machine_readable_artifacts() -> None:
     supplement = SUPPLEMENT.read_text(encoding="utf-8")
     for method in ("mtlface", "cacon"):
@@ -436,3 +443,37 @@ def test_endpoint_age_matched_fgnet_claim_tracks_subject_artifact() -> None:
         assert _fmt3(value) in main
     assert (ROOT / "metrics/fgnet_endpoint_subject_stats.manifest.json").is_file()
     assert (ROOT / "metrics/fgnet_endpoint_multiseed.manifest.json").is_file()
+
+
+def test_strong_campaign_description_distinguishes_fixed_budget_from_exploratory():
+    text = (ROOT / "latex/papers/journal-1-tbiom/en/supplement.tex").read_text(encoding="utf-8")
+    protocol = text.partition(r"\paragraph{Strong-backbone matrix protocol.}")[2].partition(r"\section")[0]
+    assert "selects the last" in protocol
+    assert "without validation-based early stopping" in protocol
+    assert "running statistics are frozen" in protocol
+    assert "best-validation checkpoints with adaptive BatchNorm are exploratory" in protocol
+    assert "identity-group-disjoint" in protocol
+    assert "constant-predictor controls" in protocol
+    assert "Validation-loss trajectories" in protocol
+    assert "full matrix\nis not yet available" in protocol
+    assert "patience three" not in protocol
+
+
+def test_supplement_bounds_historical_figures_and_matched_table_width():
+    text = (ROOT / "latex/papers/journal-1-tbiom/en/supplement.tex").read_text(encoding="utf-8")
+    table = text.partition(r"\label{tab:matched-source}")[2].partition(r"\end{table}")[0]
+    assert r"\resizebox{\columnwidth}{!}" in table
+    figure = text.partition(r"\includegraphics[width=\columnwidth]{fig_external.pdf}")[2].partition(r"\end{figure}")[0]
+    assert "Historical random-impostor" in figure
+    assert "not the corrected endpoint-age-matched FG-NET headline" in figure
+    assert "two FG-NET estimates are dependent" in figure
+    assert "No apparent-demographic stratum degrades; errors fall everywhere" not in text
+
+
+def test_lfw_accuracy_is_not_misrepresented_as_official_before_rerun():
+    main = (ROOT / "latex/papers/journal-1-tbiom/en/main.tex").read_text(encoding="utf-8")
+    supplement = (ROOT / "latex/papers/journal-1-tbiom/en/supplement.tex").read_text(encoding="utf-8")
+    assert "LFW (legacy interleaved 10-split accuracy; official-fold rerun pending)" in main
+    assert "LFW (10-fold accuracy)" not in main
+    assert "legacy interleaved splits rather than official contiguous" in supplement
+    assert "intervals must not be called subject-level" in supplement

@@ -29,6 +29,7 @@ import re
 import shutil
 import subprocess
 import sys
+import uuid
 import zipfile
 from pathlib import Path
 
@@ -40,6 +41,15 @@ def _localize(tex: str) -> str:
     """Общие относительные пути -> локальные (пакет должен быть самодостаточным)."""
     tex = re.sub(r"\\graphicspath\{\{[^}]*\}\}", r"\\graphicspath{{./figures/}}", tex)
     return re.sub(r"\\bibliography\{[^}]*\}", r"\\bibliography{refs}", tex)
+
+
+def _latex_reference_errors(log: str) -> int:
+    """Include wrapped citation warnings, not just undefined cross-references."""
+    flattened = re.sub(r"\s+", " ", log)
+    return len(re.findall(
+        r"(?:Citation|Reference) .*? undefined|multiply defined|There were undefined references",
+        flattened,
+    ))
 
 
 def _figures(tex: str) -> list[str]:
@@ -61,6 +71,7 @@ def _sha256(path: Path) -> str:
 
 def _check_nonblank_pages(pdf: Path, pages: int) -> None:
     """Fail when the portal-facing PDF contains a textually empty page."""
+    pdf = pdf.resolve()
     if not shutil.which("pdftotext"):
         print("    ! pdftotext не найден — проверка пустых страниц пропущена")
         return
@@ -98,6 +109,20 @@ def _package_uploads(
     sub: Path, page_counts: dict[str, int], *, include_experiment_index: bool = False
 ) -> None:
     """Create portal artifacts without mixing PDFs, sources, or build logs."""
+    evidence = None
+    if include_experiment_index:
+        root = LATEX.parent
+        staging = root / ".work" / "submission-evidence" / uuid.uuid4().hex
+        result = _run(
+            [sys.executable, str(root / "scripts/export_public_evidence.py"),
+             "--root", str(root), "--out", str(staging)],
+            root,
+        )
+        if result.returncode:
+            raise RuntimeError("public evidence export failed:\n" + result.stdout + result.stderr)
+        evidence = staging / "public_evidence_bundle.zip"
+        if not evidence.is_file():
+            raise FileNotFoundError("public evidence builder produced no archive")
     man, supp = sub / "manuscript", sub / "supplement"
     upload = sub / "upload"
     upload.mkdir(exist_ok=True)
@@ -106,6 +131,7 @@ def _package_uploads(
         "supplement.pdf",
         "manuscript-source.zip",
         "artifact-manifest.json",
+        "publication-evidence.zip",
     }
     for name in managed:
         target = upload / name
@@ -115,6 +141,8 @@ def _package_uploads(
     shutil.copy2(man / "main.pdf", upload / "main.pdf")
     if (supp / "supplement.pdf").exists():
         shutil.copy2(supp / "supplement.pdf", upload / "supplement.pdf")
+    if evidence is not None:
+        shutil.copy2(evidence, upload / "publication-evidence.zip")
 
     source_files = ["main.tex", "main.bbl", "refs.bib", "IEEEtran.cls"]
     figures = sorted((man / "figures").glob("*.pdf"))
@@ -227,6 +255,9 @@ def build(paper: str) -> bool:
     if (en / "supplement.tex").exists():
         supp_tex = _localize((en / "supplement.tex").read_text(encoding="utf-8"))
         (supp / "supplement.tex").write_text(supp_tex, encoding="utf-8", newline="\n")
+        shutil.copy2(LATEX / "shared" / "refs.bib", supp / "refs.bib")
+        if cls.exists():
+            shutil.copy2(cls, supp / "IEEEtran.cls")
         # дополнение тоже может содержать фигуры (в T-BIOM туда вынесены четыре кривые,
         # чтобы рукопись уложилась в 10 страниц) -> копируем их рядом с ним
         supp_figs = set(_figures(supp_tex))
@@ -260,13 +291,15 @@ def build(paper: str) -> bool:
         if not (d / f"{stem}.tex").exists():
             continue
         _run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", stem], d)
-        _run(["bibtex", stem], d)
+        has_bibliography = r"\bibliography{" in (d / f"{stem}.tex").read_text(encoding="utf-8")
+        bibliography_result = _run(["bibtex", stem], d) if has_bibliography else None
         _run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", stem], d)
         r = _run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", stem], d)
         log = (d / f"{stem}.log").read_text(encoding="utf-8", errors="replace")
-        bad = len(re.findall(r"Reference .* undefined|multiply defined", log))
+        bad = _latex_reference_errors(log)
         pages = re.search(r"Output written on \S+ \((\d+) pages", log)
-        status = "OK" if r.returncode == 0 and bad == 0 else "ПРОБЛЕМА"
+        bibliography_ok = bibliography_result is None or bibliography_result.returncode == 0
+        status = "OK" if r.returncode == 0 and bad == 0 and bibliography_ok else "ПРОБЛЕМА"
         ok &= status == "OK"
         print(f"    {stem}.pdf: {status}, страниц {pages.group(1) if pages else '?'}"
               f"{f', битых ссылок {bad}' if bad else ''}")
