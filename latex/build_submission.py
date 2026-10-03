@@ -110,6 +110,9 @@ def _package_uploads(
 ) -> None:
     """Create portal artifacts without mixing PDFs, sources, or build logs."""
     evidence = None
+    lfw_evidence = None
+    curation_evidence = None
+    roc_v2_evidence = None
     if include_experiment_index:
         root = LATEX.parent
         staging = root / ".work" / "submission-evidence" / uuid.uuid4().hex
@@ -123,6 +126,36 @@ def _package_uploads(
         evidence = staging / "public_evidence_bundle.zip"
         if not evidence.is_file():
             raise FileNotFoundError("public evidence builder produced no archive")
+        lfw_staging = staging / "lfw"
+        lfw_result = _run(
+            [sys.executable, "-m", "scripts.export_lfw_evidence", "--root", str(root),
+             "--out", str(lfw_staging)], root,
+        )
+        if lfw_result.returncode:
+            raise RuntimeError("LFW evidence export failed:\n" + lfw_result.stdout + lfw_result.stderr)
+        lfw_evidence = lfw_staging / "lfw_evidence_bundle.zip"
+        if not lfw_evidence.is_file():
+            raise FileNotFoundError("LFW evidence builder produced no archive")
+        curation_staging = staging / "curation"
+        curation_result = _run(
+            [sys.executable, "-m", "scripts.export_curation_evidence", "--root", str(root),
+             "--out", str(curation_staging)], root,
+        )
+        if curation_result.returncode:
+            raise RuntimeError("curation evidence export failed:\n" + curation_result.stdout + curation_result.stderr)
+        curation_evidence = curation_staging / "curation_evidence_bundle.zip"
+        if not curation_evidence.is_file():
+            raise FileNotFoundError("curation evidence builder produced no archive")
+        roc_staging = staging / "roc-v2"
+        roc_result = _run(
+            [sys.executable, "-m", "scripts.export_roc_v2_evidence", "--root", str(root),
+             "--out", str(roc_staging)], root,
+        )
+        if roc_result.returncode:
+            raise RuntimeError("ROC-v2 evidence export failed:\n" + roc_result.stdout + roc_result.stderr)
+        roc_v2_evidence = roc_staging / "roc_v2_evidence_bundle.zip"
+        if not roc_v2_evidence.is_file():
+            raise FileNotFoundError("ROC-v2 evidence builder produced no archive")
     man, supp = sub / "manuscript", sub / "supplement"
     upload = sub / "upload"
     upload.mkdir(exist_ok=True)
@@ -132,6 +165,9 @@ def _package_uploads(
         "manuscript-source.zip",
         "artifact-manifest.json",
         "publication-evidence.zip",
+        "lfw-evidence.zip",
+        "curation-evidence.zip",
+        "roc-v2-evidence.zip",
     }
     for name in managed:
         target = upload / name
@@ -143,6 +179,12 @@ def _package_uploads(
         shutil.copy2(supp / "supplement.pdf", upload / "supplement.pdf")
     if evidence is not None:
         shutil.copy2(evidence, upload / "publication-evidence.zip")
+    if lfw_evidence is not None:
+        shutil.copy2(lfw_evidence, upload / "lfw-evidence.zip")
+    if curation_evidence is not None:
+        shutil.copy2(curation_evidence, upload / "curation-evidence.zip")
+    if roc_v2_evidence is not None:
+        shutil.copy2(roc_v2_evidence, upload / "roc-v2-evidence.zip")
 
     source_files = ["main.tex", "main.bbl", "refs.bib", "IEEEtran.cls"]
     figures = sorted((man / "figures").glob("*.pdf"))
@@ -224,13 +266,15 @@ def _package_uploads(
     print(f"    upload: {upload} (PDF и source ZIP разделены, build-логи исключены)")
 
 
-def build(paper: str) -> bool:
+def build(paper: str, *, submission_dir: Path | None = None, compile_only: bool = False) -> bool:
+    if compile_only and submission_dir is None:
+        raise ValueError("compile-only requires an isolated submission_dir")
     src = LATEX / "papers" / paper
     en = src / "en"
     if not (en / "main.tex").exists():
         print(f"[пропуск] {paper}: нет en/main.tex")
         return False
-    sub = src / "submission"
+    sub = submission_dir.resolve() if submission_dir is not None else src / "submission"
     man, supp = sub / "manuscript", sub / "supplement"
     for d in (man, man / "figures", supp):
         d.mkdir(parents=True, exist_ok=True)
@@ -274,7 +318,7 @@ def build(paper: str) -> bool:
                     print(f"    ! нет фигуры дополнения {fig}")
 
     # вырезаем комментарии (защита от деанонимизации через исходник)
-    strip = sub / "strip_comments.py"
+    strip = src / "submission" / "strip_comments.py"
     if strip.exists():
         targets = [str(man / "main.tex")]
         if (supp / "supplement.tex").exists():
@@ -305,7 +349,7 @@ def build(paper: str) -> bool:
               f"{f', битых ссылок {bad}' if bad else ''}")
         if pages:
             page_counts[stem] = int(pages.group(1))
-    if ok:
+    if ok and not compile_only:
         include_experiment_index = paper == "journal-1-tbiom"
         if include_experiment_index:
             index_builder = LATEX.parent / "scripts" / "build_publication_artifact_index.py"
@@ -322,6 +366,8 @@ def build(paper: str) -> bool:
             page_counts,
             include_experiment_index=include_experiment_index,
         )
+    if compile_only:
+        print("    compile-only: artifact index and upload package were not updated")
     print(f"[{paper}] -> {sub}")
     return ok
 
@@ -331,10 +377,19 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("paper", nargs="?", choices=PAPERS)
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--submission-dir", type=Path,
+                    help="isolated build destination; canonical sources remain unchanged")
+    ap.add_argument("--compile-only", action="store_true",
+                    help="compile isolated PDFs without refreshing the index or packaging uploads")
     args = ap.parse_args()
     if not args.paper and not args.all:
         ap.error("укажите статью или --all")
-    ok = all(build(p) for p in (PAPERS if args.all else [args.paper]))
+    if args.all and args.submission_dir is not None:
+        ap.error("--submission-dir requires one paper, not --all")
+    if args.compile_only and args.submission_dir is None:
+        ap.error("--compile-only requires an isolated --submission-dir")
+    ok = all(build(p, submission_dir=args.submission_dir, compile_only=args.compile_only)
+             for p in (PAPERS if args.all else [args.paper]))
     sys.exit(0 if ok else 1)
 
 

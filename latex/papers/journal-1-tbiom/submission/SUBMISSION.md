@@ -11,6 +11,29 @@ Run from the repository root:
 uv run python latex/build_submission.py journal-1-tbiom
 ```
 
+To verify current sources without overwriting another live build destination:
+
+```powershell
+uv run python latex/build_submission.py journal-1-tbiom --submission-dir .work/submission-check
+```
+
+Use a fresh task-specific destination. This option is incompatible with `--all`;
+it changes the output directory only, not the canonical source or data/experiment inputs.
+
+After a completed isolated build, audit the local current-source/package snapshot:
+
+```powershell
+uv run python -m scripts.audit_submission_snapshot --submission-dir .work/submission-check --out metrics/submission-check-audit
+```
+
+The audit requires a fresh output directory and fails on source/ZIP/hash/page mismatches,
+extra upload members or missing/timeout extractors. It re-derives the exact localized,
+comment-stripped LF source bytes, checks canonical refs/class/literal PDF figures and
+the archived index against the current local index. Evidence member certificates and
+projected aggregate/original-manifest bindings are checked. It does not attest the
+compiler execution, reverify all private experiment inputs, certify figure privacy,
+perform a visual review or replace the portal proof. Repeat after any source change.
+
 The command compiles and validates the paper, then creates an ignored `upload/`
 directory. Upload artifacts are deliberately separated:
 
@@ -20,6 +43,9 @@ directory. Upload artifacts are deliberately separated:
 | Main manuscript LaTeX source | `upload/manuscript-source.zip` |
 | Supplementary material for review | `upload/supplement.pdf` |
 | Supplementary data/code slot, if supported | `upload/publication-evidence.zip` |
+| Additional supplementary data/code slot, if supported | `upload/lfw-evidence.zip` |
+| Additional supplementary data/code slot, if supported | `upload/curation-evidence.zip` |
+| Additional supplementary data/code slot, if supported | `upload/roc-v2-evidence.zip` |
 | Conflict of interest | compile `coi.tex` to `coi.pdf` |
 | Cover letter | compile `cover_letter.tex` to `cover_letter.pdf` after all results are frozen |
 
@@ -45,6 +71,46 @@ This is partial aggregate evidence, not full experiment reproducibility or
 publication clearance. Remaining manuscript artifacts and access procedures must
 still be completed. Upload this ZIP separately, never inside the source/PDF item;
 confirm the portal supports it and that reviewers can access it.
+
+`lfw-evidence.zip` separately contains exactly six members: `results/lfw.json`,
+`tables/lfw.tex`, two sanitized evaluation/presentation manifests, `README.txt`,
+and `CERTIFICATE.json`. A strict scalar/schema allowlist preserves aggregate
+official-fold metrics and conditional subject intervals, but omits checkpoint
+names/digests, private record paths/digests and arbitrary original prose. All
+declared direct inputs/outputs are checked locally before and after packaging;
+the generated table must match the verified result after newline normalization.
+The certificate distinguishes original and exported result/table checksums and
+binds each member. The previous upload is preserved if any evidence exporter
+fails preflight. These archives do not establish training independence, full
+reproducibility or publication readiness. Confirm that the portal accepts the
+separate archives and exposes them to reviewers; do not merge them into a PDF
+or source upload item.
+
+`curation-evidence.zip` is a separate eight-member local package candidate: three
+schema-allowlisted aggregate results (lineage, global-ID shadow reconstruction,
+constituent-caption sensitivity), three count-only sanitized manifests, README and
+certificate. All declared direct inputs/outputs are verified locally, but no input
+record paths/digests, commands, parameters, private candidates or captions are
+redistributed. Exact recursive schemas reject unknown fields, vectors and changed
+scope claims; member hashes and original-versus-exported aggregate hashes are
+checked independently. The reconstruction does not recover historical provenance;
+automatic categories are not human gold, and unbalanced count filters are not
+retrained experimental arms. Marker/schema checks do not certify privacy: small-cell
+disclosure and access review remain mandatory before release. Confirm the separate
+portal slot and reviewer access only after the publication gates are cleared.
+
+`roc-v2-evidence.zip` is a separate thirteen-member candidate: three corrected ROC
+aggregates (global FG-NET, internal sensitivity, LFW compatibility), three generated
+tables, five count-only sanitized manifests, README and certificate. Original and
+exported hashes are distinct; parse/hash binding uses the same buffered bytes.
+The snapshot audit compares projections and tables to current native results, not
+only to hashes supplied inside the ZIP. Export failure preserves prior uploads.
+Private scores, images, captions, embeddings and person IDs are not redistributed.
+Fixed-checkpoint uncertainty is not a training-seed population interval; test ROC
+thresholds are not deployment calibration. Both EER definitions remain labelled.
+This is still partial evidence, not ethics/privacy clearance or full reproduction.
+The experiment index includes the five corresponding ROC-v2 manifests but remains
+incomplete until missing evidence and unfinished campaigns are resolved.
 
 ## Mandatory gates before upload
 

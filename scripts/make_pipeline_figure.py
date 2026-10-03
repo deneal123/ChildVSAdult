@@ -2,24 +2,63 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
 from age_gap.common.io import PROJECT_ROOT, data_path
+from age_gap.common.manifest import write_experiment_manifest
+
+
+def load_bound_funnel(path: Path) -> dict[str, int]:
+    """Verify the aggregate output binding, not private-input provenance or labels."""
+    payload = path.read_bytes()
+    metrics = json.loads(payload)
+    manifest = json.loads(path.with_suffix(".manifest.json").read_text(encoding="utf-8"))
+    outputs = manifest.get("outputs", [])
+    if len(outputs) != 1 or outputs[0].get("bytes") != len(payload) or outputs[0].get(
+        "sha256"
+    ) != hashlib.sha256(payload).hexdigest():
+        raise ValueError("Funnel aggregate checksum/size binding is invalid")
+    if manifest.get("metrics") != metrics:
+        raise ValueError("Funnel manifest metrics differ from the aggregate")
+    funnel = metrics["funnel"]
+    required = (
+        "posts", "photos", "face_records", "usable_faces", "rejected_face_records",
+        "curated_faces", "identity_groups", "person_clusters", "positive_pairs",
+        "negative_pairs", "final_pairs",
+    )
+    if any(type(funnel.get(key)) is not int or funnel[key] < 0 for key in required):
+        raise ValueError("Funnel counts must be nonnegative integers")
+    if funnel["face_records"] != funnel["usable_faces"] + funnel["rejected_face_records"]:
+        raise ValueError("Face-record accounting is inconsistent")
+    if funnel["final_pairs"] != funnel["positive_pairs"] + funnel["negative_pairs"]:
+        raise ValueError("Pair accounting is inconsistent")
+    if funnel["curated_faces"] > funnel["usable_faces"]:
+        raise ValueError("Curated faces exceed usable faces")
+    return funnel
+
+
+def pipeline_boxes(funnel: dict[str, int]) -> list[tuple[str, str]]:
+    """Keep caption grouping/merging before integrity pruning; no human-audit yield."""
+    return [
+        ("Public then/now\nposts", f"{funnel['posts']:,} posts\n{funnel['photos']:,} photos"),
+        ("RetinaFace +\nalignment", f"{funnel['face_records']:,} face records\n{funnel['usable_faces']:,} usable"),
+        ("Caption groups +\nperson merging", f"regex / cached LLM\ncos >= 0.85\n{funnel['person_clusters']:,} mapped clusters"),
+        ("Integrity prune +\ndeduplication", f"cos >= 0.97\n{funnel['curated_faces']:,} faces\n{funnel['identity_groups']:,} retained groups"),
+        ("Recorded-person\nsplit / evaluation", f"{funnel['positive_pairs']:,} positive +\n{funnel['negative_pairs']:,} negative pairs"),
+    ]
 
 
 def main() -> None:
-    metrics = json.loads(data_path("metrics_dir", "data_funnel.json").read_text(encoding="utf-8"))
-    funnel = metrics["funnel"]
-    boxes = [
-        ("Public then/now\nposts", f"{funnel['posts']:,} posts\n{funnel['photos']:,} photos"),
-        ("RetinaFace +\nalignment", f"{funnel['face_records']:,} face records\n{funnel['usable_faces']:,} usable"),
-        ("Caption +\nintegrity audit", "regex + versioned LLM\naudit pack: 5 x 400"),
-        ("Person clustering\n+ dedup", f"cos >= 0.85 / 0.97\n{funnel['identity_groups']:,} persons"),
-        ("Person-disjoint\nprotocol", f"{funnel['positive_pairs']:,} positive +\n{funnel['negative_pairs']:,} negative pairs"),
-    ]
+    source = Path(data_path("metrics_dir", "data_funnel.json"))
+    bound_inputs = [source, source.with_suffix(".manifest.json"), Path(__file__)]
+    before = [hashlib.sha256(path.read_bytes()).hexdigest() for path in bound_inputs]
+    funnel = load_bound_funnel(source)
+    boxes = pipeline_boxes(funnel)
     fig, ax = plt.subplots(figsize=(10.0, 2.05))
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 2)
@@ -48,6 +87,18 @@ def main() -> None:
     for extension in ["pdf", "png"]:
         fig.savefig(destination / f"fig_pipeline.{extension}", bbox_inches="tight", dpi=240)
     plt.close(fig)
+    # Detect changed aggregate/manifest before declaring the rendered output bound.
+    after = [hashlib.sha256(path.read_bytes()).hexdigest() for path in bound_inputs]
+    if after != before or load_bound_funnel(source) != funnel:
+        raise ValueError("Presentation inputs changed during rendering")
+    write_experiment_manifest(
+        Path(data_path("metrics_dir", "pipeline_figure.manifest.json")),
+        experiment="pipeline-figure-presentation",
+        parameters={"scope": "aggregate presentation, not historical preprocessing replay"},
+        metrics={"funnel": funnel},
+        inputs=bound_inputs,
+        outputs=[destination / "fig_pipeline.pdf", destination / "fig_pipeline.png"],
+    )
 
 
 if __name__ == "__main__":

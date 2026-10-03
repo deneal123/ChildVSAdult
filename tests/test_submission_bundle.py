@@ -108,12 +108,19 @@ def test_tbiom_packages_evidence_separately_and_binds_its_hash(tmp_path, monkeyp
     monkeypatch.setattr(build_submission, "_check_nonblank_pages", lambda *args: None)
 
     def fake_export(command, cwd):
-        assert "export_public_evidence.py" in command[1]
+        if command[1] == "-m":
+            assert command[2] in {"scripts.export_lfw_evidence", "scripts.export_curation_evidence", "scripts.export_roc_v2_evidence"}
+            filename = {"scripts.export_lfw_evidence": "lfw_evidence_bundle.zip",
+                        "scripts.export_curation_evidence": "curation_evidence_bundle.zip",
+                        "scripts.export_roc_v2_evidence": "roc_v2_evidence_bundle.zip"}[command[2]]
+        else:
+            assert "export_public_evidence.py" in command[1]
+            filename = "public_evidence_bundle.zip"
         assert cwd == root
         staging = Path(command[command.index("--out") + 1])
         assert staging.is_relative_to(root / ".work")
         staging.mkdir(parents=True)
-        with zipfile.ZipFile(staging / "public_evidence_bundle.zip", "w") as archive:
+        with zipfile.ZipFile(staging / filename, "w") as archive:
             archive.writestr("CERTIFICATE.json", "{}")
         return subprocess.CompletedProcess(command, 0, "", "")
 
@@ -123,8 +130,20 @@ def test_tbiom_packages_evidence_separately_and_binds_its_hash(tmp_path, monkeyp
     manifest = json.loads((sub / "upload/artifact-manifest.json").read_text(encoding="utf-8"))
     record = next(item for item in manifest["artifacts"] if item["file"] == evidence.name)
     assert record["sha256"] == build_submission._sha256(evidence)
+    lfw = sub / "upload/lfw-evidence.zip"
+    lfw_record = next(item for item in manifest["artifacts"] if item["file"] == lfw.name)
+    assert lfw_record["sha256"] == build_submission._sha256(lfw)
+    curation = sub / "upload/curation-evidence.zip"
+    curation_record = next(item for item in manifest["artifacts"] if item["file"] == curation.name)
+    assert curation_record["sha256"] == build_submission._sha256(curation)
+    roc = sub / "upload/roc-v2-evidence.zip"
+    roc_record = next(item for item in manifest["artifacts"] if item["file"] == roc.name)
+    assert roc_record["sha256"] == build_submission._sha256(roc)
     with zipfile.ZipFile(sub / "upload/manuscript-source.zip") as archive:
         assert "publication-evidence.zip" not in archive.namelist()
+        assert "lfw-evidence.zip" not in archive.namelist()
+        assert "curation-evidence.zip" not in archive.namelist()
+        assert "roc-v2-evidence.zip" not in archive.namelist()
 
 
 def test_evidence_export_failure_preserves_previous_upload(tmp_path, monkeypatch):
@@ -145,6 +164,31 @@ def test_non_tbiom_package_does_not_export_tbiom_evidence(tmp_path, monkeypatch)
     monkeypatch.setattr(build_submission, "_run", lambda *args: pytest.fail("unexpected export"))
     build_submission._package_uploads(sub, {"main": 1})
     assert not (sub / "upload/publication-evidence.zip").exists()
+    assert not (sub / "upload/lfw-evidence.zip").exists()
+    assert not (sub / "upload/curation-evidence.zip").exists()
+    assert not (sub / "upload/roc-v2-evidence.zip").exists()
+
+
+def test_lfw_export_failure_preserves_previous_uploads_after_first_export_succeeds(tmp_path, monkeypatch):
+    sub = _synthetic_submission(tmp_path)
+    (sub / "upload").mkdir()
+    originals = {name: b"previous valid bytes" for name in ("main.pdf", "publication-evidence.zip", "lfw-evidence.zip")}
+    for name, data in originals.items():
+        (sub / "upload" / name).write_bytes(data)
+
+    def exports(command, cwd):
+        if command[1] == "-m":
+            return subprocess.CompletedProcess(command, 1, "", "LFW checksum failure")
+        staging = Path(command[command.index("--out") + 1])
+        staging.mkdir(parents=True)
+        (staging / "public_evidence_bundle.zip").write_bytes(b"new first archive")
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(build_submission, "_run", exports)
+    with pytest.raises(RuntimeError, match="LFW checksum failure"):
+        build_submission._package_uploads(sub, {}, include_experiment_index=True)
+    for name, data in originals.items():
+        assert (sub / "upload" / name).read_bytes() == data
 
 
 def test_nonblank_page_check_resolves_relative_pdf_before_changing_cwd(tmp_path, monkeypatch):
@@ -158,3 +202,88 @@ def test_nonblank_page_check_resolves_relative_pdf_before_changing_cwd(tmp_path,
 
     monkeypatch.setattr(build_submission, "_run", fake_extract)
     build_submission._check_nonblank_pages(Path("upload/main.pdf"), 1)
+
+
+def test_curation_export_failure_preserves_all_previous_uploads(tmp_path, monkeypatch):
+    sub = _synthetic_submission(tmp_path)
+    (sub / "upload").mkdir()
+    originals = {name: b"previous valid bytes" for name in (
+        "main.pdf", "publication-evidence.zip", "lfw-evidence.zip", "curation-evidence.zip")}
+    for name, data in originals.items():
+        (sub / "upload" / name).write_bytes(data)
+
+    def exports(command, cwd):
+        if "scripts.export_curation_evidence" in command:
+            return subprocess.CompletedProcess(command, 1, "", "curation checksum failure")
+        staging = Path(command[command.index("--out") + 1])
+        staging.mkdir(parents=True)
+        name = "lfw_evidence_bundle.zip" if "scripts.export_lfw_evidence" in command else "public_evidence_bundle.zip"
+        (staging / name).write_bytes(b"new intermediate archive")
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(build_submission, "_run", exports)
+    with pytest.raises(RuntimeError, match="curation checksum failure"):
+        build_submission._package_uploads(sub, {}, include_experiment_index=True)
+    for name, data in originals.items():
+        assert (sub / "upload" / name).read_bytes() == data
+
+
+def test_isolated_build_leaves_canonical_submission_untouched(tmp_path, monkeypatch):
+    latex = tmp_path / "latex"
+    paper = latex / "papers/journal-1-tnnls"
+    (paper / "en").mkdir(parents=True)
+    (paper / "en/main.tex").write_text("aggregate main", encoding="utf-8")
+    (paper / "submission").mkdir()
+    marker = paper / "submission/main.pdf"
+    marker.write_bytes(b"active canonical build")
+    strip = paper / "submission/strip_comments.py"
+    strip.write_text("# fixture", encoding="utf-8")
+    (latex / "shared/vendor/ieee-tnnls").mkdir(parents=True)
+    (latex / "shared/refs.bib").write_text("refs", encoding="utf-8")
+    (latex / "shared/vendor/ieee-tnnls/IEEEtran.cls").write_text("class", encoding="utf-8")
+    monkeypatch.setattr(build_submission, "LATEX", latex)
+    destination = tmp_path / ".work/isolated-submission"
+    calls = []
+
+    def run(command, cwd):
+        calls.append((command, cwd))
+        if command[0] == "pdflatex":
+            (cwd / "main.log").write_text("Output written on main.pdf (1 pages).", encoding="utf-8")
+            (cwd / "main.pdf").write_bytes(b"new isolated PDF")
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(build_submission, "_run", run)
+    packaged = []
+    monkeypatch.setattr(build_submission, "_package_uploads", lambda sub, counts, **kwargs:
+                        packaged.append((sub, counts, kwargs)))
+    assert build_submission.build("journal-1-tnnls", submission_dir=destination)
+    assert marker.read_bytes() == b"active canonical build"
+    assert packaged == [(destination.resolve(), {"main": 1}, {"include_experiment_index": False})]
+    assert calls[0][0][1] == str(strip)
+    assert calls[0][1] == destination.resolve()
+    assert (destination / "manuscript/main.tex").read_text() == "aggregate main"
+
+
+def test_roc_export_failure_preserves_all_previous_uploads(tmp_path, monkeypatch):
+    sub = _synthetic_submission(tmp_path)
+    (sub / "upload").mkdir()
+    originals = {name: b"previous valid bytes" for name in (
+        "main.pdf", "publication-evidence.zip", "lfw-evidence.zip", "curation-evidence.zip", "roc-v2-evidence.zip")}
+    for name, data in originals.items():
+        (sub / "upload" / name).write_bytes(data)
+
+    def exports(command, cwd):
+        if "scripts.export_roc_v2_evidence" in command:
+            return subprocess.CompletedProcess(command, 1, "", "ROC-v2 checksum failure")
+        staging = Path(command[command.index("--out") + 1])
+        staging.mkdir(parents=True)
+        name = ("lfw_evidence_bundle.zip" if "scripts.export_lfw_evidence" in command else
+                "curation_evidence_bundle.zip" if "scripts.export_curation_evidence" in command else "public_evidence_bundle.zip")
+        (staging / name).write_bytes(b"intermediate evidence")
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(build_submission, "_run", exports)
+    with pytest.raises(RuntimeError, match="ROC-v2 checksum failure"):
+        build_submission._package_uploads(sub, {}, include_experiment_index=True)
+    for name, data in originals.items():
+        assert (sub / "upload" / name).read_bytes() == data

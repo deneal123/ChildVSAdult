@@ -19,6 +19,11 @@ INCLUDE = (
     "human_audit_pack_validation.manifest.json",
     "human_audit.manifest.json",
     "data_funnel.manifest.json",
+    "pipeline_figure.manifest.json",
+    "curation_lineage_20261003/summary.manifest.json",
+    "curation_replay_global_*/summary.manifest.json",
+    "constituent_integrity_20261003/summary.manifest.json",
+    "constituent_policy_sensitivity_20261003/summary.manifest.json",
     "sensitivity_dedup.manifest.json",
     "independent_embedding_audit.manifest.json",
     "model_inventory.manifest.json",
@@ -32,7 +37,15 @@ INCLUDE = (
     "fgnet_error_breakdown/fgnet_error_breakdown.manifest.json",
     "comparator_fgnet_endpoint_age_matched.manifest.json",
     "internal_endpoint_age_matched.manifest.json",
+    "internal_metrics_v2_20261003/summary.manifest.json",
+    "internal_metrics_v2_20261003/presentation.manifest.json",
+    "fgnet_metrics_v2_20261003/summary.manifest.json",
+    "fgnet_metrics_v2_20261003/presentation.manifest.json",
+    "lfw_metrics_v2_20261003/summary.manifest.json",
     "lfw_bound_cache_*/lfw_bound_cache.manifest.json",
+    "lfw_bound_evaluation_*/lfw_bound_evaluation.manifest.json",
+    "lfw_bound_evaluation_*/lfw_presentation.manifest.json",
+    "matched_arm_image_budget_*/summary.manifest.json",
     "delong_tests.manifest.json",
     "synthetic_parity.manifest.json",
     "sota_objectives.manifest.json",
@@ -163,6 +176,10 @@ def main() -> None:
         if not entry["input_integrity"]["valid"] or not entry["output_integrity"]["valid"]
     ]
     incomplete_experiments: list[str] = []
+    for evaluation_dir in sorted(METRICS.glob("lfw_bound_evaluation_*")):
+        if not ((evaluation_dir / "lfw_bound_evaluation.json").is_file()
+                and (evaluation_dir / "lfw_bound_evaluation.manifest.json").is_file()):
+            incomplete_experiments.append(f"{evaluation_dir.name}: completed result or manifest missing")
     for campaign_dir in sorted(METRICS.glob("strong_backbone_fixed8_bn_frozen_*")):
         corrected_summary = campaign_dir / "summary.json"
         if not corrected_summary.is_file():

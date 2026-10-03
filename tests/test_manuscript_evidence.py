@@ -252,21 +252,15 @@ def test_publication_artifact_index_has_no_checksum_failures() -> None:
 
 
 def test_cacd_vs_results_match_machine_readable_artifacts() -> None:
-    frozen = json.loads(
-        (ROOT / "metrics/cacd_vs/facenet_frozen.json").read_text(encoding="utf-8")
-    )["metrics"]
-    tuned = json.loads(
-        (ROOT / "metrics/cacd_vs/fine_tuned_summary.json").read_text(encoding="utf-8")
-    )["metrics"]
+    from scripts.render_cacd_metrics_v2 import summary, table
+
+    payload = json.loads((ROOT / "metrics/cacd_serial_20261003/summary.json").read_text(encoding="utf-8"))
     main = MAIN.read_text(encoding="utf-8")
 
-    assert f"{frozen['accuracy_10fold']:.4f}" in main
-    historical = SUPPLEMENT.read_text(encoding="utf-8")
-    assert f"{frozen['roc_auc']:.4f}" in historical
-    assert f"{frozen['eer']:.4f}" in main
-    for key in ("accuracy_10fold", "eer"):
-        assert f"{tuned[key]['mean']:.4f}" in main
-    assert f"{tuned['roc_auc']['mean']:.4f}" in historical
+    supplement = SUPPLEMENT.read_text(encoding="utf-8")
+    assert summary(payload).strip() in main
+    assert table(payload).strip() in supplement
+    assert "CACD-VS row is historical" in main
 
 
 def test_cacd_person_fold_disjointness_is_not_claimed_without_person_metadata() -> None:
@@ -392,13 +386,14 @@ def test_endpoint_matched_internal_claim_tracks_artifact() -> None:
         (ROOT / "metrics/internal_endpoint_age_matched.json").read_text(encoding="utf-8")
     )
     comparison = result["model_comparison_same_matched_subset"]
-    interval = result["facenet_paired_subject_bootstrap"]["ci95"]["delta_comparison_minus_reference"]
+    updated = json.loads((ROOT / "metrics/internal_metrics_v2_20261003/summary.json").read_text(encoding="utf-8"))
+    interval = updated["subsets"]["original_tolerance"]["metrics"]["roc_auc"]["tuned_minus_frozen"]["ci95"]
     main = MAIN.read_text(encoding="utf-8")
 
     assert result["diagnostics"]["matched_positive_count"] == 154
     assert result["diagnostics"]["age_gap_only_predictive_auc"] < 0.501
     assert comparison["facenet_tuned"]["roc_auc"] > comparison["facenet_frozen"]["roc_auc"]
-    assert comparison["facenet_tuned"]["tar@far=0.01"] < comparison["facenet_frozen"]["tar@far=0.01"]
+    assert comparison["facenet_tuned"]["tar@far=0.001"] < comparison["facenet_frozen"]["tar@far=0.001"]
     for value in (
         comparison["facenet_frozen"]["roc_auc"],
         comparison["facenet_tuned"]["roc_auc"],
@@ -406,6 +401,24 @@ def test_endpoint_matched_internal_claim_tracks_artifact() -> None:
     ):
         assert _fmt3(value) in main
     assert (ROOT / "metrics/internal_endpoint_age_matched.manifest.json").is_file()
+
+
+def test_internal_operating_points_use_corrected_empirical_roc():
+    path = ROOT / "metrics/internal_exact_age_sensitivity_20261003/summary.json"
+    result = json.loads(path.read_text(encoding="utf-8"))
+    manifest = json.loads(path.with_suffix(".manifest.json").read_text(encoding="utf-8"))
+    record = next(r for r in manifest["outputs"] if r["path"] == path.relative_to(ROOT).as_posix())
+    assert record["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+    operating = result["original_tolerance"]["empirical_tar_at_far"]
+    assert operating["tuned"]["0.01"] > operating["frozen"]["0.01"]
+    assert operating["tuned"]["0.001"] < operating["frozen"]["0.001"]
+    main = MAIN.read_text(encoding="utf-8")
+    section = main.split(r"\subsection{Endpoint-Age-Matched Internal Check}", 1)[1].split(r"\subsection", 1)[0]
+    for model in ("frozen", "tuned"):
+        for target in ("0.01", "0.001"):
+            assert _fmt3(operating[model][target]) in section
+    assert "The old threshold rule understated attainable TAR at 1" in section
+    assert "paired TAR-change intervals include zero at both points" in section
 
 
 def test_endpoint_age_matched_fgnet_claim_tracks_subject_artifact() -> None:
@@ -428,19 +441,22 @@ def test_endpoint_age_matched_fgnet_claim_tracks_subject_artifact() -> None:
     )
     assert multiseed["seeds"] == [42, 1, 2]
     assert "Endpoint-age-matched protocol check (three seeds)" in main
-    assert f"{multiseed['strata']['large_gap_25plus']['tuned_auc_mean']:.4f}" in main
-    assert f"{multiseed['strata']['large_gap_25plus']['delta_auc_mean']:+.4f}" in main
+    updated = json.loads((ROOT / "metrics/fgnet_metrics_v2_20261003/summary.json").read_text(encoding="utf-8"))
+    aggregate = updated["large_gap_25plus"]["three_checkpoint_aggregate"]["roc_auc"]
+    assert f"{aggregate['mean']:.4f}" in main
+    assert f"{aggregate['mean_checkpoint_delta']:+.4f}" in main
     abstract = main.partition(r"\begin{abstract}")[2].partition(r"\end{abstract}")[0]
     assert "endpoint-age-matched FG-NET protocol" in abstract
-    assert "0.8490" in abstract
+    assert f"{aggregate['mean']:.4f}" in abstract
     assert "original random-impostor protocol" in abstract
     for value in (
         interval["frozen_auc"],
         interval["tuned_auc"],
         interval["delta_auc"],
-        *interval["delta_ci95"],
     ):
         assert _fmt3(value) in main
+    for value in aggregate["delta_ci95"]:
+        assert f"{value:.4f}" in main
     assert (ROOT / "metrics/fgnet_endpoint_subject_stats.manifest.json").is_file()
     assert (ROOT / "metrics/fgnet_endpoint_multiseed.manifest.json").is_file()
 
@@ -470,10 +486,30 @@ def test_supplement_bounds_historical_figures_and_matched_table_width():
     assert "No apparent-demographic stratum degrades; errors fall everywhere" not in text
 
 
-def test_lfw_accuracy_is_not_misrepresented_as_official_before_rerun():
+def test_lfw_official_evaluation_is_separated_from_legacy_results():
     main = (ROOT / "latex/papers/journal-1-tbiom/en/main.tex").read_text(encoding="utf-8")
     supplement = (ROOT / "latex/papers/journal-1-tbiom/en/supplement.tex").read_text(encoding="utf-8")
-    assert "LFW (legacy interleaved 10-split accuracy; official-fold rerun pending)" in main
+    assert "LFW (source-bound FaceNet official View-2 accuracy and ROC-AUC" in main
     assert "LFW (10-fold accuracy)" not in main
     assert "legacy interleaved splits rather than official contiguous" in supplement
     assert "intervals must not be called subject-level" in supplement
+    assert "accuracy and low-FAR gain intervals include zero" in main
+    assert r"\label{tab:lfw-bound}" in supplement
+    assert "official-fold evaluation is pending" not in supplement
+
+
+def test_partial_source_control_discloses_total_image_budget_confound():
+    from scripts.render_fgnet_evidence import verified_result
+
+    result = verified_result(ROOT / "metrics/matched_arm_image_budget_20261002/summary.json", ROOT)
+    assert result["positive_image_budget_equal"] is True
+    assert result["all_train_image_budget_equal"] is False
+    main = MAIN.read_text(encoding="utf-8").partition(r"\textbf{Partial source control.}")[2].partition(r"\subsection")[0]
+    supplement = SUPPLEMENT.read_text(encoding="utf-8").partition(r"\section{Partial Matched-Source Control}")[2].partition(r"\section")[0]
+    for arm in ("LOW", "CROSS"):
+        count = result["arms"][arm]["all_train_images"]
+        assert _latex_int(count) in main and _latex_int(count) in supplement
+    assert "total training images differ" in main
+    assert "not only the 1{,}096 selected positive images" in supplement
+    assert "not fully matched" in supplement
+    assert "arm's own positive pool" not in supplement

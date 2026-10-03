@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "T-BIOM publication experiments only; no face data or biometric templates",
-  "entry_count": 79,
+  "entry_count": 94,
   "missing_expected_manifests": [
     "age_leakage.manifest.json",
     "fairness_audit.manifest.json",
@@ -581,6 +581,201 @@
       }
     },
     {
+      "manifest": "metrics/constituent_integrity_20261003/summary.manifest.json",
+      "manifest_sha256": "77ebd64e3098afda5977580c1359c8e67ca2b8e98a26f0ae469061f4dbaa7c51",
+      "experiment": "constituent-integrity-policy-audit",
+      "created_at_utc": "2026-10-03T00:20:47.497486+00:00",
+      "command": [
+        "scripts/audit_constituent_integrity.py"
+      ],
+      "parameters": {
+        "mode": "read-only cached decisions",
+        "policy": "exclude any cached noisy constituent",
+        "seed": null
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/processed/identity_groups.jsonl.post_bak",
+          "bytes": 12627556,
+          "sha256": "3e2b573f7e60fca144dec48c4e5f4ecb473f9f3af3d4b61bf966b8c138b2cdf6"
+        },
+        {
+          "path": "data/processed/person_clusters.jsonl",
+          "bytes": 2324340,
+          "sha256": "6493732524a969919602f078c2afdda381268eb30b9c12fdc2743bb5ba3e56a8"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
+          "bytes": 14059077,
+          "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl",
+          "bytes": 13617812,
+          "sha256": "2ebb08a55c8bce8f0d55f2a523bd74994e7327a63bf51ebb8afed0502bdb932b"
+        },
+        {
+          "path": "data/interim/group_validation_cache.jsonl",
+          "bytes": 11348601,
+          "sha256": "d29c9fc78fc7c2655e57efee204c9681dc961731fa9d0bf06157fb56505707cf"
+        },
+        {
+          "path": "data/processed/pairs.jsonl",
+          "bytes": 23882451,
+          "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+        },
+        {
+          "path": "metrics/group_integrity_audit.manifest.json",
+          "bytes": 1563,
+          "sha256": "9f3e19aa11391c736d1a2426598a862236d74e02cdff1a1719e8b866d37fd458"
+        },
+        {
+          "path": "scripts/audit_constituent_integrity.py",
+          "bytes": 7795,
+          "sha256": "998ccb9d3014df84f04e5038292d733c860972a980cb021839019155602675f1"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "scripts/validate_groups.py",
+          "bytes": 7365,
+          "sha256": "e47ba559197010757643a137e9753ce9906fcb18248d2c988c9f44c6f6a95bf2"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/constituent_integrity_20261003/summary.json",
+          "bytes": 1441,
+          "sha256": "dbbe36cf7c0d932296968c128010899c0b363478b3ac86faa02863ffd97b0cef"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 10,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/constituent_policy_sensitivity_20261003/summary.manifest.json",
+      "manifest_sha256": "b42802f8a42b96e1b64bbd21343834ba08489baf5bb01532e6b811ff4dc407fa",
+      "experiment": "constituent-integrity-sensitivity",
+      "created_at_utc": "2026-10-03T00:27:22.358019+00:00",
+      "command": [
+        "scripts/audit_constituent_policy_sensitivity.py"
+      ],
+      "parameters": {
+        "mode": "read-only",
+        "policies": [
+          "known noisy",
+          "all cached single"
+        ],
+        "seed": null
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/processed/identity_groups.jsonl.post_bak",
+          "bytes": 12627556,
+          "sha256": "3e2b573f7e60fca144dec48c4e5f4ecb473f9f3af3d4b61bf966b8c138b2cdf6"
+        },
+        {
+          "path": "data/processed/person_clusters.jsonl",
+          "bytes": 2324340,
+          "sha256": "6493732524a969919602f078c2afdda381268eb30b9c12fdc2743bb5ba3e56a8"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
+          "bytes": 14059077,
+          "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl",
+          "bytes": 13617812,
+          "sha256": "2ebb08a55c8bce8f0d55f2a523bd74994e7327a63bf51ebb8afed0502bdb932b"
+        },
+        {
+          "path": "data/interim/group_validation_cache.jsonl",
+          "bytes": 11348601,
+          "sha256": "d29c9fc78fc7c2655e57efee204c9681dc961731fa9d0bf06157fb56505707cf"
+        },
+        {
+          "path": "data/processed/pairs.jsonl",
+          "bytes": 23882451,
+          "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+        },
+        {
+          "path": "metrics/group_integrity_audit.manifest.json",
+          "bytes": 1563,
+          "sha256": "9f3e19aa11391c736d1a2426598a862236d74e02cdff1a1719e8b866d37fd458"
+        },
+        {
+          "path": "scripts/audit_constituent_policy_sensitivity.py",
+          "bytes": 4544,
+          "sha256": "6fb2e137585d6c68266758f31f1ba00fae2fc1f77fec524a6bf478e9232a0da4"
+        },
+        {
+          "path": "scripts/audit_constituent_integrity.py",
+          "bytes": 7795,
+          "sha256": "998ccb9d3014df84f04e5038292d733c860972a980cb021839019155602675f1"
+        },
+        {
+          "path": "scripts/replay_curation_snapshot.py",
+          "bytes": 7398,
+          "sha256": "cabcccfed544de9f8662ba09f7827d9891578a5138d092621446e96354dd8f47"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/constituent_policy_sensitivity_20261003/summary.json",
+          "bytes": 2149,
+          "sha256": "c09431ecf35f759c61734a2ed0fe10f76f6f39e24baf19d1c8717ee736e0cafe"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 10,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
       "manifest": "metrics/cross_platform_vk2reddit_3seed.manifest.json",
       "manifest_sha256": "09fc140dc57b1cb84e3f7f3f6c278627be9e88fef150f5a7ff291c146b2c97d9",
       "experiment": "cross-platform-transfer",
@@ -711,6 +906,269 @@
       "private_output_count": 0,
       "input_integrity": {
         "checked": 4,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/curation_lineage_20261003/summary.manifest.json",
+      "manifest_sha256": "120c50c4addb60f0023b4fe2a6de2db65d87d4e557e43636d4dbddfb03cf3b12",
+      "experiment": "historical-curation-lineage",
+      "created_at_utc": "2026-10-02T23:41:04.701732+00:00",
+      "command": [
+        "scripts/audit_curation_lineage.py"
+      ],
+      "parameters": {
+        "mode": "read-only",
+        "noisy_categories": [
+          "collage",
+          "meme",
+          "multi_person"
+        ]
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/processed/identity_groups.jsonl.post_bak",
+          "bytes": 12627556,
+          "sha256": "3e2b573f7e60fca144dec48c4e5f4ecb473f9f3af3d4b61bf966b8c138b2cdf6"
+        },
+        {
+          "path": "data/processed/person_clusters.jsonl",
+          "bytes": 2324340,
+          "sha256": "6493732524a969919602f078c2afdda381268eb30b9c12fdc2743bb5ba3e56a8"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
+          "bytes": 14059077,
+          "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl",
+          "bytes": 13617812,
+          "sha256": "2ebb08a55c8bce8f0d55f2a523bd74994e7327a63bf51ebb8afed0502bdb932b"
+        },
+        {
+          "path": "data/processed/redundant_faces.jsonl",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "scripts/audit_curation_lineage.py",
+          "bytes": 4388,
+          "sha256": "6960cbd301099c12b1823792c4d88c306b8a404faa7dda0dc20bfae88b73beab"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/curation_lineage_20261003/summary.json",
+          "bytes": 751,
+          "sha256": "d54509aac2a5fd1ff2e0756813d4bdbe838883130f4f3d8d01a9919ea4a4eddb"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 6,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/curation_replay_global_20261003/summary.manifest.json",
+      "manifest_sha256": "f5a16999280c0e5de983e4f1da0f3a871247d066b50908cbd3955515957ac11e",
+      "experiment": "shadow-global-id-curation-replay",
+      "created_at_utc": "2026-10-03T00:04:28.288270+00:00",
+      "command": [
+        "scripts/replay_curation_snapshot_global.py"
+      ],
+      "parameters": {
+        "threshold": 0.97,
+        "policy": "global redundant face IDs",
+        "seed": null
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
+          "bytes": 14059077,
+          "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl",
+          "bytes": 13617812,
+          "sha256": "2ebb08a55c8bce8f0d55f2a523bd74994e7327a63bf51ebb8afed0502bdb932b"
+        },
+        {
+          "path": "metrics/sensitivity_dedup.manifest.json",
+          "bytes": 2058,
+          "sha256": "248ec42f2b87323c1cd6ba1c233a4265af4943e8c26240b7385aad7487cf9bca"
+        },
+        {
+          "path": "metrics/curation_replay_global_20261003/source/replay_curation_snapshot_global.py",
+          "bytes": 4553,
+          "sha256": "3999f13dcf9d732c0e9ce80f84bfff09e75f8760768b18c63b0df69b6166aa47"
+        },
+        {
+          "path": "scripts/replay_curation_snapshot.py",
+          "bytes": 7398,
+          "sha256": "cabcccfed544de9f8662ba09f7827d9891578a5138d092621446e96354dd8f47"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/curation_replay_global_20261003/summary.json",
+          "bytes": 1108,
+          "sha256": "8e6acae88ec34939a7f004d0ccf78335bfca8cd934c6eb1387d0a2afe0880fa9"
+        }
+      ],
+      "private_input_count": 1,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 10,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/curation_replay_global_20261003_v2/summary.manifest.json",
+      "manifest_sha256": "81f4098cd12bcc226c47545cb3640f6ae9b4e0b18bbafb1b6b35c1ba7a05182a",
+      "experiment": "shadow-global-id-curation-replay",
+      "created_at_utc": "2026-10-03T00:06:33.211629+00:00",
+      "command": [
+        "scripts/replay_curation_snapshot_global.py",
+        "--out",
+        "metrics/curation_replay_global_20261003_v2"
+      ],
+      "parameters": {
+        "threshold": 0.97,
+        "policy": "global redundant face IDs",
+        "seed": null
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
+          "bytes": 14059077,
+          "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
+        },
+        {
+          "path": "data/processed/identity_groups.jsonl",
+          "bytes": 13617812,
+          "sha256": "2ebb08a55c8bce8f0d55f2a523bd74994e7327a63bf51ebb8afed0502bdb932b"
+        },
+        {
+          "path": "metrics/sensitivity_dedup.manifest.json",
+          "bytes": 2058,
+          "sha256": "248ec42f2b87323c1cd6ba1c233a4265af4943e8c26240b7385aad7487cf9bca"
+        },
+        {
+          "path": "scripts/replay_curation_snapshot_global.py",
+          "bytes": 4573,
+          "sha256": "7165affa49df119507bfd206b394378f13c60f322203e8ecd0cc74af5230dde2"
+        },
+        {
+          "path": "scripts/replay_curation_snapshot.py",
+          "bytes": 7398,
+          "sha256": "cabcccfed544de9f8662ba09f7827d9891578a5138d092621446e96354dd8f47"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/curation_replay_global_20261003_v2/summary.json",
+          "bytes": 1108,
+          "sha256": "8e6acae88ec34939a7f004d0ccf78335bfca8cd934c6eb1387d0a2afe0880fa9"
+        }
+      ],
+      "private_input_count": 1,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 10,
         "missing": [],
         "checksum_mismatch": [],
         "private_missing_count": 0,
@@ -1261,6 +1719,605 @@
       },
       "output_integrity": {
         "checked": 13,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/fgnet_metrics_v2_20261003/presentation.manifest.json",
+      "manifest_sha256": "c3ebd17352e394f4b5b2a2c25d8ae94cb64412458d4d10cd6666f9367206f5bd",
+      "experiment": "fgnet-roc-v2-presentation",
+      "created_at_utc": "2026-10-03T02:54:19.887063+00:00",
+      "command": [
+        "scripts/render_fgnet_metrics_v2.py"
+      ],
+      "parameters": {
+        "seed": null
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/fgnet_metrics_v2_20261003/summary.json",
+          "bytes": 19675,
+          "sha256": "29831c45b57e81a5df403273430fe823f21001975df064390fb5f1ad629885ca"
+        },
+        {
+          "path": "metrics/fgnet_metrics_v2_20261003/summary.manifest.json",
+          "bytes": 40127,
+          "sha256": "de5add6ccea2acd2e1c649340fdb7d1192f4403d31edfa1a2d1516353eff5d19"
+        },
+        {
+          "path": "scripts/render_fgnet_metrics_v2.py",
+          "bytes": 6232,
+          "sha256": "a23514aa967854695a3711300d2e341b7ef59f88a60c0be5a99eae63955d6c4a"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/fgnet_metrics_v2_20261003/headline_table.tex",
+          "bytes": 914,
+          "sha256": "6e1ff50ef71827a8c6dde5071532f8faa702251a4350c64eff09cbbd46cbbc78"
+        },
+        {
+          "path": "metrics/fgnet_metrics_v2_20261003/operating_table.tex",
+          "bytes": 2038,
+          "sha256": "e12bc413d56ef34bf3bd184167a0f62d5b59e9ccd81b9dbe438d1c384420988a"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 4,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/fgnet_metrics_v2_20261003/summary.manifest.json",
+      "manifest_sha256": "de5add6ccea2acd2e1c649340fdb7d1192f4403d31edfa1a2d1516353eff5d19",
+      "experiment": "fgnet-headline-full-cache-roc-v2",
+      "created_at_utc": "2026-10-03T02:50:06.252757+00:00",
+      "command": [
+        "scripts/reevaluate_fgnet_metrics_v2.py",
+        "--out",
+        "metrics/fgnet_metrics_v2_20261003"
+      ],
+      "parameters": {
+        "seed": 0,
+        "protocol_seed": 42,
+        "tolerance": 2,
+        "n_boot": 2000,
+        "image_inference": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/fgnet_error_breakdown/fgnet_error_breakdown.json",
+          "bytes": 1676136,
+          "sha256": "4634466f84ae38a528448fa71935e9905fabf68ba4c251c838daf71d8ca5de44"
+        },
+        {
+          "path": "metrics/fgnet_error_breakdown/fgnet_error_breakdown.manifest.json",
+          "bytes": 6988,
+          "sha256": "e45e088bb6eda5d2673f12269b94868cce8d26797f0b32557ca87524240ef2df"
+        },
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "scripts/reevaluate_fgnet_metrics_v2.py",
+          "bytes": 7503,
+          "sha256": "86fe9b707192dee03db01c5d1754eae1d871fe89dcb3296f57b1df4d16758a81"
+        },
+        {
+          "path": "scripts/benchmark_metrics_v2.py",
+          "bytes": 4244,
+          "sha256": "18e590a7e83e84855c8dfebe89acadf09d19d7e88fc80fa6d5c473bc6d103e45"
+        },
+        {
+          "path": "scripts/verification_metrics_v2.py",
+          "bytes": 4224,
+          "sha256": "74a9ca835c9a6e32a1339bc9e7a159d8b57c18fc7e7e21a09327d58294788651"
+        },
+        {
+          "path": "scripts/fgnet_error_breakdown.py",
+          "bytes": 49708,
+          "sha256": "a0f6fc9650ca48f969658eee51adb72cd5b4e41cadd720ab918cdc42cc54a858"
+        },
+        {
+          "path": "scripts/fgnet_retrieval_study.py",
+          "bytes": 56767,
+          "sha256": "0296a630b9416d57d1bc91bb4a1e2695b3aeabf750a7772ad7b8362e3d64ca8f"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        },
+        {
+          "path": "src/age_gap/__init__.py",
+          "bytes": 23,
+          "sha256": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003"
+        },
+        {
+          "path": "src/age_gap/beauty.py",
+          "bytes": 18769,
+          "sha256": "fdaef46da7a609bce70943a3a39fe684baf655484d584ca71ec4e92cafb042eb"
+        },
+        {
+          "path": "src/age_gap/common/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/common/device.py",
+          "bytes": 4344,
+          "sha256": "597a52dcfb0f8fba4c794e8ca0b44013efb382e2e71088cfcf571189f54d42fb"
+        },
+        {
+          "path": "src/age_gap/common/io.py",
+          "bytes": 2439,
+          "sha256": "eff1ac8b84647d55eba4f2cdca9b86cd31c085c2a7d2bb5f203848e6e06fd075"
+        },
+        {
+          "path": "src/age_gap/common/logging.py",
+          "bytes": 1390,
+          "sha256": "c10569bb1f4cf2bc6f65acbff9242ec746ef32a7c04f92a35a33da070aec5017"
+        },
+        {
+          "path": "src/age_gap/common/manifest.py",
+          "bytes": 3383,
+          "sha256": "55717ceed0dda8d3b3239f0f9d9a0a63a3d442e027f3f0baf916ff0046af8ecd"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        },
+        {
+          "path": "src/age_gap/contrastive.py",
+          "bytes": 12647,
+          "sha256": "bccf1344d3228bc906d9e3e4b1fecddcc6fc8b8daa46c0eba2aa0809102afc12"
+        },
+        {
+          "path": "src/age_gap/datasets/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/datasets/age_anchors.py",
+          "bytes": 9596,
+          "sha256": "c7f1510f65bfd81260fee8d05c95728cfc8a872c6866c2ad3c9428c169809259"
+        },
+        {
+          "path": "src/age_gap/datasets/anonymize.py",
+          "bytes": 3063,
+          "sha256": "a70ddec135117d0a5ce8af00a9c1f4e5f252f5b06f1013f107a5e914fb77f34f"
+        },
+        {
+          "path": "src/age_gap/datasets/apparent_age.py",
+          "bytes": 2319,
+          "sha256": "71a77f20fed1f6ddd2bde062af370f5c6051cbd1fee8dded112de17baad6a674"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/gender_meta.py",
+          "bytes": 4040,
+          "sha256": "18ee00433d6c5ea44c1f4f05454a1ce6bee898a5f5b0b41c46fa4ce31eda13ba"
+        },
+        {
+          "path": "src/age_gap/datasets/group_validator.py",
+          "bytes": 4365,
+          "sha256": "c2b4ef64be8d5a69c34ea48c49fa40acb418031b133a07c9a1fde9d501d7961b"
+        },
+        {
+          "path": "src/age_gap/datasets/hard_negatives.py",
+          "bytes": 8016,
+          "sha256": "031e3e9cca81ece4767e28033064adf231086725b9be5510fc915f4e3ede3f16"
+        },
+        {
+          "path": "src/age_gap/datasets/identity_groups.py",
+          "bytes": 9546,
+          "sha256": "71c60ee4a1463af395ca43431b7d85e7fcda0c30ecf1deb419ea1c77ebc2fc36"
+        },
+        {
+          "path": "src/age_gap/datasets/llm_age_extractor.py",
+          "bytes": 12275,
+          "sha256": "08bf96525d0977ffac4d0bbd0ffc87a3331c703b3291eec382ef5e5d2791c0ec"
+        },
+        {
+          "path": "src/age_gap/datasets/pair_builder.py",
+          "bytes": 8361,
+          "sha256": "f8190115105cab133f0924625464449cad566b27de6042ce275b6af2eefe443c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/datasets/splits.py",
+          "bytes": 9033,
+          "sha256": "39edcd27520975c75c8c1587854f83886487e261be2c099ab479c2bb19e795dd"
+        },
+        {
+          "path": "src/age_gap/domain_adapt.py",
+          "bytes": 6028,
+          "sha256": "6783324f4c4d7c489c8135c203a0fe6860dfde9c942abb01c4f74bc92079e9c4"
+        },
+        {
+          "path": "src/age_gap/engagement/__init__.py",
+          "bytes": 924,
+          "sha256": "3acd396458ca30d83a53d4d2e909fb223b4be66232e6b87c0f9c69b02141715d"
+        },
+        {
+          "path": "src/age_gap/engagement/backfill.py",
+          "bytes": 10120,
+          "sha256": "2405620b042f79b51dd15831c488b660e4be765f79cf21ebd925dfcbd2a711e1"
+        },
+        {
+          "path": "src/age_gap/engagement/cluster.py",
+          "bytes": 3672,
+          "sha256": "2bea1143d3fa7d950118651ea61dc731f730e1f2f4c8b8a3ae0e61b91e73fbb0"
+        },
+        {
+          "path": "src/age_gap/engagement/deep.py",
+          "bytes": 19792,
+          "sha256": "8d1e8003322723e76c9e4f945e01af72ef15155abc255e567307258cf2edce84"
+        },
+        {
+          "path": "src/age_gap/engagement/features.py",
+          "bytes": 16414,
+          "sha256": "07bec9da0620b38d50313e75f71357bd6160f20f70583b180c272868505ae1f9"
+        },
+        {
+          "path": "src/age_gap/engagement/model.py",
+          "bytes": 8740,
+          "sha256": "669f755bc0d37e5cbbed133d5aea7047ab7531de99ac19141fb25052bc24184f"
+        },
+        {
+          "path": "src/age_gap/engagement/report.py",
+          "bytes": 30967,
+          "sha256": "088009ed10c6ddf3905bc7aae4a40212b3c4c9e4a507a016f3d0790397ceb60f"
+        },
+        {
+          "path": "src/age_gap/engagement/target.py",
+          "bytes": 8588,
+          "sha256": "0b39e2ce05d6b38e484052a788673bbe4604a57c68b159cbee84544a6c983a2b"
+        },
+        {
+          "path": "src/age_gap/evaluation/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/evaluation/age_leakage.py",
+          "bytes": 4259,
+          "sha256": "22d2d835103e227b50fcf6681a6b7ad872eed47f63be1105449b3058abcb6cba"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark.py",
+          "bytes": 3306,
+          "sha256": "1c319fba7db05d1f4f61f74ddcda26d37058ff25688ca3ed7d9b73f32f2090ff"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark_external.py",
+          "bytes": 12420,
+          "sha256": "2b96d693a13af7a318e812ac30b05e9be97159708ba11dfa6129a2b7b0af5017"
+        },
+        {
+          "path": "src/age_gap/evaluation/calibration.py",
+          "bytes": 5091,
+          "sha256": "b9481023f5cccbde22bfaa0c96c4655aab1043b60ead2cc638ee68e35f3288a6"
+        },
+        {
+          "path": "src/age_gap/evaluation/external_suite.py",
+          "bytes": 2533,
+          "sha256": "e83475bacb90581381f6ce016694ac6bf622fcbe309aa6cbe49b9929a9d47827"
+        },
+        {
+          "path": "src/age_gap/evaluation/fairness.py",
+          "bytes": 11013,
+          "sha256": "c06dc629deda58c4743047a70d0d3285ab99acccda4151414f170ef8772e7999"
+        },
+        {
+          "path": "src/age_gap/evaluation/fgnet.py",
+          "bytes": 15380,
+          "sha256": "5d74ed1da5fbf8c1ea8dfb146aa33648244bb24f6de510c520b13132226a6119"
+        },
+        {
+          "path": "src/age_gap/evaluation/human_audit.py",
+          "bytes": 2456,
+          "sha256": "dd4b4e2f6a95feb52530354633bade0ff1b0eb02a09bbcd179bfc1391168d78e"
+        },
+        {
+          "path": "src/age_gap/evaluation/internal_age_matched.py",
+          "bytes": 15908,
+          "sha256": "f560f1da5f2a71ee6fdb39dd122477b2049544d04a1ca802b4635bf7037cda46"
+        },
+        {
+          "path": "src/age_gap/evaluation/metrics.py",
+          "bytes": 5173,
+          "sha256": "1ce55a399c253704b4161c429309a6d6a118e1465d28ff3bc291660390f93b4c"
+        },
+        {
+          "path": "src/age_gap/evaluation/representation_diagnostics.py",
+          "bytes": 13062,
+          "sha256": "0794adf27ad8ccdf576a5f5bd4ee4af54b142331f1c11984726a64fb70c97748"
+        },
+        {
+          "path": "src/age_gap/evaluation/retrieval.py",
+          "bytes": 4695,
+          "sha256": "c841032deaf7ad5b8ca24deefd48260c87c51e2a1df618ddcefd47b892caa1bc"
+        },
+        {
+          "path": "src/age_gap/evaluation/subject_bootstrap.py",
+          "bytes": 5655,
+          "sha256": "15483a351bbf7e4c84558a676f4d8d1d434bc03e74d27d8ef82d9457c87984a4"
+        },
+        {
+          "path": "src/age_gap/infrastructure/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/base.py",
+          "bytes": 3227,
+          "sha256": "a081a93779613e11193d91f0d82050382b378382c640535c1f32d80a43b3a3e6"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/client.py",
+          "bytes": 15370,
+          "sha256": "5ec71f03dd629ba6848651a4cb2f1be44f08a6bc5b985ee79d1cda1cd55cd506"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/retry.py",
+          "bytes": 5315,
+          "sha256": "6462e83e06b7ef584d9b5bbe0ddc33148c465c3996ab056db6431f3d7311c350"
+        },
+        {
+          "path": "src/age_gap/models/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/models/adaface_ir.py",
+          "bytes": 9853,
+          "sha256": "8cf2c2dbcdb2434aeb6bf3f64f786243f528bb573925bc9330bf1841e15ddadf"
+        },
+        {
+          "path": "src/age_gap/models/adapter.py",
+          "bytes": 1465,
+          "sha256": "4e12d979541139f6543ab2053e7f65da574affce98b2c4a5b9ec0ba4254d738c"
+        },
+        {
+          "path": "src/age_gap/models/aging.py",
+          "bytes": 11847,
+          "sha256": "ee8cd962b42ab5b0a82e51eb9b07ff078d1597f7d69e80a80590ac5e2f8a1ab5"
+        },
+        {
+          "path": "src/age_gap/models/backbones.py",
+          "bytes": 2227,
+          "sha256": "ab659200fc03c85304a3d0908eedaed7711eff45b5bf00ac6b0b05973c140a87"
+        },
+        {
+          "path": "src/age_gap/models/embeddings.py",
+          "bytes": 4427,
+          "sha256": "302a13b14bbaee53ed54ba526ded227042dd7879af32420946096227bf6c5659"
+        },
+        {
+          "path": "src/age_gap/models/facenet.py",
+          "bytes": 3046,
+          "sha256": "13dd00de91c0c3ebe59bc30d06d5b551f161bfc9088c3f5afffc1adcda5346c4"
+        },
+        {
+          "path": "src/age_gap/models/iresnet.py",
+          "bytes": 9144,
+          "sha256": "28d1973c0634093107eea76545eaaaa3bb3abd3aafb82400f262b59e0336feb7"
+        },
+        {
+          "path": "src/age_gap/parsing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/parsing/ingest.py",
+          "bytes": 9926,
+          "sha256": "a87bfa7ad6305b7747a2f7289db2d0936ffb5100df302ef52cbd6a3029c41703"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_client.py",
+          "bytes": 12480,
+          "sha256": "bf80fa6d7a27a5135c6029ef0de469ec53d1ad0747d4383a50e613db57e90f1b"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_ingest.py",
+          "bytes": 8941,
+          "sha256": "4ebbcd511a66347768e8c926dcaedbf322ab7cecc58de3fb7b23b863cb96b6dd"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_scrape.py",
+          "bytes": 14625,
+          "sha256": "03219212deb9c4745bac59d33c816ec5bd84db0d81039a6b4e166e860869b6bd"
+        },
+        {
+          "path": "src/age_gap/parsing/vk_client.py",
+          "bytes": 8137,
+          "sha256": "f21451186ac85e58a3d84368d138cb68e0da6a9a557ab4c902b1a0aaae7e2e10"
+        },
+        {
+          "path": "src/age_gap/preprocessing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/preprocessing/crop_align.py",
+          "bytes": 2433,
+          "sha256": "69a327fbcc2676bc7f802ce3e96d7d577e6afbc90e60ae33509db3dc2240b581"
+        },
+        {
+          "path": "src/age_gap/preprocessing/detect.py",
+          "bytes": 3019,
+          "sha256": "f8e7ff55b3c7005a772260766ec3282283a9eba89fbdfd05ca471c4b245df79e"
+        },
+        {
+          "path": "src/age_gap/preprocessing/mtcnn_align.py",
+          "bytes": 4988,
+          "sha256": "a10bbce290361243cbbba4a5fa9b8abd7dcf12673d34c057f11c88b4761d5ac5"
+        },
+        {
+          "path": "src/age_gap/preprocessing/pipeline.py",
+          "bytes": 9472,
+          "sha256": "36d118b9710f7135330ebdbf8dcb50a47d4d6d0beed004c6d6a4e7d1d27012fe"
+        },
+        {
+          "path": "src/age_gap/preprocessing/quality.py",
+          "bytes": 2496,
+          "sha256": "90eaf81601fce09b8146eec9d5ea15b199ab00292a6a88966c6b5cf36c24db53"
+        },
+        {
+          "path": "src/age_gap/recsys.py",
+          "bytes": 5584,
+          "sha256": "d9e660a6f50806f8d8f66988390b63c1ceed45ebfea77e6b7b85a1cfcd699fa1"
+        },
+        {
+          "path": "src/age_gap/settings/__init__.py",
+          "bytes": 122,
+          "sha256": "031b68f30596847a15ff364c6cca21a2aa9b7d2326eb4d2511790094084e53e9"
+        },
+        {
+          "path": "src/age_gap/settings/config.py",
+          "bytes": 599,
+          "sha256": "61f398efc7b2855818fc929b7e54dc359520b06216a0ca6c82b73c40ef04a2e0"
+        },
+        {
+          "path": "src/age_gap/training/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/training/arcface_train.py",
+          "bytes": 11160,
+          "sha256": "3f578ab9ebbd034ecf36a0f79c43f5c2435d2a0e5267090b8a00b6e5696b26da"
+        },
+        {
+          "path": "src/age_gap/training/dataset.py",
+          "bytes": 3891,
+          "sha256": "a9081f56f915adf3c53466bb37c5a31f5500bb6e3aa123ae255f82a8ce81fbcd"
+        },
+        {
+          "path": "src/age_gap/training/disentangle.py",
+          "bytes": 8069,
+          "sha256": "96fa894d4443f621ddc1c5abdbd45e6187fe4502f41125f458990b26b40507f0"
+        },
+        {
+          "path": "src/age_gap/training/finetune.py",
+          "bytes": 16834,
+          "sha256": "ec073a2c2fef2d0bb2a6d44e610a064c469325cb6fa364ae8ed249d44594ffd8"
+        },
+        {
+          "path": "src/age_gap/training/losses.py",
+          "bytes": 1516,
+          "sha256": "b8e41b96b1713473be60b7dd77ed6dd8c4f2e00f6d376484e3b74506110645d1"
+        },
+        {
+          "path": "src/age_gap/training/sota_common.py",
+          "bytes": 15576,
+          "sha256": "382a4c28707d96f45e1d2008c8a7d228a9c0e00ac1ad18c887a45cb22422eedb"
+        },
+        {
+          "path": "src/age_gap/training/synthetic.py",
+          "bytes": 8443,
+          "sha256": "d04877b36dbdad9ff2e35635729700db378b4b32fe8690c11904f9a5a1883ebf"
+        },
+        {
+          "path": "src/age_gap/training/train.py",
+          "bytes": 7946,
+          "sha256": "c894284020345527a6b9469527c747217f93b667eb57548a08298eeead7ac067"
+        },
+        {
+          "path": "src/age_gap/settings/settings.toml",
+          "bytes": 3753,
+          "sha256": "13a84990cf071680c022bf13b64bb2191211a438270dea0b3c5501651db104de"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/fgnet_metrics_v2_20261003/summary.json",
+          "bytes": 19675,
+          "sha256": "29831c45b57e81a5df403273430fe823f21001975df064390fb5f1ad629885ca"
+        }
+      ],
+      "private_input_count": 5,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 101,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
         "private_missing_count": 0,
@@ -2360,6 +3417,976 @@
       },
       "output_integrity": {
         "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/internal_metrics_v2_20261003/presentation.manifest.json",
+      "manifest_sha256": "41aa35c98ffce83e0fc289eecb150bb0b86d9bad3cb86bbb93cd6c49798580f8",
+      "experiment": "internal-roc-v2-table-presentation",
+      "created_at_utc": "2026-10-03T02:15:14.247155+00:00",
+      "command": [
+        "scripts/render_internal_metrics_v2.py"
+      ],
+      "parameters": {
+        "seed": null,
+        "table_label": "tab:internal-roc-v2"
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/internal_metrics_v2_20261003/summary.json",
+          "bytes": 10735,
+          "sha256": "42c43a891b88a68684a96c94775171bc009c3921eadd174282458002645c7af2"
+        },
+        {
+          "path": "metrics/internal_metrics_v2_20261003/summary.manifest.json",
+          "bytes": 29085,
+          "sha256": "dc3f6c22965786b139578af7166af22476849f3e83295056acfe43ae77be59e8"
+        },
+        {
+          "path": "scripts/render_internal_metrics_v2.py",
+          "bytes": 4459,
+          "sha256": "e52039949201700cf31f3995170588e98f0159b1d615cb4500317c8b56bc6fd7"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/internal_metrics_v2_20261003/internal_table.tex",
+          "bytes": 1956,
+          "sha256": "3aa9d8079dc74885b67e1aa9d95ee5cc6382568835be821fa158f4b9af50d9d8"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 4,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/internal_metrics_v2_20261003/summary.manifest.json",
+      "manifest_sha256": "dc3f6c22965786b139578af7166af22476849f3e83295056acfe43ae77be59e8",
+      "experiment": "internal-roc-v2-paired-inference",
+      "created_at_utc": "2026-10-03T02:12:48.606897+00:00",
+      "command": [
+        "scripts/reevaluate_internal_metrics_v2.py",
+        "--out",
+        "metrics/internal_metrics_v2_20261003"
+      ],
+      "parameters": {
+        "seed": 42,
+        "n_boot": 2000,
+        "metric_version": "empirical-roc-v2",
+        "threshold_reselection": "test empirical ROC, not calibrated deployment"
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/internal_exact_age_sensitivity_20261003/summary.json",
+          "bytes": 3797,
+          "sha256": "a5d41bfb80b831f3a45d7fa5367bf52527e8dc744489e2833602d9dd6ecaeb74"
+        },
+        {
+          "path": "metrics/internal_exact_age_sensitivity_20261003/summary.manifest.json",
+          "bytes": 91855,
+          "sha256": "bd73a1865030a32a2b32449b89c7280466bd137bedfa4665025cbb2a19f5d556"
+        },
+        {
+          "path": "data/processed/experiments/pairs_internal_endpoint_age_matched.jsonl",
+          "bytes": 121726,
+          "sha256": "25d93b75c20da10b39e200380803eb5c3464e8f7327fe908cb42679a196b7772"
+        },
+        {
+          "path": "data/processed/person_clusters.jsonl",
+          "bytes": 2324340,
+          "sha256": "6493732524a969919602f078c2afdda381268eb30b9c12fdc2743bb5ba3e56a8"
+        },
+        {
+          "path": "scripts/reevaluate_internal_metrics_v2.py",
+          "bytes": 8298,
+          "sha256": "82ba81ea384ea128c8667d7552dee9951adf39922a0137b7367cb3cd1f7afac6"
+        },
+        {
+          "path": "scripts/verification_metrics_v2.py",
+          "bytes": 4224,
+          "sha256": "74a9ca835c9a6e32a1339bc9e7a159d8b57c18fc7e7e21a09327d58294788651"
+        },
+        {
+          "path": "scripts/internal_exact_age_sensitivity.py",
+          "bytes": 12832,
+          "sha256": "68df5796b2de7bf403e14021ebdf451cdc84cb66bb18a6cb2981f4a7b0cbddf1"
+        },
+        {
+          "path": "scripts/audit_age_label_balance.py",
+          "bytes": 8790,
+          "sha256": "05dc839ba6baf4e38a3581ca0716f973e2dd09539be214b5b0bfe39e1dfb2fac"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        },
+        {
+          "path": "src/age_gap/__init__.py",
+          "bytes": 23,
+          "sha256": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003"
+        },
+        {
+          "path": "src/age_gap/beauty.py",
+          "bytes": 18769,
+          "sha256": "fdaef46da7a609bce70943a3a39fe684baf655484d584ca71ec4e92cafb042eb"
+        },
+        {
+          "path": "src/age_gap/common/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/common/device.py",
+          "bytes": 4344,
+          "sha256": "597a52dcfb0f8fba4c794e8ca0b44013efb382e2e71088cfcf571189f54d42fb"
+        },
+        {
+          "path": "src/age_gap/common/io.py",
+          "bytes": 2439,
+          "sha256": "eff1ac8b84647d55eba4f2cdca9b86cd31c085c2a7d2bb5f203848e6e06fd075"
+        },
+        {
+          "path": "src/age_gap/common/logging.py",
+          "bytes": 1390,
+          "sha256": "c10569bb1f4cf2bc6f65acbff9242ec746ef32a7c04f92a35a33da070aec5017"
+        },
+        {
+          "path": "src/age_gap/common/manifest.py",
+          "bytes": 3383,
+          "sha256": "55717ceed0dda8d3b3239f0f9d9a0a63a3d442e027f3f0baf916ff0046af8ecd"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        },
+        {
+          "path": "src/age_gap/contrastive.py",
+          "bytes": 12647,
+          "sha256": "bccf1344d3228bc906d9e3e4b1fecddcc6fc8b8daa46c0eba2aa0809102afc12"
+        },
+        {
+          "path": "src/age_gap/datasets/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/datasets/age_anchors.py",
+          "bytes": 9596,
+          "sha256": "c7f1510f65bfd81260fee8d05c95728cfc8a872c6866c2ad3c9428c169809259"
+        },
+        {
+          "path": "src/age_gap/datasets/anonymize.py",
+          "bytes": 3063,
+          "sha256": "a70ddec135117d0a5ce8af00a9c1f4e5f252f5b06f1013f107a5e914fb77f34f"
+        },
+        {
+          "path": "src/age_gap/datasets/apparent_age.py",
+          "bytes": 2319,
+          "sha256": "71a77f20fed1f6ddd2bde062af370f5c6051cbd1fee8dded112de17baad6a674"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/gender_meta.py",
+          "bytes": 4040,
+          "sha256": "18ee00433d6c5ea44c1f4f05454a1ce6bee898a5f5b0b41c46fa4ce31eda13ba"
+        },
+        {
+          "path": "src/age_gap/datasets/group_validator.py",
+          "bytes": 4365,
+          "sha256": "c2b4ef64be8d5a69c34ea48c49fa40acb418031b133a07c9a1fde9d501d7961b"
+        },
+        {
+          "path": "src/age_gap/datasets/hard_negatives.py",
+          "bytes": 8016,
+          "sha256": "031e3e9cca81ece4767e28033064adf231086725b9be5510fc915f4e3ede3f16"
+        },
+        {
+          "path": "src/age_gap/datasets/identity_groups.py",
+          "bytes": 9546,
+          "sha256": "71c60ee4a1463af395ca43431b7d85e7fcda0c30ecf1deb419ea1c77ebc2fc36"
+        },
+        {
+          "path": "src/age_gap/datasets/llm_age_extractor.py",
+          "bytes": 12275,
+          "sha256": "08bf96525d0977ffac4d0bbd0ffc87a3331c703b3291eec382ef5e5d2791c0ec"
+        },
+        {
+          "path": "src/age_gap/datasets/pair_builder.py",
+          "bytes": 8361,
+          "sha256": "f8190115105cab133f0924625464449cad566b27de6042ce275b6af2eefe443c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/datasets/splits.py",
+          "bytes": 9033,
+          "sha256": "39edcd27520975c75c8c1587854f83886487e261be2c099ab479c2bb19e795dd"
+        },
+        {
+          "path": "src/age_gap/domain_adapt.py",
+          "bytes": 6028,
+          "sha256": "6783324f4c4d7c489c8135c203a0fe6860dfde9c942abb01c4f74bc92079e9c4"
+        },
+        {
+          "path": "src/age_gap/engagement/__init__.py",
+          "bytes": 924,
+          "sha256": "3acd396458ca30d83a53d4d2e909fb223b4be66232e6b87c0f9c69b02141715d"
+        },
+        {
+          "path": "src/age_gap/engagement/backfill.py",
+          "bytes": 10120,
+          "sha256": "2405620b042f79b51dd15831c488b660e4be765f79cf21ebd925dfcbd2a711e1"
+        },
+        {
+          "path": "src/age_gap/engagement/cluster.py",
+          "bytes": 3672,
+          "sha256": "2bea1143d3fa7d950118651ea61dc731f730e1f2f4c8b8a3ae0e61b91e73fbb0"
+        },
+        {
+          "path": "src/age_gap/engagement/deep.py",
+          "bytes": 19792,
+          "sha256": "8d1e8003322723e76c9e4f945e01af72ef15155abc255e567307258cf2edce84"
+        },
+        {
+          "path": "src/age_gap/engagement/features.py",
+          "bytes": 16414,
+          "sha256": "07bec9da0620b38d50313e75f71357bd6160f20f70583b180c272868505ae1f9"
+        },
+        {
+          "path": "src/age_gap/engagement/model.py",
+          "bytes": 8740,
+          "sha256": "669f755bc0d37e5cbbed133d5aea7047ab7531de99ac19141fb25052bc24184f"
+        },
+        {
+          "path": "src/age_gap/engagement/report.py",
+          "bytes": 30967,
+          "sha256": "088009ed10c6ddf3905bc7aae4a40212b3c4c9e4a507a016f3d0790397ceb60f"
+        },
+        {
+          "path": "src/age_gap/engagement/target.py",
+          "bytes": 8588,
+          "sha256": "0b39e2ce05d6b38e484052a788673bbe4604a57c68b159cbee84544a6c983a2b"
+        },
+        {
+          "path": "src/age_gap/evaluation/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/evaluation/age_leakage.py",
+          "bytes": 4259,
+          "sha256": "22d2d835103e227b50fcf6681a6b7ad872eed47f63be1105449b3058abcb6cba"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark.py",
+          "bytes": 3306,
+          "sha256": "1c319fba7db05d1f4f61f74ddcda26d37058ff25688ca3ed7d9b73f32f2090ff"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark_external.py",
+          "bytes": 12420,
+          "sha256": "2b96d693a13af7a318e812ac30b05e9be97159708ba11dfa6129a2b7b0af5017"
+        },
+        {
+          "path": "src/age_gap/evaluation/calibration.py",
+          "bytes": 5091,
+          "sha256": "b9481023f5cccbde22bfaa0c96c4655aab1043b60ead2cc638ee68e35f3288a6"
+        },
+        {
+          "path": "src/age_gap/evaluation/external_suite.py",
+          "bytes": 2533,
+          "sha256": "e83475bacb90581381f6ce016694ac6bf622fcbe309aa6cbe49b9929a9d47827"
+        },
+        {
+          "path": "src/age_gap/evaluation/fairness.py",
+          "bytes": 11013,
+          "sha256": "c06dc629deda58c4743047a70d0d3285ab99acccda4151414f170ef8772e7999"
+        },
+        {
+          "path": "src/age_gap/evaluation/fgnet.py",
+          "bytes": 15380,
+          "sha256": "5d74ed1da5fbf8c1ea8dfb146aa33648244bb24f6de510c520b13132226a6119"
+        },
+        {
+          "path": "src/age_gap/evaluation/human_audit.py",
+          "bytes": 2456,
+          "sha256": "dd4b4e2f6a95feb52530354633bade0ff1b0eb02a09bbcd179bfc1391168d78e"
+        },
+        {
+          "path": "src/age_gap/evaluation/internal_age_matched.py",
+          "bytes": 15908,
+          "sha256": "f560f1da5f2a71ee6fdb39dd122477b2049544d04a1ca802b4635bf7037cda46"
+        },
+        {
+          "path": "src/age_gap/evaluation/metrics.py",
+          "bytes": 5173,
+          "sha256": "1ce55a399c253704b4161c429309a6d6a118e1465d28ff3bc291660390f93b4c"
+        },
+        {
+          "path": "src/age_gap/evaluation/representation_diagnostics.py",
+          "bytes": 13062,
+          "sha256": "0794adf27ad8ccdf576a5f5bd4ee4af54b142331f1c11984726a64fb70c97748"
+        },
+        {
+          "path": "src/age_gap/evaluation/retrieval.py",
+          "bytes": 4695,
+          "sha256": "c841032deaf7ad5b8ca24deefd48260c87c51e2a1df618ddcefd47b892caa1bc"
+        },
+        {
+          "path": "src/age_gap/evaluation/subject_bootstrap.py",
+          "bytes": 5655,
+          "sha256": "15483a351bbf7e4c84558a676f4d8d1d434bc03e74d27d8ef82d9457c87984a4"
+        },
+        {
+          "path": "src/age_gap/infrastructure/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/base.py",
+          "bytes": 3227,
+          "sha256": "a081a93779613e11193d91f0d82050382b378382c640535c1f32d80a43b3a3e6"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/client.py",
+          "bytes": 15370,
+          "sha256": "5ec71f03dd629ba6848651a4cb2f1be44f08a6bc5b985ee79d1cda1cd55cd506"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/retry.py",
+          "bytes": 5315,
+          "sha256": "6462e83e06b7ef584d9b5bbe0ddc33148c465c3996ab056db6431f3d7311c350"
+        },
+        {
+          "path": "src/age_gap/models/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/models/adaface_ir.py",
+          "bytes": 9853,
+          "sha256": "8cf2c2dbcdb2434aeb6bf3f64f786243f528bb573925bc9330bf1841e15ddadf"
+        },
+        {
+          "path": "src/age_gap/models/adapter.py",
+          "bytes": 1465,
+          "sha256": "4e12d979541139f6543ab2053e7f65da574affce98b2c4a5b9ec0ba4254d738c"
+        },
+        {
+          "path": "src/age_gap/models/aging.py",
+          "bytes": 11847,
+          "sha256": "ee8cd962b42ab5b0a82e51eb9b07ff078d1597f7d69e80a80590ac5e2f8a1ab5"
+        },
+        {
+          "path": "src/age_gap/models/backbones.py",
+          "bytes": 2227,
+          "sha256": "ab659200fc03c85304a3d0908eedaed7711eff45b5bf00ac6b0b05973c140a87"
+        },
+        {
+          "path": "src/age_gap/models/embeddings.py",
+          "bytes": 4427,
+          "sha256": "302a13b14bbaee53ed54ba526ded227042dd7879af32420946096227bf6c5659"
+        },
+        {
+          "path": "src/age_gap/models/facenet.py",
+          "bytes": 3046,
+          "sha256": "13dd00de91c0c3ebe59bc30d06d5b551f161bfc9088c3f5afffc1adcda5346c4"
+        },
+        {
+          "path": "src/age_gap/models/iresnet.py",
+          "bytes": 9144,
+          "sha256": "28d1973c0634093107eea76545eaaaa3bb3abd3aafb82400f262b59e0336feb7"
+        },
+        {
+          "path": "src/age_gap/parsing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/parsing/ingest.py",
+          "bytes": 9926,
+          "sha256": "a87bfa7ad6305b7747a2f7289db2d0936ffb5100df302ef52cbd6a3029c41703"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_client.py",
+          "bytes": 12480,
+          "sha256": "bf80fa6d7a27a5135c6029ef0de469ec53d1ad0747d4383a50e613db57e90f1b"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_ingest.py",
+          "bytes": 8941,
+          "sha256": "4ebbcd511a66347768e8c926dcaedbf322ab7cecc58de3fb7b23b863cb96b6dd"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_scrape.py",
+          "bytes": 14625,
+          "sha256": "03219212deb9c4745bac59d33c816ec5bd84db0d81039a6b4e166e860869b6bd"
+        },
+        {
+          "path": "src/age_gap/parsing/vk_client.py",
+          "bytes": 8137,
+          "sha256": "f21451186ac85e58a3d84368d138cb68e0da6a9a557ab4c902b1a0aaae7e2e10"
+        },
+        {
+          "path": "src/age_gap/preprocessing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/preprocessing/crop_align.py",
+          "bytes": 2433,
+          "sha256": "69a327fbcc2676bc7f802ce3e96d7d577e6afbc90e60ae33509db3dc2240b581"
+        },
+        {
+          "path": "src/age_gap/preprocessing/detect.py",
+          "bytes": 3019,
+          "sha256": "f8e7ff55b3c7005a772260766ec3282283a9eba89fbdfd05ca471c4b245df79e"
+        },
+        {
+          "path": "src/age_gap/preprocessing/mtcnn_align.py",
+          "bytes": 4988,
+          "sha256": "a10bbce290361243cbbba4a5fa9b8abd7dcf12673d34c057f11c88b4761d5ac5"
+        },
+        {
+          "path": "src/age_gap/preprocessing/pipeline.py",
+          "bytes": 9472,
+          "sha256": "36d118b9710f7135330ebdbf8dcb50a47d4d6d0beed004c6d6a4e7d1d27012fe"
+        },
+        {
+          "path": "src/age_gap/preprocessing/quality.py",
+          "bytes": 2496,
+          "sha256": "90eaf81601fce09b8146eec9d5ea15b199ab00292a6a88966c6b5cf36c24db53"
+        },
+        {
+          "path": "src/age_gap/recsys.py",
+          "bytes": 5584,
+          "sha256": "d9e660a6f50806f8d8f66988390b63c1ceed45ebfea77e6b7b85a1cfcd699fa1"
+        },
+        {
+          "path": "src/age_gap/settings/__init__.py",
+          "bytes": 122,
+          "sha256": "031b68f30596847a15ff364c6cca21a2aa9b7d2326eb4d2511790094084e53e9"
+        },
+        {
+          "path": "src/age_gap/settings/config.py",
+          "bytes": 599,
+          "sha256": "61f398efc7b2855818fc929b7e54dc359520b06216a0ca6c82b73c40ef04a2e0"
+        },
+        {
+          "path": "src/age_gap/training/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/training/arcface_train.py",
+          "bytes": 11160,
+          "sha256": "3f578ab9ebbd034ecf36a0f79c43f5c2435d2a0e5267090b8a00b6e5696b26da"
+        },
+        {
+          "path": "src/age_gap/training/dataset.py",
+          "bytes": 3891,
+          "sha256": "a9081f56f915adf3c53466bb37c5a31f5500bb6e3aa123ae255f82a8ce81fbcd"
+        },
+        {
+          "path": "src/age_gap/training/disentangle.py",
+          "bytes": 8069,
+          "sha256": "96fa894d4443f621ddc1c5abdbd45e6187fe4502f41125f458990b26b40507f0"
+        },
+        {
+          "path": "src/age_gap/training/finetune.py",
+          "bytes": 16834,
+          "sha256": "ec073a2c2fef2d0bb2a6d44e610a064c469325cb6fa364ae8ed249d44594ffd8"
+        },
+        {
+          "path": "src/age_gap/training/losses.py",
+          "bytes": 1516,
+          "sha256": "b8e41b96b1713473be60b7dd77ed6dd8c4f2e00f6d376484e3b74506110645d1"
+        },
+        {
+          "path": "src/age_gap/training/sota_common.py",
+          "bytes": 15576,
+          "sha256": "382a4c28707d96f45e1d2008c8a7d228a9c0e00ac1ad18c887a45cb22422eedb"
+        },
+        {
+          "path": "src/age_gap/training/synthetic.py",
+          "bytes": 8443,
+          "sha256": "d04877b36dbdad9ff2e35635729700db378b4b32fe8690c11904f9a5a1883ebf"
+        },
+        {
+          "path": "src/age_gap/training/train.py",
+          "bytes": 7946,
+          "sha256": "c894284020345527a6b9469527c747217f93b667eb57548a08298eeead7ac067"
+        },
+        {
+          "path": "src/age_gap/settings/settings.toml",
+          "bytes": 3753,
+          "sha256": "13a84990cf071680c022bf13b64bb2191211a438270dea0b3c5501651db104de"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/internal_metrics_v2_20261003/summary.json",
+          "bytes": 10735,
+          "sha256": "42c43a891b88a68684a96c94775171bc009c3921eadd174282458002645c7af2"
+        }
+      ],
+      "private_input_count": 1,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 94,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/lfw_bound_cache_20261002/lfw_bound_cache.manifest.json",
+      "manifest_sha256": "3b46b778b71e15b122a7093957b708512d25626ad35c5ea78d5bfc0ba97db5f9",
+      "experiment": "lfw_bound_cache",
+      "created_at_utc": "2026-10-02T20:37:51.556080+00:00",
+      "command": [
+        "scripts/build_lfw_bound_cache.py",
+        "--execute",
+        "--threads",
+        "2"
+      ],
+      "parameters": {
+        "threads": 2,
+        "device": "cpu",
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "detector": "SCRFD det_10g",
+        "det_size": 640,
+        "det_threshold": 0.5,
+        "nms_threshold": 0.4,
+        "alignment_mode": "arcface",
+        "image_size": 112,
+        "decoder": "PIL RGB full 250px + resize 1.0 + sklearn float32 round-trip -> BGR",
+        "fallback": "central square resize; reject miss_rate > 0.05",
+        "fold_assignment": "official contiguous positive/negative blocks",
+        "versions": {
+          "insightface": "1.0.1",
+          "onnxruntime": "1.26.0",
+          "Pillow": "12.2.0",
+          "numpy": "2.2.6",
+          "opencv-python": "4.13.0.92"
+        }
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": false
+      },
+      "inputs": [
+        {
+          "path": "<external-artifact>/pairs.txt",
+          "bytes": 155335,
+          "sha256": "ea42330c62c92989f9d7c03237ed5d591365e89b3e649747777b70e692dc1592"
+        },
+        {
+          "path": "<external-artifact>/det_10g.onnx",
+          "bytes": 16923827,
+          "sha256": "5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91"
+        },
+        {
+          "path": "scripts/build_lfw_bound_cache.py",
+          "bytes": 17691,
+          "sha256": "1838fffd547700d0ec1316d43626c162ed5f26abf0cfbdb9b4850a9ff165adff"
+        },
+        {
+          "path": ".venv/Lib/site-packages/insightface/model_zoo/scrfd.py",
+          "bytes": 16065,
+          "sha256": "8898d1f90690d46bee371e1de31d1af60837988272a5eef904c5ba89e0fb8d83"
+        },
+        {
+          "path": ".venv/Lib/site-packages/insightface/utils/face_align.py",
+          "bytes": 3356,
+          "sha256": "a8b34ddd06716f5ca7e7501415cbd3789ccbce18db9e557b35e537695290d922"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/lfw_bound_cache_20261002/lfw_bound_cache.json",
+          "bytes": 562,
+          "sha256": "d40bc12721d35a33237d9b99245158a11236973a6318832ebfeca5d039c41be0"
+        }
+      ],
+      "private_input_count": 7701,
+      "private_output_count": 5,
+      "input_integrity": {
+        "checked": 7706,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 6,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/lfw_bound_evaluation_20261002/lfw_bound_evaluation.manifest.json",
+      "manifest_sha256": "1e36ac4cfbe24a9ae11c200bb147ca64d51e6320b13c45d0c0b53017aabd9468",
+      "experiment": "lfw-bound-3seed-subject-evaluation",
+      "created_at_utc": "2026-10-02T21:03:50.383179+00:00",
+      "command": [
+        ".venv/Scripts/python.exe",
+        "-m",
+        "scripts.evaluate_lfw_bound",
+        "--execute",
+        "--threads",
+        "2",
+        "--batch-size",
+        "32",
+        "--n-boot",
+        "2000"
+      ],
+      "parameters": {
+        "seeds": [
+          42,
+          1,
+          2
+        ],
+        "device": "cpu",
+        "threads": 2,
+        "batch_size": 32,
+        "n_boot": 2000,
+        "bootstrap_seed": 0,
+        "threshold_grid_count": 4001,
+        "threshold_grid_sha256_float64_little_endian": "c5eea70abaf0d63d900777a848be84468323bdaa435ccba7b32995402d1265a6",
+        "package_versions": {
+          "torch": "2.12.0+cu132",
+          "facenet-pytorch": "2.6.0",
+          "numpy": "2.2.6",
+          "scikit-learn": "1.9.0",
+          "Pillow": "12.2.0"
+        },
+        "fold_thresholds_reselected_in_bootstrap": true
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/lfw_bound_cache_20261002/lfw_bound_cache.manifest.json",
+          "bytes": 1853081,
+          "sha256": "3b46b778b71e15b122a7093957b708512d25626ad35c5ea78d5bfc0ba97db5f9"
+        },
+        {
+          "path": "<external-artifact>/pairs.txt",
+          "bytes": 155335,
+          "sha256": "ea42330c62c92989f9d7c03237ed5d591365e89b3e649747777b70e692dc1592"
+        },
+        {
+          "path": "<external-artifact>/det_10g.onnx",
+          "bytes": 16923827,
+          "sha256": "5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91"
+        },
+        {
+          "path": "scripts/build_lfw_bound_cache.py",
+          "bytes": 17691,
+          "sha256": "1838fffd547700d0ec1316d43626c162ed5f26abf0cfbdb9b4850a9ff165adff"
+        },
+        {
+          "path": ".venv/Lib/site-packages/insightface/model_zoo/scrfd.py",
+          "bytes": 16065,
+          "sha256": "8898d1f90690d46bee371e1de31d1af60837988272a5eef904c5ba89e0fb8d83"
+        },
+        {
+          "path": ".venv/Lib/site-packages/insightface/utils/face_align.py",
+          "bytes": 3356,
+          "sha256": "a8b34ddd06716f5ca7e7501415cbd3789ccbce18db9e557b35e537695290d922"
+        },
+        {
+          "path": "metrics/lfw_bound_cache_20261002/lfw_bound_cache.json",
+          "bytes": 562,
+          "sha256": "d40bc12721d35a33237d9b99245158a11236973a6318832ebfeca5d039c41be0"
+        },
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "scripts/evaluate_lfw_bound.py",
+          "bytes": 23107,
+          "sha256": "ac2de94a1b47da6ad4eafaffd1127a69b75424f58c64630e1de6b1441cb4f164"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        },
+        {
+          "path": "scripts/export_public_evidence.py",
+          "bytes": 20464,
+          "sha256": "c2fa0dccc787e6ad3f5eff212264f75aab53698df87b54fe0921d3c19e3c948b"
+        },
+        {
+          "path": "src/age_gap/models/facenet.py",
+          "bytes": 3046,
+          "sha256": "13dd00de91c0c3ebe59bc30d06d5b551f161bfc9088c3f5afffc1adcda5346c4"
+        },
+        {
+          "path": "src/age_gap/models/backbones.py",
+          "bytes": 2227,
+          "sha256": "ab659200fc03c85304a3d0908eedaed7711eff45b5bf00ac6b0b05973c140a87"
+        },
+        {
+          "path": ".venv/Lib/site-packages/facenet_pytorch/models/inception_resnet_v1.py",
+          "bytes": 11054,
+          "sha256": "ed9ad5168bb45da68850a4e84667eb665226068a95ec9fdd03fb554850d7b749"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/lfw_bound_evaluation_20261002/lfw_bound_evaluation.json",
+          "bytes": 17148,
+          "sha256": "5c67f54f41b8e6aa36712826da42ea86badd831d5fc3051d9f81e900166c80e6"
+        }
+      ],
+      "private_input_count": 7706,
+      "private_output_count": 5,
+      "input_integrity": {
+        "checked": 7723,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 6,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/lfw_bound_evaluation_20261002/lfw_presentation.manifest.json",
+      "manifest_sha256": "d0aadb3f037ad55cbc85b4e0513db27ac82924eabaa70dcb403777df940cd562",
+      "experiment": "lfw-source-bound-table-presentation",
+      "created_at_utc": "2026-10-02T21:11:41.526896+00:00",
+      "command": [
+        "scripts/render_lfw_evidence.py"
+      ],
+      "parameters": {
+        "table_label": "tab:lfw-bound"
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/lfw_bound_evaluation_20261002/lfw_bound_evaluation.json",
+          "bytes": 17148,
+          "sha256": "5c67f54f41b8e6aa36712826da42ea86badd831d5fc3051d9f81e900166c80e6"
+        },
+        {
+          "path": "metrics/lfw_bound_evaluation_20261002/lfw_bound_evaluation.manifest.json",
+          "bytes": 1874163,
+          "sha256": "1e36ac4cfbe24a9ae11c200bb147ca64d51e6320b13c45d0c0b53017aabd9468"
+        },
+        {
+          "path": "scripts/render_lfw_evidence.py",
+          "bytes": 4717,
+          "sha256": "ae0832ba43cb2bdf97f80dcb5d68b9c802fc4f449b1581e434b26c9205496a52"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/lfw_bound_evaluation_20261002/lfw_table.tex",
+          "bytes": 1292,
+          "sha256": "f1a9993ae5d1bcfce3b3ecb2d38fb9b30d737737fa0932d9e4d15aa6364e356a"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 4,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/lfw_metrics_v2_20261003/summary.manifest.json",
+      "manifest_sha256": "21c292014636e71c694f6e97371cc948f55436664a7570b95783e9dbc3bc5d4d",
+      "experiment": "lfw-saved-score-roc-v2-compatibility",
+      "created_at_utc": "2026-10-03T03:08:18.393766+00:00",
+      "command": [
+        "scripts/audit_lfw_metrics_v2.py",
+        "--out",
+        "metrics/lfw_metrics_v2_20261003"
+      ],
+      "parameters": {
+        "seed": 0,
+        "n_boot": 2000,
+        "image_inference": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/lfw_bound_evaluation_20261002/lfw_bound_evaluation.json",
+          "bytes": 17148,
+          "sha256": "5c67f54f41b8e6aa36712826da42ea86badd831d5fc3051d9f81e900166c80e6"
+        },
+        {
+          "path": "metrics/lfw_bound_evaluation_20261002/lfw_bound_evaluation.manifest.json",
+          "bytes": 1874163,
+          "sha256": "1e36ac4cfbe24a9ae11c200bb147ca64d51e6320b13c45d0c0b53017aabd9468"
+        },
+        {
+          "path": "scripts/audit_lfw_metrics_v2.py",
+          "bytes": 5782,
+          "sha256": "4b52190724e027356508f7611378ef89f7d016bfe86b26c30c8aac82b9e12f89"
+        },
+        {
+          "path": "scripts/benchmark_metrics_v2.py",
+          "bytes": 4244,
+          "sha256": "18e590a7e83e84855c8dfebe89acadf09d19d7e88fc80fa6d5c473bc6d103e45"
+        },
+        {
+          "path": "scripts/verification_metrics_v2.py",
+          "bytes": 4224,
+          "sha256": "74a9ca835c9a6e32a1339bc9e7a159d8b57c18fc7e7e21a09327d58294788651"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/lfw_metrics_v2_20261003/summary.json",
+          "bytes": 10199,
+          "sha256": "9a54b0dcbe913419b08d4086e5355eaa4485a1ebf1629a76ff89eef533c206bc"
+        }
+      ],
+      "private_input_count": 2,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 8,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
         "missing": [],
         "checksum_mismatch": [],
         "private_missing_count": 0,
@@ -3860,6 +5887,67 @@
       }
     },
     {
+      "manifest": "metrics/matched_arm_image_budget_20261002/summary.manifest.json",
+      "manifest_sha256": "2dfbc7b3e8ff3aae4e4c2ea34b8d4ad3293881898275abc10aa99f2446b5d9ae",
+      "experiment": "matched-arm-actual-image-budget-audit",
+      "created_at_utc": "2026-10-02T20:59:47.420553+00:00",
+      "command": [
+        "scripts/audit_matched_arm_image_budget.py"
+      ],
+      "parameters": {
+        "splits_counted": [
+          "train"
+        ]
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/interim/matched_agegap_arms/low_arm.jsonl",
+          "bytes": 7749777,
+          "sha256": "c404783ae6de0b90cef1bb126b113f92350721c6539988c5e773274bab861ead"
+        },
+        {
+          "path": "data/interim/matched_agegap_arms/cross_arm.jsonl",
+          "bytes": 7746594,
+          "sha256": "8435c42e9babe0d7995ad4e2c7092f1a5e79d84f994477a22fd662702beb2cac"
+        },
+        {
+          "path": "scripts/audit_matched_arm_image_budget.py",
+          "bytes": 2864,
+          "sha256": "7774c35c129d79f92c752012625410ba7f794b9b656539eb3c57f8d5d6b332fd"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/matched_arm_image_budget_20261002/summary.json",
+          "bytes": 585,
+          "sha256": "00aad81d020418518bfb3ed98579a9c879a6975ac623c509be6a17f8c38bd7ad"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 3,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
       "manifest": "metrics/model_inventory.manifest.json",
       "manifest_sha256": "a6a3c1a9155bc40c10e7e18849bc8c973290d699351d2f08879f76feb6b72afb",
       "experiment": "model-and-llm-dependency-inventory",
@@ -4022,6 +6110,65 @@
       },
       "output_integrity": {
         "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/pipeline_figure.manifest.json",
+      "manifest_sha256": "e78032eabc5a860bfa39d07da02196daeeb9bf1c61341873b3e4724e90758202",
+      "experiment": "pipeline-figure-presentation",
+      "created_at_utc": "2026-10-02T23:41:14.767354+00:00",
+      "command": [
+        "scripts/make_pipeline_figure.py"
+      ],
+      "parameters": {
+        "scope": "aggregate presentation, not historical preprocessing replay"
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/data_funnel.json",
+          "bytes": 4930,
+          "sha256": "3b5e5ee7c87dd26b89421a6b45396b92ea9856e5a9ee036507fd2893499c4e74"
+        },
+        {
+          "path": "metrics/data_funnel.manifest.json",
+          "bytes": 7515,
+          "sha256": "8f3223ec3f08fca8ae023bfa113e1797fe980aa66c86c79f68fa86ef850b06b5"
+        },
+        {
+          "path": "scripts/make_pipeline_figure.py",
+          "bytes": 5008,
+          "sha256": "3bc09666423949924e6b5c7f20b5bf1cfec360b45ff2cf9018c9a4c017a55ebd"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "latex/shared/figures/fig_pipeline.pdf",
+          "bytes": 25236,
+          "sha256": "dd4d03bc19ec7c0a5e708bcff1b8913b1a983ec1bd1b34cd739f130bf16298cc"
+        }
+      ],
+      "private_input_count": 0,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 3,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
         "missing": [],
         "checksum_mismatch": [],
         "private_missing_count": 0,
