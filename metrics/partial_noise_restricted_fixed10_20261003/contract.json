@@ -1,0 +1,31 @@
+{
+  "contract": {
+    "positive_pairs": 600,
+    "negative_pairs": 600,
+    "noisy_positive_pairs": 570,
+    "retained_genuine_positive_pairs": 30,
+    "noise_fraction_among_positive_labels": 0.95,
+    "noise_fraction_among_all_train_labels": 0.475,
+    "all_train_images": 1096,
+    "recorded_train_people": 500,
+    "fixed_negatives_and_heldout_unchanged": true,
+    "endpoint_image_multiplicities_unchanged": true,
+    "training_completed": false,
+    "publication_ready": false,
+    "scope": "shared-source supervision perturbation, not full co-occurrence or causal source evidence"
+  },
+  "training_seeds": [
+    42,
+    1,
+    2
+  ],
+  "permutation_seed": 42,
+  "permutation_sensitivity_completed": false,
+  "device": "cpu",
+  "threads": 2,
+  "epochs": 10,
+  "checkpoint_selection": "last_epoch",
+  "batchnorm_policy": "adapt_all",
+  "clean_comparison_completed": false,
+  "publication_ready": false
+}

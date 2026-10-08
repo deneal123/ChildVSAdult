@@ -12,13 +12,15 @@ from pathlib import Path
 from age_gap.common.io import PROJECT_ROOT
 from age_gap.common.manifest import file_record, sha256_file, write_experiment_manifest
 from latex.build_submission import _latex_reference_errors, _localize
+from scripts import export_cacd_evidence as cacd
 from scripts import export_curation_evidence as curation
 from scripts import export_lfw_evidence as lfw
 from scripts import export_public_evidence as public
 from scripts import export_roc_v2_evidence as roc
 
 UPLOAD_MEMBERS = {"main.pdf", "supplement.pdf", "manuscript-source.zip", "artifact-manifest.json",
-                  "publication-evidence.zip", "lfw-evidence.zip", "curation-evidence.zip", "roc-v2-evidence.zip"}
+                  "publication-evidence.zip", "lfw-evidence.zip", "curation-evidence.zip", "roc-v2-evidence.zip",
+                  "cacd-evidence.zip"}
 
 
 def digest(data):
@@ -294,6 +296,7 @@ def check_evidence(root, upload):
                 payload = archive.read(name)
                 public.scan_unsafe(json.loads(payload) if name.endswith(".json") else payload.decode("utf-8"))
     inputs.extend(check_roc_evidence(root, upload))
+    inputs.extend(cacd.check_evidence(root, upload / "cacd-evidence.zip"))
     return inputs
 
 
@@ -309,6 +312,10 @@ def audit(root, submission, extract=pdf_pages):
                  root / "metrics/publication_artifact_index.json",
                  root / lfw.DIRECTORY / "lfw_presentation.manifest.json"]
     originals.extend((Path(roc.__file__), root / "scripts/render_fgnet_metrics_v2.py", root / "scripts/render_internal_metrics_v2.py"))
+    originals.extend((Path(cacd.__file__), root / "scripts/render_cacd_metrics_v2.py",
+        root / cacd.DIRECTORY / "summary.json", root / cacd.DIRECTORY / "summary.manifest.json",
+        root / cacd.PRESENTATION / "presentation.manifest.json"))
+    originals.extend(root / cacd.PRESENTATION / name for name in cacd.TABLES)
     for directory, _ in roc.EXPORTS.values():
         originals.extend(root / "metrics" / directory / name for name in ("summary.json", "summary.manifest.json"))
     for label, (_, tables) in roc.PRESENTATIONS.items():
@@ -339,7 +346,7 @@ def audit(root, submission, extract=pdf_pages):
         "main_pages": counts["main"], "supplement_pages": counts["supplement"],
         "upload_artifacts": len(UPLOAD_MEMBERS) - 1, "source_zip_matches_staged_sources": True,
         "staged_sources_match_current_master": True, "staged_and_upload_pdf_bytes_match": True,
-        "textual_nonblank_pages_checked": sum(counts.values()), "evidence_archive_members": [18, 6, 8, 13],
+        "textual_nonblank_pages_checked": sum(counts.values()), "evidence_archive_members": [18, 6, 8, 13, 7],
         "archived_index_entries": index["entry_count"], "archived_index_complete": index["complete"],
         "archived_index_missing_expected": len(index["missing_expected_manifests"]),
         "compiler_execution_attested": False, "all_pages_visually_reviewed": False,

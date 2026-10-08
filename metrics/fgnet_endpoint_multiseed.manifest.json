@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "experiment": "fgnet-endpoint-age-matched-three-seed-reevaluation",
+  "created_at_utc": "2026-09-25T20:29:04.250783+00:00",
+  "command": [
+    "scripts/summarize_fgnet_endpoint_multiseed.py"
+  ],
+  "parameters": {
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "negative_seed": 42,
+    "endpoint_age_tolerance": 2,
+    "training_provenance": "legacy checkpoints; training manifests absent"
+  },
+  "metrics": {
+    "protocol": "endpoint_age_matched",
+    "endpoint_age_tolerance": 2,
+    "negative_seed": 42,
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "checkpoint_training_provenance": "legacy checkpoints; training manifests absent",
+    "strata": {
+      "overall": {
+        "frozen_auc": 0.8870187980321751,
+        "tuned_auc_mean": 0.9201904222146379,
+        "tuned_auc_std_across_seeds": 0.0005015679717820232,
+        "delta_auc_mean": 0.03317162418246274,
+        "delta_auc_std_across_seeds": 0.0005015679717820232,
+        "subject_bootstrap_by_seed": {
+          "42": {
+            "frozen_auc": 0.8870187980321751,
+            "tuned_auc": 0.9198731181098159,
+            "delta_auc": 0.032854320077640775,
+            "frozen_ci95": [
+              0.8658897993885821,
+              0.9084751582592624
+            ],
+            "tuned_ci95": [
+              0.9023810977647827,
+              0.9360211096703148
+            ],
+            "delta_ci95": [
+              0.014877060101953323,
+              0.050394755411297495
+            ],
+            "n_subjects": 82,
+            "n_pairs": 5308,
+            "n_valid_resamples": 2000,
+            "n_requested_resamples": 2000
+          },
+          "1": {
+            "frozen_auc": 0.8870187980321751,
+            "tuned_auc": 0.9199294804049454,
+            "delta_auc": 0.032910682372770284,
+            "frozen_ci95": [
+              0.8658897993885821,
+              0.9084751582592624
+            ],
+            "tuned_ci95": [
+              0.9031050607273455,
+              0.9358942517416496
+            ],
+            "delta_ci95": [
+              0.014262993661149756,
+              0.05049869475650999
+            ],
+            "n_subjects": 82,
+            "n_pairs": 5308,
+            "n_valid_resamples": 2000,
+            "n_requested_resamples": 2000
+          },
+          "2": {
+            "frozen_auc": 0.8870187980321751,
+            "tuned_auc": 0.9207686681291523,
+            "delta_auc": 0.033749870096977164,
+            "frozen_ci95": [
+              0.8658897993885821,
+              0.9084751582592624
+            ],
+            "tuned_ci95": [
+              0.9040134383787956,
+              0.9367537581493496
+            ],
+            "delta_ci95": [
+              0.016332577746209144,
+              0.050805293391097045
+            ],
+            "n_subjects": 82,
+            "n_pairs": 5308,
+            "n_valid_resamples": 2000,
+            "n_requested_resamples": 2000
+          }
+        },
+        "all_per_seed_delta_ci95_above_zero": true
+      },
+      "large_gap_25plus": {
+        "frozen_auc": 0.802314764737696,
+        "tuned_auc_mean": 0.849021092482423,
+        "tuned_auc_std_across_seeds": 0.0016256684378370254,
+        "delta_auc_mean": 0.046706327744726904,
+        "delta_auc_std_across_seeds": 0.0016256684378370254,
+        "subject_bootstrap_by_seed": {
+          "42": {
+            "frozen_auc": 0.802314764737696,
+            "tuned_auc": 0.8483071930773392,
+            "delta_auc": 0.04599242833964312,
+            "frozen_ci95": [
+              0.7151007625970044,
+              0.8746270496261673
+            ],
+            "tuned_ci95": [
+              0.7761546535876968,
+              0.9061739301541673
+            ],
+            "delta_ci95": [
+              0.006027366696581025,
+              0.09061015533580336
+            ],
+            "n_subjects": 75,
+            "n_pairs": 430,
+            "n_valid_resamples": 2000,
+            "n_requested_resamples": 2000
+          },
+          "1": {
+            "frozen_auc": 0.802314764737696,
+            "tuned_auc": 0.8478745267712277,
+            "delta_auc": 0.045559762033531626,
+            "frozen_ci95": [
+              0.7151007625970044,
+              0.8746270496261673
+            ],
+            "tuned_ci95": [
+              0.7762098649467624,
+              0.9038669067998129
+            ],
+            "delta_ci95": [
+              0.00591772027483278,
+              0.09168529824271922
+            ],
+            "n_subjects": 75,
+            "n_pairs": 430,
+            "n_valid_resamples": 2000,
+            "n_requested_resamples": 2000
+          },
+          "2": {
+            "frozen_auc": 0.802314764737696,
+            "tuned_auc": 0.850881557598702,
+            "delta_auc": 0.04856679286100596,
+            "frozen_ci95": [
+              0.7151007625970044,
+              0.8746270496261673
+            ],
+            "tuned_ci95": [
+              0.779574534909563,
+              0.9081710843152805
+            ],
+            "delta_ci95": [
+              0.010941791955828945,
+              0.0919094105060362
+            ],
+            "n_subjects": 75,
+            "n_pairs": 430,
+            "n_valid_resamples": 2000,
+            "n_requested_resamples": 2000
+          }
+        },
+        "all_per_seed_delta_ci95_above_zero": true
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/fgnet_endpoint_subject_stats.json",
+      "bytes": 3141,
+      "sha256": "456c167d81342a325250b0429ed336fecbed98894b32ad7534d49127c2c46c1a"
+    },
+    {
+      "path": "metrics/fgnet_endpoint_subject_stats.manifest.json",
+      "bytes": 5048,
+      "sha256": "d584c4c51ce48e8d3bff8b13972d298c59d04efed48106b5300d69ea71ec3092"
+    },
+    {
+      "path": "metrics/fgnet_endpoint_subject_stats_s1.json",
+      "bytes": 3141,
+      "sha256": "13acc398849bd876af6cc2825342149c96a6592dd946b011b8e315cf73a9a3d2"
+    },
+    {
+      "path": "metrics/fgnet_endpoint_subject_stats_s1.manifest.json",
+      "bytes": 5073,
+      "sha256": "b42000ebb05a68b9f22e981875592062b6de1278528b32c11f26cb9d12cff170"
+    },
+    {
+      "path": "metrics/fgnet_endpoint_subject_stats_s2.json",
+      "bytes": 3139,
+      "sha256": "78fd797164913d1b7cd06b30089d798e78ddcfaeef42ff04f2a6c96494184266"
+    },
+    {
+      "path": "metrics/fgnet_endpoint_subject_stats_s2.manifest.json",
+      "bytes": 5071,
+      "sha256": "83e34aa0a496c2ca8c867bebc61b2c97b47c098694767e22e66364a427fbafc9"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/fgnet_endpoint_multiseed.json",
+      "bytes": 4726,
+      "sha256": "3e22b23f4bc8359d412629a3fbd2e8383001ef90f8544a0e308ae7c56c2b2c9e"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

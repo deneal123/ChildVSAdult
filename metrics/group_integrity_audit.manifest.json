@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "experiment": "llm-group-integrity-corpus-audit",
+  "created_at_utc": "2026-09-23T17:57:42.894723+00:00",
+  "command": [
+    "scripts/validate_groups.py",
+    "--skip-llm"
+  ],
+  "parameters": {
+    "uses_cached_llm_outputs": true,
+    "human_ground_truth": false
+  },
+  "metrics": {
+    "total": 33697,
+    "categories": {
+      "single": 31275,
+      "multi_person": 2034,
+      "unknown": 336,
+      "meme": 49,
+      "collage": 3
+    },
+    "percentages": {
+      "single": 92.81241653559664,
+      "multi_person": 6.036145650948155,
+      "unknown": 0.997121405466362,
+      "meme": 0.1454135382971778,
+      "collage": 0.008902869691663946
+    },
+    "human_ground_truth": false
+  },
+  "inputs": [
+    {
+      "path": "data/interim/group_validation_cache.jsonl",
+      "bytes": 11348601,
+      "sha256": "d29c9fc78fc7c2655e57efee204c9681dc961731fa9d0bf06157fb56505707cf"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/group_integrity_audit.json",
+      "bytes": 391,
+      "sha256": "13429170d35efb89a7ed83d2b81b91e0ea7181e7e3a65cf48d99dd5329ef1458"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

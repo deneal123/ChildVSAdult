@@ -44,11 +44,23 @@ def test_unmatched_old_control_not_promoted_to_causal_evidence():
     main, abstract, conclusion, _ = sections()
     budget = json.loads((ROOT / 'metrics/matched_arm_image_budget_20261002/summary.json').read_text())
     assert not budget['all_train_image_budget_equal']
-    assert 'unequal total image budgets' in abstract
+    control_path = ROOT / 'metrics/oriented_cuda_fgnet_20261004/summary.json'
+    control = json.loads(control_path.read_text())
+    binding = json.loads(control_path.with_suffix('.manifest.json').read_text())
+    from age_gap.common.manifest import file_record
+
+    assert file_record(control_path) in binding['outputs']
+    assert binding['experiment'] == 'oriented-cuda-controls-full-fgnet-roc-v2'
+    assert binding['metrics'] == control and control['execution_complete'] is True
+    delta = control['large_gap_25plus']['metrics']['roc_auc']['cross_minus_low']
+    lo, hi = delta['mean_checkpoint_ci95']
+    assert lo < 0 < hi
+    assert 'completed full-image-budget within-VK' in abstract
+    assert 'inconclusive paired AUC difference' in abstract
+    assert 'generic/co-occurrence controls remain absent' in abstract
+    assert 'matched-budget retraining remains incomplete' not in abstract
     assert 'does not separate longitudinal supervision' in main
     assert 'not yet for the added value of longitudinal' in conclusion
-    if not (ROOT / 'metrics/restricted_matched_fixed10_20261003/campaign-bound.manifest.json').exists():
-        assert 'matched-budget retraining remains incomplete' in abstract
 
 
 def test_objective_similarity_not_equivalence_and_fran_not_all_synthesis():
@@ -63,7 +75,35 @@ def test_objective_similarity_not_equivalence_and_fran_not_all_synthesis():
     assert 'Real Pairs Outperform Synthetic Aging' not in main
     assert 'coincide under' not in main
     assert 'adds nothing over a plain margin' not in main
-    assert 'full-method reproduction' not in SUPPLEMENT.read_text(encoding='utf-8')
+    supplement = SUPPLEMENT.read_text(encoding='utf-8')
+    assert 'these restricted comparators do not complete full-method reproduction' in supplement
+    assert 'Our complete three-seed' not in supplement
+
+
+def test_crossplatform_paragraph_does_not_claim_uniform_external_improvement():
+    main, _, _, _ = sections()
+    transfer = main.split(r"\subsection{Cross-Platform Transfer", 1)[1].split(
+        r"\begin{table}", 1)[0]
+    assert "positive across all three" not in transfer
+    assert "AgeDB-30 and CACD-VS operating-point deterioration" in transfer
+    assert "transfer is not uniformly positive" in transfer
+
+
+def test_restricted_sota_does_not_claim_complete_methods_or_equal_compute():
+    main, _, _, _ = sections()
+    limitations = main.split(r"\textbf{Controlled SOTA scope:}", 1)[1].split(
+        r"\end{itemize}", 1)[0]
+    assert "not demonstrated equal compute" in limitations
+    assert "MTLFace-CP omits joint synthesis" in limitations
+    assert "CACon-CP substitutes FRAN" in limitations
+    assert "lacks the supervised final-linear stage" in limitations
+    assert "not full-method reproductions" in limitations
+    supplement = SUPPLEMENT.read_text(encoding='utf-8')
+    assert "Our complete three-seed" not in supplement
+    assert "MTLFace-CP omits joint synthesis" in supplement
+    assert "CACon-CP substitutes" in supplement
+    assert "lacks the supervised final-linear stage" in supplement
+    assert "Equal compute has not been demonstrated" in supplement
 
 
 def test_planned_matrix_not_claimed_publicly_preregistered():
@@ -82,3 +122,26 @@ def test_independent_replication_and_sota_limits_are_visible():
     assert 'reimplementations' in conclusion
     assert 'without proving leaderboard superiority' in conclusion
     assert 'blinded identity/annotation audits' in conclusion
+
+
+def test_compute_claim_does_not_certify_pending_full_sota_training():
+    main, _, _, _ = sections()
+    compute = main.split(r"\textbf{Compute.}", 1)[1].split(
+        r"\textbf{Data availability.}", 1)[0]
+    assert "Completed local experiments" in compute
+    assert "Full joint MTLFace/CACon training is still pending" in compute
+    assert "peak GPU memory and common compute budget have not been validated" in compute
+    assert "entire study" not in compute
+    assert "full study within" not in compute
+
+
+def test_lookalike_diagnostics_do_not_become_universal_or_causal_proof():
+    main, _, _, _ = sections()
+    paragraph = main.split(r"\textbf{The random-impostor protocol", 1)[1].split(
+        r"\begin{table}", 1)[0]
+    assert "do not establish this ordering for every person" in paragraph
+    assert "not a population-wide failure claim" in paragraph
+    assert "not miner-independent or causal proof" in paragraph
+    assert "incomplete matrix does not establish a general inability" in paragraph
+    assert "the difficulty axis belongs to the task, not to the miner" not in paragraph
+    assert "At a 25-year gap a person is less similar to themselves" not in paragraph

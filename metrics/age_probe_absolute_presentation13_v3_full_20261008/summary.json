@@ -1,0 +1,87 @@
+{
+  "models": {
+    "strong/frozen": {
+      "mae_image": 9.915587673939028,
+      "mae_person": 10.226953350296894
+    },
+    "strong/random_head_lr1e-06_s1": {
+      "mae_image": 9.90986852609584,
+      "mae_person": 10.059876165216874
+    },
+    "strong/random_head_lr1e-06_s2": {
+      "mae_image": 9.91490586865917,
+      "mae_person": 10.063407867119562
+    },
+    "strong/random_tail_lr1e-06_s42": {
+      "mae_image": 8.324505197586205,
+      "mae_person": 8.565929967818867
+    },
+    "strong/random_tail_lr1e-06_s1": {
+      "mae_image": 8.27770451442294,
+      "mae_person": 8.526705494377566
+    },
+    "strong/random_head_lr1e-06_s42": {
+      "mae_image": 9.942355468430112,
+      "mae_person": 10.089891793476356
+    },
+    "weak/frozen": {
+      "mae_image": 5.765743856753437,
+      "mae_person": 5.990803509317909
+    },
+    "weak/tuned_seed42": {
+      "mae_image": 5.912310225544756,
+      "mae_person": 6.078104952804929
+    },
+    "weak/tuned_seed1": {
+      "mae_image": 5.986567519258606,
+      "mae_person": 6.15127540085397
+    },
+    "weak/tuned_seed2": {
+      "mae_image": 5.996189968325489,
+      "mae_person": 6.162711617385764
+    },
+    "strong/random_tail_lr1e-06_s2": {
+      "mae_image": 8.347783336554206,
+      "mae_person": 8.583022759014602
+    },
+    "strong/random_head_lr1e-05_s42": {
+      "mae_image": 9.196432254855505,
+      "mae_person": 9.228092752647573
+    },
+    "strong/random_head_lr1e-05_s1": {
+      "mae_image": 8.923025207206374,
+      "mae_person": 8.964476045844062
+    }
+  },
+  "baselines": {
+    "mean": {
+      "mae_image": 9.452316463041072,
+      "mae_person": 9.308576074707641
+    },
+    "median": {
+      "mae_image": 9.135384615384615,
+      "mae_person": 9.07751181745084
+    }
+  },
+  "native_probe_records": 34,
+  "unique_model_points": 13,
+  "expected_cells": [
+    "random_head_lr1e-05_s1",
+    "random_head_lr1e-05_s42",
+    "random_head_lr1e-06_s1",
+    "random_head_lr1e-06_s2",
+    "random_head_lr1e-06_s42",
+    "random_tail_lr1e-06_s1",
+    "random_tail_lr1e-06_s2",
+    "random_tail_lr1e-06_s42"
+  ],
+  "expected_strong_cells": 8,
+  "observed_strong_cells": 8,
+  "strong_tuned_checkpoints": 8,
+  "weak_tuned_checkpoints": 3,
+  "canonical_matrix_cells": 36,
+  "matrix_complete": false,
+  "publication_ready": false,
+  "mechanism_complete": false,
+  "scope": "absolute point estimates in years for explicitly declared canonical strong cells; image-weighted and equal-person MAE are different denominators; deduplicated model points, not independent replications; no new CI or significance test, age removal, mechanism, controlled causal family comparison or identity-independence clearance"
+}

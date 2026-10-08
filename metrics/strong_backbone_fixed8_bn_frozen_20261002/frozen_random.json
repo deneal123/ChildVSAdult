@@ -1,0 +1,20 @@
+{
+  "backbone": "adaface_ir101",
+  "negative_type": "random",
+  "metrics": {
+    "LFW.acc": 0.9843333333333332,
+    "agedb_30.acc": 0.9806666666666668,
+    "agedb_30.roc": 0.9910855555555556,
+    "calfw.acc": 0.9608333333333332,
+    "calfw.roc": 0.9759295555555556,
+    "cacd_vs.acc": 0.9935,
+    "cacd_vs.roc": 0.99545225,
+    "cacd_vs.eer": 0.009000000000000008,
+    "cacd_vs.tar@far=0.01": 0.991,
+    "cacd_vs.tar@far=0.001": 0.989,
+    "fgnet.roc": 0.9902739367784675,
+    "fgnet.large_gap": 0.9568783508400606,
+    "our.overall": 0.9881546458557575,
+    "our.25+": 0.9675108521789548
+  }
+}

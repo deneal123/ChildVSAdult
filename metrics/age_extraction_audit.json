@@ -1,0 +1,12 @@
+{
+  "total": 33697,
+  "agree_empty": 5934,
+  "agree_ages": 20378,
+  "llm_filled": 1162,
+  "llm_missed": 1016,
+  "age_mismatch": 5207,
+  "agreement_pct": 78.08410244235392,
+  "llm_filled_pct": 3.4483781939045017,
+  "llm_missed_pct": 3.015105202243523,
+  "age_mismatch_pct": 15.452414161498057
+}

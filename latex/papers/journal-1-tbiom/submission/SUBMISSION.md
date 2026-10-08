@@ -46,6 +46,7 @@ directory. Upload artifacts are deliberately separated:
 | Additional supplementary data/code slot, if supported | `upload/lfw-evidence.zip` |
 | Additional supplementary data/code slot, if supported | `upload/curation-evidence.zip` |
 | Additional supplementary data/code slot, if supported | `upload/roc-v2-evidence.zip` |
+| Additional supplementary data/code slot, if supported | `upload/cacd-evidence.zip` |
 | Conflict of interest | compile `coi.tex` to `coi.pdf` |
 | Cover letter | compile `cover_letter.tex` to `cover_letter.pdf` after all results are frozen |
 
@@ -53,6 +54,16 @@ directory. Upload artifacts are deliberately separated:
 `IEEEtran.cls`, referenced figures, and the aggregate
 `artifacts/publication_artifact_index.json`. The index exposes commands,
 parameters and checksums, but no images, embeddings or row-level corpus data.
+
+`cacd-evidence.zip` is the separate seven-member source-bound serial CACD-VS aggregate
+package (not part of the historical ROC-v2 ZIP). It includes the generated table and
+main-summary TeX bytes, count-only native manifest projections and a certificate.
+Its intervals resample pairs, not subjects or the training-seed population. Accuracy,
+EER and TAR at FAR 1% worsen despite nearly unchanged AUC. Original alignment replay,
+checkpoint training provenance and benchmark identity independence remain unverified.
+The local snapshot audit checks this archive against its native sources, not only its
+self-reported checksums. Availability of another portal slot and disclosure/access
+approval remain required; exporting it locally is not permission to distribute it.
 The archive never contains the compiled PDF,
 `.aux`, `.log`, `.blg`, or the supplement. `artifact-manifest.json` records the
 size and SHA-256 of each portal-facing artifact. The build fails on LaTeX errors,
@@ -112,6 +123,15 @@ This is still partial evidence, not ethics/privacy clearance or full reproductio
 The experiment index includes the five corresponding ROC-v2 manifests but remains
 incomplete until missing evidence and unfinished campaigns are resolved.
 
+The index builder also discovers fixed8 native CUDA training/evaluation manifests,
+including nested train/FG-NET outputs of the sequential queue, representation/age and
+common-index diagnostics, recorded trajectories, cache-key checks, matched-denominator
+constants, and per-checkpoint ROC presentations. These discovery rules are not a freshly
+regenerated index or uploaded package. Queue ledgers are orchestration only and are not
+indexed as scientific completion evidence; private checkpoint/cache/prediction records
+remain withheld. Index integrity does not establish full-matrix mechanism, independent
+human identity clearance, ethics approval, or publication readiness.
+
 ## Mandatory gates before upload
 
 1. Obtain and record the ethics committee's actual decision, official name,
@@ -120,11 +140,13 @@ incomplete until missing evidence and unfinished campaigns are resolved.
    and publication of examples. Do not select a portal ethics answer in advance.
 2. Apply the decision consistently. If minors or the retrospective source are
    not covered, remove the affected material and regenerate every result.
-3. Finish the three-seed strong-backbone study and remaining matched-source,
-   uncertainty and leakage gates. CACD-VS, common-protocol MTLFace/CACon and
-   three-seed cross-platform transfer are already available; finalize their
-   bounded interpretation and regenerate after any confirmed exclusions. Every
-   reported number must be generated from a machine-readable manifest.
+3. Finish the three-seed strong-backbone study, two complete common-budget SOTA
+   reproductions, and remaining matched-source, uncertainty and leakage gates.
+   CACD-VS and three-seed cross-platform transfer are available with stated limits.
+   Existing MTLFace/CACon-inspired common-protocol adaptations do not satisfy the
+   full-method reproduction requirement. Finalize bounded interpretations and
+   regenerate after confirmed exclusions. Every reported number must be generated
+   from a machine-readable manifest.
 4. Complete the independent annotation audit and controlled-access procedure.
    Do not restore the removed illustrative manual-validation values.
 5. Complete `reviewer_response_matrix.md` with one row per editor/reviewer

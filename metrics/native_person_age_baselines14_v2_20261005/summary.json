@@ -1,0 +1,203 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "probes": {
+    "strong_mechanism_remaining4_v1_20261004/random_head_lr1e-06_s1/frozen_age_probe": {
+      "probe_mae_image": 9.915587673939028,
+      "probe_mae_person": 10.226953350296894,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_head_lr1e-06_s1/tuned_age_probe": {
+      "probe_mae_image": 9.90986852609584,
+      "probe_mae_person": 10.059876165216874,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_head_lr1e-06_s2/frozen_age_probe": {
+      "probe_mae_image": 9.915587673939028,
+      "probe_mae_person": 10.226953350296894,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_head_lr1e-06_s2/tuned_age_probe": {
+      "probe_mae_image": 9.91490586865917,
+      "probe_mae_person": 10.063407867119562,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_tail_lr1e-06_s42/frozen_age_probe": {
+      "probe_mae_image": 9.915587673939028,
+      "probe_mae_person": 10.226953350296894,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_tail_lr1e-06_s42/tuned_age_probe": {
+      "probe_mae_image": 8.324505197586205,
+      "probe_mae_person": 8.565929967818867,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_tail_lr1e-06_s1/frozen_age_probe": {
+      "probe_mae_image": 9.915587673939028,
+      "probe_mae_person": 10.226953350296894,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "strong_mechanism_remaining4_v1_20261004/random_tail_lr1e-06_s1/tuned_age_probe": {
+      "probe_mae_image": 8.27770451442294,
+      "probe_mae_person": 8.526705494377566,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "common_mechanism_head42_weak3_v1_20261004/strong/frozen": {
+      "probe_mae_image": 9.915587673939028,
+      "probe_mae_person": 10.226953350296894,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "common_mechanism_head42_weak3_v1_20261004/strong/random_head_lr1e-06_s42": {
+      "probe_mae_image": 9.942355468430112,
+      "probe_mae_person": 10.089891793476356,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "common_mechanism_head42_weak3_v1_20261004/weak/frozen": {
+      "probe_mae_image": 5.765743856753437,
+      "probe_mae_person": 5.990803509317909,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "common_mechanism_head42_weak3_v1_20261004/weak/tuned_seed42": {
+      "probe_mae_image": 5.912310225544756,
+      "probe_mae_person": 6.078104952804929,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "common_mechanism_head42_weak3_v1_20261004/weak/tuned_seed1": {
+      "probe_mae_image": 5.986567519258606,
+      "probe_mae_person": 6.15127540085397,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    },
+    "common_mechanism_head42_weak3_v1_20261004/weak/tuned_seed2": {
+      "probe_mae_image": 5.996189968325489,
+      "probe_mae_person": 6.162711617385764,
+      "baselines": {
+        "mean": {
+          "mae_image": 9.452316463041072,
+          "mae_person": 9.308576074707641
+        },
+        "median": {
+          "mae_image": 9.135384615384615,
+          "mae_person": 9.07751181745084
+        }
+      }
+    }
+  },
+  "limitation": "fixed chronological ages/person folds; no age removal or mechanism conclusion"
+}

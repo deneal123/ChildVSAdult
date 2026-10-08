@@ -1,0 +1,478 @@
+{
+  "strong": {
+    "frozen": {
+      "negative_mean": 0.046219571817897195,
+      "positive_mean": 0.4871569057461927,
+      "negative_variance": 0.0054129213082005035,
+      "positive_variance": 0.0293932785726828,
+      "standardized_mean_difference": 3.3424395748456983,
+      "ci95": [
+        3.140638840699264,
+        3.5781270737510686
+      ],
+      "delta_vs_frozen": 0.0,
+      "delta_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "cells": {
+      "random_head_lr1e-06_s42": {
+        "negative_mean": 0.11066059285484271,
+        "positive_mean": 0.5390036215327719,
+        "negative_variance": 0.010042408766238143,
+        "positive_variance": 0.0256314008015484,
+        "standardized_mean_difference": 3.2072436659862293,
+        "ci95": [
+          2.985613777188405,
+          3.474596255760221
+        ],
+        "delta_vs_frozen": -0.13519590885946897,
+        "delta_ci95": [
+          -0.24563351171462477,
+          -0.012135613490903125
+        ]
+      },
+      "random_head_lr1e-06_s1": {
+        "negative_mean": 0.11065436237086013,
+        "positive_mean": 0.5390197965811262,
+        "negative_variance": 0.010060910248167484,
+        "positive_variance": 0.025637885597953016,
+        "standardized_mean_difference": 3.2062887675754292,
+        "ci95": [
+          2.984434353361452,
+          3.4745892082205594
+        ],
+        "delta_vs_frozen": -0.13615080727026907,
+        "delta_ci95": [
+          -0.24703375085301627,
+          -0.014151873760834153
+        ]
+      },
+      "random_head_lr1e-06_s2": {
+        "negative_mean": 0.11109480851941504,
+        "positive_mean": 0.5391771852589032,
+        "negative_variance": 0.010091345216116553,
+        "positive_variance": 0.025614885674736656,
+        "standardized_mean_difference": 3.203836483243726,
+        "ci95": [
+          2.9824226797870854,
+          3.470824698943793
+        ],
+        "delta_vs_frozen": -0.13860309160197248,
+        "delta_ci95": [
+          -0.250333623765617,
+          -0.01562078258621558
+        ]
+      },
+      "random_tail_lr1e-06_s42": {
+        "negative_mean": 0.41361224979457684,
+        "positive_mean": 0.7917787888576505,
+        "negative_variance": 0.020430798897980506,
+        "positive_variance": 0.00972511294904087,
+        "standardized_mean_difference": 3.079724473589099,
+        "ci95": [
+          2.866092182512301,
+          3.3343517128997076
+        ],
+        "delta_vs_frozen": -0.26271510125659914,
+        "delta_ci95": [
+          -0.4562019245582316,
+          -0.052226707840277276
+        ]
+      },
+      "random_tail_lr1e-06_s1": {
+        "negative_mean": 0.41258130669621884,
+        "positive_mean": 0.791842068317427,
+        "negative_variance": 0.020707399334063945,
+        "positive_variance": 0.009833422529581299,
+        "standardized_mean_difference": 3.0691106817870506,
+        "ci95": [
+          2.8540227836151444,
+          3.325670183607879
+        ],
+        "delta_vs_frozen": -0.2733288930586477,
+        "delta_ci95": [
+          -0.4698710414210552,
+          -0.05903254589168603
+        ]
+      },
+      "random_tail_lr1e-06_s2": {
+        "negative_mean": 0.41437530158208324,
+        "positive_mean": 0.792012169317096,
+        "negative_variance": 0.0203744460057123,
+        "positive_variance": 0.009641644290470465,
+        "standardized_mean_difference": 3.0825655676423596,
+        "ci95": [
+          2.87052536910309,
+          3.336350540579159
+        ],
+        "delta_vs_frozen": -0.25987400720333875,
+        "delta_ci95": [
+          -0.45844868324326254,
+          -0.044598530811388024
+        ]
+      },
+      "random_head_lr1e-05_s42": {
+        "negative_mean": 0.32074066139680435,
+        "positive_mean": 0.6972355375511357,
+        "negative_variance": 0.022519377065329565,
+        "positive_variance": 0.019055521520161968,
+        "standardized_mean_difference": 2.6113102213813555,
+        "ci95": [
+          2.3948672643937114,
+          2.865934090316619
+        ],
+        "delta_vs_frozen": -0.7311293534643428,
+        "delta_ci95": [
+          -0.9242902773827926,
+          -0.5047866322668099
+        ]
+      },
+      "random_head_lr1e-05_s1": {
+        "negative_mean": 0.32040782418970887,
+        "positive_mean": 0.6971319407061831,
+        "negative_variance": 0.022689710963794647,
+        "positive_variance": 0.019262379756711214,
+        "standardized_mean_difference": 2.601127354383527,
+        "ci95": [
+          2.386325186962694,
+          2.858518665983208
+        ],
+        "delta_vs_frozen": -0.7413122204621714,
+        "delta_ci95": [
+          -0.9321856218335846,
+          -0.5181042942914827
+        ]
+      },
+      "random_head_lr1e-05_s2": {
+        "negative_mean": 0.320317119189251,
+        "positive_mean": 0.6974348167031891,
+        "negative_variance": 0.022884918120362422,
+        "positive_variance": 0.019246624035302428,
+        "standardized_mean_difference": 2.5982936588098755,
+        "ci95": [
+          2.3800068585269516,
+          2.8533488973327334
+        ],
+        "delta_vs_frozen": -0.7441459160358228,
+        "delta_ci95": [
+          -0.9375974601883343,
+          -0.5181847175245556
+        ]
+      }
+    },
+    "diagnostics": {
+      "random_head_lr1e-06_s42": {
+        "representation": {
+          "mean_cosine_drift": 0.057022365985591794,
+          "linear_cka": 0.9470421617131594,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -0.1370615568205368,
+          "ci95": [
+            -0.6409926400684591,
+            0.3587565024284308
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_head_lr1e-06_s1": {
+        "representation": {
+          "mean_cosine_drift": 0.05696553309006931,
+          "linear_cka": 0.94697031791701,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -0.1670771850800175,
+          "ci95": [
+            -0.6658875037700367,
+            0.3228880338991752
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_head_lr1e-06_s2": {
+        "representation": {
+          "mean_cosine_drift": 0.05735356862608927,
+          "linear_cka": 0.9468370225935544,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -0.16354548317733347,
+          "ci95": [
+            -0.6650403897949527,
+            0.33147455238349344
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_tail_lr1e-06_s42": {
+        "representation": {
+          "mean_cosine_drift": 0.45460803333094324,
+          "linear_cka": 0.601991889740034,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -1.6610233824780252,
+          "ci95": [
+            -2.7840298207885295,
+            -0.5394129421172442
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_tail_lr1e-06_s1": {
+        "representation": {
+          "mean_cosine_drift": 0.45629008113099995,
+          "linear_cka": 0.6002013549786162,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -1.7002478559193266,
+          "ci95": [
+            -2.7847048799726624,
+            -0.5905773528951952
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_tail_lr1e-06_s2": {
+        "representation": {
+          "mean_cosine_drift": 0.454309942007819,
+          "linear_cka": 0.6029584053636896,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -1.6439305912822921,
+          "ci95": [
+            -2.7656972110778733,
+            -0.5049285214415954
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_head_lr1e-05_s42": {
+        "representation": {
+          "mean_cosine_drift": 0.37590499600334887,
+          "linear_cka": 0.6734410801710187,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -0.9988605976493192,
+          "ci95": [
+            -2.2444234190732026,
+            0.03671806366591232
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_head_lr1e-05_s1": {
+        "representation": {
+          "mean_cosine_drift": 0.3757299080663782,
+          "linear_cka": 0.6715488291511524,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -1.2624773044528315,
+          "ci95": [
+            -2.4808427010093093,
+            -0.24777128165941073
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "random_head_lr1e-05_s2": {
+        "representation": {
+          "mean_cosine_drift": 0.375789803650191,
+          "linear_cka": 0.6734108683067881,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": -1.3266444967419304,
+          "ci95": [
+            -2.544354578022493,
+            -0.33254496194421257
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      }
+    }
+  },
+  "weak": {
+    "models": {
+      "frozen": {
+        "negative_mean": 0.26653772236648793,
+        "positive_mean": 0.5758600654798127,
+        "negative_variance": 0.02282892167010392,
+        "positive_variance": 0.03677261604323062,
+        "standardized_mean_difference": 1.791833107783519,
+        "ci95": [
+          1.6217373336487566,
+          1.987690317022973
+        ],
+        "delta_vs_frozen": 0.0,
+        "delta_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "tuned_seed1": {
+        "negative_mean": 0.13212042378479952,
+        "positive_mean": 0.5162275947392486,
+        "negative_variance": 0.026486730809107028,
+        "positive_variance": 0.04247048148273096,
+        "standardized_mean_difference": 2.068604975476412,
+        "ci95": [
+          1.9157978581953294,
+          2.248422030448761
+        ],
+        "delta_vs_frozen": 0.2767718676928932,
+        "delta_ci95": [
+          0.11811635912582398,
+          0.42913304449307327
+        ]
+      },
+      "tuned_seed2": {
+        "negative_mean": 0.13136836766130583,
+        "positive_mean": 0.5154839618648764,
+        "negative_variance": 0.026279571135007066,
+        "positive_variance": 0.042141899653564345,
+        "standardized_mean_difference": 2.076733334183601,
+        "ci95": [
+          1.927651097321642,
+          2.252589378417624
+        ],
+        "delta_vs_frozen": 0.28490022640008217,
+        "delta_ci95": [
+          0.1309357502140207,
+          0.4287725789204149
+        ]
+      },
+      "tuned_seed42": {
+        "negative_mean": 0.14127506434185094,
+        "positive_mean": 0.5221877542765462,
+        "negative_variance": 0.02633140955078419,
+        "positive_variance": 0.04184340392528585,
+        "standardized_mean_difference": 2.063138862941983,
+        "ci95": [
+          1.9107779459277414,
+          2.24131641138514
+        ],
+        "delta_vs_frozen": 0.2713057551584641,
+        "delta_ci95": [
+          0.10996329741967724,
+          0.42361669375823213
+        ]
+      }
+    },
+    "diagnostics": {
+      "tuned_seed42": {
+        "representation": {
+          "mean_cosine_drift": 0.17497878684312573,
+          "linear_cka": 0.8896195028802558,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": 0.08730144348701968,
+          "ci95": [
+            -0.18715005243960708,
+            0.3449144024460971
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "tuned_seed1": {
+        "representation": {
+          "mean_cosine_drift": 0.1670140911562724,
+          "linear_cka": 0.8909087333835289,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": 0.16047189153606117,
+          "ci95": [
+            -0.12547081680522493,
+            0.4245238546954305
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      },
+      "tuned_seed2": {
+        "representation": {
+          "mean_cosine_drift": 0.15885581778451585,
+          "linear_cka": 0.8925736563421365,
+          "n_images": 650,
+          "limitation": "descriptive representation change; not a mechanism decision"
+        },
+        "paired_age_error": {
+          "delta_mae_person": 0.17190810806785572,
+          "ci95": [
+            -0.10254412313800922,
+            0.43701819373528794
+          ],
+          "n_persons": 82,
+          "resamples": 2000,
+          "seed": 0,
+          "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+        }
+      }
+    }
+  },
+  "n_images": 650,
+  "n_pairs": 5308,
+  "n_persons": 82,
+  "resamples": 2000,
+  "bootstrap_seed": 0,
+  "observed_strong_cells": 9,
+  "expected_strong_matrix_cells": 36,
+  "evaluated_strong_cells": 9,
+  "mechanism_complete": false,
+  "publication_ready": false,
+  "limitation": "per-checkpoint conditional descriptive evidence only; incomplete 36-cell strong matrix; no average, ensemble or seed-mean; no training-seed population inference, causal claim or mechanism decision; lower age MAE is easier age decoding, not age removal; weak training history and train-benchmark independence unverified; fixed OOF age predictions, no probe refitting or multiplicity correction; different architecture/preprocessing families, not a controlled causal weak-versus-strong comparison",
+  "pair_linkage_scope": "selected records and exact arrays; not human identity clearance"
+}

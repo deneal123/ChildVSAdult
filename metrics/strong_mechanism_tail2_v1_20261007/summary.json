@@ -1,0 +1,30 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "cells": {
+    "random_tail_lr1e-06_s2": {
+      "representation": {
+        "mean_cosine_drift": 0.454309942007819,
+        "linear_cka": 0.6029584053636896,
+        "n_images": 650,
+        "limitation": "descriptive representation change; not a mechanism decision"
+      },
+      "paired_age_error": {
+        "delta_mae_person": -1.6439305912822921,
+        "ci95": [
+          -2.7656972110778733,
+          -0.5049285214415954
+        ],
+        "n_persons": 82,
+        "resamples": 2000,
+        "seed": 0,
+        "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+      },
+      "frozen_mae_person": 10.226953350296894,
+      "tuned_mae_person": 8.583022759014602,
+      "frozen_mean_baseline_mae_image": 9.452316463041072,
+      "tuned_mean_baseline_mae_image": 9.452316463041072
+    }
+  },
+  "limitation": "FG-NET descriptive fixed-checkpoint diagnostics; incomplete36-cell matrix; weak comparison and identity separability remain open; chronological ages; conditional OOF uncertainty"
+}

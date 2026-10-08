@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "experiment": "pretraining-benchmark-identity-overlap-audit",
+  "created_at_utc": "2026-09-23T17:09:06.144311+00:00",
+  "command": [
+    "scripts/pretraining_overlap_audit.py"
+  ],
+  "parameters": {
+    "image_or_embedding_matching_performed": false
+  },
+  "metrics": {
+    "exact_intersection_computable": false,
+    "verified_empty_intersection": false,
+    "pretraining_sources": 7,
+    "benchmarks": 5
+  },
+  "inputs": [
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "data/external/lfw_aligned.npz",
+      "bytes": 393528172,
+      "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
+    },
+    {
+      "path": "data/external/agedb_30.bin",
+      "bytes": 76525089,
+      "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
+    },
+    {
+      "path": "data/external/calfw.bin",
+      "bytes": 74157257,
+      "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
+    },
+    {
+      "path": "data/external/cacd_vs_aligned.npz",
+      "bytes": 265802876,
+      "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
+    },
+    {
+      "path": "data/external/fgnet_crops.npz",
+      "bytes": 24471952,
+      "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/pretraining_overlap_audit.json",
+      "bytes": 4915,
+      "sha256": "e5f46e228b7f92baba3af18047375fbda862700e3dd346ae3bb928e75e6edee5"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

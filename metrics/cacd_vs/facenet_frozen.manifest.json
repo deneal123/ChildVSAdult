@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "experiment": "cacd-vs-verification",
+  "created_at_utc": "2026-09-23T09:04:01.924332+00:00",
+  "command": [
+    "scripts/eval_cacd_vs.py",
+    "--backbone",
+    "facenet",
+    "--label",
+    "facenet_frozen"
+  ],
+  "parameters": {
+    "backbone": "facenet",
+    "checkpoint": null,
+    "protocol": "official identity-disjoint 10 folds"
+  },
+  "metrics": {
+    "n_pairs": 4000.0,
+    "accuracy_10fold": 0.9792500000000001,
+    "roc_auc": 0.994776,
+    "eer": 0.022,
+    "tar@far=0.01": 0.9625,
+    "tar@far=0.001": 0.8925,
+    "accuracy_10fold_ci95": [
+      0.97575,
+      0.983
+    ],
+    "roc_auc_ci95": [
+      0.9922809375,
+      0.99680083125
+    ],
+    "eer_ci95": [
+      0.017000000000000015,
+      0.026000000000000023
+    ],
+    "tar@far=0.01_ci95": [
+      0.9489875,
+      0.9735
+    ],
+    "tar@far=0.001_ci95": [
+      0.8639875,
+      0.926
+    ]
+  },
+  "inputs": [
+    {
+      "path": "data/external/cacd_vs_aligned.npz",
+      "bytes": 265802876,
+      "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/cacd_vs/facenet_frozen.json",
+      "bytes": 662,
+      "sha256": "74d51d368aa4edfca747cc0b63468ed38b4808a383ab5105c51ba54e9f49ca37"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

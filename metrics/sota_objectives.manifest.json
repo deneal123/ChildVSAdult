@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "experiment": "margin-softmax-objectives-vs-pair-contrastive",
+  "created_at_utc": "2026-09-23T18:18:53.351195+00:00",
+  "command": [
+    "scripts/sota_arcface.py",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "backbone": "facenet",
+    "epochs": 15,
+    "scale": 32.0,
+    "objectives": [
+      "arcface",
+      "cosface",
+      "sphereface"
+    ],
+    "reused_checkpoints": false,
+    "manifest_only": true
+  },
+  "metrics": {
+    "frozen": {
+      "LFW.acc": 0.9688333333333332,
+      "agedb_30.acc": 0.882,
+      "agedb_30.roc": 0.9529574444444444,
+      "calfw.acc": 0.8835000000000001,
+      "calfw.roc": 0.9481664444444444,
+      "fgnet.roc": 0.8955028802957054,
+      "fgnet.large_gap": 0.7360591934369451,
+      "our.overall": 0.8362658838471743,
+      "our.25+": 0.6402594859614636
+    },
+    "+pairs": {
+      "LFW.acc": 0.9461666666666668,
+      "agedb_30.acc": 0.8768333333333332,
+      "agedb_30.roc": 0.9446752222222222,
+      "calfw.acc": 0.8865000000000001,
+      "calfw.roc": 0.9482632222222223,
+      "fgnet.roc": 0.9221787648892597,
+      "fgnet.large_gap": 0.8475821475113043,
+      "our.overall": 0.9163001066390138,
+      "our.25+": 0.8380501425341841
+    },
+    "+arcface": {
+      "LFW.acc": 0.9518333333333333,
+      "agedb_30.acc": 0.8761666666666666,
+      "agedb_30.roc": 0.9473514444444444,
+      "calfw.acc": 0.8789999999999999,
+      "calfw.roc": 0.9440238888888889,
+      "fgnet.roc": 0.9333941607129901,
+      "fgnet.large_gap": 0.8506467722609479,
+      "our.overall": 0.929432409986117,
+      "our.25+": 0.8675487426221713
+    },
+    "+cosface": {
+      "LFW.acc": 0.9521666666666666,
+      "agedb_30.acc": 0.8731666666666668,
+      "agedb_30.roc": 0.9446221111111112,
+      "calfw.acc": 0.8748333333333334,
+      "calfw.roc": 0.9412436666666667,
+      "fgnet.roc": 0.9306627275493011,
+      "fgnet.large_gap": 0.8432126083420065,
+      "our.overall": 0.9261259219148446,
+      "our.25+": 0.8599274232718525
+    },
+    "+sphereface": {
+      "LFW.acc": 0.9504999999999999,
+      "agedb_30.acc": 0.8745,
+      "agedb_30.roc": 0.9432796666666666,
+      "calfw.acc": 0.876,
+      "calfw.roc": 0.9431834444444445,
+      "fgnet.roc": 0.8997587224609602,
+      "fgnet.large_gap": 0.8008693598747562,
+      "our.overall": 0.8625671641173004,
+      "our.25+": 0.6991130076111475
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "models/bb_facenet_seed42.pt",
+      "bytes": 115977947,
+      "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+    },
+    {
+      "path": "models/bb_facenet_arcface.pt",
+      "bytes": 115978669,
+      "sha256": "72c893deccdf04f76ff88ce8315e3fa8f9f805637fd05a5f4006e1f0c95962ac"
+    },
+    {
+      "path": "models/bb_facenet_cosface.pt",
+      "bytes": 115978669,
+      "sha256": "b0fb7a609d5f62b316a576d1fedec22886d9e125d5ac695f15b931115829c89e"
+    },
+    {
+      "path": "models/bb_facenet_sphereface.pt",
+      "bytes": 115980835,
+      "sha256": "4395885cec22b8b5101ca806acca1f7f21e9808bd1fae962f822e1db778c9062"
+    },
+    {
+      "path": "data/external/lfw_aligned.npz",
+      "bytes": 393528172,
+      "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
+    },
+    {
+      "path": "data/external/agedb_30.bin",
+      "bytes": 76525089,
+      "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
+    },
+    {
+      "path": "data/external/calfw.bin",
+      "bytes": 74157257,
+      "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
+    },
+    {
+      "path": "data/external/fgnet_crops.npz",
+      "bytes": 24471952,
+      "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+    },
+    {
+      "path": "data/external/cacd_vs_aligned.npz",
+      "bytes": 265802876,
+      "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/sota_objectives.json",
+      "bytes": 1833,
+      "sha256": "d10f91d79413c658464ae550a100d320b2abbe91057ce3937f0ef03116dcfd62"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

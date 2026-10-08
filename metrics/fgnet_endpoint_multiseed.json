@@ -1,0 +1,159 @@
+{
+  "protocol": "endpoint_age_matched",
+  "endpoint_age_tolerance": 2,
+  "negative_seed": 42,
+  "seeds": [
+    42,
+    1,
+    2
+  ],
+  "checkpoint_training_provenance": "legacy checkpoints; training manifests absent",
+  "strata": {
+    "overall": {
+      "frozen_auc": 0.8870187980321751,
+      "tuned_auc_mean": 0.9201904222146379,
+      "tuned_auc_std_across_seeds": 0.0005015679717820232,
+      "delta_auc_mean": 0.03317162418246274,
+      "delta_auc_std_across_seeds": 0.0005015679717820232,
+      "subject_bootstrap_by_seed": {
+        "42": {
+          "frozen_auc": 0.8870187980321751,
+          "tuned_auc": 0.9198731181098159,
+          "delta_auc": 0.032854320077640775,
+          "frozen_ci95": [
+            0.8658897993885821,
+            0.9084751582592624
+          ],
+          "tuned_ci95": [
+            0.9023810977647827,
+            0.9360211096703148
+          ],
+          "delta_ci95": [
+            0.014877060101953323,
+            0.050394755411297495
+          ],
+          "n_subjects": 82,
+          "n_pairs": 5308,
+          "n_valid_resamples": 2000,
+          "n_requested_resamples": 2000
+        },
+        "1": {
+          "frozen_auc": 0.8870187980321751,
+          "tuned_auc": 0.9199294804049454,
+          "delta_auc": 0.032910682372770284,
+          "frozen_ci95": [
+            0.8658897993885821,
+            0.9084751582592624
+          ],
+          "tuned_ci95": [
+            0.9031050607273455,
+            0.9358942517416496
+          ],
+          "delta_ci95": [
+            0.014262993661149756,
+            0.05049869475650999
+          ],
+          "n_subjects": 82,
+          "n_pairs": 5308,
+          "n_valid_resamples": 2000,
+          "n_requested_resamples": 2000
+        },
+        "2": {
+          "frozen_auc": 0.8870187980321751,
+          "tuned_auc": 0.9207686681291523,
+          "delta_auc": 0.033749870096977164,
+          "frozen_ci95": [
+            0.8658897993885821,
+            0.9084751582592624
+          ],
+          "tuned_ci95": [
+            0.9040134383787956,
+            0.9367537581493496
+          ],
+          "delta_ci95": [
+            0.016332577746209144,
+            0.050805293391097045
+          ],
+          "n_subjects": 82,
+          "n_pairs": 5308,
+          "n_valid_resamples": 2000,
+          "n_requested_resamples": 2000
+        }
+      },
+      "all_per_seed_delta_ci95_above_zero": true
+    },
+    "large_gap_25plus": {
+      "frozen_auc": 0.802314764737696,
+      "tuned_auc_mean": 0.849021092482423,
+      "tuned_auc_std_across_seeds": 0.0016256684378370254,
+      "delta_auc_mean": 0.046706327744726904,
+      "delta_auc_std_across_seeds": 0.0016256684378370254,
+      "subject_bootstrap_by_seed": {
+        "42": {
+          "frozen_auc": 0.802314764737696,
+          "tuned_auc": 0.8483071930773392,
+          "delta_auc": 0.04599242833964312,
+          "frozen_ci95": [
+            0.7151007625970044,
+            0.8746270496261673
+          ],
+          "tuned_ci95": [
+            0.7761546535876968,
+            0.9061739301541673
+          ],
+          "delta_ci95": [
+            0.006027366696581025,
+            0.09061015533580336
+          ],
+          "n_subjects": 75,
+          "n_pairs": 430,
+          "n_valid_resamples": 2000,
+          "n_requested_resamples": 2000
+        },
+        "1": {
+          "frozen_auc": 0.802314764737696,
+          "tuned_auc": 0.8478745267712277,
+          "delta_auc": 0.045559762033531626,
+          "frozen_ci95": [
+            0.7151007625970044,
+            0.8746270496261673
+          ],
+          "tuned_ci95": [
+            0.7762098649467624,
+            0.9038669067998129
+          ],
+          "delta_ci95": [
+            0.00591772027483278,
+            0.09168529824271922
+          ],
+          "n_subjects": 75,
+          "n_pairs": 430,
+          "n_valid_resamples": 2000,
+          "n_requested_resamples": 2000
+        },
+        "2": {
+          "frozen_auc": 0.802314764737696,
+          "tuned_auc": 0.850881557598702,
+          "delta_auc": 0.04856679286100596,
+          "frozen_ci95": [
+            0.7151007625970044,
+            0.8746270496261673
+          ],
+          "tuned_ci95": [
+            0.779574534909563,
+            0.9081710843152805
+          ],
+          "delta_ci95": [
+            0.010941791955828945,
+            0.0919094105060362
+          ],
+          "n_subjects": 75,
+          "n_pairs": 430,
+          "n_valid_resamples": 2000,
+          "n_requested_resamples": 2000
+        }
+      },
+      "all_per_seed_delta_ci95_above_zero": true
+    }
+  }
+}

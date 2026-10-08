@@ -113,6 +113,7 @@ def _package_uploads(
     lfw_evidence = None
     curation_evidence = None
     roc_v2_evidence = None
+    cacd_evidence = None
     if include_experiment_index:
         root = LATEX.parent
         staging = root / ".work" / "submission-evidence" / uuid.uuid4().hex
@@ -156,6 +157,16 @@ def _package_uploads(
         roc_v2_evidence = roc_staging / "roc_v2_evidence_bundle.zip"
         if not roc_v2_evidence.is_file():
             raise FileNotFoundError("ROC-v2 evidence builder produced no archive")
+        cacd_staging = staging / "cacd"
+        cacd_result = _run(
+            [sys.executable, "-m", "scripts.export_cacd_evidence", "--root", str(root),
+             "--out", str(cacd_staging)], root,
+        )
+        if cacd_result.returncode:
+            raise RuntimeError("CACD evidence export failed:\n" + cacd_result.stdout + cacd_result.stderr)
+        cacd_evidence = cacd_staging / "cacd_evidence_bundle.zip"
+        if not cacd_evidence.is_file():
+            raise FileNotFoundError("CACD evidence builder produced no archive")
     man, supp = sub / "manuscript", sub / "supplement"
     upload = sub / "upload"
     upload.mkdir(exist_ok=True)
@@ -168,6 +179,7 @@ def _package_uploads(
         "lfw-evidence.zip",
         "curation-evidence.zip",
         "roc-v2-evidence.zip",
+        "cacd-evidence.zip",
     }
     for name in managed:
         target = upload / name
@@ -185,6 +197,8 @@ def _package_uploads(
         shutil.copy2(curation_evidence, upload / "curation-evidence.zip")
     if roc_v2_evidence is not None:
         shutil.copy2(roc_v2_evidence, upload / "roc-v2-evidence.zip")
+    if cacd_evidence is not None:
+        shutil.copy2(cacd_evidence, upload / "cacd-evidence.zip")
 
     source_files = ["main.tex", "main.bbl", "refs.bib", "IEEEtran.cls"]
     figures = sorted((man / "figures").glob("*.pdf"))

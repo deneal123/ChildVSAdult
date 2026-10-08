@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "experiment": "comparator-fgnet-endpoint-age-matched-reevaluation",
+  "created_at_utc": "2026-10-02T18:54:36.620693+00:00",
+  "command": [
+    "scripts/reevaluate_comparators_fgnet.py"
+  ],
+  "parameters": {
+    "protocol": "endpoint_age_matched",
+    "backbone": "arcface_r50_casia",
+    "epochs": 8,
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "endpoint_age_tolerance": 2,
+    "negative_seed": 42,
+    "bootstrap_seed": 0,
+    "n_boot": 2000,
+    "device": "cpu",
+    "torch_threads": 2
+  },
+  "metrics": {
+    "pair_counts": {
+      "total": 5308,
+      "positive": 2654,
+      "negative": 2654,
+      "large_gap_total": 430,
+      "large_gap_positive": 215,
+      "large_gap_negative": 215
+    },
+    "coverage": {
+      "positive_retained": 2654,
+      "positive_source": 2659,
+      "positive_unmatched": 5,
+      "positive_fraction": 0.9981195938322678,
+      "large_gap_positive_retained": 215,
+      "large_gap_positive_source": 215,
+      "large_gap_positive_fraction": 1.0,
+      "unique_crops_embedded": 650
+    },
+    "frozen_common_backbone": {
+      "overall": {
+        "n_pairs": 5308.0,
+        "n_pos": 2654.0,
+        "n_neg": 2654.0,
+        "roc_auc": 0.8808048195015244,
+        "eer": 0.2008289374529013,
+        "tar@far=0.01": 0.40580256217030897,
+        "tar@far=0.001": 0.22343632253202714,
+        "accuracy_10fold": 0.8067039761219487
+      },
+      "large_gap_25plus": {
+        "n_pairs": 430.0,
+        "n_pos": 215.0,
+        "n_neg": 215.0,
+        "roc_auc": 0.8180421849648458,
+        "eer": 0.26976744186046514,
+        "tar@far=0.01": 0.21395348837209302,
+        "tar@far=0.001": 0.19069767441860466,
+        "accuracy_10fold": 0.755813953488372
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "data/external/fgnet_crops.npz",
+      "bytes": 24471952,
+      "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+    },
+    {
+      "path": "models/arcface_r50_casia.pth",
+      "bytes": 175710586,
+      "sha256": "6c111ba31adcbfd40ae8d8e0075c2c7e1fe7eefe41ec835948040717a5a8d70e"
+    },
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "models/sota_common_protocol/mtlface_arcface_r50_casia_e8_s42.pt",
+      "bytes": 175200094,
+      "sha256": "6bc6ade996181eedcf3fb452f3a92fdead148fb36e49962558e569eb16f59168"
+    },
+    {
+      "path": "metrics/sota_common_protocol/mtlface_arcface_r50_casia_e8_s42.manifest.json",
+      "bytes": 2175,
+      "sha256": "37f85a38f7f745c9db0ff9acdc5ff5741e51d27c38e23ccf9d762bb4fb5c2738"
+    },
+    {
+      "path": "models/sota_common_protocol/mtlface_arcface_r50_casia_e8_s1.pt",
+      "bytes": 175199609,
+      "sha256": "8fd21e1557066fa87f6d357753de0c73b1e74d0ef7c9ad52594309632160727e"
+    },
+    {
+      "path": "metrics/sota_common_protocol/mtlface_arcface_r50_casia_e8_s1.manifest.json",
+      "bytes": 2214,
+      "sha256": "bb4055586ba8e0e8148f9d009e0cf0ebe15a0ba1c5cceb8a54fe77e207cae209"
+    },
+    {
+      "path": "models/sota_common_protocol/mtlface_arcface_r50_casia_e8_s2.pt",
+      "bytes": 175199609,
+      "sha256": "a0ea08bfce18661197d1eac73a5e189893fc6c10be569d139e3641f095d77fbc"
+    },
+    {
+      "path": "metrics/sota_common_protocol/mtlface_arcface_r50_casia_e8_s2.manifest.json",
+      "bytes": 2208,
+      "sha256": "45a178e6d02a1620c2fd059142fc6f79304727249df26c7676b96377b3cf967e"
+    },
+    {
+      "path": "models/sota_common_protocol/cacon_arcface_r50_casia_e8_s42.pt",
+      "bytes": 174670592,
+      "sha256": "958c11a6663dd927dcbf8d2eab520961c1000d3a78a8c24a0a38768004ad68d9"
+    },
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s42.manifest.json",
+      "bytes": 2359,
+      "sha256": "aa62c1ecffac0a4059c45cb54f9691c5ae3927d1a446c5c351562dba1427bbf0"
+    },
+    {
+      "path": "models/sota_common_protocol/cacon_arcface_r50_casia_e8_s1.pt",
+      "bytes": 174670111,
+      "sha256": "477ec7676a8307e84bef406a16c4a6d66e6bebce4fa1c6ec880e6af3f681a871"
+    },
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s1.manifest.json",
+      "bytes": 2371,
+      "sha256": "9dc58a697789e417a06230eb9c370f4a7467e8f4ad89b8226b555c35457d8e0d"
+    },
+    {
+      "path": "models/sota_common_protocol/cacon_arcface_r50_casia_e8_s2.pt",
+      "bytes": 174670111,
+      "sha256": "f8658315eb40cbd14b236abcc9cbdd938e5e69a1079006a121876dbe9dc9e559"
+    },
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s2.manifest.json",
+      "bytes": 2352,
+      "sha256": "a02e4033b0827f799e8853aee9bf931f791d4b6afdd0592afb5b5efcf23314b7"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/comparator_fgnet_endpoint_age_matched.json",
+      "bytes": 28409,
+      "sha256": "e12aec6d2a531b562a3bfbb2428f545c89890dde5cc4b8b7edb449a4991dbbcc"
+    },
+    {
+      "path": "data/interim/comparator_fgnet_embeddings/fgnet_comparator_embeddings.npz",
+      "bytes": 8668292,
+      "sha256": "887a08282dc59a65a20a485437c787a2904b4a6fa17c6bfb816cd045ab324555"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "383ba7347fab0352c00ecb9fd1028ec8754832c2",
+    "branch": "research",
+    "dirty": true
+  }
+}

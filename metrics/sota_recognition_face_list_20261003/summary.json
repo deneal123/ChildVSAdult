@@ -1,0 +1,41 @@
+{
+  "counts": {
+    "train_unmapped_or_orphan_age_labels": 14389,
+    "nontrain_groups": 6428,
+    "fewer_than_two_declared_faces_groups": 5794,
+    "missing_recorded_person_groups": 1,
+    "retained_age_explicit": 18101,
+    "retained_age_missing": 4412,
+    "retained_age_conflict_masked": 58,
+    "retained_images": 22571,
+    "retained_people": 9204
+  },
+  "inventory": {
+    "counts": {
+      "groups": 21427,
+      "face_occurrences": 40586,
+      "groups_with_at_least_two_faces": 13142,
+      "unmapped_age_labels": 14129,
+      "unique_faces": 40586,
+      "recorded_people": 21426
+    },
+    "violations": {
+      "age_labels_outside_group_faces": 6368,
+      "groups_without_recorded_person": 1,
+      "recorded_people_across_splits": 0,
+      "faces_across_splits": 0,
+      "faces_with_multiple_recorded_people": 0,
+      "faces_with_conflicting_age_values": 96
+    },
+    "input_contract_clean": false,
+    "human_identity_audit_complete": false,
+    "crops_verified": false,
+    "training_complete": false,
+    "publication_ready": false
+  },
+  "preparation_complete": true,
+  "retained_crops_decoded": true,
+  "training_complete": false,
+  "human_identity_audit_complete": false,
+  "publication_ready": false
+}

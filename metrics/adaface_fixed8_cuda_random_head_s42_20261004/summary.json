@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 651918848,
+  "peak_reserved_bytes": 729808896,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.2927502725493237,
+      "validation_auc": 0.9880207891920544,
+      "mean_gradient_norm": 0.3872194476790856,
+      "epoch_seconds": 494.59399999992456
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.2661628800757685,
+      "validation_auc": 0.9747234745859028,
+      "mean_gradient_norm": 0.3636995545596838,
+      "epoch_seconds": 482.6570000000065
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.24078732757176208,
+      "validation_auc": 0.9594586145120381,
+      "mean_gradient_norm": 0.35648439949573557,
+      "epoch_seconds": 460.4529999999795
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.22910726292319086,
+      "validation_auc": 0.9541806668793477,
+      "mean_gradient_norm": 0.36019893772063216,
+      "epoch_seconds": 455.844000000041
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.22291416319136614,
+      "validation_auc": 0.9545079393135225,
+      "mean_gradient_norm": 0.3602422630218321,
+      "epoch_seconds": 454.76500000001397
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.21830847289041508,
+      "validation_auc": 0.9574172634348983,
+      "mean_gradient_norm": 0.3591178892605464,
+      "epoch_seconds": 455.10899999993853
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.21427694502419264,
+      "validation_auc": 0.9609590503586046,
+      "mean_gradient_norm": 0.35661548329086057,
+      "epoch_seconds": 480.344000000041
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.2104314395422931,
+      "validation_auc": 0.9643456666520883,
+      "mean_gradient_norm": 0.3533302338365693,
+      "epoch_seconds": 464.030999999959
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

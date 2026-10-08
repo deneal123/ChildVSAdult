@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 708781568,
+  "peak_reserved_bytes": 778043392,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.22243610065166866,
+      "validation_auc": 0.9939149838550527,
+      "mean_gradient_norm": 0.7251122304937139,
+      "epoch_seconds": 545.5
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.20479071069206622,
+      "validation_auc": 0.9943202589220013,
+      "mean_gradient_norm": 0.6975843286166437,
+      "epoch_seconds": 570.344000000041
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.19121303806171527,
+      "validation_auc": 0.9933448325413916,
+      "mean_gradient_norm": 0.6577066130073942,
+      "epoch_seconds": 527.561999999918
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.1793076421619886,
+      "validation_auc": 0.9920344789283435,
+      "mean_gradient_norm": 0.6158961781586751,
+      "epoch_seconds": 524.359999999986
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.16934684799155444,
+      "validation_auc": 0.9906407810164437,
+      "mean_gradient_norm": 0.58037043103178,
+      "epoch_seconds": 522.265000000014
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.1615705577635379,
+      "validation_auc": 0.9888472212438442,
+      "mean_gradient_norm": 0.5709591983339501,
+      "epoch_seconds": 522.344000000041
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.15537537197194048,
+      "validation_auc": 0.9878272014901722,
+      "mean_gradient_norm": 0.6171681961058829,
+      "epoch_seconds": 523.3129999999655
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.1505729704114377,
+      "validation_auc": 0.9864110876581235,
+      "mean_gradient_norm": 0.624261216508826,
+      "epoch_seconds": 517.859000000055
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

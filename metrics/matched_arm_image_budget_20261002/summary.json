@@ -1,0 +1,22 @@
+{
+  "arms": {
+    "LOW": {
+      "positive_pairs": 600,
+      "negative_pairs": 600,
+      "positive_images": 1096,
+      "all_train_images": 1398,
+      "negative_only_images": 302
+    },
+    "CROSS": {
+      "positive_pairs": 600,
+      "negative_pairs": 600,
+      "positive_images": 1096,
+      "all_train_images": 1121,
+      "negative_only_images": 25
+    }
+  },
+  "positive_image_budget_equal": true,
+  "all_train_image_budget_equal": false,
+  "scope": "count audit of existing arm files, not retraining or causal evidence",
+  "publication_ready": false
+}

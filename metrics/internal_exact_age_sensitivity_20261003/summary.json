@@ -1,0 +1,130 @@
+{
+  "original_tolerance": {
+    "positive_pairs": 154,
+    "negative_pairs": 154,
+    "recorded_people": 216,
+    "frozen_auc": 0.7676252319109462,
+    "tuned_auc": 0.8330662843649856,
+    "gain_auc": 0.06544105245403942,
+    "ci95_frozen_tuned_gain": [
+      [
+        0.6768948125122404,
+        0.8520542046300726
+      ],
+      [
+        0.7523520260416318,
+        0.9060184447042706
+      ],
+      [
+        0.0051202181675655154,
+        0.13060306155043208
+      ]
+    ],
+    "empirical_tar_at_far": {
+      "frozen": {
+        "0.01": 0.33766233766233766,
+        "0.001": 0.3246753246753247
+      },
+      "tuned": {
+        "0.01": 0.4025974025974026,
+        "0.001": 0.2532467532467532
+      }
+    }
+  },
+  "exact_age_subset": {
+    "positive_pairs": 140,
+    "negative_pairs": 140,
+    "recorded_people": 203,
+    "frozen_auc": 0.77,
+    "tuned_auc": 0.8410204081632654,
+    "gain_auc": 0.07102040816326538,
+    "ci95_frozen_tuned_gain": [
+      [
+        0.6698967109039099,
+        0.8588699255199205
+      ],
+      [
+        0.7516776788780344,
+        0.9170069197640406
+      ],
+      [
+        0.00757696757212695,
+        0.1406726871612958
+      ]
+    ],
+    "empirical_tar_at_far": {
+      "frozen": {
+        "0.01": 0.36428571428571427,
+        "0.001": 0.29285714285714287
+      },
+      "tuned": {
+        "0.01": 0.39285714285714285,
+        "0.001": 0.24285714285714285
+      }
+    }
+  },
+  "exact_minus_original_gain": {
+    "point": 0.005579355709225964,
+    "ci95": [
+      -0.008321748548251268,
+      0.029608821298345234
+    ]
+  },
+  "bootstrap": {
+    "seed": 42,
+    "requested": 2000,
+    "valid": 2000,
+    "recorded_people": 216,
+    "method": "joint recorded-person dyad-multiplicity product; same weight for positive and negative matched block",
+    "conditioning": "one fixed seed42 checkpoint and selected saved pairs; not training-seed uncertainty or causal age effect"
+  },
+  "lowfar_scope": "descriptive empirical ROC operating points, no CI or deployable calibrated threshold; accepts tied scores together",
+  "identity_independence": "recorded person clusters only; missed-merge human audit pending",
+  "publication_ready": false,
+  "protocol": {
+    "rule": "retain original whole matched blocks iff both endpoint ages exactly equal; no re-mining or score-based selection",
+    "original_blocks": 154,
+    "exact_blocks": 140,
+    "retained_fraction": 0.9090909090909091,
+    "original_recorded_people": 216,
+    "exact_recorded_people": 203,
+    "bootstrap_seed": 42,
+    "n_boot": 2000,
+    "training_seed": 42,
+    "device": "cpu",
+    "threads": 2,
+    "selection_based_on_scores": false,
+    "public_preregistration": false,
+    "publication_ready": false,
+    "limits": "subset changes age/identity composition; does not test causal shortcut use or exact rematching coverage; legacy training provenance unverified"
+  },
+  "historical_point_reference": {
+    "facenet_frozen": {
+      "n_pairs": 308.0,
+      "n_pos": 154.0,
+      "n_neg": 154.0,
+      "roc_auc": 0.7676673975375274,
+      "eer": 0.3181818181818182,
+      "tar@far=0.01": 0.3246753246753247,
+      "tar@far=0.001": 0.3246753246753247
+    },
+    "facenet_tuned": {
+      "n_pairs": 308.0,
+      "n_pos": 154.0,
+      "n_neg": 154.0,
+      "roc_auc": 0.8330241187384044,
+      "eer": 0.2597402597402597,
+      "tar@far=0.01": 0.2532467532467532,
+      "tar@far=0.001": 0.2532467532467532
+    },
+    "arcface": {
+      "n_pairs": 308.0,
+      "n_pos": 154.0,
+      "n_neg": 154.0,
+      "roc_auc": 0.9701467363805026,
+      "eer": 0.08441558441558439,
+      "tar@far=0.01": 0.7857142857142857,
+      "tar@far=0.001": 0.7857142857142857
+    }
+  }
+}

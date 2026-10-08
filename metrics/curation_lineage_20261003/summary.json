@@ -1,0 +1,20 @@
+{
+  "post_groups": 27488,
+  "mapped_post_groups": 27487,
+  "mapped_person_clusters": 21847,
+  "unmapped_fallback_groups": 1,
+  "unmapped_fallback_faces": 2,
+  "pre_prune_groups": 21848,
+  "noisy_groups_dropped": 421,
+  "retained_groups": 21427,
+  "pre_prune_faces": 49606,
+  "faces_in_dropped_noisy_groups": 830,
+  "dedup_faces_removed_from_retained_groups": 8190,
+  "retained_unique_faces": 40586,
+  "low_consistency_multiface_groups_pre_prune": 2919,
+  "low_consistency_multiface_groups_retained": 2866,
+  "current_redundant_file_replays_final_faces": false,
+  "dedup_face_set_mismatched_groups": 3968,
+  "dedup_face_order_only_mismatches": 0,
+  "scope": "record lineage only; no true-person or historical detector validation"
+}

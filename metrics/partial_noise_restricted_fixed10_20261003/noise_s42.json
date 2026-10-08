@@ -1,0 +1,34 @@
+{
+  "training_seed": 42,
+  "permutation_seed": 42,
+  "fgnet": {
+    "overall": {
+      "n_pairs": 5308.0,
+      "n_positive": 2654.0,
+      "n_negative": 2654.0,
+      "roc_auc": 0.9073734659375818,
+      "eer": 0.17483044461190655,
+      "tar@far=0.01": 0.517709118311982
+    },
+    "large_gap_25_plus": {
+      "n_pairs": 430.0,
+      "n_positive": 215.0,
+      "n_negative": 215.0,
+      "roc_auc": 0.8350676041103299,
+      "eer": 0.24186046511627912,
+      "tar@far=0.01": 0.4
+    },
+    "coverage": {
+      "retained_positive": 2654,
+      "source_positive": 2659,
+      "unmatched_positive": 5,
+      "positive_fraction": 0.9981195938322678,
+      "large_gap_retained_positive": 215,
+      "large_gap_source_positive": 215,
+      "large_gap_unmatched_positive": 0,
+      "large_gap_positive_fraction": 1.0
+    }
+  },
+  "clean_comparison_completed": false,
+  "publication_ready": false
+}

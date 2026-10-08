@@ -1,0 +1,52 @@
+{
+  "valid": true,
+  "annotators": 2,
+  "tasks_per_annotator": 2000,
+  "adjudication_template_rows": 2000,
+  "counts_by_type": {
+    "age_extraction": 400,
+    "cluster_merge": 400,
+    "group_integrity": 400,
+    "near_duplicate": 400,
+    "positive_identity": 400
+  },
+  "automatic_label_counts_by_type": {
+    "cluster_merge": {
+      "same_identity": 400
+    },
+    "group_integrity": {
+      "different_identity": 200,
+      "same_identity": 200
+    },
+    "near_duplicate": {
+      "distinct_photo": 128,
+      "near_duplicate": 272
+    },
+    "positive_identity": {
+      "same_identity": 400
+    }
+  },
+  "near_duplicate_similarity": {
+    "threshold": 0.97,
+    "min": 0.9634715914726257,
+    "p25": 0.9690496027469635,
+    "median": 0.9716207087039948,
+    "p75": 0.9745961278676987,
+    "max": 0.9764612317085266
+  },
+  "age_baseline_coverage": {
+    "gigachat": 1.0,
+    "regex": 0.59,
+    "local": 1.0
+  },
+  "independently_shuffled": true,
+  "responses_filled": 0,
+  "opaque_image_files": 5112,
+  "source_image_occurrences": 5112,
+  "unique_source_images": 5112,
+  "repeated_source_occurrences": 0,
+  "cross_stratum_source_reuse": 0,
+  "source_identifier_leaks": 0,
+  "automatic_decision_leaks": 0,
+  "image_checksum_mismatches": 0
+}

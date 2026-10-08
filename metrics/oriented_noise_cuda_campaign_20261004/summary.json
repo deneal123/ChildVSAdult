@@ -1,0 +1,8 @@
+{
+  "training_complete": true,
+  "completed_cells": 3,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "permutation_seed": 42,
+  "scope": "supervision perturbation, not co-occurrence or causal-source evidence"
+}

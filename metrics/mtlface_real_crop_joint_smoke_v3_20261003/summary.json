@@ -1,0 +1,40 @@
+{
+  "recognition": {
+    "identity": 34.275550842285156,
+    "age": 1429.3170166015625,
+    "adversarial_age": 1445.2413330078125,
+    "total": 38.59535217285156,
+    "gradient_norm": 189.43628882561129
+  },
+  "fas": {
+    "discriminator_loss": 0.5045220851898193,
+    "generator_loss": 43.47955322265625,
+    "adversarial_loss": 0.309929221868515,
+    "identity_loss": 0.0013223920250311494,
+    "age_loss": 2.0234861373901367,
+    "discriminator_gradient_norm": 3.3691403462944702,
+    "generator_gradient_norm": 31.217722570146705,
+    "discriminator_updated": true,
+    "generator_updated": true,
+    "recognizer_updated": false,
+    "generator_bn_policy": "adapt",
+    "full_joint_fas": false
+  },
+  "updated_recognition_parameter_tensors": 26,
+  "updated_classifier_parameter_tensors": 1,
+  "recognition_buffers_frozen": true,
+  "recognizer_state_unchanged_during_fas": true,
+  "identity_head_unchanged_during_fas": true,
+  "embeddings_finite": true,
+  "embedding_shape": [
+    2,
+    512
+  ],
+  "target_group": 1,
+  "joint_steps_complete": true,
+  "training_complete": false,
+  "scientific_evaluation_complete": false,
+  "full_method_parity": false,
+  "publication_ready": false,
+  "real_crop_joint_smoke_complete": true
+}

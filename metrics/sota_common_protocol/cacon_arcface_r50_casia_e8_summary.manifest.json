@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "experiment": "cacon-common-protocol-three-seed-summary",
+  "created_at_utc": "2026-09-23T11:34:30.202495+00:00",
+  "command": [
+    "scripts\\sota_common_protocol.py",
+    "--methods",
+    "cacon",
+    "--epochs",
+    "8",
+    "--seeds",
+    "42",
+    "1",
+    "2",
+    "--batch-size",
+    "64"
+  ],
+  "parameters": {
+    "backbone": "arcface_r50_casia",
+    "epochs": 8,
+    "seeds": [
+      42,
+      1,
+      2
+    ]
+  },
+  "metrics": {
+    "LFW.acc": {
+      "mean": 0.9539444444444444,
+      "std": 0.0008388704928079304,
+      "n_seeds": 3
+    },
+    "agedb_30.acc": {
+      "mean": 0.8207222222222222,
+      "std": 0.0014938144066387778,
+      "n_seeds": 3
+    },
+    "agedb_30.roc": {
+      "mean": 0.8970389814814815,
+      "std": 0.0002842525412404602,
+      "n_seeds": 3
+    },
+    "cacd_vs.acc": {
+      "mean": 0.9615833333333333,
+      "std": 0.00014433756729739054,
+      "n_seeds": 3
+    },
+    "cacd_vs.eer": {
+      "mean": 0.040333333333333325,
+      "std": 0.001040832999733064,
+      "n_seeds": 3
+    },
+    "cacd_vs.roc": {
+      "mean": 0.9906827500000001,
+      "std": 0.00010706218987117174,
+      "n_seeds": 3
+    },
+    "cacd_vs.tar@far=0.001": {
+      "mean": 0.8414999999999999,
+      "std": 0.006082762530298225,
+      "n_seeds": 3
+    },
+    "cacd_vs.tar@far=0.01": {
+      "mean": 0.9228333333333333,
+      "std": 0.0027537852736430266,
+      "n_seeds": 3
+    },
+    "calfw.acc": {
+      "mean": 0.8445,
+      "std": 0.0018333333333332424,
+      "n_seeds": 3
+    },
+    "calfw.roc": {
+      "mean": 0.9191191111111111,
+      "std": 0.000215231916261891,
+      "n_seeds": 3
+    },
+    "fgnet.large_gap": {
+      "mean": 0.7751203314179428,
+      "std": 0.0014522976597014486,
+      "n_seeds": 3
+    },
+    "fgnet.roc": {
+      "mean": 0.8767288032823589,
+      "std": 0.0010543746439067646,
+      "n_seeds": 3
+    },
+    "our.25+": {
+      "mean": 0.6953379496947149,
+      "std": 0.0025898793839891224,
+      "n_seeds": 3
+    },
+    "our.overall": {
+      "mean": 0.8416886398195643,
+      "std": 0.0012496162309003122,
+      "n_seeds": 3
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s42.json",
+      "bytes": 1789,
+      "sha256": "a4f568353803f0d2b5ab174889641fd12ee4514187d4f405103f05abd9842719"
+    },
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s1.json",
+      "bytes": 1801,
+      "sha256": "e56fdbb9b0655dfeff706a3a53076e59ceb1a39f9bc424448f2e0879c0e9b0d8"
+    },
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_s2.json",
+      "bytes": 1780,
+      "sha256": "2c56da335cf36f2b2096fa98fbc8ca06e08cc69e28977f7e09ef926371a0298e"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/sota_common_protocol/cacon_arcface_r50_casia_e8_summary.json",
+      "bytes": 2001,
+      "sha256": "e3712c0c0f01bc4cb84342a508ec32561b075de8fe16582f7d80970c8846aaff"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

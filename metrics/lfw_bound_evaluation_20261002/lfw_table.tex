@@ -1,0 +1,18 @@
+% BEGIN GENERATED LFW BOUND
+\begin{table*}[!t]
+\caption{Separate source-bound FaceNet LFW evaluation: 6{,}000 official View-2 pairs, 4{,}281 persons. Mean and SD describe three fixed legacy training checkpoints; gain CI resamples persons jointly for all checkpoints, conditional on these weights and folds, not a population of training seeds. Accuracy thresholds are selected on the other nine folds and reselected in each draw. ROC operating points are test-derived, not development-calibrated deployment thresholds; EER uses the discrete minimax ROC point. EER improvement has negative sign. Legacy interleaved-cache results are not pooled.}
+\label{tab:lfw-bound}
+\centering\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Metric & Frozen & Tuned mean$\pm$SD & Tuned$-$frozen & Paired gain 95\% CI \\
+\midrule
+Official-fold accuracy & 0.9638 & 0.9673$\pm$0.0006 & +0.0034 & $[-0.0037,+0.0091]$ \\
+ROC-AUC & 0.9827 & 0.9865$\pm$0.0001 & +0.0037 & $[+0.0018,+0.0060]$ \\
+Discrete ROC EER & 0.0380 & 0.0364$\pm$0.0005 & -0.0016 & $[-0.0054,+0.0026]$ \\
+TAR@FAR=1\% & 0.9397 & 0.9420$\pm$0.0022 & +0.0023 & $[-0.0205,+0.0176]$ \\
+TAR@FAR=0.1\% & 0.8413 & 0.8518$\pm$0.0181 & +0.0104 & $[-0.0796,+0.3947]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED LFW BOUND

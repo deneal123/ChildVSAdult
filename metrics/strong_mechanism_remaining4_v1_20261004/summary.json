@@ -1,0 +1,99 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "cells": {
+    "random_head_lr1e-06_s1": {
+      "representation": {
+        "mean_cosine_drift": 0.05696553309006931,
+        "linear_cka": 0.94697031791701,
+        "n_images": 650,
+        "limitation": "descriptive representation change; not a mechanism decision"
+      },
+      "paired_age_error": {
+        "delta_mae_person": -0.1670771850800175,
+        "ci95": [
+          -0.6658875037700367,
+          0.3228880338991752
+        ],
+        "n_persons": 82,
+        "resamples": 2000,
+        "seed": 0,
+        "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+      },
+      "frozen_mae_person": 10.226953350296894,
+      "tuned_mae_person": 10.059876165216874,
+      "frozen_mean_baseline_mae_image": 9.452316463041072,
+      "tuned_mean_baseline_mae_image": 9.452316463041072
+    },
+    "random_head_lr1e-06_s2": {
+      "representation": {
+        "mean_cosine_drift": 0.05735356862608927,
+        "linear_cka": 0.9468370225935544,
+        "n_images": 650,
+        "limitation": "descriptive representation change; not a mechanism decision"
+      },
+      "paired_age_error": {
+        "delta_mae_person": -0.16354548317733347,
+        "ci95": [
+          -0.6650403897949527,
+          0.33147455238349344
+        ],
+        "n_persons": 82,
+        "resamples": 2000,
+        "seed": 0,
+        "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+      },
+      "frozen_mae_person": 10.226953350296894,
+      "tuned_mae_person": 10.063407867119562,
+      "frozen_mean_baseline_mae_image": 9.452316463041072,
+      "tuned_mean_baseline_mae_image": 9.452316463041072
+    },
+    "random_tail_lr1e-06_s42": {
+      "representation": {
+        "mean_cosine_drift": 0.45460803333094324,
+        "linear_cka": 0.601991889740034,
+        "n_images": 650,
+        "limitation": "descriptive representation change; not a mechanism decision"
+      },
+      "paired_age_error": {
+        "delta_mae_person": -1.6610233824780252,
+        "ci95": [
+          -2.7840298207885295,
+          -0.5394129421172442
+        ],
+        "n_persons": 82,
+        "resamples": 2000,
+        "seed": 0,
+        "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+      },
+      "frozen_mae_person": 10.226953350296894,
+      "tuned_mae_person": 8.565929967818867,
+      "frozen_mean_baseline_mae_image": 9.452316463041072,
+      "tuned_mean_baseline_mae_image": 9.452316463041072
+    },
+    "random_tail_lr1e-06_s1": {
+      "representation": {
+        "mean_cosine_drift": 0.45629008113099995,
+        "linear_cka": 0.6002013549786162,
+        "n_images": 650,
+        "limitation": "descriptive representation change; not a mechanism decision"
+      },
+      "paired_age_error": {
+        "delta_mae_person": -1.7002478559193266,
+        "ci95": [
+          -2.7847048799726624,
+          -0.5905773528951952
+        ],
+        "n_persons": 82,
+        "resamples": 2000,
+        "seed": 0,
+        "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+      },
+      "frozen_mae_person": 10.226953350296894,
+      "tuned_mae_person": 8.526705494377566,
+      "frozen_mean_baseline_mae_image": 9.452316463041072,
+      "tuned_mean_baseline_mae_image": 9.452316463041072
+    }
+  },
+  "limitation": "FG-NET descriptive fixed-checkpoint diagnostics; incomplete36-cell matrix; weak comparison and identity separability remain open; chronological ages; conditional OOF uncertainty"
+}

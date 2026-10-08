@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 651918848,
+  "peak_reserved_bytes": 729808896,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.29274302378106715,
+      "validation_auc": 0.9880121566781247,
+      "mean_gradient_norm": 0.38728194790315773,
+      "epoch_seconds": 442.2029999999795
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.266105757708201,
+      "validation_auc": 0.9746442080767803,
+      "mean_gradient_norm": 0.36374614864527466,
+      "epoch_seconds": 455.93799999996554
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.2406312282785012,
+      "validation_auc": 0.9591361114225758,
+      "mean_gradient_norm": 0.35579691003009745,
+      "epoch_seconds": 458.01500000001397
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.22896927620266078,
+      "validation_auc": 0.9539148712985175,
+      "mean_gradient_norm": 0.36003998009576405,
+      "epoch_seconds": 458.85899999993853
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.22294528667143884,
+      "validation_auc": 0.9545584943674754,
+      "mean_gradient_norm": 0.3608699146310787,
+      "epoch_seconds": 458.56300000008196
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.2182429428696713,
+      "validation_auc": 0.9572148762920214,
+      "mean_gradient_norm": 0.35859948255942614,
+      "epoch_seconds": 459.25
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.2142305733724455,
+      "validation_auc": 0.9607388020197793,
+      "mean_gradient_norm": 0.356513059859214,
+      "epoch_seconds": 459.26599999994505
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.2103242082346216,
+      "validation_auc": 0.9642846428864914,
+      "mean_gradient_norm": 0.3534733638634727,
+      "epoch_seconds": 457.9220000000205
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

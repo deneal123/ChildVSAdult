@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "experiment": "strong-backbone-fgnet-endpoint-age-matched-reevaluation",
+  "created_at_utc": "2026-09-25T17:18:37.734524+00:00",
+  "command": [
+    "scripts/reevaluate_strong_backbone_fgnet.py",
+    "--output",
+    "metrics/strong_backbone_study/fgnet_endpoint_age_matched.json"
+  ],
+  "parameters": {
+    "backbone": "adaface_ir101",
+    "protocol": "endpoint_age_matched",
+    "pair_seed": 42,
+    "endpoint_age_tolerance": 2,
+    "large_gap_threshold": 25,
+    "checkpoint_count": 13,
+    "device": "cuda"
+  },
+  "metrics": {
+    "pair_counts": {
+      "total": 5308,
+      "positive": 2654,
+      "negative": 2654,
+      "large_gap_total": 430,
+      "large_gap_positive": 215,
+      "large_gap_negative": 215
+    },
+    "coverage": {
+      "positive_retained": 2654,
+      "positive_source": 2659,
+      "positive_unmatched": 5,
+      "positive_fraction": 0.9981195938322678,
+      "large_gap_positive_retained": 215,
+      "large_gap_positive_source": 215,
+      "large_gap_positive_unmatched": 0,
+      "large_gap_positive_fraction": 1.0
+    },
+    "frozen_baseline": {
+      "overall": {
+        "n_pairs": 5308.0,
+        "n_pos": 2654.0,
+        "n_neg": 2654.0,
+        "roc_auc": 0.9895663027867677,
+        "eer": 0.045214770158251705,
+        "tar@far=0.01": 0.8944988696307461,
+        "tar@far=0.001": 0.7889977392614921,
+        "accuracy_10fold": 0.9572351916995345
+      },
+      "large_gap_25_plus": {
+        "n_pairs": 430.0,
+        "n_pos": 215.0,
+        "n_neg": 215.0,
+        "roc_auc": 0.9676149269875608,
+        "eer": 0.08372093023255814,
+        "tar@far=0.01": 0.7581395348837209,
+        "tar@far=0.001": 0.6976744186046512,
+        "accuracy_10fold": 0.9093023255813953
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "data/external/fgnet_crops.npz",
+      "bytes": 24471952,
+      "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+    },
+    {
+      "path": "models/adaface_ir101.pt",
+      "bytes": 261111273,
+      "sha256": "e312d79222d28027f146ed495e182e48fe0dddf404cdbbdabcccdbdd07cc3758"
+    },
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-05_s1.pt",
+      "bytes": 261180091,
+      "sha256": "aabfd44f53b6e1ac182e20a0ace73516e3f9eeff9a9c0b6b30b956d21ee67e7b"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s1.json",
+      "bytes": 3139,
+      "sha256": "2c13ce053a324f647926db7cf6558a723d1980b7b06481e19e413fcfd515a8b3"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s1.manifest.json",
+      "bytes": 2671,
+      "sha256": "909889f1eece637dea7f9b2abf36639448217af17495406e8163395fcd0574f8"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-05_s2.pt",
+      "bytes": 261180091,
+      "sha256": "e9559e28bdad2f814e3b467cd4eeed07b2bfc043a3e47c32b46b22c815cb36cc"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s2.json",
+      "bytes": 3113,
+      "sha256": "d18a28ba2609cc71e5a7a980e8f0ab3d690bf28b7d3e2625a9f9bef6a7c9aec6"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s2.manifest.json",
+      "bytes": 2659,
+      "sha256": "b96bd3dd39e8673999c053d91ab55491aa8b26c0fe34c2f93346f3b9960b71fb"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-05_s42.pt",
+      "bytes": 261181014,
+      "sha256": "2945a4d8fbee3bc7123d9e74ee70f35664849e6bbc4c8d34356ffa94ccaab03e"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s42.json",
+      "bytes": 3125,
+      "sha256": "bb4fd569470b7aae91ff944f6ecfc513cc7f828685aac29562d046e3bcfa5c9f"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s42.manifest.json",
+      "bytes": 2673,
+      "sha256": "81fbc665e02f8d1f7d8eb7a76c8e1d9a2ef9cb5ea0228f82f14d6b935e0f9a55"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-06_s1.pt",
+      "bytes": 261180347,
+      "sha256": "a5c90e2a75b3a9f87d8eddd79be07f8df53404b870ac525a1a08ff0089726572"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-06_s1.json",
+      "bytes": 4005,
+      "sha256": "d41d3f683545c4750a3849006d242edab86a9be088cfda7df22cf26b2abedb0e"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-06_s1.manifest.json",
+      "bytes": 2671,
+      "sha256": "f3784f4a5fbea2f63fbe2b32b0b1676dca97b2e180299ffa9c8b474df3f96465"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-06_s2.pt",
+      "bytes": 261180347,
+      "sha256": "f7b09f2829eac40ac5b7734104d6a19a44cf6d1d2122743f0e91be1b46e739f4"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-06_s2.json",
+      "bytes": 3939,
+      "sha256": "625c582f84489a2310a79c86fb0375927617b961d57cea7a4a5829b02c974415"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-06_s2.manifest.json",
+      "bytes": 2654,
+      "sha256": "2619b9ce44b6bce29fea37919c3d81c7cb0de3e76db369e09f9c6aa6a8ed6417"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-06_s42.pt",
+      "bytes": 261181270,
+      "sha256": "73cb5a2cda1b4fb15eb972c49c189a7ffe8d314895bb52ca75092a99aafaf77a"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-06_s42.json",
+      "bytes": 3978,
+      "sha256": "cefc6ef8f93ef4c62a5e4358f2a77e1edded600bd7bd4889ea353506028e13bb"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-06_s42.manifest.json",
+      "bytes": 2663,
+      "sha256": "12d8a723cc423a3a0c05883b9c737ed5fbbe69d95420c18c9c8a1c1f04b0b2c0"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_tail_lr1e-05_s1.pt",
+      "bytes": 261180219,
+      "sha256": "c1635bc766ad45130e34c98d405b2c553990d01c61f813af72cb71d2a3da9e24"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-05_s1.json",
+      "bytes": 3538,
+      "sha256": "37d7af9104c1e1ca70cdebc7fb59e4479dbddf8e5f232c4744edc2cf3fc6e8d1"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-05_s1.manifest.json",
+      "bytes": 2681,
+      "sha256": "2506cdebb57fec40a0feb6ed9f2c6d54bb1d9a3d5003a09c85bd094e8462ad21"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_tail_lr1e-05_s2.pt",
+      "bytes": 261180283,
+      "sha256": "7fef770065860a85727eb73aaeefaffd7cbf477e54e98ff16590ec4156c809e9"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-05_s2.json",
+      "bytes": 3772,
+      "sha256": "f54bb7d7f48686be6e6cf00ffea47359f5b80818c72fcde2b397e1ac51e3ad9d"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-05_s2.manifest.json",
+      "bytes": 2670,
+      "sha256": "8b81565af88a25561cb4ead1fbd1f155a5b97f6deac2fdc6b71cca8d8df439bc"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_tail_lr1e-05_s42.pt",
+      "bytes": 261181078,
+      "sha256": "80e5e84e9df3abf88549fe90991fdf33ea07d4e79813c8495778c52daa02d246"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-05_s42.json",
+      "bytes": 3273,
+      "sha256": "008e46e39ced7508790d94c859bb7a86346f407c22bdbb39af5a726f73ea71de"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-05_s42.manifest.json",
+      "bytes": 2632,
+      "sha256": "d576e639b4530bf022d32c4372cf0b1f22c6213fb6bb3f8007b4b1b61896b668"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_tail_lr1e-06_s1.pt",
+      "bytes": 261180155,
+      "sha256": "64c77dd14244d1a58937ea8c0134b6d7c0bf6b54850edf4fa1548f154e74f39e"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-06_s1.json",
+      "bytes": 3366,
+      "sha256": "e9cb51351667659447cc39fa422282546ecf293ed34e7223abca3943d0988af7"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-06_s1.manifest.json",
+      "bytes": 2663,
+      "sha256": "604619978c8f57c436670659b4d0f3ea79b704478a98e4bb3b4324db22871ae7"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_tail_lr1e-06_s2.pt",
+      "bytes": 261180155,
+      "sha256": "8b94c760a3d2cb5efca4c73a1e9c9294c067a3aeb5c4f2291d7a8955871610e3"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-06_s2.json",
+      "bytes": 3330,
+      "sha256": "f83e8c3a5fba5683286506d440e03406f1be5f3e315399df6e95e904bfb832be"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-06_s2.manifest.json",
+      "bytes": 2669,
+      "sha256": "fe3013c510de446b9c016433c2a77986b9f95c18a04bc50196d9c8877cd8f7b5"
+    },
+    {
+      "path": "models/strong_backbone_study/e8_random_tail_lr1e-06_s42.pt",
+      "bytes": 261181078,
+      "sha256": "ac8f5bfa43e98b41b02f8aebb3589d4f04c3a8607cc1712a2a08b69eac64f5fc"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-06_s42.json",
+      "bytes": 3331,
+      "sha256": "4461901ec60242dfec65f9744b0fc8c08379c0dc298f855f70d543bb9d03c5e2"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_tail_lr1e-06_s42.manifest.json",
+      "bytes": 2665,
+      "sha256": "a7a85f96fbd2b6b12489bdca1ad28c7873945ab04c5b2dd8d66e65ebfb899d2a"
+    },
+    {
+      "path": "models/strong_backbone_study/random_head_lr1e-06_s42.pt",
+      "bytes": 261177989,
+      "sha256": "04b3265ecdacb8d69c436c26d9a894227dffe1e7c95e2a9fdac3f7ae6c10882b"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_random_head_lr1e-06_s42.json",
+      "bytes": 1078,
+      "sha256": "f3dfebb1ab46331e488cbaaf90350083983226aaa99d413e3c7d86ebcee6d1dd"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_random_head_lr1e-06_s42.manifest.json",
+      "bytes": 2725,
+      "sha256": "2e1bfb93623221bd415842eccf5434d0f7dafed6c9f80c1f62edbf8fe1764690"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/strong_backbone_study/fgnet_endpoint_age_matched.json",
+      "bytes": 26341,
+      "sha256": "5de9ece543bf6cc9152c8bd6200ffb1889e9980f9ef92afae869cff9c9ea9833"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

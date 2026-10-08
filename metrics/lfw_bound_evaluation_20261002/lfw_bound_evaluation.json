@@ -1,0 +1,618 @@
+{
+  "n_pairs": 6000,
+  "n_subjects": 4281,
+  "n_positive": 3000,
+  "n_negative": 3000,
+  "models": {
+    "frozen": {
+      "metrics": {
+        "roc_auc": 0.9827083333333333,
+        "eer": 0.038,
+        "tar@far=0.01": 0.9396666666666667,
+        "tar@far=0.001": 0.8413333333333334,
+        "accuracy_official_folds": 0.9638333333333332
+      },
+      "official_folds": [
+        {
+          "fold": 0,
+          "threshold": 0.4335,
+          "accuracy": 0.9516666666666667
+        },
+        {
+          "fold": 1,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.9683333333333334
+        },
+        {
+          "fold": 2,
+          "threshold": 0.4105000000000001,
+          "accuracy": 0.96
+        },
+        {
+          "fold": 3,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.9633333333333334
+        },
+        {
+          "fold": 4,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.97
+        },
+        {
+          "fold": 5,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.955
+        },
+        {
+          "fold": 6,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.96
+        },
+        {
+          "fold": 7,
+          "threshold": 0.40000000000000013,
+          "accuracy": 0.9566666666666667
+        },
+        {
+          "fold": 8,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.9816666666666667
+        },
+        {
+          "fold": 9,
+          "threshold": 0.4345000000000001,
+          "accuracy": 0.9716666666666667
+        }
+      ],
+      "subject_ci95": {
+        "roc_auc": [
+          0.9779043213163906,
+          0.9870961630896086
+        ],
+        "eer": [
+          0.0314479952043312,
+          0.044704028695732256
+        ],
+        "tar@far=0.01": [
+          0.9213152565833451,
+          0.9526400480397346
+        ],
+        "tar@far=0.001": [
+          0.4781295163471967,
+          0.920374054190066
+        ],
+        "accuracy_official_folds": [
+          0.9572811732060477,
+          0.9708577159801051
+        ]
+      }
+    },
+    "tuned_seed42": {
+      "metrics": {
+        "roc_auc": 0.9864117777777778,
+        "eer": 0.03700000000000003,
+        "tar@far=0.01": 0.94,
+        "tar@far=0.001": 0.8326666666666667,
+        "accuracy_official_folds": 0.9678333333333333
+      },
+      "official_folds": [
+        {
+          "fold": 0,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.9666666666666667
+        },
+        {
+          "fold": 1,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.96
+        },
+        {
+          "fold": 2,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.965
+        },
+        {
+          "fold": 3,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.9766666666666667
+        },
+        {
+          "fold": 4,
+          "threshold": 0.42900000000000005,
+          "accuracy": 0.9633333333333334
+        },
+        {
+          "fold": 5,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.97
+        },
+        {
+          "fold": 6,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.9516666666666667
+        },
+        {
+          "fold": 7,
+          "threshold": 0.4305000000000001,
+          "accuracy": 0.9666666666666667
+        },
+        {
+          "fold": 8,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.9816666666666667
+        },
+        {
+          "fold": 9,
+          "threshold": 0.43100000000000005,
+          "accuracy": 0.9766666666666667
+        }
+      ],
+      "subject_ci95": {
+        "roc_auc": [
+          0.9825376380689428,
+          0.9899177298921735
+        ],
+        "eer": [
+          0.030561714182764745,
+          0.04376254870167005
+        ],
+        "tar@far=0.01": [
+          0.9075899963717071,
+          0.9556526228502914
+        ],
+        "tar@far=0.001": [
+          0.7757600686221321,
+          0.9064303531126929
+        ],
+        "accuracy_official_folds": [
+          0.959805299966118,
+          0.9735295392759745
+        ]
+      },
+      "paired_gain": {
+        "roc_auc": {
+          "delta": 0.0037034444444444814,
+          "subject_ci95": [
+            0.0016863786913137863,
+            0.0060224317177439805
+          ]
+        },
+        "eer": {
+          "delta": -0.0009999999999999662,
+          "subject_ci95": [
+            -0.0053102604605169655,
+            0.0033265707468260863
+          ]
+        },
+        "tar@far=0.01": {
+          "delta": 0.0003333333333332966,
+          "subject_ci95": [
+            -0.028771501520278457,
+            0.01614268380134741
+          ]
+        },
+        "tar@far=0.001": {
+          "delta": -0.008666666666666711,
+          "subject_ci95": [
+            -0.10393731648454484,
+            0.3928302908371631
+          ]
+        },
+        "accuracy_official_folds": {
+          "delta": 0.004000000000000115,
+          "subject_ci95": [
+            -0.004588994279561645,
+            0.00947319156647212
+          ]
+        }
+      }
+    },
+    "tuned_seed1": {
+      "metrics": {
+        "roc_auc": 0.9863327777777778,
+        "eer": 0.03633333333333333,
+        "tar@far=0.01": 0.9416666666666667,
+        "tar@far=0.001": 0.854,
+        "accuracy_official_folds": 0.9666666666666666
+      },
+      "official_folds": [
+        {
+          "fold": 0,
+          "threshold": 0.44100000000000006,
+          "accuracy": 0.9616666666666667
+        },
+        {
+          "fold": 1,
+          "threshold": 0.44100000000000006,
+          "accuracy": 0.9566666666666667
+        },
+        {
+          "fold": 2,
+          "threshold": 0.44199999999999995,
+          "accuracy": 0.9616666666666667
+        },
+        {
+          "fold": 3,
+          "threshold": 0.44199999999999995,
+          "accuracy": 0.975
+        },
+        {
+          "fold": 4,
+          "threshold": 0.44399999999999995,
+          "accuracy": 0.9633333333333334
+        },
+        {
+          "fold": 5,
+          "threshold": 0.44100000000000006,
+          "accuracy": 0.9766666666666667
+        },
+        {
+          "fold": 6,
+          "threshold": 0.4405000000000001,
+          "accuracy": 0.95
+        },
+        {
+          "fold": 7,
+          "threshold": 0.44100000000000006,
+          "accuracy": 0.9683333333333334
+        },
+        {
+          "fold": 8,
+          "threshold": 0.4355,
+          "accuracy": 0.9766666666666667
+        },
+        {
+          "fold": 9,
+          "threshold": 0.44100000000000006,
+          "accuracy": 0.9766666666666667
+        }
+      ],
+      "subject_ci95": {
+        "roc_auc": [
+          0.9824266115165365,
+          0.9897596510991182
+        ],
+        "eer": [
+          0.030422556413121964,
+          0.043565959610050546
+        ],
+        "tar@far=0.01": [
+          0.9114730568931788,
+          0.9562292152292152
+        ],
+        "tar@far=0.001": [
+          0.7682635165725974,
+          0.9119369217059916
+        ],
+        "accuracy_official_folds": [
+          0.9591528298734711,
+          0.9727061267804062
+        ]
+      },
+      "paired_gain": {
+        "roc_auc": {
+          "delta": 0.003624444444444541,
+          "subject_ci95": [
+            0.0016810415515417176,
+            0.005798381266011054
+          ]
+        },
+        "eer": {
+          "delta": -0.0016666666666666705,
+          "subject_ci95": [
+            -0.005634365296928864,
+            0.0030969184697776215
+          ]
+        },
+        "tar@far=0.01": {
+          "delta": 0.0020000000000000018,
+          "subject_ci95": [
+            -0.024899712034824224,
+            0.018009573079156488
+          ]
+        },
+        "tar@far=0.001": {
+          "delta": 0.012666666666666604,
+          "subject_ci95": [
+            -0.10981023443823792,
+            0.38152850229041274
+          ]
+        },
+        "accuracy_official_folds": {
+          "delta": 0.0028333333333333544,
+          "subject_ci95": [
+            -0.005110131238378104,
+            0.00854918911482834
+          ]
+        }
+      }
+    },
+    "tuned_seed2": {
+      "metrics": {
+        "roc_auc": 0.9866061111111111,
+        "eer": 0.03600000000000003,
+        "tar@far=0.01": 0.9443333333333334,
+        "tar@far=0.001": 0.8686666666666667,
+        "accuracy_official_folds": 0.9673333333333334
+      },
+      "official_folds": [
+        {
+          "fold": 0,
+          "threshold": 0.4179999999999999,
+          "accuracy": 0.965
+        },
+        {
+          "fold": 1,
+          "threshold": 0.4255,
+          "accuracy": 0.96
+        },
+        {
+          "fold": 2,
+          "threshold": 0.4255,
+          "accuracy": 0.965
+        },
+        {
+          "fold": 3,
+          "threshold": 0.4445000000000001,
+          "accuracy": 0.97
+        },
+        {
+          "fold": 4,
+          "threshold": 0.4179999999999999,
+          "accuracy": 0.9666666666666667
+        },
+        {
+          "fold": 5,
+          "threshold": 0.4179999999999999,
+          "accuracy": 0.9716666666666667
+        },
+        {
+          "fold": 6,
+          "threshold": 0.4235,
+          "accuracy": 0.9533333333333334
+        },
+        {
+          "fold": 7,
+          "threshold": 0.41300000000000003,
+          "accuracy": 0.965
+        },
+        {
+          "fold": 8,
+          "threshold": 0.41300000000000003,
+          "accuracy": 0.9783333333333334
+        },
+        {
+          "fold": 9,
+          "threshold": 0.4179999999999999,
+          "accuracy": 0.9783333333333334
+        }
+      ],
+      "subject_ci95": {
+        "roc_auc": [
+          0.982791557892615,
+          0.9901101058929265
+        ],
+        "eer": [
+          0.029814848091400153,
+          0.0426432641399793
+        ],
+        "tar@far=0.01": [
+          0.9227948318103452,
+          0.957929394519303
+        ],
+        "tar@far=0.001": [
+          0.8188916988779574,
+          0.9249424915954197
+        ],
+        "accuracy_official_folds": [
+          0.9608003195099837,
+          0.974294785315688
+        ]
+      },
+      "paired_gain": {
+        "roc_auc": {
+          "delta": 0.003897777777777778,
+          "subject_ci95": [
+            0.0019451812129570839,
+            0.006106446839650698
+          ]
+        },
+        "eer": {
+          "delta": -0.001999999999999967,
+          "subject_ci95": [
+            -0.006030217647725933,
+            0.002074433630371097
+          ]
+        },
+        "tar@far=0.01": {
+          "delta": 0.004666666666666708,
+          "subject_ci95": [
+            -0.012917256610457327,
+            0.020423978406976222
+          ]
+        },
+        "tar@far=0.001": {
+          "delta": 0.02733333333333332,
+          "subject_ci95": [
+            -0.04320350712002653,
+            0.4143500802239947
+          ]
+        },
+        "accuracy_official_folds": {
+          "delta": 0.0035000000000001696,
+          "subject_ci95": [
+            -0.003248474029899065,
+            0.01014736046432487
+          ]
+        }
+      }
+    }
+  },
+  "seed_aggregate": {
+    "roc_auc": {
+      "mean": 0.9864502222222221,
+      "std": 0.00014066363872460602,
+      "n_seeds": 3,
+      "delta_mean_vs_frozen": 0.0037418888888888224,
+      "fixed_checkpoint_mean_gain_subject_ci95": [
+        0.0017728194694986738,
+        0.005965978576879049
+      ]
+    },
+    "eer": {
+      "mean": 0.03644444444444447,
+      "std": 0.00050917507721732,
+      "n_seeds": 3,
+      "delta_mean_vs_frozen": -0.0015555555555555323,
+      "fixed_checkpoint_mean_gain_subject_ci95": [
+        -0.005379190980945637,
+        0.0026495576142103244
+      ]
+    },
+    "tar@far=0.01": {
+      "mean": 0.9420000000000001,
+      "std": 0.002185812841434039,
+      "n_seeds": 3,
+      "delta_mean_vs_frozen": 0.0023333333333334094,
+      "fixed_checkpoint_mean_gain_subject_ci95": [
+        -0.02053254631146059,
+        0.01760808141498402
+      ]
+    },
+    "tar@far=0.001": {
+      "mean": 0.8517777777777779,
+      "std": 0.018102588315036725,
+      "n_seeds": 3,
+      "delta_mean_vs_frozen": 0.010444444444444478,
+      "fixed_checkpoint_mean_gain_subject_ci95": [
+        -0.07959772931471049,
+        0.3946710306210491
+      ]
+    },
+    "accuracy_official_folds": {
+      "mean": 0.9672777777777778,
+      "std": 0.0005853140973807591,
+      "n_seeds": 3,
+      "delta_mean_vs_frozen": 0.003444444444444583,
+      "fixed_checkpoint_mean_gain_subject_ci95": [
+        -0.0037443687092602847,
+        0.009088985751234747
+      ]
+    }
+  },
+  "bootstrap": {
+    "sampling_unit": "person",
+    "n_requested": 2000,
+    "seed": 0,
+    "n_valid_roc": 2000,
+    "n_valid_accuracy": 2000,
+    "positive_weight": "one shared person multiplicity",
+    "negative_weight": "product of both endpoint multiplicities",
+    "accuracy_threshold_reselection": true,
+    "conditional_on_fixed_trained_checkpoints_and_official_folds": true,
+    "includes_training_seed_population_uncertainty": false,
+    "folds_are_subject_disjoint": true,
+    "train_test_shared_person_count_per_fold": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "boundary_percentile_intervals_do_not_establish_zero_risk": true
+  },
+  "delta_definition": "tuned minus frozen; EER improvement is negative, other metric improvements positive",
+  "roc_scope": "empirical ROC points; test-derived thresholds, not deployment calibration",
+  "negative_events_at_nominal_far": {
+    "0.01": 30.0,
+    "0.001": 3.0
+  },
+  "protocol": "official_lfw_view2_contiguous_folds_source_bound",
+  "seeds": [
+    42,
+    1,
+    2
+  ],
+  "n_unique_crops_embedded": 7701,
+  "cache_full_transform_replay": true,
+  "threshold_grid": {
+    "minimum": -1,
+    "maximum": 1,
+    "count": 4001,
+    "sha256_float64_little_endian": "c5eea70abaf0d63d900777a848be84468323bdaa435ccba7b32995402d1265a6",
+    "tie_break": "lowest threshold"
+  },
+  "package_versions": {
+    "torch": "2.12.0+cu132",
+    "facenet-pytorch": "2.6.0",
+    "numpy": "2.2.6",
+    "scikit-learn": "1.9.0",
+    "Pillow": "12.2.0"
+  },
+  "detection_sensitivity": {
+    "endpoint_fallback_count": 43,
+    "endpoint_fallback_fraction": 0.0035833333333333333,
+    "pairs_with_any_fallback": 43,
+    "both_detected_pairs": 5957,
+    "both_detected_positive": 2980,
+    "both_detected_negative": 2977,
+    "both_detected_roc": {
+      "frozen": {
+        "roc_auc": 0.9825912532999078,
+        "eer": 0.03825503355704696,
+        "tar@far=0.01": 0.939261744966443,
+        "tar@far=0.001": 0.8151006711409396
+      },
+      "tuned_seed42": {
+        "roc_auc": 0.9863295331320887,
+        "eer": 0.03724832214765106,
+        "tar@far=0.01": 0.939261744966443,
+        "tar@far=0.001": 0.8171140939597316
+      },
+      "tuned_seed1": {
+        "roc_auc": 0.9862546863763124,
+        "eer": 0.036577181208053644,
+        "tar@far=0.01": 0.9406040268456376,
+        "tar@far=0.001": 0.8409395973154362
+      },
+      "tuned_seed2": {
+        "roc_auc": 0.986524653213789,
+        "eer": 0.03624161073825505,
+        "tar@far=0.01": 0.9422818791946309,
+        "tar@far=0.001": 0.8687919463087248
+      }
+    },
+    "scope": "descriptive retained-pair subset; no subset CI or canonical accuracy; selection can change composition"
+  },
+  "accuracy_acceptance": "cosine >= threshold",
+  "provenance": {
+    "frozen": {
+      "checkpoint_name": "20180408-102900-casia-webface.pt",
+      "checkpoint_sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d",
+      "status": "local CASIA-WebFace pretrained weights"
+    },
+    "tuned_seed42": {
+      "checkpoint_name": "bb_facenet_seed42.pt",
+      "checkpoint_sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4",
+      "status": "legacy checkpoint; training manifests not independently verified"
+    },
+    "tuned_seed1": {
+      "checkpoint_name": "bb_facenet_seed1.pt",
+      "checkpoint_sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df",
+      "status": "legacy checkpoint; training manifests not independently verified"
+    },
+    "tuned_seed2": {
+      "checkpoint_name": "bb_facenet_seed2.pt",
+      "checkpoint_sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13",
+      "status": "legacy checkpoint; training manifests not independently verified"
+    }
+  },
+  "training_identity_independence": "unverified",
+  "publication_ready": false,
+  "legacy_accuracy_protocol": "interleaved folds; not substituted or pooled with new results"
+}

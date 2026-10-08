@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "experiment": "independent-embedding-clustering-dedup-sensitivity",
+  "created_at_utc": "2026-09-23T09:28:37.357823+00:00",
+  "command": [
+    "scripts\\independent_embedding_audit.py"
+  ],
+  "parameters": {
+    "clustering_thresholds": [
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9
+    ],
+    "dedup_thresholds": [
+      0.9,
+      0.93,
+      0.95,
+      0.97,
+      0.99
+    ]
+  },
+  "metrics": {
+    "embedding_model": "FaceNet InceptionResnetV1 CASIA-WebFace",
+    "clustering": {
+      "0.70": {
+        "groups": 27487,
+        "persons": 6665,
+        "merged_groups": 20822
+      },
+      "0.75": {
+        "groups": 27487,
+        "persons": 12858,
+        "merged_groups": 14629
+      },
+      "0.80": {
+        "groups": 27487,
+        "persons": 19030,
+        "merged_groups": 8457
+      },
+      "0.85": {
+        "groups": 27487,
+        "persons": 21484,
+        "merged_groups": 6003
+      },
+      "0.90": {
+        "groups": 27487,
+        "persons": 21815,
+        "merged_groups": 5672
+      }
+    },
+    "dedup_no_filter_positives": 65897,
+    "dedup": {
+      "0.90": {
+        "redundant_faces": 8802,
+        "positives": 30717,
+        "reduction_pct": 53.38634535714828
+      },
+      "0.93": {
+        "redundant_faces": 8743,
+        "positives": 30974,
+        "reduction_pct": 52.99634277736467
+      },
+      "0.95": {
+        "redundant_faces": 8680,
+        "positives": 31223,
+        "reduction_pct": 52.61848035570663
+      },
+      "0.97": {
+        "redundant_faces": 8577,
+        "positives": 31565,
+        "reduction_pct": 52.09948859583896
+      },
+      "0.99": {
+        "redundant_faces": 7957,
+        "positives": 33536,
+        "reduction_pct": 49.10845713765421
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "cache/embeddings/independent_facenet.npz",
+      "bytes": 102874027,
+      "sha256": "9a1ddaf56a6332f8e686fe5cc25a65bbe812362f1924bcbb390c7c88459da07c"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/independent_embedding_audit.json",
+      "bytes": 1278,
+      "sha256": "c8729d8f7bdb0decdd782fd492f94da7cac6f12c9e7f2858dba3e661ef0c3b0c"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

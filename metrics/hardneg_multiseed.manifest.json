@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "experiment": "hard-negative-training-multiseed",
+  "created_at_utc": "2026-09-23T18:17:11.572303+00:00",
+  "command": [
+    "scripts/hardneg_multiseed.py",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "backbone": "facenet",
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "epochs": 10,
+    "learning_rate": 3e-05,
+    "top_k": 5,
+    "mined_count": null,
+    "manifest_only": true
+  },
+  "metrics": {
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "mean": {
+      "fgnet.large_gap": 0.8679832425199191,
+      "fgnet.roc": 0.912170157499162,
+      "LFW.acc": 0.9248333333333334,
+      "agedb_30.roc": 0.9113349629629629,
+      "calfw.roc": 0.8982971666666666
+    },
+    "std": {
+      "fgnet.large_gap": 0.003563399913302308,
+      "fgnet.roc": 0.003208145332889572,
+      "LFW.acc": 0.004708148963941755,
+      "agedb_30.roc": 0.012461584738718983,
+      "calfw.roc": 0.01523089216405821
+    },
+    "per_seed": [
+      {
+        "fgnet.large_gap": 0.8644113454087479,
+        "fgnet.roc": 0.9076709963861408,
+        "LFW.acc": 0.9268333333333334,
+        "agedb_30.roc": 0.8951722222222223,
+        "calfw.roc": 0.8855135
+      },
+      {
+        "fgnet.large_gap": 0.8666905726055433,
+        "fgnet.roc": 0.9149261535715483,
+        "LFW.acc": 0.9293333333333333,
+        "agedb_30.roc": 0.9255,
+        "calfw.roc": 0.9197024444444445
+      },
+      {
+        "fgnet.large_gap": 0.8728478095454665,
+        "fgnet.roc": 0.9139133225397972,
+        "LFW.acc": 0.9183333333333336,
+        "agedb_30.roc": 0.9133326666666667,
+        "calfw.roc": 0.8896755555555556
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "splits/group_splits.jsonl",
+      "bytes": 1389262,
+      "sha256": "62c8f9d7d0779de0b7d7078066851c8641497d266676c40501f2205175a55c1e"
+    },
+    {
+      "path": "models/bb_facenet_hardneg_s42.pt",
+      "bytes": 115981621,
+      "sha256": "2299bc67511f0d5e207f85167bc3d0990c315ddfbfceecff61a3b879f837c491"
+    },
+    {
+      "path": "models/bb_facenet_hardneg_s1.pt",
+      "bytes": 115980835,
+      "sha256": "a7c9bc40e5c64311705eb3359efead4f6d3dc5ab9a4a041b210a7afb3b279e6d"
+    },
+    {
+      "path": "models/bb_facenet_hardneg_s2.pt",
+      "bytes": 115980835,
+      "sha256": "3d989a57c1f230de44689cd4a3243faed5470724b15f5e37364a8b00b613c588"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/hardneg_multiseed.json",
+      "bytes": 1148,
+      "sha256": "e275e09ee189dc7f8eda812ce010d41ffd8ce615b0eb906dceef9663a8b58430"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

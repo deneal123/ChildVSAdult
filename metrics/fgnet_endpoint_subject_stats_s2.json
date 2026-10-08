@@ -1,0 +1,112 @@
+{
+  "protocol": "endpoint_age_matched",
+  "endpoint_age_tolerance": 2,
+  "negative_seed": 42,
+  "bootstrap_seed": 0,
+  "n_bootstrap": 2000,
+  "overall": {
+    "subject_bootstrap": {
+      "frozen_auc": 0.8870187980321751,
+      "tuned_auc": 0.9207686681291523,
+      "delta_auc": 0.033749870096977164,
+      "frozen_ci95": [
+        0.8658897993885821,
+        0.9084751582592624
+      ],
+      "tuned_ci95": [
+        0.9040134383787956,
+        0.9367537581493496
+      ],
+      "delta_ci95": [
+        0.016332577746209144,
+        0.050805293391097045
+      ],
+      "n_subjects": 82,
+      "n_pairs": 5308,
+      "n_valid_resamples": 2000,
+      "n_requested_resamples": 2000
+    },
+    "leave_one_subject_out": {
+      "minimum_delta_auc": 0.031123784827194134,
+      "maximum_delta_auc": 0.03723199189937376,
+      "median_delta_auc": 0.033710075686354535,
+      "n_evaluable_subjects": 82,
+      "n_subjects": 82
+    },
+    "class_counts": {
+      "positive": 2654,
+      "negative": 2654
+    },
+    "observed_age_gap": {
+      "positive_mean": 10.129992464204973,
+      "negative_mean": 10.129992464204973,
+      "gap_only_auc": 0.5,
+      "gap_only_predictive_auc": 0.5
+    },
+    "endpoint_age_only_auc": {
+      "age_a": 0.49825113619004513,
+      "age_b": 0.5011388874849582
+    }
+  },
+  "large_gap_25plus": {
+    "subject_bootstrap": {
+      "frozen_auc": 0.802314764737696,
+      "tuned_auc": 0.850881557598702,
+      "delta_auc": 0.04856679286100596,
+      "frozen_ci95": [
+        0.7151007625970044,
+        0.8746270496261673
+      ],
+      "tuned_ci95": [
+        0.779574534909563,
+        0.9081710843152805
+      ],
+      "delta_ci95": [
+        0.010941791955828945,
+        0.0919094105060362
+      ],
+      "n_subjects": 75,
+      "n_pairs": 430,
+      "n_valid_resamples": 2000,
+      "n_requested_resamples": 2000
+    },
+    "leave_one_subject_out": {
+      "minimum_delta_auc": 0.03791387888145481,
+      "maximum_delta_auc": 0.053191737659003424,
+      "median_delta_auc": 0.04870557261956998,
+      "n_evaluable_subjects": 75,
+      "n_subjects": 75
+    },
+    "class_counts": {
+      "positive": 215,
+      "negative": 215
+    },
+    "observed_age_gap": {
+      "positive_mean": 32.15348837209302,
+      "negative_mean": 32.15348837209302,
+      "gap_only_auc": 0.5,
+      "gap_only_predictive_auc": 0.5
+    },
+    "endpoint_age_only_auc": {
+      "age_a": 0.5,
+      "age_b": 0.5
+    }
+  },
+  "negative_construction": {
+    "all_negatives_have_different_subjects": true,
+    "positive_source_count": 2659,
+    "positive_retained_count": 2654,
+    "positive_unmatched_count": 5,
+    "positive_coverage": 0.9981195938322678,
+    "large_gap_positive_source_count": 215,
+    "large_gap_positive_retained_count": 215,
+    "large_gap_positive_unmatched_count": 0,
+    "large_gap_positive_coverage": 1.0,
+    "endpoint_age_error_mean_years": 0.07309721175584025,
+    "endpoint_age_error_max_years": 2.0,
+    "positive_negative_stratum_counts": {
+      "positive": 215,
+      "negative": 215
+    }
+  }
+}

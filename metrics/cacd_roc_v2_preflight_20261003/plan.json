@@ -1,0 +1,21 @@
+{
+  "seed": 0,
+  "n_boot": 2000,
+  "device": "cpu",
+  "threads": 2,
+  "batch_size": 32,
+  "n_pairs": 4000,
+  "n_crop_rows": 8000,
+  "preprocessing": {
+    "function": "age_gap.models.facenet.preprocess_bgr",
+    "input_size": 160,
+    "channel_order": "RGB",
+    "normalization": "(x - 127.5) / 128",
+    "source_crop_format": "BGR uint8 112x112",
+    "shared_between_frozen_and_tuned": true
+  },
+  "image_inference_authorized_by_execute": false,
+  "subject_metadata_available": false,
+  "scope": "fresh local weights/scores and pair CI; original alignment replay and person independence unverified",
+  "publication_ready": false
+}

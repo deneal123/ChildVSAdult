@@ -1,0 +1,23 @@
+{
+  "pre_groups": 21848,
+  "expected_retained_groups": 21427,
+  "actual_retained_groups": 21427,
+  "noisy_groups_dropped": 421,
+  "missing_group_count": 0,
+  "extra_group_count": 0,
+  "face_set_mismatched_groups": 1,
+  "face_order_only_mismatches": 0,
+  "metadata_mismatched_groups": 0,
+  "dedup_removed_from_retained_groups": 8188,
+  "all_pre_groups_redundant_faces": 8304,
+  "expected_retained_unique_faces": 40588,
+  "actual_retained_unique_faces": 40586,
+  "ordered_faces_replayed": false,
+  "full_group_records_replayed": false,
+  "scope": "new deterministic reconstruction; original dedup file/provenance not recovered",
+  "pre_faces": 49604,
+  "embedding_unique_ids": 49604,
+  "embedding_cache_rows": 49606,
+  "identical_duplicate_extra_rows": 2,
+  "pre_faces_without_embeddings": 0
+}

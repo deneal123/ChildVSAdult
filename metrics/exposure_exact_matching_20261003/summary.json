@@ -1,0 +1,38 @@
+{
+  "arms": {
+    "LOW": {
+      "targets": 600,
+      "candidate_assignments": 20614,
+      "targets_without_candidate": 1,
+      "training_ready": false,
+      "status": "structural_infeasible",
+      "solver_called": false,
+      "positive_B_images": 572
+    },
+    "CROSS": {
+      "targets": 600,
+      "candidate_assignments": 14000,
+      "targets_without_candidate": 4,
+      "training_ready": false,
+      "status": "structural_infeasible",
+      "solver_called": false,
+      "positive_B_images": 564
+    }
+  },
+  "protocol": {
+    "version": "exact-negative-B-exposure-feasibility-v1",
+    "objective": "zero: feasibility only, not quality optimum",
+    "constraints": "one B per target; exact B-image counts from positive B; unique unordered negative edges",
+    "identity": "different recorded people; exclude canonical known-genuine edges",
+    "time_limit_per_arm_seconds": 30,
+    "node_limit_per_arm": 1000,
+    "integrality_tolerance": 1e-07,
+    "scope": "fixed E88 positive pools/heldout; no training or global corpus impossibility claim"
+  },
+  "scipy_version": "1.17.1",
+  "execution_complete": true,
+  "both_arms_feasible": false,
+  "training_ready": false,
+  "publication_ready": false,
+  "recognition_outcomes_used": false
+}

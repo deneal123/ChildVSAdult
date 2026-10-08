@@ -1,0 +1,82 @@
+{
+  "training_complete": true,
+  "completed_cells": 1,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "peak_allocated_bytes": 437246464,
+  "peak_reserved_bytes": 627048448,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.23816737552483877,
+      "validation_auc": 0.8417041135741226,
+      "mean_gradient_norm": 0.17224915742316807,
+      "epoch_seconds": 31.82799999997951
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.23496557394663492,
+      "validation_auc": 0.8377302955596304,
+      "mean_gradient_norm": 0.17005064081618532,
+      "epoch_seconds": 27.594000000040978
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.23100797573725382,
+      "validation_auc": 0.8343634243532566,
+      "mean_gradient_norm": 0.16968226232497866,
+      "epoch_seconds": 28.375
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.22993832190831504,
+      "validation_auc": 0.8324866395154231,
+      "mean_gradient_norm": 0.16862724616756858,
+      "epoch_seconds": 28.29700000002049
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.22709015468756358,
+      "validation_auc": 0.8322381089624524,
+      "mean_gradient_norm": 0.16779099848412588,
+      "epoch_seconds": 28.046999999904074
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.22468742390473684,
+      "validation_auc": 0.8317180596149966,
+      "mean_gradient_norm": 0.16747402015124385,
+      "epoch_seconds": 31.25
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.2224431182940801,
+      "validation_auc": 0.8321136529121785,
+      "mean_gradient_norm": 0.16511785753347982,
+      "epoch_seconds": 31.95299999997951
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.22336792171001435,
+      "validation_auc": 0.8324341528768616,
+      "mean_gradient_norm": 0.1668680333442528,
+      "epoch_seconds": 29.155999999959022
+    },
+    {
+      "epoch": 9,
+      "training_loss": 0.2208006246884664,
+      "validation_auc": 0.8324285488968244,
+      "mean_gradient_norm": 0.16309371182043242,
+      "epoch_seconds": 28.358999999938533
+    },
+    {
+      "epoch": 10,
+      "training_loss": 0.22065628250439961,
+      "validation_auc": 0.833581156433505,
+      "mean_gradient_norm": 0.16536673888264256,
+      "epoch_seconds": 28.516000000061467
+    }
+  ],
+  "limitation": "one CUDA cell; CPU/GPU results not pooled or assumed numerically equivalent"
+}

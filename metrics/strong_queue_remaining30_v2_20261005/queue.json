@@ -1,0 +1,31 @@
+{
+  "status": "running",
+  "completed": [
+    {
+      "cell": {
+        "negative": "random",
+        "scope": "head",
+        "lr": 1e-05,
+        "seed": 42
+      },
+      "training_manifest": "metrics\\strong_queue_remaining30_v2_20261005\\random_head_lr1e-05_s42\\train\\summary.manifest.json",
+      "external_manifest": "metrics\\strong_queue_remaining30_v2_20261005\\random_head_lr1e-05_s42\\fgnet\\summary.manifest.json"
+    },
+    {
+      "cell": {
+        "negative": "random",
+        "scope": "head",
+        "lr": 1e-05,
+        "seed": 1
+      },
+      "training_manifest": "metrics\\strong_queue_remaining30_v2_20261005\\random_head_lr1e-05_s1\\train\\summary.manifest.json",
+      "external_manifest": "metrics\\strong_queue_remaining30_v2_20261005\\random_head_lr1e-05_s1\\fgnet\\summary.manifest.json"
+    }
+  ],
+  "failed": null,
+  "plan_record": {
+    "path": ".work/strong_queue_20261005/plan.json",
+    "bytes": 5241,
+    "sha256": "a3f59ba6532db4583e4ea5a5dfd271ee8687a818b7b639206a26ab194926a189"
+  }
+}

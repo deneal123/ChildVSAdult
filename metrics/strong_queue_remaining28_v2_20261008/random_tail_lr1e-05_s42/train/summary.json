@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 708781568,
+  "peak_reserved_bytes": 778043392,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.17180964606342736,
+      "validation_auc": 0.9765300546695677,
+      "mean_gradient_norm": 4.201240710205193,
+      "epoch_seconds": 583.4060000000172
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.13638432503067058,
+      "validation_auc": 0.9759850616492651,
+      "mean_gradient_norm": 5.310323999339584,
+      "epoch_seconds": 652.5160000000033
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.12694658246172674,
+      "validation_auc": 0.977168908393813,
+      "mean_gradient_norm": 5.123017360903027,
+      "epoch_seconds": 699.8589999999967
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.12057241966117412,
+      "validation_auc": 0.9774712848485884,
+      "mean_gradient_norm": 4.976128578130008,
+      "epoch_seconds": 700.6559999999881
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.1145244846495458,
+      "validation_auc": 0.9762210011321948,
+      "mean_gradient_norm": 4.732189782186427,
+      "epoch_seconds": 652.3439999999828
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.10841726923457244,
+      "validation_auc": 0.977446484256083,
+      "mean_gradient_norm": 4.458423653423265,
+      "epoch_seconds": 812.6719999999914
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.10199658302586471,
+      "validation_auc": 0.9772823711045244,
+      "mean_gradient_norm": 3.9651433541499035,
+      "epoch_seconds": 771.7969999999914
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.09495194556576286,
+      "validation_auc": 0.9740615372332487,
+      "mean_gradient_norm": 3.552002625261951,
+      "epoch_seconds": 818.109999999986
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

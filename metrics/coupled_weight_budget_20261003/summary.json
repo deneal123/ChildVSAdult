@@ -1,0 +1,600 @@
+{
+  "views": {
+    "quality_only": {
+      "LOW": {
+        "positive_pairs": 600,
+        "negative_pairs": 600,
+        "class_loss_mass": {
+          "positive": 600.0,
+          "negative": 600.0
+        },
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5000027777777778
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5003875
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "coupled_candidate_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.49999999999999994
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.003052049660903132,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5015260248304516,
+            "weighted_rank_auc_positive_higher": 0.500008277742318
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0030520496609031176,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5015260248304516,
+            "weighted_rank_auc_positive_higher": 0.5006548773748607
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.003052049660903132,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5015260248304516,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.003052049660903132,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5015260248304516,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "uniform_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 997.2299168975069,
+            "maximum_endpoint_mass_fraction": 0.0033333333333333335
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 444.5130421361321,
+            "maximum_endpoint_mass_fraction": 0.007083333333333333
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        },
+        "coupled_candidate_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 749.7726405663898,
+            "maximum_endpoint_mass_fraction": 0.003510659957728933
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 340.5085859141511,
+            "maximum_endpoint_mass_fraction": 0.010732977170488147
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        }
+      },
+      "CROSS": {
+        "positive_pairs": 600,
+        "negative_pairs": 600,
+        "class_loss_mass": {
+          "positive": 600.0,
+          "negative": 600.0
+        },
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5000083333333333
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": 0.5000291666666666
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "coupled_candidate_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0009428996562445321,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5004714498281223,
+            "weighted_rank_auc_positive_higher": 0.500004155466354
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0018716460387355545,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5009358230193678,
+            "weighted_rank_auc_positive_higher": 0.5000131842538813
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0018716460387355539,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5009358230193678,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0018716460387355539,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5009358230193678,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "uniform_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 994.4751381215469,
+            "maximum_endpoint_mass_fraction": 0.0033333333333333335
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 425.21777646537726,
+            "maximum_endpoint_mass_fraction": 0.007916666666666667
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        },
+        "coupled_candidate_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 754.9679602007927,
+            "maximum_endpoint_mass_fraction": 0.004180968111719848
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 328.1091615852204,
+            "maximum_endpoint_mass_fraction": 0.013515425484340178
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        }
+      }
+    },
+    "younger_anchor": {
+      "LOW": {
+        "positive_pairs": 600,
+        "negative_pairs": 600,
+        "class_loss_mass": {
+          "positive": 600.0,
+          "negative": 600.0
+        },
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5000027777777778
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5003875
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "coupled_candidate_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.00012052055351240309,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000602602767562,
+            "weighted_rank_auc_positive_higher": 0.5000000141814357
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.00012052055351241666,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000602602767562,
+            "weighted_rank_auc_positive_higher": 0.5000261845482612
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.00012052055351240309,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000602602767562,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.00012052055351240309,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000602602767562,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "uniform_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 997.2299168975069,
+            "maximum_endpoint_mass_fraction": 0.0033333333333333335
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 444.5130421361321,
+            "maximum_endpoint_mass_fraction": 0.007083333333333333
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        },
+        "coupled_candidate_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 528.6524155894334,
+            "maximum_endpoint_mass_fraction": 0.0060854705879593955
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 244.44670671211023,
+            "maximum_endpoint_mass_fraction": 0.015629831402753005
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        }
+      },
+      "CROSS": {
+        "positive_pairs": 600,
+        "negative_pairs": 600,
+        "class_loss_mass": {
+          "positive": 600.0,
+          "negative": 600.0
+        },
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5000083333333333
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": 0.5000291666666666
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "coupled_candidate_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.003710031758692299,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5018550158793461,
+            "weighted_rank_auc_positive_higher": 0.5000271930820531
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0043643541173547865,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5021821770586774,
+            "weighted_rank_auc_positive_higher": 0.5000694667597894
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.004364354117354785,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5021821770586774,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.004364354117354785,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5021821770586774,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "uniform_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 994.4751381215469,
+            "maximum_endpoint_mass_fraction": 0.0033333333333333335
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 425.21777646537726,
+            "maximum_endpoint_mass_fraction": 0.007916666666666667
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        },
+        "coupled_candidate_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 495.45076776740177,
+            "maximum_endpoint_mass_fraction": 0.006486106700427926
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 190.62458607944205,
+            "maximum_endpoint_mass_fraction": 0.028719582332210926
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        }
+      }
+    },
+    "older_anchor": {
+      "LOW": {
+        "positive_pairs": 600,
+        "negative_pairs": 600,
+        "class_loss_mass": {
+          "positive": 600.0,
+          "negative": 600.0
+        },
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5000027777777778
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5003875
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "coupled_candidate_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.49999999999999994
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.026931088595689316,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5134655442978446,
+            "weighted_rank_auc_positive_higher": 0.5007181976852765
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.026931088595689316,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5134655442978446,
+            "weighted_rank_auc_positive_higher": 0.5059704071627524
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.02693108859568931,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5134655442978446,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.02693108859568931,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5134655442978446,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "uniform_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 997.2299168975069,
+            "maximum_endpoint_mass_fraction": 0.0033333333333333335
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 444.5130421361321,
+            "maximum_endpoint_mass_fraction": 0.007083333333333333
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        },
+        "coupled_candidate_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 140.60642133280496,
+            "maximum_endpoint_mass_fraction": 0.02006676128056784
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 69.49180991046447,
+            "maximum_endpoint_mass_fraction": 0.03662640527354262
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        }
+      },
+      "CROSS": {
+        "positive_pairs": 600,
+        "negative_pairs": 600,
+        "class_loss_mass": {
+          "positive": 600.0,
+          "negative": 600.0
+        },
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0016666666666666668,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5008333333333334,
+            "weighted_rank_auc_positive_higher": 0.5000083333333333
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": 0.5000291666666666
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0033333333333333335,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5016666666666667,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "coupled_candidate_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 5.252254191968709e-09,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000000026261271,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 7.095314041113662e-09,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000000035476571,
+            "weighted_rank_auc_positive_higher": 0.5000000000001017
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 7.095314041112772e-09,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000000035476571,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 7.095314041112772e-09,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5000000035476571,
+            "weighted_rank_auc_positive_higher": null
+          }
+        },
+        "uniform_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 994.4751381215469,
+            "maximum_endpoint_mass_fraction": 0.0033333333333333335
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 425.21777646537726,
+            "maximum_endpoint_mass_fraction": 0.007916666666666667
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        },
+        "coupled_candidate_endpoint_mass": {
+          "images": {
+            "distinct": 1096,
+            "positive_mass_units": 1096,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 246.0620253395808,
+            "maximum_endpoint_mass_fraction": 0.013594986564187256
+          },
+          "recorded_people": {
+            "distinct": 500,
+            "positive_mass_units": 500,
+            "total_loss_weighted_endpoint_mass": 2400.0,
+            "mass_effective_size": 130.36040564939267,
+            "maximum_endpoint_mass_fraction": 0.023671273594880613
+          },
+          "scope": "hypothetical loss-weighted endpoint mass, not actual image presentations or independent sample size"
+        }
+      }
+    }
+  },
+  "execution_complete": true,
+  "training_weights_ready": false,
+  "publication_ready": false,
+  "recognition_outcomes_used": false,
+  "candidate_objective": "L=(1/(2N))*sum_i w_i*(ell(positive_i)+ell(negative_i)); mean(w)=1 within each arm",
+  "batch_rule": "uniform block sampling; fixed globally normalized weights, never re-normalize by batch weight sum",
+  "scope": "audit of a candidate paired loss objective; not balanced presentations or completed training",
+  "uncertainty": "empirical weighted age TV/oracle only; no held-out shortcut accuracy or confidence interval",
+  "remaining": [
+    "full positive/negative joint quality balance",
+    "age-error sensitivity after weighting",
+    "BatchNorm and actual presentation policy",
+    "fresh source-bound three-seed training"
+  ]
+}

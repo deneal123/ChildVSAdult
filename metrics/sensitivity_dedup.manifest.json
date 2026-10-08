@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "experiment": "deduplication-threshold-sensitivity",
+  "created_at_utc": "2026-09-22T13:02:40.072740+00:00",
+  "command": [
+    "scripts/sensitivity_dedup.py"
+  ],
+  "parameters": {
+    "thresholds": [
+      0.93,
+      0.95,
+      0.97,
+      0.98,
+      0.99
+    ],
+    "embedding_model": "buffalo_l/w600k_r50.onnx"
+  },
+  "metrics": {
+    "no_dedup_positives": 65897,
+    "thresholds": {
+      "0.93": {
+        "redundant_faces": 8653,
+        "positives": 31304,
+        "reduction_pct": 52.5
+      },
+      "0.95": {
+        "redundant_faces": 8564,
+        "positives": 31611,
+        "reduction_pct": 52.0
+      },
+      "0.97": {
+        "redundant_faces": 8304,
+        "positives": 32360,
+        "reduction_pct": 50.9
+      },
+      "0.98": {
+        "redundant_faces": 7876,
+        "positives": 33684,
+        "reduction_pct": 48.9
+      },
+      "0.99": {
+        "redundant_faces": 6274,
+        "positives": 38565,
+        "reduction_pct": 41.5
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "data/processed/identity_groups.jsonl.pre_prune_bak",
+      "bytes": 14059077,
+      "sha256": "0597d4ee5cf532e7b705e10e973a6c20e9184ca17615a5b266a1cb88ecd1046d"
+    },
+    {
+      "path": "cache/embeddings/baseline_arcface.npz",
+      "bytes": 102874027,
+      "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/sensitivity_dedup.json",
+      "bytes": 614,
+      "sha256": "76b53972e172bb9f878c57ccc67065074e0d37d64b8941916377ebe70006320f"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

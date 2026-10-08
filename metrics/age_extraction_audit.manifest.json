@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "experiment": "llm-vs-regex-age-extraction-audit",
+  "created_at_utc": "2026-09-23T17:57:41.759913+00:00",
+  "command": [
+    "scripts/audit_ages.py",
+    "--skip-audit"
+  ],
+  "parameters": {
+    "uses_cached_llm_outputs": true,
+    "human_ground_truth": false
+  },
+  "metrics": {
+    "total": 33697,
+    "agree_empty": 5934,
+    "agree_ages": 20378,
+    "llm_filled": 1162,
+    "llm_missed": 1016,
+    "age_mismatch": 5207,
+    "agreement_pct": 78.08410244235392,
+    "llm_filled_pct": 3.4483781939045017,
+    "llm_missed_pct": 3.015105202243523,
+    "age_mismatch_pct": 15.452414161498057
+  },
+  "inputs": [
+    {
+      "path": "data/interim/llm_age_cache.jsonl",
+      "bytes": 12282521,
+      "sha256": "f1dd0063aa8402efa94f3a06639fadebda6df9e1b15339717b1edd518fda0941"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/age_extraction_audit.json",
+      "bytes": 306,
+      "sha256": "c8f32dc5259f0f68b91f1084682776020960c313e77c32d534bbdc16d34ce308"
+    },
+    {
+      "path": "data/interim/age_audit_report.jsonl",
+      "bytes": 1321858,
+      "sha256": "26d88f5fe149412df92c975011eb5780395d9cdd6df5fab677d2d73455679017"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

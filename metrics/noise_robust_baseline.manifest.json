@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "experiment": "subcenter-arcface-noise-robust-comparator",
+  "created_at_utc": "2026-09-23T18:29:10.342032+00:00",
+  "command": [
+    "scripts/noise_robust_baseline.py",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "backbone": "facenet",
+    "epochs": 15,
+    "scale": 32.0,
+    "sub_centers": 3,
+    "skip_train": false,
+    "manifest_only": true
+  },
+  "metrics": {
+    "frozen": {
+      "LFW.acc": 0.9688333333333332,
+      "agedb_30.acc": 0.882,
+      "agedb_30.roc": 0.9529574444444444,
+      "calfw.acc": 0.8835000000000001,
+      "calfw.roc": 0.9481664444444444,
+      "fgnet.roc": 0.8955028802957054,
+      "fgnet.large_gap": 0.7360591934369451,
+      "our.overall": 0.8362658838471743,
+      "our.25+": 0.6402594859614636
+    },
+    "+pairs": {
+      "LFW.acc": 0.9461666666666668,
+      "agedb_30.acc": 0.8768333333333332,
+      "agedb_30.roc": 0.9446752222222222,
+      "calfw.acc": 0.8865000000000001,
+      "calfw.roc": 0.9482632222222223,
+      "fgnet.roc": 0.9221787648892597,
+      "fgnet.large_gap": 0.8475821475113043,
+      "our.overall": 0.9163001066390138,
+      "our.25+": 0.8380501425341841
+    },
+    "+arcface": {
+      "LFW.acc": 0.9518333333333333,
+      "agedb_30.acc": 0.8761666666666666,
+      "agedb_30.roc": 0.9473514444444444,
+      "calfw.acc": 0.8789999999999999,
+      "calfw.roc": 0.9440238888888889,
+      "fgnet.roc": 0.9333941607129901,
+      "fgnet.large_gap": 0.8506467722609479,
+      "our.overall": 0.929432409986117,
+      "our.25+": 0.8675487426221713
+    },
+    "+arcface_sc3": {
+      "LFW.acc": 0.9511666666666667,
+      "agedb_30.acc": 0.8773333333333333,
+      "agedb_30.roc": 0.9469842222222222,
+      "calfw.acc": 0.8758333333333332,
+      "calfw.roc": 0.9436937777777777,
+      "fgnet.roc": 0.9335278187670335,
+      "fgnet.large_gap": 0.8513796933626036,
+      "our.overall": 0.9284914154884569,
+      "our.25+": 0.8694775950503384
+    }
+  },
+  "inputs": [
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "models/bb_facenet_seed42.pt",
+      "bytes": 115977947,
+      "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+    },
+    {
+      "path": "models/bb_facenet_arcface.pt",
+      "bytes": 115978669,
+      "sha256": "72c893deccdf04f76ff88ce8315e3fa8f9f805637fd05a5f4006e1f0c95962ac"
+    },
+    {
+      "path": "models/bb_facenet_arcface_sc3.pt",
+      "bytes": 115981621,
+      "sha256": "1c91dc410e63fa7b4080fa906301517a7d6a3b2c3c4b0bc3d95d087446b2c855"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/noise_robust_baseline.json",
+      "bytes": 1485,
+      "sha256": "3af5a4c90245550b8bf23b6b4bf1c5d2ce5cc538c2221ddfca6b1dc8f2b4c36a"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

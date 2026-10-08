@@ -1,0 +1,8 @@
+{
+  "n_pairs": 4000,
+  "n_crop_rows": 8000,
+  "side_order": "all a then all b",
+  "alignment_fallback_fraction": 0.006875,
+  "execution_complete": true,
+  "publication_ready": false
+}

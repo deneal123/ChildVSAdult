@@ -1,0 +1,34 @@
+{
+  "run_id": "random_head_lr1e-06_s42",
+  "backbone": "adaface_ir101",
+  "negative_type": "random",
+  "scope": "head",
+  "learning_rate": 1e-06,
+  "seed": 42,
+  "metrics": {
+    "LFW.acc": 0.9838333333333333,
+    "agedb_30.acc": 0.9783333333333333,
+    "agedb_30.roc": 0.9897854444444445,
+    "calfw.acc": 0.9586666666666666,
+    "calfw.roc": 0.9752874444444445,
+    "fgnet.roc": 0.9835882053344132,
+    "fgnet.large_gap": 0.9368026098288393,
+    "our.overall": 0.982578000171693,
+    "our.25+": 0.9457085894328894,
+    "linear_cka": 0.9534994959831238,
+    "mean_cosine_drift": 0.07497408241033554,
+    "frozen_identity_separability": 0.4035327136516571,
+    "tuned_identity_separability": 0.376980721950531,
+    "frozen_age_gap_probe_mae": 14.61406832690878,
+    "tuned_age_gap_probe_mae": 14.864221390349408,
+    "diagnostic_pairs": 512.0
+  },
+  "training_history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.33657186084095925,
+      "validation_auc": 0.9832058018506107,
+      "mean_gradient_norm": 0.43971896459177107
+    }
+  ]
+}

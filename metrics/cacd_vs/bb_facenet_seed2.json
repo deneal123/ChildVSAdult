@@ -1,0 +1,33 @@
+{
+  "backbone": "facenet",
+  "checkpoint": "models\\bb_facenet_seed2.pt",
+  "protocol": "official identity-disjoint 10 folds",
+  "metrics": {
+    "n_pairs": 4000.0,
+    "accuracy_10fold": 0.9727499999999999,
+    "roc_auc": 0.99482875,
+    "eer": 0.030000000000000027,
+    "tar@far=0.01": 0.95,
+    "tar@far=0.001": 0.897,
+    "accuracy_10fold_ci95": [
+      0.9702500000000001,
+      0.9750000000000002
+    ],
+    "roc_auc_ci95": [
+      0.992791275,
+      0.99653828125
+    ],
+    "eer_ci95": [
+      0.0245,
+      0.03649999999999998
+    ],
+    "tar@far=0.01_ci95": [
+      0.9279875000000001,
+      0.9605125
+    ],
+    "tar@far=0.001_ci95": [
+      0.867,
+      0.9165
+    ]
+  }
+}

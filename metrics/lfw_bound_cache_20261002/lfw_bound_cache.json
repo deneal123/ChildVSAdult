@@ -1,0 +1,18 @@
+{
+  "n_pairs": 6000,
+  "n_subjects": 4281,
+  "n_unique_images": 7701,
+  "missing_detection_endpoints": 43,
+  "miss_rate": 0.0035833333333333333,
+  "legacy_cache_replaced": false,
+  "row_binding_verified": true,
+  "all_endpoints_checked": 12000,
+  "unique_sources_checked": 7701,
+  "full_transform_replay": true,
+  "folds": 10,
+  "pairs_per_class_per_fold": 300,
+  "training_identity_independence": "unverified",
+  "source": "LFW funneled named images; official pairs.txt",
+  "claims_legacy_cache_binding": false,
+  "publication_ready": false
+}

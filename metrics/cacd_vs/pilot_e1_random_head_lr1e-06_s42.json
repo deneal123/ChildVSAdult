@@ -1,0 +1,13 @@
+{
+  "backbone": "adaface_ir101",
+  "checkpoint": "models\\strong_backbone_study\\random_head_lr1e-06_s42.pt",
+  "protocol": "official identity-disjoint 10 folds",
+  "metrics": {
+    "n_pairs": 4000.0,
+    "accuracy_10fold": 0.99375,
+    "roc_auc": 0.995968,
+    "eer": 0.0095,
+    "tar@far=0.01": 0.9905,
+    "tar@far=0.001": 0.989
+  }
+}

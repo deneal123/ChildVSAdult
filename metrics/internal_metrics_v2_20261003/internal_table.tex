@@ -1,0 +1,23 @@
+% BEGIN GENERATED INTERNAL ROC V2
+\begin{table*}[!t]
+\caption{Source-bound CPU FaceNet internal sensitivity: 154 positive/negative matched blocks and 216 recorded persons; exact-age subset 140 blocks/203 persons. Exact blocks were selected by endpoint ages before scoring, without re-mining. Joint recorded-person dyad bootstrap uses the same positive/negative block weight, conditional on one fixed seed-42 checkpoint; missed-merge independence and training provenance remain unverified. TAR maximizes the attainable empirical ROC at FAR no greater than target, accepting tied scores together; thresholds are reselected in each draw, not calibrated for deployment. Interpolated ROC EER and attainable discrete minimax EER are separate definitions. Negative EER deltas favor tuning; Interpret changes using their reported intervals, which are not multiplicity-corrected.}
+\label{tab:internal-roc-v2}
+\centering\footnotesize
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Subset & Metric & Frozen & Tuned & Tuned$-$frozen & Paired delta 95\% CI \\
+\midrule
+Tolerance 2y & ROC-AUC & 0.7676 & 0.8331 & +0.0654 & $[+0.0051,+0.1306]$ \\
+Tolerance 2y & Interpolated EER & 0.3182 & 0.2597 & -0.0584 & $[-0.1413,+0.0355]$ \\
+Tolerance 2y & Discrete minimax EER & 0.3182 & 0.2597 & -0.0584 & $[-0.1413,+0.0355]$ \\
+Tolerance 2y & TAR@FAR=1\% & 0.3377 & 0.4026 & +0.0649 & $[-0.2154,+0.2259]$ \\
+Tolerance 2y & TAR@FAR=0.1\% & 0.3247 & 0.2532 & -0.0714 & $[-0.2202,+0.2041]$ \\
+Exact ages & ROC-AUC & 0.7700 & 0.8410 & +0.0710 & $[+0.0076,+0.1407]$ \\
+Exact ages & Interpolated EER & 0.3143 & 0.2571 & -0.0571 & $[-0.1573,+0.0345]$ \\
+Exact ages & Discrete minimax EER & 0.3143 & 0.2571 & -0.0571 & $[-0.1573,+0.0345]$ \\
+Exact ages & TAR@FAR=1\% & 0.3643 & 0.3929 & +0.0286 & $[-0.2124,+0.2619]$ \\
+Exact ages & TAR@FAR=0.1\% & 0.2929 & 0.2429 & -0.0500 & $[-0.2222,+0.2373]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED INTERNAL ROC V2

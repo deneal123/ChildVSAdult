@@ -1,0 +1,1659 @@
+{
+  "diagnostic_complete": true,
+  "bounded_tolerance_passed": true,
+  "accelerator_qualified": false,
+  "training_complete": false,
+  "scientific_evaluation_complete": false,
+  "publication_ready": false,
+  "elapsed_seconds": 212.98499999998603,
+  "selected_rows": 64,
+  "steps": [
+    {
+      "seed": 42,
+      "step": 1,
+      "batch_size": 64,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "output_b": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "evaluation": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 64,
+        "positive": 32,
+        "negative": 32
+      }
+    },
+    {
+      "seed": 42,
+      "step": 2,
+      "batch_size": 48,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "output_b": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "evaluation": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 48,
+        "positive": 24,
+        "negative": 24
+      }
+    },
+    {
+      "seed": 42,
+      "step": 3,
+      "batch_size": 6,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 4.470348358154297e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 4.470348358154297e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 2.9103830456733704e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 1.1641532182693481e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 4.190951585769653e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 2.9103830456733704e-11,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 6.661338147750939e-16,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 2.6645352591003757e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 4.0745362639427185e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 3.907985046680551e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 3.725290298461914e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 6,
+        "positive": 3,
+        "negative": 3
+      }
+    },
+    {
+      "seed": 42,
+      "step": 4,
+      "batch_size": 1,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 3.3527612686157227e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 4.470348358154297e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 1.1641532182693481e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 4.423782229423523e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 1.3969838619232178e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 1.862645149230957e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 5.329070518200751e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 4.838511813431978e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 3.907985046680551e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 1.5133991837501526e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 3.979039320256561e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 5.21540641784668e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 1,
+        "positive": 1,
+        "negative": 0
+      }
+    },
+    {
+      "seed": 42,
+      "step": 5,
+      "batch_size": 64,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 2.2351741790771484e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 3.725290298461914e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 2.3283064365386963e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 1.862645149230957e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 1.0186340659856796e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 5.329070518200751e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 4.3655745685100555e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 3.907985046680551e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 1.3351382222026587e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 3.979039320256561e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 2.9802322387695312e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 64,
+        "positive": 32,
+        "negative": 32
+      }
+    },
+    {
+      "seed": 1,
+      "step": 1,
+      "batch_size": 64,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "output_b": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "evaluation": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 64,
+        "positive": 32,
+        "negative": 32
+      }
+    },
+    {
+      "seed": 1,
+      "step": 2,
+      "batch_size": 48,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "output_b": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "evaluation": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 48,
+        "positive": 24,
+        "negative": 24
+      }
+    },
+    {
+      "seed": 1,
+      "step": 3,
+      "batch_size": 6,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 4.842877388000488e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 4.0978193283081055e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 2.9802322387695312e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 2.9103830456733704e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 1.1641532182693481e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 4.423782229423523e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 2.9103830456733704e-11,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 4.440892098500626e-16,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 4.440892098500626e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 4.3655745685100555e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 2.1316282072803006e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 3.725290298461914e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 6,
+        "positive": 3,
+        "negative": 3
+      }
+    },
+    {
+      "seed": 1,
+      "step": 4,
+      "batch_size": 1,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 4.0978193283081055e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 5.21540641784668e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 5.960464477539063e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 1.280568540096283e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 4.423782229423523e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 1.4901161193847656e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 1.3096723705530167e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 5.329070518200751e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 4.397406883072108e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 4.263256414560601e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 1.5133991837501526e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 3.410605131648481e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 4.0978193283081055e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 1,
+        "positive": 1,
+        "negative": 0
+      }
+    },
+    {
+      "seed": 1,
+      "step": 5,
+      "batch_size": 64,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 2.2351741790771484e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 2.2351741790771484e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 2.3283064365386963e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 5.329070518200751e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 4.0745362639427185e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 4.263256414560601e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 5.587935447692871e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 1.3387762010097504e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 3.410605131648481e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 2.9802322387695312e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 64,
+        "positive": 32,
+        "negative": 32
+      }
+    },
+    {
+      "seed": 2,
+      "step": 1,
+      "batch_size": 64,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "output_b": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "evaluation": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 64,
+        "positive": 32,
+        "negative": 32
+      }
+    },
+    {
+      "seed": 2,
+      "step": 2,
+      "batch_size": 48,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "output_b": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "evaluation": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 48,
+        "positive": 24,
+        "negative": 24
+      }
+    },
+    {
+      "seed": 2,
+      "step": 3,
+      "batch_size": 6,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 3.91155481338501e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 4.7264620661735535e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 3.4924596548080444e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 1.3387762010097504e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 3.4924596548080444e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 4.3655745685100555e-11,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 6.661338147750939e-16,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 1.3460521586239338e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 5.329070518200751e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 3.4924596548080444e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 4.263256414560601e-14,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 4.470348358154297e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 6,
+        "positive": 3,
+        "negative": 3
+      }
+    },
+    {
+      "seed": 2,
+      "step": 4,
+      "batch_size": 1,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 4.470348358154297e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 4.470348358154297e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 5.960464477539063e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 1.1641532182693481e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 4.889443516731262e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 1.955777406692505e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 2.3283064365386963e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 4.440892098500626e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 4.656612873077393e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 1.1368683772161603e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 2.0954757928848267e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 5.968558980384842e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 3.3527612686157227e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 1,
+        "positive": 1,
+        "negative": 0
+      }
+    },
+    {
+      "seed": 2,
+      "step": 5,
+      "batch_size": 64,
+      "comparisons": {
+        "output_a": {
+          "max_abs": 2.2351741790771484e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "output_b": {
+          "max_abs": 2.2351741790771484e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "loss": {
+          "max_abs": 2.9802322387695312e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.bias": {
+          "max_abs": 1.1641532182693481e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_bn.weight": {
+          "max_abs": 2.3283064365386963e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "gradient:last_linear.weight": {
+          "max_abs": 2.3283064365386963e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.bias": {
+          "max_abs": 1.862645149230957e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.bias:exp_avg": {
+          "max_abs": 1.0913936421275139e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.bias:exp_avg_sq": {
+          "max_abs": 4.440892098500626e-15,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_bn.weight": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_bn.weight:exp_avg": {
+          "max_abs": 4.3655745685100555e-10,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_bn.weight:exp_avg_sq": {
+          "max_abs": 1.1368683772161603e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "parameter:last_linear.weight": {
+          "max_abs": 3.725290298461914e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:step": {
+          "max_abs": 0.0,
+          "within_tolerance": true,
+          "bitwise_equal": true
+        },
+        "adam:last_linear.weight:exp_avg": {
+          "max_abs": 1.862645149230957e-09,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "adam:last_linear.weight:exp_avg_sq": {
+          "max_abs": 5.968558980384842e-13,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        },
+        "evaluation": {
+          "max_abs": 2.9802322387695312e-08,
+          "within_tolerance": true,
+          "bitwise_equal": false
+        }
+      },
+      "within_tolerance": true,
+      "recorded_labels": {
+        "batch_size": 64,
+        "positive": 32,
+        "negative": 32
+      }
+    }
+  ],
+  "class_counts": [
+    {
+      "batch_size": 64,
+      "positive": 32,
+      "negative": 32
+    },
+    {
+      "batch_size": 48,
+      "positive": 24,
+      "negative": 24
+    },
+    {
+      "batch_size": 6,
+      "positive": 3,
+      "negative": 3
+    },
+    {
+      "batch_size": 1,
+      "positive": 1,
+      "negative": 0
+    },
+    {
+      "batch_size": 64,
+      "positive": 32,
+      "negative": 32
+    }
+  ]
+}

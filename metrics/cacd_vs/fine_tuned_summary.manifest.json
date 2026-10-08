@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "experiment": "cacd-vs-fine-tuned-multiseed-summary",
+  "created_at_utc": "2026-09-23T09:03:21.783219+00:00",
+  "command": [
+    "scripts/eval_cacd_vs.py",
+    "--checkpoints",
+    "models/bb_facenet_seed42.pt",
+    "models/bb_facenet_seed1.pt",
+    "models/bb_facenet_seed2.pt"
+  ],
+  "parameters": {
+    "checkpoint_count": 3
+  },
+  "metrics": {
+    "accuracy_10fold": {
+      "mean": 0.9700000000000001,
+      "std": 0.0027499999999999747,
+      "n_seeds": 3
+    },
+    "eer": {
+      "mean": 0.031333333333333324,
+      "std": 0.0012583057392117633,
+      "n_seeds": 3
+    },
+    "roc_auc": {
+      "mean": 0.9946635,
+      "std": 0.00016979417687306667,
+      "n_seeds": 3
+    },
+    "tar@far=0.001": {
+      "mean": 0.8896666666666667,
+      "std": 0.006658328118479399,
+      "n_seeds": 3
+    },
+    "tar@far=0.01": {
+      "mean": 0.9483333333333333,
+      "std": 0.0020816659994661343,
+      "n_seeds": 3
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/cacd_vs/bb_facenet_seed42.json",
+      "bytes": 713,
+      "sha256": "511651042b060e134e6de9594e4a9b9082e22ef0f2efcac95fced38791910756"
+    },
+    {
+      "path": "metrics/cacd_vs/bb_facenet_seed1.json",
+      "bytes": 717,
+      "sha256": "92c228197103b0f5d254ad125bb11e286cdb4f2a7a444dc699a086b39af84cbf"
+    },
+    {
+      "path": "metrics/cacd_vs/bb_facenet_seed2.json",
+      "bytes": 718,
+      "sha256": "c120091ab224b269be5ba1292c69c81b94c412836169b55a55d5edce30bb1dda"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/cacd_vs/fine_tuned_summary.json",
+      "bytes": 812,
+      "sha256": "6f993a40c208ab4bbba4702228fda1f81971d15a4f098ab10f63adfe828d04d5"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

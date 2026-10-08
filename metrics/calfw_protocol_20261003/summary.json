@@ -1,0 +1,37 @@
+{
+  "pairs": 6000,
+  "positive_pairs": 3000,
+  "negative_pairs": 3000,
+  "unique_pair_images": 7156,
+  "unique_pair_person_tokens": 2996,
+  "image_multiplicity_histogram": {
+    "1": 4455,
+    "2": 1449,
+    "3": 758,
+    "4": 279,
+    "5": 116,
+    "6": 52,
+    "7": 28,
+    "8": 7,
+    "9": 9,
+    "10": 1,
+    "11": 2
+  },
+  "positive_fold_counts": {
+    "1": 300,
+    "2": 300,
+    "3": 300,
+    "4": 300,
+    "5": 300,
+    "6": 300,
+    "7": 300,
+    "8": 300,
+    "9": 300,
+    "10": 300
+  },
+  "negative_fold_assignment": "not encoded in source text",
+  "scope": "official pair text structure; not a local cache endpoint mapping",
+  "bin_binding_verified": false,
+  "subject_ci_available": false,
+  "publication_ready": false
+}

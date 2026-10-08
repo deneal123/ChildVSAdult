@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "experiment": "exploratory-backbone-headroom-audit",
+  "created_at_utc": "2026-09-25T17:57:55.664443+00:00",
+  "command": [
+    "scripts/headroom_audit.py",
+    "--help"
+  ],
+  "parameters": {
+    "backbones": [
+      "facenet",
+      "arcface_r50_casia",
+      "adaface_ir50",
+      "arcface_r100",
+      "adaface_ir101"
+    ],
+    "metrics": [
+      "fgnet.large_gap",
+      "our.25+"
+    ],
+    "scope": "exploratory one-seed; not confirmatory mechanism evidence"
+  },
+  "metrics": {
+    "protocol": "exploratory one-seed frozen-vs-pairs comparison",
+    "metrics": [
+      "fgnet.large_gap",
+      "our.25+"
+    ],
+    "rows": {
+      "facenet": {
+        "checkpoint": "bb_facenet_seed42.pt",
+        "frozen": {
+          "fgnet.large_gap": 0.7360591934369451,
+          "our.25+": 0.6402594859614636
+        },
+        "tuned": {
+          "fgnet.large_gap": 0.8475821475113043,
+          "our.25+": 0.8380501425341841
+        },
+        "delta": {
+          "fgnet.large_gap": 0.11152295407435919,
+          "our.25+": 0.19779065657272044
+        }
+      },
+      "arcface_r50_casia": {
+        "checkpoint": "bb_arcface_r50_casia_pairs.pt",
+        "frozen": {
+          "fgnet.large_gap": 0.7634676438948023,
+          "our.25+": 0.6435221328505056
+        },
+        "tuned": {
+          "fgnet.large_gap": 0.8046581596508566,
+          "our.25+": 0.7767528144461765
+        },
+        "delta": {
+          "fgnet.large_gap": 0.04119051575605437,
+          "our.25+": 0.13323068159567086
+        }
+      },
+      "adaface_ir50": {
+        "checkpoint": "bb_adaface_ir50_pairs.pt",
+        "frozen": {
+          "fgnet.large_gap": 0.9166761415814653,
+          "our.25+": 0.9308397691988841
+        },
+        "tuned": {
+          "fgnet.large_gap": 0.9199244339102828,
+          "our.25+": 0.9355328438939169
+        },
+        "delta": {
+          "fgnet.large_gap": 0.0032482923288175147,
+          "our.25+": 0.004693074695032773
+        }
+      },
+      "arcface_r100": {
+        "checkpoint": "bb_arcface_r100_pairs.pt",
+        "frozen": {
+          "fgnet.large_gap": 0.9541915565390031,
+          "our.25+": 0.9420428797754038
+        },
+        "tuned": {
+          "fgnet.large_gap": 0.9497502995530755,
+          "our.25+": 0.9609308842713973
+        },
+        "delta": {
+          "fgnet.large_gap": -0.004441256985927566,
+          "our.25+": 0.018888004495993482
+        }
+      },
+      "adaface_ir101": {
+        "checkpoint": "bb_adaface_ir101_pairs.pt",
+        "frozen": {
+          "fgnet.large_gap": 0.9568783508400606,
+          "our.25+": 0.9675108521789548
+        },
+        "tuned": {
+          "fgnet.large_gap": 0.9412316223094886,
+          "our.25+": 0.9644084132041837
+        },
+        "delta": {
+          "fgnet.large_gap": -0.01564672853057192,
+          "our.25+": -0.003102438974771138
+        }
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "models/bb_facenet_seed42.pt",
+      "bytes": 115977947,
+      "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+    },
+    {
+      "path": "models/bb_arcface_r50_casia_pairs.pt",
+      "bytes": 174668220,
+      "sha256": "0021c17982e47f608d02030e90b39c8c540f5018fa8ffaa59f5c458750c8f660"
+    },
+    {
+      "path": "models/bb_adaface_ir50_pairs.pt",
+      "bytes": 174644535,
+      "sha256": "a571787bef566e4b01c32b4b8ebb26f80c76d636305bb7970e3168e817a2a145"
+    },
+    {
+      "path": "models/bb_arcface_r100_pairs.pt",
+      "bytes": 261194479,
+      "sha256": "5d693d32a91bbef223ef96b675eda1f67c9b31bf87f64334713ad7de3f278b34"
+    },
+    {
+      "path": "models/bb_adaface_ir101_pairs.pt",
+      "bytes": 261176874,
+      "sha256": "8f2aa3b12ffcf997c6924dde98209c28c226b864da7baaf0051ceef357f1a397"
+    },
+    {
+      "path": "data/external/fgnet_crops.npz",
+      "bytes": 24471952,
+      "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+    },
+    {
+      "path": "data/external/lfw_aligned.npz",
+      "bytes": 393528172,
+      "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
+    },
+    {
+      "path": "data/external/agedb_30.bin",
+      "bytes": 76525089,
+      "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
+    },
+    {
+      "path": "data/external/calfw.bin",
+      "bytes": 74157257,
+      "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/headroom_audit.json",
+      "bytes": 2297,
+      "sha256": "0dad528751697d17398eb29eed3b4b7ff0395e965f1be04b92f915538ecd1458"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

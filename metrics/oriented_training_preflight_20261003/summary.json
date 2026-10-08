@@ -1,0 +1,77 @@
+{
+  "protocol": {
+    "backbone": "facenet",
+    "epochs_requested": 10,
+    "epochs_executed": 10,
+    "selected_epoch": 10,
+    "checkpoint_selection": "last_epoch",
+    "batchnorm_policy": "frozen_all",
+    "trainable_scope": "head",
+    "learning_rate": 3e-05,
+    "batch_size": 64,
+    "margin": 0.3,
+    "gap_weight": 0.0,
+    "crops_dir": "faces",
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "sampling": "uniform row shuffle; drop_last=false; no diagnostic weights",
+    "scope": "conditional within-source age-gap sensitivity, not causal source evidence"
+  },
+  "crop_audit": {
+    "unique_crops": 13873,
+    "all_decodable": true,
+    "preprocessing": "BGR -> RGB160 INTER_AREA; (x-127.5)/128; float32 CHW",
+    "source_shape_counts": {
+      "112x112": 13873
+    },
+    "missing_rows_dropped": 0
+  },
+  "arm_validation": {
+    "counts": {
+      "low": {
+        "train_positive": 600,
+        "train_negative": 600,
+        "val_pairs": 9158,
+        "test_pairs": 10214,
+        "train_unique_people": 500,
+        "positive_unique_people": 500,
+        "person_groups_without_map": 0
+      },
+      "cross": {
+        "train_positive": 600,
+        "train_negative": 600,
+        "val_pairs": 9158,
+        "test_pairs": 10214,
+        "train_unique_people": 500,
+        "positive_unique_people": 500,
+        "person_groups_without_map": 0
+      }
+    },
+    "identity_mapping_available": true,
+    "heldout_sha256": {
+      "val": "da66fd04ccfaaddf4cba4dcde1bdaf58b42df071f5fa87ee7a95e13f9fd067e8",
+      "test": "9c7cd22f562502090a2d90d4e7456432cf1f352cfba515fd94bac8ba0b9a79d4"
+    }
+  },
+  "loader_counts": {
+    "LOW": {
+      "train": 1200,
+      "val": 9158,
+      "test": 10214
+    },
+    "CROSS": {
+      "train": 1200,
+      "val": 9158,
+      "test": 10214
+    }
+  },
+  "preflight_complete": true,
+  "training_complete": false,
+  "runtime_stability_checked": false,
+  "publication_ready": false
+}

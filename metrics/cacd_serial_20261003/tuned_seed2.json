@@ -1,0 +1,13 @@
+{
+  "role": "tuned_seed2",
+  "checkpoint_record": {
+    "path": "models/bb_facenet_seed2.pt",
+    "bytes": 115977225,
+    "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+  },
+  "n_crop_rows": 8000,
+  "embedding_dimension": 512,
+  "side_order": "all a then all b",
+  "execution_complete": true,
+  "publication_ready": false
+}

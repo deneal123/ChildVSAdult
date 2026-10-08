@@ -1,0 +1,27 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "models": {
+    "frozen": {
+      "key_verified": true,
+      "n_images": 650,
+      "dimensions": 512
+    },
+    "tuned_seed42": {
+      "key_verified": true,
+      "n_images": 650,
+      "dimensions": 512
+    },
+    "tuned_seed1": {
+      "key_verified": true,
+      "n_images": 650,
+      "dimensions": 512
+    },
+    "tuned_seed2": {
+      "key_verified": true,
+      "n_images": 650,
+      "dimensions": 512
+    }
+  },
+  "limitation": "cache source/weights/preprocessing/index linkage only; training history and identity independence unverified"
+}

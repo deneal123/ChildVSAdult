@@ -1,0 +1,83 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "cells": {
+    "random_tail_lr1e-06_s2": {
+      "version": "strong-training-trajectory-v1",
+      "epochs": 8,
+      "selected_epoch": 8,
+      "checkpoint_selection": "last_epoch",
+      "training_loss_first": 0.2225687531145922,
+      "training_loss_last": 0.1506796277475973,
+      "training_loss_change": -0.0718891253669949,
+      "validation_auc_first": 0.9937472936949596,
+      "validation_auc_last": 0.9866577581666562,
+      "validation_auc_change": -0.007089535528303381,
+      "diagnostic_peak_auc_epoch": 2,
+      "diagnostic_peak_auc": 0.9943478495811633,
+      "last_minus_peak_auc": -0.00769009141450705,
+      "validation_loss": null,
+      "validation_loss_status": "not collected by v1 trainer; cannot infer from AUC",
+      "history": [
+        {
+          "epoch": 1,
+          "training_loss": 0.2225687531145922,
+          "validation_auc": 0.9937472936949596,
+          "mean_gradient_norm": 0.7366453115506962,
+          "epoch_seconds": 539.7029999999795
+        },
+        {
+          "epoch": 2,
+          "training_loss": 0.2049288546074511,
+          "validation_auc": 0.9943478495811633,
+          "mean_gradient_norm": 0.7153889433840647,
+          "epoch_seconds": 623.2969999999041
+        },
+        {
+          "epoch": 3,
+          "training_loss": 0.19143364059575174,
+          "validation_auc": 0.993564532405575,
+          "mean_gradient_norm": 0.6793715985052878,
+          "epoch_seconds": 575.030999999959
+        },
+        {
+          "epoch": 4,
+          "training_loss": 0.17948350667687435,
+          "validation_auc": 0.9921223302579486,
+          "mean_gradient_norm": 0.652289556233892,
+          "epoch_seconds": 567.125
+        },
+        {
+          "epoch": 5,
+          "training_loss": 0.1696480272395826,
+          "validation_auc": 0.9905227874282554,
+          "mean_gradient_norm": 0.6221142052610357,
+          "epoch_seconds": 589.0620000000345
+        },
+        {
+          "epoch": 6,
+          "training_loss": 0.1616782553716026,
+          "validation_auc": 0.9892307242521798,
+          "mean_gradient_norm": 0.5899727676677199,
+          "epoch_seconds": 534.9220000000205
+        },
+        {
+          "epoch": 7,
+          "training_loss": 0.1555117507201857,
+          "validation_auc": 0.9880092950712972,
+          "mean_gradient_norm": 0.5788808910447059,
+          "epoch_seconds": 538.109999999986
+        },
+        {
+          "epoch": 8,
+          "training_loss": 0.1506796277475973,
+          "validation_auc": 0.9866577581666562,
+          "mean_gradient_norm": 0.5596567383775259,
+          "epoch_seconds": 554.2189999999246
+        }
+      ],
+      "limitation": "descriptive recorded history; peak is not checkpoint selection; no mechanism conclusion"
+    }
+  },
+  "limitation": "recorded completed histories only; incomplete matrix; no validation loss or mechanism decision"
+}

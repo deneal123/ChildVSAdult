@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 651918848,
+  "peak_reserved_bytes": 729808896,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.23320620006164572,
+      "validation_auc": 0.9695286804782756,
+      "mean_gradient_norm": 0.3600342244907018,
+      "epoch_seconds": 637.125
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.19110967600878126,
+      "validation_auc": 0.9836468470029033,
+      "mean_gradient_norm": 0.3309069077289349,
+      "epoch_seconds": 541.6089999999967
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.17137485647030617,
+      "validation_auc": 0.987072071141835,
+      "mean_gradient_norm": 0.30568650947765447,
+      "epoch_seconds": 512.4850000000006
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.15856632853864178,
+      "validation_auc": 0.9876838349881131,
+      "mean_gradient_norm": 0.28795531634188287,
+      "epoch_seconds": 524.375
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.14919270831024825,
+      "validation_auc": 0.987639885476587,
+      "mean_gradient_norm": 0.27561333126921245,
+      "epoch_seconds": 555.3429999999935
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.14221883554303338,
+      "validation_auc": 0.9875006444577042,
+      "mean_gradient_norm": 0.26704150326466664,
+      "epoch_seconds": 548.3589999999967
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.13670513951962232,
+      "validation_auc": 0.9874562895518776,
+      "mean_gradient_norm": 0.2612384365360223,
+      "epoch_seconds": 625.4840000000113
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.13218805006653953,
+      "validation_auc": 0.9870938193537242,
+      "mean_gradient_norm": 0.2567669478315896,
+      "epoch_seconds": 776.125
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

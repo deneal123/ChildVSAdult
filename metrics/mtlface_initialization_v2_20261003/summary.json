@@ -1,0 +1,31 @@
+{
+  "initialization": {
+    "weights": {
+      "path": "models/arcface_r50_casia.pth",
+      "bytes": 175710586,
+      "sha256": "6c111ba31adcbfd40ae8d8e0075c2c7e1fe7eefe41ec835948040717a5a8d70e"
+    },
+    "initialization": {
+      "backbone_tensors": 475,
+      "skipped_classifier_tensors": 1,
+      "missing_keys": 0,
+      "unexpected_backbone_keys": 0
+    },
+    "seed": 42,
+    "backbone": "arcface_r50_casia",
+    "scope": "head",
+    "channels": 512,
+    "spatial_size": 7,
+    "embedding_dimension": 512,
+    "cosface_scale": 64.0,
+    "cosface_margin": 0.35,
+    "batchnorm_policy": "frozen_all",
+    "full_joint_fas": false
+  },
+  "identity_classes": 9204,
+  "model_parameters": 72830850,
+  "initialization_complete": true,
+  "real_crop_smoke_complete": false,
+  "training_complete": false,
+  "publication_ready": false
+}

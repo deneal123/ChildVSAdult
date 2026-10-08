@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 708781568,
+  "peak_reserved_bytes": 778043392,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.2224517053742217,
+      "validation_auc": 0.9940195755845989,
+      "mean_gradient_norm": 0.7423638234230462,
+      "epoch_seconds": 481.375
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.20483379238977348,
+      "validation_auc": 0.9942807210543342,
+      "mean_gradient_norm": 0.7254622562927989,
+      "epoch_seconds": 704.795999999973
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.19128994929631402,
+      "validation_auc": 0.9934775872514653,
+      "mean_gradient_norm": 0.6873114827838228,
+      "epoch_seconds": 786.609000000055
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.17941436925861393,
+      "validation_auc": 0.9920914725976584,
+      "mean_gradient_norm": 0.6412065328356705,
+      "epoch_seconds": 500.3279999999795
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.16948837746433412,
+      "validation_auc": 0.9905415309529756,
+      "mean_gradient_norm": 0.6194873158241593,
+      "epoch_seconds": 533.1879999999655
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.16159794713180323,
+      "validation_auc": 0.989190089435229,
+      "mean_gradient_norm": 0.5971003926927992,
+      "epoch_seconds": 591.7339999999385
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.1554916647792674,
+      "validation_auc": 0.9879462920276445,
+      "mean_gradient_norm": 0.5724692385654034,
+      "epoch_seconds": 565.9070000000065
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.15060229195554217,
+      "validation_auc": 0.986512436233265,
+      "mean_gradient_norm": 0.5588608796719524,
+      "epoch_seconds": 552.8589999999385
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

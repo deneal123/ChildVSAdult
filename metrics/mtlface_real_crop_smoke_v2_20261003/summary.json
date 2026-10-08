@@ -1,0 +1,31 @@
+{
+  "batch_size": 2,
+  "supervised_age_rows": 1,
+  "missing_age_rows": 1,
+  "step": {
+    "identity": 34.275550842285156,
+    "age": 1429.3170166015625,
+    "adversarial_age": 1445.2413330078125,
+    "total": 38.59535217285156,
+    "gradient_norm": 189.43628882561129
+  },
+  "updated_parameter_tensors": {
+    "backbone": 4,
+    "separation": 7,
+    "age_head": 7,
+    "age_adversary": 8,
+    "identity_head": 1
+  },
+  "frozen_buffers_unchanged": true,
+  "frozen_parameters_unchanged": true,
+  "embeddings_finite": true,
+  "embedding_shape": [
+    2,
+    512
+  ],
+  "real_crop_smoke_complete": true,
+  "training_complete": false,
+  "scientific_evaluation_complete": false,
+  "full_joint_fas": false,
+  "publication_ready": false
+}

@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "groups": 21427,
+    "face_occurrences": 40586,
+    "groups_with_at_least_two_faces": 13142,
+    "unmapped_age_labels": 14129,
+    "unique_faces": 40586,
+    "recorded_people": 21426
+  },
+  "violations": {
+    "age_labels_outside_group_faces": 6368,
+    "groups_without_recorded_person": 1,
+    "recorded_people_across_splits": 0,
+    "faces_across_splits": 0,
+    "faces_with_multiple_recorded_people": 0,
+    "faces_with_conflicting_age_values": 96
+  },
+  "input_contract_clean": false,
+  "human_identity_audit_complete": false,
+  "crops_verified": false,
+  "training_complete": false,
+  "publication_ready": false
+}

@@ -1,0 +1,63 @@
+{
+  "pre_groups": 21848,
+  "retained_groups": 21427,
+  "constituent_coverage": {
+    "singleton_groups": 17688,
+    "constituent_posts": 27488,
+    "missing_constituent_posts": 711,
+    "unknown_constituent_posts": 204,
+    "groups_with_missing_constituents": 495,
+    "groups_with_unknown_constituents": 177,
+    "merged_groups": 4160
+  },
+  "representative_by_constituent_noisy": {
+    "collage|any_noisy": 1,
+    "meme|any_noisy": 25,
+    "missing|no_noisy": 475,
+    "multi_person|any_noisy": 395,
+    "single|any_noisy": 16,
+    "single|no_noisy": 20763,
+    "unknown|any_noisy": 1,
+    "unknown|no_noisy": 172
+  },
+  "any_constituent_noisy_pre_groups": 438,
+  "retained_groups_with_noisy_constituent": 17,
+  "retained_unique_faces_in_affected_groups": 54,
+  "all_constituents_cached_single_pre_groups": 20741,
+  "all_constituents_cached_single_retained_groups": 20741,
+  "original_pair_counts": {
+    "test_negative": 5107,
+    "test_positive": 5107,
+    "train_negative": 22179,
+    "train_positive": 22179,
+    "val_negative": 4579,
+    "val_positive": 4579
+  },
+  "pair_counts_after_any_noisy_group_exclusion": {
+    "test_negative": 5107,
+    "test_positive": 5107,
+    "train_negative": 22114,
+    "train_positive": 22135,
+    "val_negative": 4555,
+    "val_positive": 4506
+  },
+  "scope": "cached automatic categories; sensitivity only, no true-identity purity or retrained effect",
+  "positive_groups": 13142,
+  "positive_group_representative_categories": {
+    "missing": 192,
+    "single": 12839,
+    "unknown": 111
+  },
+  "positive_group_single_fraction_all": 0.976944148531426,
+  "positive_group_single_fraction_cached": 0.9914285714285714,
+  "retained_groups_unresolved_after_known_noisy_exclusion": 669,
+  "pair_counts_after_all_cached_single_filter": {
+    "test_negative": 4901,
+    "test_positive": 5060,
+    "train_negative": 20894,
+    "train_positive": 21620,
+    "val_negative": 4286,
+    "val_positive": 4394
+  },
+  "policy_scope": "known-noisy exclusion does not certify missing/unknown as clean; all-cached-single is a separate automatic sensitivity arm"
+}

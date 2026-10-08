@@ -1,0 +1,134 @@
+{
+  "status": "exact_identity_intersection_not_computable",
+  "verified_empty_intersection": false,
+  "pretraining_sources": [
+    {
+      "declared_training_data": "CASIA-FaceV5",
+      "models": [
+        "arcface_r50_casia"
+      ],
+      "complete_identity_manifest_available_locally": false
+    },
+    {
+      "declared_training_data": "CASIA-WebFace",
+      "models": [
+        "facenet_casia"
+      ],
+      "complete_identity_manifest_available_locally": false
+    },
+    {
+      "declared_training_data": "WebFace12M",
+      "models": [
+        "adaface_ir101"
+      ],
+      "complete_identity_manifest_available_locally": false
+    },
+    {
+      "declared_training_data": "WebFace4M",
+      "models": [
+        "adaface_ir50"
+      ],
+      "complete_identity_manifest_available_locally": false
+    },
+    {
+      "declared_training_data": "WebFace600K (model filename/InsightFace model-zoo designation)",
+      "models": [
+        "insightface_arcface_r50"
+      ],
+      "complete_identity_manifest_available_locally": false
+    },
+    {
+      "declared_training_data": "not declared in the distributed artifact",
+      "models": [
+        "insightface_genderage",
+        "insightface_retinaface"
+      ],
+      "complete_identity_manifest_available_locally": false
+    },
+    {
+      "declared_training_data": "not declared in the downloaded checkpoint artifact",
+      "models": [
+        "arcface_r100"
+      ],
+      "complete_identity_manifest_available_locally": false
+    }
+  ],
+  "benchmark_identity_evidence": {
+    "LFW": {
+      "artifact": {
+        "path": "data/external/lfw_aligned.npz",
+        "bytes": 393528172,
+        "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
+      },
+      "fields": [
+        "a",
+        "b",
+        "issame"
+      ],
+      "numeric_subject_count": null,
+      "contains_identity_names": false,
+      "identifier_scope": "pair labels only; no subject identifier field"
+    },
+    "AgeDB-30": {
+      "artifact": {
+        "path": "data/external/agedb_30.bin",
+        "bytes": 76525089,
+        "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
+      },
+      "format": "InsightFace verification bin: encoded image arrays plus same/different labels",
+      "contains_identity_names": false,
+      "identifier_scope": "pair labels only; no subject identifier field"
+    },
+    "CALFW": {
+      "artifact": {
+        "path": "data/external/calfw.bin",
+        "bytes": 74157257,
+        "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
+      },
+      "format": "InsightFace verification bin: encoded image arrays plus same/different labels",
+      "contains_identity_names": false,
+      "identifier_scope": "pair labels only; no subject identifier field"
+    },
+    "CACD-VS": {
+      "artifact": {
+        "path": "data/external/cacd_vs_aligned.npz",
+        "bytes": 265802876,
+        "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
+      },
+      "fields": [
+        "a",
+        "b",
+        "fold_ids",
+        "issame",
+        "miss_rate"
+      ],
+      "numeric_subject_count": null,
+      "contains_identity_names": false,
+      "identifier_scope": "pair labels only; no subject identifier field"
+    },
+    "FG-NET": {
+      "artifact": {
+        "path": "data/external/fgnet_crops.npz",
+        "bytes": 24471952,
+        "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+      },
+      "fields": [
+        "ages",
+        "crops",
+        "subjects"
+      ],
+      "numeric_subject_count": 82,
+      "contains_identity_names": false,
+      "identifier_scope": "benchmark-local numeric subject IDs; no mapping to real names"
+    }
+  },
+  "finding": "None of the downloaded pretrained checkpoints is accompanied by a complete identity manifest. The local verification artifacts expose no compatible real-name identity mapping (FG-NET exposes benchmark-local numeric IDs only). Therefore identity-level pretraining/benchmark intersection cannot be computed and must not be reported as zero.",
+  "risk": "Overlap cannot be excluded, especially for web-scale or celebrity-oriented pretraining sets and celebrity benchmarks. This limits claims of benchmark independence.",
+  "mitigations": [
+    "Report each checkpoint, checksum and declared pretraining dataset.",
+    "Keep every benchmark evaluation-only and never tune thresholds on benchmark identities.",
+    "Report results across CASIA- and WebFace-pretrained model families rather than relying on one lineage.",
+    "State the unresolved overlap risk in the model card and limitations.",
+    "Re-run the exact intersection if upstream identity manifests and compatible benchmark mappings become available."
+  ]
+}

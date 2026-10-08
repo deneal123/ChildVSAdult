@@ -1,0 +1,21 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "mechanism_complete": false,
+  "checked_cells": [
+    "random_head_lr1e-06_s1",
+    "random_head_lr1e-06_s2",
+    "random_head_lr1e-06_s42",
+    "random_tail_lr1e-06_s1",
+    "random_tail_lr1e-06_s2",
+    "random_tail_lr1e-06_s42"
+  ],
+  "checked_cell_count": 6,
+  "n_images": 650,
+  "n_pairs": 5308,
+  "n_recorded_persons": 82,
+  "exact_pair_arrays_equal": true,
+  "frozen_embedding_bytes_equal": true,
+  "weak_embedding_bindings_equal": true,
+  "limitation": "targeted selected-record and exact-array linkage audit only; not full native-ancestry reverification, human identity clearance, training provenance, full mechanism or seed-population inference"
+}

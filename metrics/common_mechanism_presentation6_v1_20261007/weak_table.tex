@@ -1,0 +1,14 @@
+\begin{table*}[!t]
+\caption{Weak arm: the same bound weak tuned family appears in every binding and is rendered once (deduplicated, not averaged or ensembled). Frozen reference separation SMD is 1.7918 (95\% CI $[1.6217,1.9877]$). $\Delta$MAE and SMD deltas are tuned minus frozen; intervals are conditional paired subject bootstrap intervals, not a seed mean and not an ensemble. Lower age MAE means easier age decoding, not age removal. Descriptive only: no mechanism decision, no training-seed population inference and no identity-independence clearance; weak training history unverified. Age intervals hold OOF predictions fixed, without probe refitting or multiplicity correction. Different architecture/preprocessing, not a causal family comparison.}
+\label{tab:common-mechanism-weak}
+\centering\scriptsize
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Checkpoint & CKA & Cos.\ drift & Age $\Delta$MAE & Age $\Delta$MAE 95\% CI & Sep.\ SMD & Sep.\ $\Delta$SMD & Sep.\ $\Delta$95\% CI \\
+\midrule
+tuned, seed 42 & 0.8896 & 0.1750 & +0.0873 & $[-0.1872,+0.3449]$ & 2.0631 & +0.2713 & $[+0.1100,+0.4236]$ \\
+tuned, seed 1 & 0.8909 & 0.1670 & +0.1605 & $[-0.1255,+0.4245]$ & 2.0686 & +0.2768 & $[+0.1181,+0.4291]$ \\
+tuned, seed 2 & 0.8926 & 0.1589 & +0.1719 & $[-0.1025,+0.4370]$ & 2.0767 & +0.2849 & $[+0.1309,+0.4288]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

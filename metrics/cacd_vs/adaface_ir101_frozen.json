@@ -1,0 +1,33 @@
+{
+  "backbone": "adaface_ir101",
+  "checkpoint": null,
+  "protocol": "official identity-disjoint 10 folds",
+  "metrics": {
+    "n_pairs": 4000.0,
+    "accuracy_10fold": 0.9935,
+    "roc_auc": 0.99545225,
+    "eer": 0.009000000000000008,
+    "tar@far=0.01": 0.991,
+    "tar@far=0.001": 0.989,
+    "accuracy_10fold_ci95": [
+      0.99175,
+      0.9952500000000001
+    ],
+    "roc_auc_ci95": [
+      0.99290231875,
+      0.9976630062499999
+    ],
+    "eer_ci95": [
+      0.005499999999999949,
+      0.013000000000000012
+    ],
+    "tar@far=0.01_ci95": [
+      0.987,
+      0.995
+    ],
+    "tar@far=0.001_ci95": [
+      0.983,
+      0.993
+    ]
+  }
+}

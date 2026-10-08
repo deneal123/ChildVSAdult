@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "experiment": "cacd-vs-verification",
+  "created_at_utc": "2026-09-22T12:50:14.241975+00:00",
+  "command": [
+    "scripts/eval_cacd_vs.py",
+    "--backbone",
+    "adaface_ir101"
+  ],
+  "parameters": {
+    "backbone": "adaface_ir101",
+    "checkpoint": null,
+    "protocol": "official identity-disjoint 10 folds"
+  },
+  "metrics": {
+    "n_pairs": 4000.0,
+    "accuracy_10fold": 0.9935,
+    "roc_auc": 0.99545225,
+    "eer": 0.009000000000000008,
+    "tar@far=0.01": 0.991,
+    "tar@far=0.001": 0.989,
+    "accuracy_10fold_ci95": [
+      0.99175,
+      0.9952500000000001
+    ],
+    "roc_auc_ci95": [
+      0.99290231875,
+      0.9976630062499999
+    ],
+    "eer_ci95": [
+      0.005499999999999949,
+      0.013000000000000012
+    ],
+    "tar@far=0.01_ci95": [
+      0.987,
+      0.995
+    ],
+    "tar@far=0.001_ci95": [
+      0.983,
+      0.993
+    ]
+  },
+  "inputs": [
+    {
+      "path": "data/external/cacd_vs_aligned.npz",
+      "bytes": 265802876,
+      "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/cacd_vs/adaface_ir101_frozen.json",
+      "bytes": 681,
+      "sha256": "e7183429a5533533f8ff5ce7e95876b7c29ef71a29c3ad88188720e5bafb8dd0"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

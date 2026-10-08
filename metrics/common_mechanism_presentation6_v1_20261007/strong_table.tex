@@ -1,0 +1,17 @@
+\begin{table*}[!t]
+\caption{Strong arm: 6 of 36 expected tuned checkpoints, each conditional on its own fixed checkpoint (descriptive, not the full matrix). Frozen reference separation SMD is 3.3424 (95\% CI $[3.1406,3.5781]$), the same bound reference in every row. $\Delta$MAE and SMD deltas are tuned minus frozen; each interval is the paired subject/endpoint bootstrap interval for this checkpoint, not a seed mean and not an ensemble. Age intervals hold OOF probe predictions fixed, with no probe refitting. Lower age MAE means easier age decoding, not age removal. Descriptive only: no mechanism decision, no training-seed population inference, no identity-independence clearance and no multiplicity correction; not deployment-calibrated.}
+\label{tab:common-mechanism-strong}
+\centering\scriptsize
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Checkpoint & CKA & Cos.\ drift & Age $\Delta$MAE & Age $\Delta$MAE 95\% CI & Sep.\ SMD & Sep.\ $\Delta$SMD & Sep.\ $\Delta$95\% CI \\
+\midrule
+random, head, LR $10^{-6}$, seed 1 & 0.9470 & 0.0570 & -0.1671 & $[-0.6659,+0.3229]$ & 3.2063 & -0.1362 & $[-0.2470,-0.0142]$ \\
+random, head, LR $10^{-6}$, seed 2 & 0.9468 & 0.0574 & -0.1635 & $[-0.6650,+0.3315]$ & 3.2038 & -0.1386 & $[-0.2503,-0.0156]$ \\
+random, head, LR $10^{-6}$, seed 42 & 0.9470 & 0.0570 & -0.1371 & $[-0.6410,+0.3588]$ & 3.2072 & -0.1352 & $[-0.2456,-0.0121]$ \\
+random, tail, LR $10^{-6}$, seed 1 & 0.6002 & 0.4563 & -1.7002 & $[-2.7847,-0.5906]$ & 3.0691 & -0.2733 & $[-0.4699,-0.0590]$ \\
+random, tail, LR $10^{-6}$, seed 2 & 0.6030 & 0.4543 & -1.6439 & $[-2.7657,-0.5049]$ & 3.0826 & -0.2599 & $[-0.4584,-0.0446]$ \\
+random, tail, LR $10^{-6}$, seed 42 & 0.6020 & 0.4546 & -1.6610 & $[-2.7840,-0.5394]$ & 3.0797 & -0.2627 & $[-0.4562,-0.0522]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

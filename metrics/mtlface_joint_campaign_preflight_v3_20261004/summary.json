@@ -1,0 +1,10 @@
+{
+  "preflight_complete": true,
+  "training_complete": false,
+  "full_method_parity": false,
+  "common_budget_matched": false,
+  "scientific_evaluation_complete": false,
+  "publication_ready": false,
+  "retained_images": 22571,
+  "identity_classes": 9204
+}

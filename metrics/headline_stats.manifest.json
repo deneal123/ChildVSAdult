@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "experiment": "headline-operating-points-and-bootstrap",
+  "created_at_utc": "2026-09-23T18:24:22.232292+00:00",
+  "command": [
+    "scripts/headline_stats.py",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "backbone": "facenet",
+    "checkpoint": "bb_facenet_seed42.pt",
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 0,
+    "large_gap_years": 25,
+    "manifest_only": true
+  },
+  "metrics": {
+    "fgnet.overall": {
+      "frozen": {
+        "auc": 0.8955,
+        "ci95": [
+          0.8866,
+          0.9039
+        ],
+        "eer": 0.1858,
+        "tar@far1e-2": 0.5017,
+        "tar@far1e-3": 0.3148,
+        "n": 5318
+      },
+      "+pairs": {
+        "auc": 0.9222,
+        "ci95": [
+          0.915,
+          0.9294
+        ],
+        "eer": 0.1512,
+        "tar@far1e-2": 0.5615,
+        "tar@far1e-3": 0.308,
+        "n": 5318
+      }
+    },
+    "fgnet.large_gap": {
+      "frozen": {
+        "auc": 0.7361,
+        "ci95": [
+          0.6959,
+          0.7766
+        ],
+        "eer": 0.3349,
+        "tar@far1e-2": 0.2093,
+        "tar@far1e-3": 0.0744,
+        "n": 2874
+      },
+      "+pairs": {
+        "auc": 0.8476,
+        "ci95": [
+          0.8171,
+          0.8775
+        ],
+        "eer": 0.2186,
+        "tar@far1e-2": 0.386,
+        "tar@far1e-3": 0.1535,
+        "n": 2874
+      }
+    },
+    "LFW": {
+      "frozen": {
+        "auc": 0.9827,
+        "ci95": [
+          0.9787,
+          0.9864
+        ],
+        "eer": 0.0377,
+        "tar@far1e-2": 0.9393,
+        "tar@far1e-3": 0.814,
+        "n": 6000
+      },
+      "+pairs": {
+        "auc": 0.9864,
+        "ci95": [
+          0.9832,
+          0.9894
+        ],
+        "eer": 0.037,
+        "tar@far1e-2": 0.9397,
+        "tar@far1e-3": 0.8163,
+        "n": 6000
+      }
+    },
+    "AgeDB-30": {
+      "frozen": {
+        "auc": 0.953,
+        "ci95": [
+          0.948,
+          0.9575
+        ],
+        "eer": 0.1147,
+        "tar@far1e-2": 0.525,
+        "tar@far1e-3": 0.285,
+        "n": 6000
+      },
+      "+pairs": {
+        "auc": 0.9447,
+        "ci95": [
+          0.939,
+          0.9497
+        ],
+        "eer": 0.126,
+        "tar@far1e-2": 0.5103,
+        "tar@far1e-3": 0.3093,
+        "n": 6000
+      }
+    },
+    "CALFW": {
+      "frozen": {
+        "auc": 0.9482,
+        "ci95": [
+          0.9427,
+          0.9534
+        ],
+        "eer": 0.1163,
+        "tar@far1e-2": 0.58,
+        "tar@far1e-3": 0.2133,
+        "n": 6000
+      },
+      "+pairs": {
+        "auc": 0.9483,
+        "ci95": [
+          0.9428,
+          0.9535
+        ],
+        "eer": 0.117,
+        "tar@far1e-2": 0.6237,
+        "tar@far1e-3": 0.3197,
+        "n": 6000
+      }
+    },
+    "our.overall": {
+      "frozen": {
+        "auc": 0.8363,
+        "pair_ci95": [
+          0.8286,
+          0.8439
+        ],
+        "identity_ci95": [
+          0.8246,
+          0.8482
+        ],
+        "n": 10214
+      },
+      "+pairs": {
+        "auc": 0.9163,
+        "pair_ci95": [
+          0.9109,
+          0.9214
+        ],
+        "identity_ci95": [
+          0.908,
+          0.9242
+        ],
+        "n": 10214
+      }
+    },
+    "our.25+": {
+      "frozen": {
+        "auc": 0.6402,
+        "pair_ci95": [
+          0.5955,
+          0.684
+        ],
+        "identity_ci95": [
+          0.5877,
+          0.6927
+        ],
+        "n": 5261
+      },
+      "+pairs": {
+        "auc": 0.838,
+        "pair_ci95": [
+          0.8044,
+          0.8689
+        ],
+        "identity_ci95": [
+          0.7962,
+          0.8762
+        ],
+        "n": 5261
+      }
+    }
+  },
+  "inputs": [
+    {
+      "path": "models/bb_facenet_seed42.pt",
+      "bytes": 115977947,
+      "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+    },
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "data/processed/person_clusters.jsonl",
+      "bytes": 2324340,
+      "sha256": "6493732524a969919602f078c2afdda381268eb30b9c12fdc2743bb5ba3e56a8"
+    },
+    {
+      "path": "data/external/lfw_aligned.npz",
+      "bytes": 393528172,
+      "sha256": "c9a6213b793f256e2e6da87ce1abc4fd59d435ebee8f5236d07ee73f97814fd1"
+    },
+    {
+      "path": "data/external/agedb_30.bin",
+      "bytes": 76525089,
+      "sha256": "1af672c0ea829b95951b12628687956fe54263614b60b0ec5af9cdfdc4480b30"
+    },
+    {
+      "path": "data/external/calfw.bin",
+      "bytes": 74157257,
+      "sha256": "f643466e875865670a91d6d836dcd0af7ac41730f279ba13de1ed5ae6546c4db"
+    },
+    {
+      "path": "data/external/fgnet_crops.npz",
+      "bytes": 24471952,
+      "sha256": "ee3d704aef68ed3bbcef860d1fbc234f1a71753d6b3e78fe050c01357e11d8a7"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/headline_stats.json",
+      "bytes": 3000,
+      "sha256": "1831846be4d724831fb8ce40358e939101e5c96048b84b10626be173ecbbaa6e"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

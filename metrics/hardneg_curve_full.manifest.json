@@ -1,0 +1,372 @@
+{
+  "schema_version": 1,
+  "experiment": "lookalike-impostor-difficulty-curve",
+  "created_at_utc": "2026-09-23T18:42:03.857199+00:00",
+  "command": [
+    "scripts/hardneg_curve.py",
+    "--backbones",
+    "adaface_ir101",
+    "arcface_r100",
+    "adaface_ir50",
+    "--splits",
+    "train",
+    "val",
+    "test",
+    "--out",
+    "hardneg_curve_full.json",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "backbones": [
+      "adaface_ir101",
+      "arcface_r100",
+      "adaface_ir50"
+    ],
+    "crops": "faces",
+    "tuned_suffix": "pairs",
+    "max_age_difference": 5.0,
+    "splits": [
+      "train",
+      "val",
+      "test"
+    ],
+    "miner": "cached InsightFace w600k_r50",
+    "ranks": [
+      1,
+      10,
+      50,
+      200
+    ],
+    "bootstrap_replicates": 1000,
+    "bootstrap_seed": 0,
+    "manifest_only": true
+  },
+  "metrics": {
+    "adaface_ir101": {
+      "random | overall": {
+        "auc": 0.982,
+        "ci95": [
+          0.9811,
+          0.983
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "random | 25+": {
+        "auc": 0.9605,
+        "ci95": [
+          0.9549,
+          0.9657
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank200 | overall": {
+        "auc": 0.9263,
+        "ci95": [
+          0.9241,
+          0.9286
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank200 | 25+": {
+        "auc": 0.8248,
+        "ci95": [
+          0.8085,
+          0.8397
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank50 | overall": {
+        "auc": 0.8835,
+        "ci95": [
+          0.8806,
+          0.8864
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank50 | 25+": {
+        "auc": 0.7268,
+        "ci95": [
+          0.707,
+          0.7449
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank10 | overall": {
+        "auc": 0.8232,
+        "ci95": [
+          0.8197,
+          0.8269
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank10 | 25+": {
+        "auc": 0.6033,
+        "ci95": [
+          0.5804,
+          0.6251
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank1 | overall": {
+        "auc": 0.6418,
+        "ci95": [
+          0.6374,
+          0.6462
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank1 | 25+": {
+        "auc": 0.3758,
+        "ci95": [
+          0.3559,
+          0.3935
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      }
+    },
+    "arcface_r100": {
+      "random | overall": {
+        "auc": 0.9738,
+        "ci95": [
+          0.9727,
+          0.975
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "random | 25+": {
+        "auc": 0.9405,
+        "ci95": [
+          0.9336,
+          0.9468
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank200 | overall": {
+        "auc": 0.905,
+        "ci95": [
+          0.9023,
+          0.9077
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank200 | 25+": {
+        "auc": 0.7733,
+        "ci95": [
+          0.7563,
+          0.7893
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank50 | overall": {
+        "auc": 0.8594,
+        "ci95": [
+          0.8562,
+          0.8625
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank50 | 25+": {
+        "auc": 0.6772,
+        "ci95": [
+          0.6579,
+          0.6956
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank10 | overall": {
+        "auc": 0.7984,
+        "ci95": [
+          0.7947,
+          0.8019
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank10 | 25+": {
+        "auc": 0.5649,
+        "ci95": [
+          0.5437,
+          0.5859
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank1 | overall": {
+        "auc": 0.6253,
+        "ci95": [
+          0.6207,
+          0.6298
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank1 | 25+": {
+        "auc": 0.3618,
+        "ci95": [
+          0.3426,
+          0.3797
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      }
+    },
+    "adaface_ir50": {
+      "random | overall": {
+        "auc": 0.96,
+        "ci95": [
+          0.9587,
+          0.9614
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "random | 25+": {
+        "auc": 0.9078,
+        "ci95": [
+          0.8986,
+          0.916
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank200 | overall": {
+        "auc": 0.8522,
+        "ci95": [
+          0.8489,
+          0.8554
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank200 | 25+": {
+        "auc": 0.6774,
+        "ci95": [
+          0.657,
+          0.696
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank50 | overall": {
+        "auc": 0.7863,
+        "ci95": [
+          0.7822,
+          0.7903
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank50 | 25+": {
+        "auc": 0.5603,
+        "ci95": [
+          0.5383,
+          0.5815
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank10 | overall": {
+        "auc": 0.7073,
+        "ci95": [
+          0.7029,
+          0.7117
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank10 | 25+": {
+        "auc": 0.4372,
+        "ci95": [
+          0.4149,
+          0.4581
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      },
+      "rank1 | overall": {
+        "auc": 0.5324,
+        "ci95": [
+          0.5277,
+          0.5372
+        ],
+        "n_pos": 31590,
+        "n_neg": 31590
+      },
+      "rank1 | 25+": {
+        "auc": 0.2584,
+        "ci95": [
+          0.2407,
+          0.275
+        ],
+        "n_pos": 1208,
+        "n_neg": 31590
+      }
+    },
+    "_note": {
+      "майнер": "w600k_r50 (кеш)",
+      "смысл": "rank1 = самый похожий импостер (состязательный отбор), random = как в статье",
+      "контроль": "если порядок моделей сохраняется как на лёгких негативах, смещение майнера не определяет результат"
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "data/interim/face_genderage.jsonl",
+      "bytes": 3357793,
+      "sha256": "e09ae22c379b40d375dbf0c1e327724cb6fe4b82cadd8d654a5fe03bcef952e7"
+    },
+    {
+      "path": "cache/embeddings/baseline_arcface.npz",
+      "bytes": 102874027,
+      "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/hardneg_curve_full.json",
+      "bytes": 5278,
+      "sha256": "e02510948dd336723e3ce4443c4d9ad4a08ade1ff4c1517b72e987ae22656dcc"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

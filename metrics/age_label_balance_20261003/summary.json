@@ -1,0 +1,258 @@
+{
+  "LOW_train": {
+    "positive_pairs": 600,
+    "negative_pairs": 600,
+    "matched_block_max_endpoint_error_histogram": {
+      "0": 599,
+      "1": 1
+    },
+    "features": {
+      "age_a": {
+        "positive_support_size": 35,
+        "negative_support_size": 35,
+        "pooled_support_size": 35,
+        "empirical_total_variation": 0.0,
+        "equal_prior_in_sample_oracle_accuracy": 0.5,
+        "rank_auc_positive_higher": 0.5
+      },
+      "age_b": {
+        "positive_support_size": 35,
+        "negative_support_size": 34,
+        "pooled_support_size": 35,
+        "empirical_total_variation": 0.0016666666666666668,
+        "equal_prior_in_sample_oracle_accuracy": 0.5008333333333334,
+        "rank_auc_positive_higher": 0.5000027777777778
+      },
+      "age_gap": {
+        "positive_support_size": 2,
+        "negative_support_size": 3,
+        "pooled_support_size": 3,
+        "empirical_total_variation": 0.0016666666666666668,
+        "equal_prior_in_sample_oracle_accuracy": 0.5008333333333334,
+        "rank_auc_positive_higher": 0.5003875
+      },
+      "ordered_endpoint_ages": {
+        "positive_support_size": 90,
+        "negative_support_size": 90,
+        "pooled_support_size": 91,
+        "empirical_total_variation": 0.0016666666666666668,
+        "equal_prior_in_sample_oracle_accuracy": 0.5008333333333334,
+        "rank_auc_positive_higher": null
+      },
+      "unordered_endpoint_ages": {
+        "positive_support_size": 62,
+        "negative_support_size": 62,
+        "pooled_support_size": 63,
+        "empirical_total_variation": 0.0016666666666666668,
+        "equal_prior_in_sample_oracle_accuracy": 0.5008333333333334,
+        "rank_auc_positive_higher": null
+      }
+    }
+  },
+  "CROSS_train": {
+    "positive_pairs": 600,
+    "negative_pairs": 600,
+    "matched_block_max_endpoint_error_histogram": {
+      "0": 598,
+      "1": 2
+    },
+    "features": {
+      "age_a": {
+        "positive_support_size": 55,
+        "negative_support_size": 55,
+        "pooled_support_size": 55,
+        "empirical_total_variation": 0.0,
+        "equal_prior_in_sample_oracle_accuracy": 0.5,
+        "rank_auc_positive_higher": 0.5
+      },
+      "age_b": {
+        "positive_support_size": 55,
+        "negative_support_size": 54,
+        "pooled_support_size": 55,
+        "empirical_total_variation": 0.0016666666666666668,
+        "equal_prior_in_sample_oracle_accuracy": 0.5008333333333334,
+        "rank_auc_positive_higher": 0.5000083333333333
+      },
+      "age_gap": {
+        "positive_support_size": 36,
+        "negative_support_size": 36,
+        "pooled_support_size": 36,
+        "empirical_total_variation": 0.0033333333333333335,
+        "equal_prior_in_sample_oracle_accuracy": 0.5016666666666667,
+        "rank_auc_positive_higher": 0.5000291666666666
+      },
+      "ordered_endpoint_ages": {
+        "positive_support_size": 284,
+        "negative_support_size": 283,
+        "pooled_support_size": 285,
+        "empirical_total_variation": 0.0033333333333333335,
+        "equal_prior_in_sample_oracle_accuracy": 0.5016666666666667,
+        "rank_auc_positive_higher": null
+      },
+      "unordered_endpoint_ages": {
+        "positive_support_size": 249,
+        "negative_support_size": 248,
+        "pooled_support_size": 250,
+        "empirical_total_variation": 0.0033333333333333335,
+        "equal_prior_in_sample_oracle_accuracy": 0.5016666666666667,
+        "rank_auc_positive_higher": null
+      }
+    }
+  },
+  "internal_test": {
+    "positive_pairs": 154,
+    "negative_pairs": 154,
+    "matched_block_max_endpoint_error_histogram": {
+      "0": 140,
+      "1": 8,
+      "2": 6
+    },
+    "features": {
+      "age_a": {
+        "positive_support_size": 31,
+        "negative_support_size": 31,
+        "pooled_support_size": 31,
+        "empirical_total_variation": 0.0,
+        "equal_prior_in_sample_oracle_accuracy": 0.5,
+        "rank_auc_positive_higher": 0.5
+      },
+      "age_b": {
+        "positive_support_size": 47,
+        "negative_support_size": 42,
+        "pooled_support_size": 48,
+        "empirical_total_variation": 0.05194805194805195,
+        "equal_prior_in_sample_oracle_accuracy": 0.525974025974026,
+        "rank_auc_positive_higher": 0.49993675156012823
+      },
+      "age_gap": {
+        "positive_support_size": 29,
+        "negative_support_size": 31,
+        "pooled_support_size": 36,
+        "empirical_total_variation": 0.07142857142857142,
+        "equal_prior_in_sample_oracle_accuracy": 0.5357142857142857,
+        "rank_auc_positive_higher": 0.5001264968797436
+      },
+      "ordered_endpoint_ages": {
+        "positive_support_size": 105,
+        "negative_support_size": 104,
+        "pooled_support_size": 118,
+        "empirical_total_variation": 0.09090909090909091,
+        "equal_prior_in_sample_oracle_accuracy": 0.5454545454545454,
+        "rank_auc_positive_higher": null
+      },
+      "unordered_endpoint_ages": {
+        "positive_support_size": 97,
+        "negative_support_size": 96,
+        "pooled_support_size": 110,
+        "empirical_total_variation": 0.09090909090909091,
+        "equal_prior_in_sample_oracle_accuracy": 0.5454545454545454,
+        "rank_auc_positive_higher": null
+      }
+    }
+  },
+  "FGNET": {
+    "overall": {
+      "positive_pairs": 2654,
+      "negative_pairs": 2654,
+      "matched_block_max_endpoint_error_histogram": {
+        "0": 2557,
+        "2": 97
+      },
+      "features": {
+        "age_a": {
+          "positive_support_size": 53,
+          "negative_support_size": 53,
+          "pooled_support_size": 53,
+          "empirical_total_variation": 0.008666164280331574,
+          "equal_prior_in_sample_oracle_accuracy": 0.5043330821401658,
+          "rank_auc_positive_higher": 0.49825113619004513
+        },
+        "age_b": {
+          "positive_support_size": 59,
+          "negative_support_size": 60,
+          "pooled_support_size": 60,
+          "empirical_total_variation": 0.007912584777694047,
+          "equal_prior_in_sample_oracle_accuracy": 0.503956292388847,
+          "rank_auc_positive_higher": 0.5011388874849582
+        },
+        "age_gap": {
+          "positive_support_size": 48,
+          "negative_support_size": 48,
+          "pooled_support_size": 48,
+          "empirical_total_variation": 0.0,
+          "equal_prior_in_sample_oracle_accuracy": 0.5,
+          "rank_auc_positive_higher": 0.5
+        },
+        "ordered_endpoint_ages": {
+          "positive_support_size": 787,
+          "negative_support_size": 805,
+          "pooled_support_size": 811,
+          "empirical_total_variation": 0.03654860587792012,
+          "equal_prior_in_sample_oracle_accuracy": 0.51827430293896,
+          "rank_auc_positive_higher": null
+        },
+        "unordered_endpoint_ages": {
+          "positive_support_size": 787,
+          "negative_support_size": 786,
+          "pooled_support_size": 790,
+          "empirical_total_variation": 0.009796533534287867,
+          "equal_prior_in_sample_oracle_accuracy": 0.5048982667671439,
+          "rank_auc_positive_higher": null
+        }
+      }
+    },
+    "source_positive_gap_25plus": {
+      "positive_pairs": 215,
+      "negative_pairs": 215,
+      "matched_block_max_endpoint_error_histogram": {
+        "0": 215
+      },
+      "features": {
+        "age_a": {
+          "positive_support_size": 32,
+          "negative_support_size": 32,
+          "pooled_support_size": 32,
+          "empirical_total_variation": 0.0,
+          "equal_prior_in_sample_oracle_accuracy": 0.5,
+          "rank_auc_positive_higher": 0.5
+        },
+        "age_b": {
+          "positive_support_size": 33,
+          "negative_support_size": 33,
+          "pooled_support_size": 33,
+          "empirical_total_variation": 0.0,
+          "equal_prior_in_sample_oracle_accuracy": 0.5,
+          "rank_auc_positive_higher": 0.5
+        },
+        "age_gap": {
+          "positive_support_size": 23,
+          "negative_support_size": 23,
+          "pooled_support_size": 23,
+          "empirical_total_variation": 0.0,
+          "equal_prior_in_sample_oracle_accuracy": 0.5,
+          "rank_auc_positive_higher": 0.5
+        },
+        "ordered_endpoint_ages": {
+          "positive_support_size": 171,
+          "negative_support_size": 171,
+          "pooled_support_size": 171,
+          "empirical_total_variation": 0.0,
+          "equal_prior_in_sample_oracle_accuracy": 0.5,
+          "rank_auc_positive_higher": null
+        },
+        "unordered_endpoint_ages": {
+          "positive_support_size": 171,
+          "negative_support_size": 171,
+          "pooled_support_size": 171,
+          "empirical_total_variation": 0.0,
+          "equal_prior_in_sample_oracle_accuracy": 0.5,
+          "rank_auc_positive_higher": null
+        }
+      }
+    }
+  },
+  "scope": "finite recorded metadata only; no image processing or protocol changes",
+  "inference": "TV and oracle are in-sample empirical descriptors, not held-out prediction, population estimates or causal effects; sparse/dependent tuples can overfit",
+  "age_shortcut_absence_proven": false,
+  "publication_ready": false
+}

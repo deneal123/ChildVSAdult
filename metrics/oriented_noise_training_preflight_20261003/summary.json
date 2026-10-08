@@ -1,0 +1,57 @@
+{
+  "preflight_complete": true,
+  "training_complete": false,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "protocol": {
+    "backbone": "facenet",
+    "epochs_requested": 10,
+    "epochs_executed": 10,
+    "selected_epoch": 10,
+    "checkpoint_selection": "last_epoch",
+    "batchnorm_policy": "frozen_all",
+    "trainable_scope": "head",
+    "learning_rate": 3e-05,
+    "batch_size": 64,
+    "margin": 0.3,
+    "gap_weight": 0.0,
+    "crops_dir": "faces",
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "sampling": "uniform row shuffle; drop_last=false; no diagnostic weights",
+    "scope": "conditional within-source age-gap sensitivity, not causal source evidence"
+  },
+  "permutation_seed": 42,
+  "training_seeds": [
+    42,
+    1,
+    2
+  ],
+  "loader_counts": {
+    "train": 1200,
+    "val": 9158,
+    "test": 10214
+  },
+  "unique_crops_covered": 12777,
+  "clean_noise_contract": {
+    "positive_pairs": 600,
+    "negative_pairs": 600,
+    "noisy_positive_pairs": 576,
+    "retained_genuine_positive_pairs": 24,
+    "noise_fraction_among_positive_labels": 0.96,
+    "noise_fraction_among_all_train_labels": 0.48,
+    "all_train_images": 1096,
+    "recorded_train_people": 500,
+    "fixed_negatives_and_heldout_unchanged": true,
+    "endpoint_image_multiplicities_unchanged": true,
+    "training_completed": false,
+    "publication_ready": false,
+    "scope": "shared-source supervision perturbation, not full co-occurrence or causal source evidence"
+  },
+  "scope": "supervision-noise sensitivity; fixed permutation not a training seed; not source/co-occurrence evidence"
+}

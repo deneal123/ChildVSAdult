@@ -1,0 +1,21 @@
+{
+  "endpoints": 12000,
+  "matched_person_endpoints": 0,
+  "unmatched_endpoints": 12000,
+  "ambiguous_person_endpoints": 0,
+  "same_person_image_alias_endpoints": 0,
+  "named_source_records": 4,
+  "exact_pixel_person_coverage_complete": false,
+  "source_provenance_verified_by_this_helper": false,
+  "subject_ci_available": false,
+  "publication_ready": false,
+  "official_source_images_sampled": 4,
+  "source_pixel_shapes": {
+    "(224, 224, 3)": 4
+  },
+  "downloaded_bytes": 63015,
+  "sampling": "first endpoint of official pair rows 0,300,2700,3000; bounded nonrandom diagnostic",
+  "source_crc_checked": true,
+  "scope": "four official aligned sources only; zero matches cannot establish global unavailability",
+  "resizing_or_approximate_matching": false
+}

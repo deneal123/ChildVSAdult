@@ -1,0 +1,58 @@
+{
+  "embedding_model": "FaceNet InceptionResnetV1 CASIA-WebFace",
+  "clustering": {
+    "0.70": {
+      "groups": 27487,
+      "persons": 6665,
+      "merged_groups": 20822
+    },
+    "0.75": {
+      "groups": 27487,
+      "persons": 12858,
+      "merged_groups": 14629
+    },
+    "0.80": {
+      "groups": 27487,
+      "persons": 19030,
+      "merged_groups": 8457
+    },
+    "0.85": {
+      "groups": 27487,
+      "persons": 21484,
+      "merged_groups": 6003
+    },
+    "0.90": {
+      "groups": 27487,
+      "persons": 21815,
+      "merged_groups": 5672
+    }
+  },
+  "dedup_no_filter_positives": 65897,
+  "dedup": {
+    "0.90": {
+      "redundant_faces": 8802,
+      "positives": 30717,
+      "reduction_pct": 53.38634535714828
+    },
+    "0.93": {
+      "redundant_faces": 8743,
+      "positives": 30974,
+      "reduction_pct": 52.99634277736467
+    },
+    "0.95": {
+      "redundant_faces": 8680,
+      "positives": 31223,
+      "reduction_pct": 52.61848035570663
+    },
+    "0.97": {
+      "redundant_faces": 8577,
+      "positives": 31565,
+      "reduction_pct": 52.09948859583896
+    },
+    "0.99": {
+      "redundant_faces": 7957,
+      "positives": 33536,
+      "reduction_pct": 49.10845713765421
+    }
+  }
+}

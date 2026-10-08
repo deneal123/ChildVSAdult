@@ -1,0 +1,45 @@
+{
+  "crop_audit": {
+    "unique_crops": 13873,
+    "all_decodable": true,
+    "preprocessing": "BGR -> RGB160 INTER_AREA; (x-127.5)/128; float32 CHW",
+    "source_shape_counts": {
+      "112x112": 13873
+    },
+    "missing_rows_dropped": 0
+  },
+  "arm_validation": {
+    "counts": {
+      "low": {
+        "train_positive": 600,
+        "train_negative": 600,
+        "val_pairs": 9158,
+        "test_pairs": 10214,
+        "train_unique_people": 500,
+        "positive_unique_people": 500,
+        "person_groups_without_map": 0
+      },
+      "cross": {
+        "train_positive": 600,
+        "train_negative": 600,
+        "val_pairs": 9158,
+        "test_pairs": 10214,
+        "train_unique_people": 500,
+        "positive_unique_people": 500,
+        "person_groups_without_map": 0
+      }
+    },
+    "identity_mapping_available": true,
+    "heldout_sha256": {
+      "val": "da66fd04ccfaaddf4cba4dcde1bdaf58b42df071f5fa87ee7a95e13f9fd067e8",
+      "test": "9c7cd22f562502090a2d90d4e7456432cf1f352cfba515fd94bac8ba0b9a79d4"
+    }
+  },
+  "threads": 2,
+  "device": "cpu",
+  "batchnorm_policy": "adapt_all",
+  "checkpoint_reuse": false,
+  "publication_ready": false,
+  "training_completed": false,
+  "training_identity_independence": "unverified"
+}

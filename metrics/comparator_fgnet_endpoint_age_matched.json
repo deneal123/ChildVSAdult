@@ -1,0 +1,799 @@
+{
+  "experiment": "comparator-fgnet-endpoint-age-matched-reevaluation",
+  "protocol": "endpoint_age_matched",
+  "endpoint_age_tolerance": 2,
+  "negative_seed": 42,
+  "bootstrap_seed": 0,
+  "n_bootstrap": 2000,
+  "large_gap_threshold": 25,
+  "strata": [
+    "overall",
+    "large_gap_25plus"
+  ],
+  "device": "cpu",
+  "torch_threads": 2,
+  "pair_counts": {
+    "total": 5308,
+    "positive": 2654,
+    "negative": 2654,
+    "large_gap_total": 430,
+    "large_gap_positive": 215,
+    "large_gap_negative": 215
+  },
+  "coverage": {
+    "positive_retained": 2654,
+    "positive_source": 2659,
+    "positive_unmatched": 5,
+    "positive_fraction": 0.9981195938322678,
+    "large_gap_positive_retained": 215,
+    "large_gap_positive_source": 215,
+    "large_gap_positive_fraction": 1.0,
+    "unique_crops_embedded": 650
+  },
+  "frozen_common_backbone": {
+    "backbone": "arcface_r50_casia",
+    "metrics": {
+      "overall": {
+        "n_pairs": 5308.0,
+        "n_pos": 2654.0,
+        "n_neg": 2654.0,
+        "roc_auc": 0.8808048195015244,
+        "eer": 0.2008289374529013,
+        "tar@far=0.01": 0.40580256217030897,
+        "tar@far=0.001": 0.22343632253202714,
+        "accuracy_10fold": 0.8067039761219487
+      },
+      "large_gap_25plus": {
+        "n_pairs": 430.0,
+        "n_pos": 215.0,
+        "n_neg": 215.0,
+        "roc_auc": 0.8180421849648458,
+        "eer": 0.26976744186046514,
+        "tar@far=0.01": 0.21395348837209302,
+        "tar@far=0.001": 0.19069767441860466,
+        "accuracy_10fold": 0.755813953488372
+      }
+    }
+  },
+  "comparators": {
+    "mtlface-common-protocol": {
+      "runs": [
+        {
+          "seed": 42,
+          "run_id": "mtlface_arcface_r50_casia_e8_s42",
+          "checkpoint": {
+            "format": "mtlface-common-v1",
+            "backbone": "arcface_r50_casia",
+            "backbone_name_in_checkpoint": null
+          },
+          "provenance": {
+            "run_id": "mtlface_arcface_r50_casia_e8_s42",
+            "seed": 42,
+            "checkpoint_name": "mtlface_arcface_r50_casia_e8_s42.pt",
+            "checkpoint_sha256": "6bc6ade996181eedcf3fb452f3a92fdead148fb36e49962558e569eb16f59168",
+            "training_manifest": "mtlface_arcface_r50_casia_e8_s42.manifest.json",
+            "provenance_status": "verified: common-protocol training manifest binds this checkpoint",
+            "manifest_checkpoint_match": true,
+            "manifest_experiment": "mtlface-common-protocol"
+          },
+          "metrics": {
+            "overall": {
+              "n_pairs": 5308.0,
+              "n_pos": 2654.0,
+              "n_neg": 2654.0,
+              "roc_auc": 0.9107184332815236,
+              "eer": 0.16465712132629992,
+              "tar@far=0.01": 0.5286360211002261,
+              "tar@far=0.001": 0.2980406932931424,
+              "accuracy_10fold": 0.8394886827985646
+            },
+            "large_gap_25plus": {
+              "n_pairs": 430.0,
+              "n_pos": 215.0,
+              "n_neg": 215.0,
+              "roc_auc": 0.8322769064359113,
+              "eer": 0.2372093023255814,
+              "tar@far=0.01": 0.19534883720930232,
+              "tar@far=0.001": 0.17209302325581396,
+              "accuracy_10fold": 0.7697674418604652
+            }
+          },
+          "paired_vs_frozen": {
+            "overall": {
+              "frozen_auc": 0.8808048195015246,
+              "tuned_auc": 0.9107184332815235,
+              "delta_auc": 0.029913613779998904,
+              "delta_ci95": [
+                0.015083424971583728,
+                0.04490561609006685
+              ],
+              "n_subjects": 82,
+              "n_pairs": 5308
+            },
+            "large_gap_25plus": {
+              "frozen_auc": 0.8180421849648459,
+              "tuned_auc": 0.8322769064359112,
+              "delta_auc": 0.014234721471065304,
+              "delta_ci95": [
+                -0.016870721813342586,
+                0.04600965390509091
+              ],
+              "n_subjects": 75,
+              "n_pairs": 430
+            }
+          },
+          "leave_one_subject_out_vs_frozen": {
+            "overall": {
+              "minimum_delta_auc": 0.02696147213211142,
+              "maximum_delta_auc": 0.032361449900600636,
+              "median_delta_auc": 0.029902716137651497,
+              "n_evaluable_subjects": 82,
+              "n_subjects": 82
+            },
+            "large_gap_25plus": {
+              "minimum_delta_auc": 0.010390093537415046,
+              "maximum_delta_auc": 0.022289218717790105,
+              "median_delta_auc": 0.014279504455553038,
+              "n_evaluable_subjects": 75,
+              "n_subjects": 75
+            }
+          }
+        },
+        {
+          "seed": 1,
+          "run_id": "mtlface_arcface_r50_casia_e8_s1",
+          "checkpoint": {
+            "format": "mtlface-common-v1",
+            "backbone": "arcface_r50_casia",
+            "backbone_name_in_checkpoint": null
+          },
+          "provenance": {
+            "run_id": "mtlface_arcface_r50_casia_e8_s1",
+            "seed": 1,
+            "checkpoint_name": "mtlface_arcface_r50_casia_e8_s1.pt",
+            "checkpoint_sha256": "8fd21e1557066fa87f6d357753de0c73b1e74d0ef7c9ad52594309632160727e",
+            "training_manifest": "mtlface_arcface_r50_casia_e8_s1.manifest.json",
+            "provenance_status": "verified: common-protocol training manifest binds this checkpoint",
+            "manifest_checkpoint_match": true,
+            "manifest_experiment": "mtlface-common-protocol"
+          },
+          "metrics": {
+            "overall": {
+              "n_pairs": 5308.0,
+              "n_pos": 2654.0,
+              "n_neg": 2654.0,
+              "roc_auc": 0.9108531633018708,
+              "eer": 0.1672946495855313,
+              "tar@far=0.01": 0.5354182366239638,
+              "tar@far=0.001": 0.29879427279577997,
+              "accuracy_10fold": 0.8389247770315886
+            },
+            "large_gap_25plus": {
+              "n_pairs": 430.0,
+              "n_pos": 215.0,
+              "n_neg": 215.0,
+              "roc_auc": 0.834050838290968,
+              "eer": 0.23255813953488372,
+              "tar@far=0.01": 0.19069767441860466,
+              "tar@far=0.001": 0.15813953488372093,
+              "accuracy_10fold": 0.7697674418604652
+            }
+          },
+          "paired_vs_frozen": {
+            "overall": {
+              "frozen_auc": 0.8808048195015246,
+              "tuned_auc": 0.9108531633018708,
+              "delta_auc": 0.030048343800346267,
+              "delta_ci95": [
+                0.015357757646313596,
+                0.045145167523113136
+              ],
+              "n_subjects": 82,
+              "n_pairs": 5308
+            },
+            "large_gap_25plus": {
+              "frozen_auc": 0.8180421849648459,
+              "tuned_auc": 0.8340508382909682,
+              "delta_auc": 0.016008653326122224,
+              "delta_ci95": [
+                -0.01445713625764437,
+                0.047949821101495316
+              ],
+              "n_subjects": 75,
+              "n_pairs": 430
+            }
+          },
+          "leave_one_subject_out_vs_frozen": {
+            "overall": {
+              "minimum_delta_auc": 0.02710376549323601,
+              "maximum_delta_auc": 0.032394940196750266,
+              "median_delta_auc": 0.030014095240121663,
+              "n_evaluable_subjects": 82,
+              "n_subjects": 82
+            },
+            "large_gap_25plus": {
+              "minimum_delta_auc": 0.012276386404293405,
+              "maximum_delta_auc": 0.024170274170274286,
+              "median_delta_auc": 0.015966010733452607,
+              "n_evaluable_subjects": 75,
+              "n_subjects": 75
+            }
+          }
+        },
+        {
+          "seed": 2,
+          "run_id": "mtlface_arcface_r50_casia_e8_s2",
+          "checkpoint": {
+            "format": "mtlface-common-v1",
+            "backbone": "arcface_r50_casia",
+            "backbone_name_in_checkpoint": null
+          },
+          "provenance": {
+            "run_id": "mtlface_arcface_r50_casia_e8_s2",
+            "seed": 2,
+            "checkpoint_name": "mtlface_arcface_r50_casia_e8_s2.pt",
+            "checkpoint_sha256": "a0ea08bfce18661197d1eac73a5e189893fc6c10be569d139e3641f095d77fbc",
+            "training_manifest": "mtlface_arcface_r50_casia_e8_s2.manifest.json",
+            "provenance_status": "verified: common-protocol training manifest binds this checkpoint",
+            "manifest_checkpoint_match": true,
+            "manifest_experiment": "mtlface-common-protocol"
+          },
+          "metrics": {
+            "overall": {
+              "n_pairs": 5308.0,
+              "n_pos": 2654.0,
+              "n_neg": 2654.0,
+              "roc_auc": 0.9105306062879309,
+              "eer": 0.16503391107761867,
+              "tar@far=0.01": 0.53353428786737,
+              "tar@far=0.001": 0.2908816880180859,
+              "accuracy_10fold": 0.8377941228724728
+            },
+            "large_gap_25plus": {
+              "n_pairs": 430.0,
+              "n_pos": 215.0,
+              "n_neg": 215.0,
+              "roc_auc": 0.831887506760411,
+              "eer": 0.24186046511627907,
+              "tar@far=0.01": 0.20465116279069767,
+              "tar@far=0.001": 0.17209302325581396,
+              "accuracy_10fold": 0.7651162790697674
+            }
+          },
+          "paired_vs_frozen": {
+            "overall": {
+              "frozen_auc": 0.8808048195015246,
+              "tuned_auc": 0.910530606287931,
+              "delta_auc": 0.029725786786406472,
+              "delta_ci95": [
+                0.014646222548840038,
+                0.04488009716608918
+              ],
+              "n_subjects": 82,
+              "n_pairs": 5308
+            },
+            "large_gap_25plus": {
+              "frozen_auc": 0.8180421849648459,
+              "tuned_auc": 0.831887506760411,
+              "delta_auc": 0.01384532179556508,
+              "delta_ci95": [
+                -0.017299796939660772,
+                0.04705000521151794
+              ],
+              "n_subjects": 75,
+              "n_pairs": 430
+            }
+          },
+          "leave_one_subject_out_vs_frozen": {
+            "overall": {
+              "minimum_delta_auc": 0.02683668009347817,
+              "maximum_delta_auc": 0.03214011625449298,
+              "median_delta_auc": 0.029672670931879364,
+              "n_evaluable_subjects": 82,
+              "n_subjects": 82
+            },
+            "large_gap_25plus": {
+              "minimum_delta_auc": 0.009919533851276308,
+              "maximum_delta_auc": 0.021902700474129122,
+              "median_delta_auc": 0.013866142591986041,
+              "n_evaluable_subjects": 75,
+              "n_subjects": 75
+            }
+          }
+        }
+      ],
+      "aggregate_across_seeds": {
+        "overall": {
+          "roc_auc": {
+            "mean": 0.9107007342904417,
+            "std": 0.000162005239188251,
+            "n_seeds": 3
+          },
+          "eer": {
+            "mean": 0.16566189399648332,
+            "std": 0.0014265029755841183,
+            "n_seeds": 3
+          },
+          "tar@far=0.01": {
+            "mean": 0.5325295151971866,
+            "std": 0.00350096957165693,
+            "n_seeds": 3
+          },
+          "tar@far=0.001": {
+            "mean": 0.29590555136900276,
+            "std": 0.004367078284529957,
+            "n_seeds": 3
+          },
+          "accuracy_10fold": {
+            "mean": 0.8387358609008754,
+            "std": 0.0008629312337097449,
+            "n_seeds": 3
+          },
+          "delta_auc_vs_frozen": {
+            "mean": 0.029895914788917215,
+            "std": 0.00016200523918818665,
+            "n_seeds": 3
+          }
+        },
+        "large_gap_25plus": {
+          "roc_auc": {
+            "mean": 0.8327384171624302,
+            "std": 0.0011531456719749173,
+            "n_seeds": 3
+          },
+          "eer": {
+            "mean": 0.23720930232558138,
+            "std": 0.004651162790697674,
+            "n_seeds": 3
+          },
+          "tar@far=0.01": {
+            "mean": 0.19689922480620156,
+            "std": 0.0071047685193113734,
+            "n_seeds": 3
+          },
+          "tar@far=0.001": {
+            "mean": 0.1674418604651163,
+            "std": 0.008056050267762228,
+            "n_seeds": 3
+          },
+          "accuracy_10fold": {
+            "mean": 0.768217054263566,
+            "std": 0.0026853500892541292,
+            "n_seeds": 3
+          },
+          "delta_auc_vs_frozen": {
+            "mean": 0.014696232197584203,
+            "std": 0.0011531456719750027,
+            "n_seeds": 3
+          }
+        }
+      }
+    },
+    "cacon-common-protocol": {
+      "runs": [
+        {
+          "seed": 42,
+          "run_id": "cacon_arcface_r50_casia_e8_s42",
+          "checkpoint": {
+            "format": "cacon-common-v1",
+            "backbone": "arcface_r50_casia",
+            "backbone_name_in_checkpoint": "arcface_r50_casia"
+          },
+          "provenance": {
+            "run_id": "cacon_arcface_r50_casia_e8_s42",
+            "seed": 42,
+            "checkpoint_name": "cacon_arcface_r50_casia_e8_s42.pt",
+            "checkpoint_sha256": "958c11a6663dd927dcbf8d2eab520961c1000d3a78a8c24a0a38768004ad68d9",
+            "training_manifest": "cacon_arcface_r50_casia_e8_s42.manifest.json",
+            "provenance_status": "verified: common-protocol training manifest binds this checkpoint",
+            "manifest_checkpoint_match": true,
+            "manifest_experiment": "cacon-common-protocol"
+          },
+          "metrics": {
+            "overall": {
+              "n_pairs": 5308.0,
+              "n_pos": 2654.0,
+              "n_neg": 2654.0,
+              "roc_auc": 0.8703366234527343,
+              "eer": 0.21439336850037682,
+              "tar@far=0.01": 0.41559909570459685,
+              "tar@far=0.001": 0.2279577995478523,
+              "accuracy_10fold": 0.7918238993710691
+            },
+            "large_gap_25plus": {
+              "n_pairs": 430.0,
+              "n_pos": 215.0,
+              "n_neg": 215.0,
+              "roc_auc": 0.800605732828556,
+              "eer": 0.2651162790697674,
+              "tar@far=0.01": 0.20930232558139536,
+              "tar@far=0.001": 0.17209302325581396,
+              "accuracy_10fold": 0.7186046511627907
+            }
+          },
+          "paired_vs_frozen": {
+            "overall": {
+              "frozen_auc": 0.8808048195015246,
+              "tuned_auc": 0.8703366234527343,
+              "delta_auc": -0.010468196048790235,
+              "delta_ci95": [
+                -0.019567939836749836,
+                -0.0008519115354775244
+              ],
+              "n_subjects": 82,
+              "n_pairs": 5308
+            },
+            "large_gap_25plus": {
+              "frozen_auc": 0.8180421849648459,
+              "tuned_auc": 0.800605732828556,
+              "delta_auc": -0.01743645213628997,
+              "delta_ci95": [
+                -0.04425119296441184,
+                0.012607671354689513
+              ],
+              "n_subjects": 75,
+              "n_pairs": 430
+            }
+          },
+          "leave_one_subject_out_vs_frozen": {
+            "overall": {
+              "minimum_delta_auc": -0.012129493564552951,
+              "maximum_delta_auc": -0.00926345399672246,
+              "median_delta_auc": -0.010507725490523034,
+              "n_evaluable_subjects": 82,
+              "n_subjects": 82
+            },
+            "large_gap_25plus": {
+              "minimum_delta_auc": -0.021827598964113903,
+              "maximum_delta_auc": -0.012883941455369974,
+              "median_delta_auc": -0.017397981570864474,
+              "n_evaluable_subjects": 75,
+              "n_subjects": 75
+            }
+          }
+        },
+        {
+          "seed": 1,
+          "run_id": "cacon_arcface_r50_casia_e8_s1",
+          "checkpoint": {
+            "format": "cacon-common-v1",
+            "backbone": "arcface_r50_casia",
+            "backbone_name_in_checkpoint": "arcface_r50_casia"
+          },
+          "provenance": {
+            "run_id": "cacon_arcface_r50_casia_e8_s1",
+            "seed": 1,
+            "checkpoint_name": "cacon_arcface_r50_casia_e8_s1.pt",
+            "checkpoint_sha256": "477ec7676a8307e84bef406a16c4a6d66e6bebce4fa1c6ec880e6af3f681a871",
+            "training_manifest": "cacon_arcface_r50_casia_e8_s1.manifest.json",
+            "provenance_status": "verified: common-protocol training manifest binds this checkpoint",
+            "manifest_checkpoint_match": true,
+            "manifest_experiment": "cacon-common-protocol"
+          },
+          "metrics": {
+            "overall": {
+              "n_pairs": 5308.0,
+              "n_pos": 2654.0,
+              "n_neg": 2654.0,
+              "roc_auc": 0.8699277483646416,
+              "eer": 0.21213262999246418,
+              "tar@far=0.01": 0.40617935192162774,
+              "tar@far=0.001": 0.22494348153730218,
+              "accuracy_10fold": 0.7954034751092635
+            },
+            "large_gap_25plus": {
+              "n_pairs": 430.0,
+              "n_pos": 215.0,
+              "n_neg": 215.0,
+              "roc_auc": 0.7963439697133585,
+              "eer": 0.2697674418604651,
+              "tar@far=0.01": 0.19069767441860466,
+              "tar@far=0.001": 0.17209302325581396,
+              "accuracy_10fold": 0.7395348837209302
+            }
+          },
+          "paired_vs_frozen": {
+            "overall": {
+              "frozen_auc": 0.8808048195015246,
+              "tuned_auc": 0.8699277483646416,
+              "delta_auc": -0.010877071136882965,
+              "delta_ci95": [
+                -0.020193265779635785,
+                -0.0008993085356527651
+              ],
+              "n_subjects": 82,
+              "n_pairs": 5308
+            },
+            "large_gap_25plus": {
+              "frozen_auc": 0.8180421849648459,
+              "tuned_auc": 0.7963439697133585,
+              "delta_auc": -0.021698215251487407,
+              "delta_ci95": [
+                -0.04917618705722431,
+                0.00945266024670921
+              ],
+              "n_subjects": 75,
+              "n_pairs": 430
+            }
+          },
+          "leave_one_subject_out_vs_frozen": {
+            "overall": {
+              "minimum_delta_auc": -0.012483333127520702,
+              "maximum_delta_auc": -0.009661131787441102,
+              "median_delta_auc": -0.010924513330797303,
+              "n_evaluable_subjects": 82,
+              "n_subjects": 82
+            },
+            "large_gap_25plus": {
+              "minimum_delta_auc": -0.026313355530891647,
+              "maximum_delta_auc": -0.017496392496392343,
+              "median_delta_auc": -0.021735241502683356,
+              "n_evaluable_subjects": 75,
+              "n_subjects": 75
+            }
+          }
+        },
+        {
+          "seed": 2,
+          "run_id": "cacon_arcface_r50_casia_e8_s2",
+          "checkpoint": {
+            "format": "cacon-common-v1",
+            "backbone": "arcface_r50_casia",
+            "backbone_name_in_checkpoint": "arcface_r50_casia"
+          },
+          "provenance": {
+            "run_id": "cacon_arcface_r50_casia_e8_s2",
+            "seed": 2,
+            "checkpoint_name": "cacon_arcface_r50_casia_e8_s2.pt",
+            "checkpoint_sha256": "f8658315eb40cbd14b236abcc9cbdd938e5e69a1079006a121876dbe9dc9e559",
+            "training_manifest": "cacon_arcface_r50_casia_e8_s2.manifest.json",
+            "provenance_status": "verified: common-protocol training manifest binds this checkpoint",
+            "manifest_checkpoint_match": true,
+            "manifest_experiment": "cacon-common-protocol"
+          },
+          "metrics": {
+            "overall": {
+              "n_pairs": 5308.0,
+              "n_pos": 2654.0,
+              "n_neg": 2654.0,
+              "roc_auc": 0.8716372153562125,
+              "eer": 0.21137905048982664,
+              "tar@far=0.01": 0.42049736247174074,
+              "tar@far=0.001": 0.23172569706103993,
+              "accuracy_10fold": 0.7935202359378887
+            },
+            "large_gap_25plus": {
+              "n_pairs": 430.0,
+              "n_pos": 215.0,
+              "n_neg": 215.0,
+              "roc_auc": 0.8014710654407788,
+              "eer": 0.2697674418604651,
+              "tar@far=0.01": 0.19069767441860466,
+              "tar@far=0.001": 0.1813953488372093,
+              "accuracy_10fold": 0.7325581395348838
+            }
+          },
+          "paired_vs_frozen": {
+            "overall": {
+              "frozen_auc": 0.8808048195015246,
+              "tuned_auc": 0.8716372153562125,
+              "delta_auc": -0.009167604145312036,
+              "delta_ci95": [
+                -0.018227901530574214,
+                0.00039120972175238263
+              ],
+              "n_subjects": 82,
+              "n_pairs": 5308
+            },
+            "large_gap_25plus": {
+              "frozen_auc": 0.8180421849648459,
+              "tuned_auc": 0.8014710654407788,
+              "delta_auc": -0.01657111952406709,
+              "delta_ci95": [
+                -0.043860302405172844,
+                0.013479337668121427
+              ],
+              "n_subjects": 75,
+              "n_pairs": 430
+            }
+          },
+          "leave_one_subject_out_vs_frozen": {
+            "overall": {
+              "minimum_delta_auc": -0.010777620621294948,
+              "maximum_delta_auc": -0.007911896408113739,
+              "median_delta_auc": -0.009199254890906228,
+              "n_evaluable_subjects": 82,
+              "n_subjects": 82
+            },
+            "large_gap_25plus": {
+              "minimum_delta_auc": -0.02108768035516073,
+              "maximum_delta_auc": -0.01213667285095843,
+              "median_delta_auc": -0.01665921288014316,
+              "n_evaluable_subjects": 75,
+              "n_subjects": 75
+            }
+          }
+        }
+      ],
+      "aggregate_across_seeds": {
+        "overall": {
+          "roc_auc": {
+            "mean": 0.8706338623911961,
+            "std": 0.0008926547981840876,
+            "n_seeds": 3
+          },
+          "eer": {
+            "mean": 0.21263501632755588,
+            "std": 0.0015687008285351803,
+            "n_seeds": 3
+          },
+          "tar@far=0.01": {
+            "mean": 0.4140919366993218,
+            "std": 0.007277018807772393,
+            "n_seeds": 3
+          },
+          "tar@far=0.001": {
+            "mean": 0.22820899271539816,
+            "std": 0.0033980781860006738,
+            "n_seeds": 3
+          },
+          "accuracy_10fold": {
+            "mean": 0.7935825368060737,
+            "std": 0.0017906009228747344,
+            "n_seeds": 3
+          },
+          "delta_auc_vs_frozen": {
+            "mean": -0.010170957110328413,
+            "std": 0.0008926547981840876,
+            "n_seeds": 3
+          }
+        },
+        "large_gap_25plus": {
+          "roc_auc": {
+            "mean": 0.7994735893275644,
+            "std": 0.0027446473962352462,
+            "n_seeds": 3
+          },
+          "eer": {
+            "mean": 0.26821705426356585,
+            "std": 0.002685350089254065,
+            "n_seeds": 3
+          },
+          "tar@far=0.01": {
+            "mean": 0.19689922480620156,
+            "std": 0.010741400357016293,
+            "n_seeds": 3
+          },
+          "tar@far=0.001": {
+            "mean": 0.17519379844961244,
+            "std": 0.005370700178508147,
+            "n_seeds": 3
+          },
+          "accuracy_10fold": {
+            "mean": 0.7302325581395349,
+            "std": 0.010657152778967073,
+            "n_seeds": 3
+          },
+          "delta_auc_vs_frozen": {
+            "mean": -0.018568595637281488,
+            "std": 0.0027446473962352462,
+            "n_seeds": 3
+          }
+        }
+      }
+    }
+  },
+  "cross_method": {
+    "rows": [
+      {
+        "seed": 1,
+        "stratum": "overall",
+        "a": "mtlface-common-protocol",
+        "b": "cacon-common-protocol",
+        "delta_direction": "b_minus_a",
+        "delta_auc": -0.04092541493722923,
+        "delta_ci95": [
+          -0.053405153122506266,
+          -0.029008611095226563
+        ],
+        "n_subjects": 82,
+        "n_pairs": 5308
+      },
+      {
+        "seed": 1,
+        "stratum": "large_gap_25plus",
+        "a": "mtlface-common-protocol",
+        "b": "cacon-common-protocol",
+        "delta_direction": "b_minus_a",
+        "delta_auc": -0.03770686857760963,
+        "delta_ci95": [
+          -0.0657336208343135,
+          -0.007573657937420067
+        ],
+        "n_subjects": 75,
+        "n_pairs": 430
+      },
+      {
+        "seed": 2,
+        "stratum": "overall",
+        "a": "mtlface-common-protocol",
+        "b": "cacon-common-protocol",
+        "delta_direction": "b_minus_a",
+        "delta_auc": -0.03889339093171851,
+        "delta_ci95": [
+          -0.05157014653818297,
+          -0.026816461342605655
+        ],
+        "n_subjects": 82,
+        "n_pairs": 5308
+      },
+      {
+        "seed": 2,
+        "stratum": "large_gap_25plus",
+        "a": "mtlface-common-protocol",
+        "b": "cacon-common-protocol",
+        "delta_direction": "b_minus_a",
+        "delta_auc": -0.03041644131963217,
+        "delta_ci95": [
+          -0.05882905248307636,
+          0.0010777734093542425
+        ],
+        "n_subjects": 75,
+        "n_pairs": 430
+      },
+      {
+        "seed": 42,
+        "stratum": "overall",
+        "a": "mtlface-common-protocol",
+        "b": "cacon-common-protocol",
+        "delta_direction": "b_minus_a",
+        "delta_auc": -0.04038180982878914,
+        "delta_ci95": [
+          -0.05367154462682239,
+          -0.02775650566373641
+        ],
+        "n_subjects": 82,
+        "n_pairs": 5308
+      },
+      {
+        "seed": 42,
+        "stratum": "large_gap_25plus",
+        "a": "mtlface-common-protocol",
+        "b": "cacon-common-protocol",
+        "delta_direction": "b_minus_a",
+        "delta_auc": -0.031671173607355274,
+        "delta_ci95": [
+          -0.05791762122573654,
+          -0.0016000084211985606
+        ],
+        "n_subjects": 75,
+        "n_pairs": 430
+      }
+    ],
+    "aggregate_across_seeds": {
+      "overall": {
+        "delta_auc": {
+          "mean": -0.040066871899245626,
+          "std": 0.0010519837519381312,
+          "n_seeds": 3
+        },
+        "all_seeds_ci95_exclude_zero": true
+      },
+      "large_gap_25plus": {
+        "delta_auc": {
+          "mean": -0.033264827834865694,
+          "std": 0.0038977407236258747,
+          "n_seeds": 3
+        },
+        "all_seeds_ci95_exclude_zero": false
+      }
+    }
+  },
+  "provenance_notes": {
+    "training_benchmark_identity_independence": "unverified; candidate adjudication pending",
+    "seed_intervals": "same FG-NET subjects reused; intervals are not independent replications",
+    "legacy_protocol_note": "Published fgnet.* numbers were produced with the legacy_random negative protocol. These endpoint-age-matched re-evaluations are a corrected protocol and are not directly comparable to those legacy numbers. Common-protocol checkpoints with a matching training manifest are controlled reimplementations, not reproductions of published leaderboard results.",
+    "unique_crop_embedding": "each unique cached FG-NET crop is embedded once per model; pair scores are cosine similarities read from the cached embedding matrices",
+    "private_embeddings": "embedding matrices are cached under the git-ignored data/ tree and never included in this public aggregate"
+  }
+}

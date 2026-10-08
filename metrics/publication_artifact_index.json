@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "T-BIOM publication experiments only; no face data or biometric templates",
-  "entry_count": 94,
+  "entry_count": 102,
   "missing_expected_manifests": [
     "age_leakage.manifest.json",
     "fairness_audit.manifest.json",
@@ -57,6 +57,2113 @@
       "private_output_count": 0,
       "input_integrity": {
         "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/frozen.manifest.json",
+      "manifest_sha256": "f3a6744dcc8bc0ab76c8ca46961ca9d3333aa76249179cc4dafdbe71d912fab8",
+      "experiment": "cacd-vs-serial-checkpoint",
+      "created_at_utc": "2026-10-03T05:03:10.551932+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute",
+        "--phase",
+        "score",
+        "--role",
+        "frozen"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.manifest.json",
+          "bytes": 20165,
+          "sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/frozen.json",
+          "bytes": 414,
+          "sha256": "b45db257725e2b851f4ad09bdfb0a51f89ad4ce7d0a7f9f1b5f7cb8763950785"
+        }
+      ],
+      "private_input_count": 5,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 8,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/plan.manifest.json",
+      "manifest_sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435",
+      "experiment": "cacd-vs-serial-plan",
+      "created_at_utc": "2026-10-03T04:43:08.971974+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/external/cacd_vs_aligned.manifest.json",
+          "bytes": 1387,
+          "sha256": "1c99706fb806cb9e3989bf091fe94e5fd136159a79030b7bbd79138cafed1ab2"
+        },
+        {
+          "path": "data/external/CACD_VS.tar",
+          "bytes": 198440960,
+          "sha256": "555a12479fd96302d87d83c20c59898e17cb5c1b53a962b257722db7a4143393"
+        },
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "scripts/reevaluate_cacd_serial.py",
+          "bytes": 20185,
+          "sha256": "424e8b9572f30dbb9d4ecbe6cb0cad9a89b334b6d47917316ca1296dc6669f6f"
+        },
+        {
+          "path": "uv.lock",
+          "bytes": 538634,
+          "sha256": "de80b2e7f90a55f54a66f5009b25c6e870c3b527e2389d74f2e9786c46daf91f"
+        },
+        {
+          "path": "pyproject.toml",
+          "bytes": 4391,
+          "sha256": "3998bd05f54cc56848cbb8d10c23b574db7963adb00d977c3d1df0fa2be91810"
+        },
+        {
+          "path": "scripts/reevaluate_cacd_metrics_v2.py",
+          "bytes": 7532,
+          "sha256": "3affff4a4bbb14c6ab56a7c16797a8be3bee1680256fe7151a95be9f8c128a09"
+        },
+        {
+          "path": "scripts/cacd_metrics_v2.py",
+          "bytes": 4150,
+          "sha256": "9fb7f928da6c7d5c558ab842ed71fd4724dbced0a9ec53e9741ac5c29c39f0f6"
+        },
+        {
+          "path": "scripts/benchmark_metrics_v2.py",
+          "bytes": 4244,
+          "sha256": "18e590a7e83e84855c8dfebe89acadf09d19d7e88fc80fa6d5c473bc6d103e45"
+        },
+        {
+          "path": "scripts/verification_metrics_v2.py",
+          "bytes": 4224,
+          "sha256": "74a9ca835c9a6e32a1339bc9e7a159d8b57c18fc7e7e21a09327d58294788651"
+        },
+        {
+          "path": "scripts/evaluate_lfw_bound.py",
+          "bytes": 23107,
+          "sha256": "ac2de94a1b47da6ad4eafaffd1127a69b75424f58c64630e1de6b1441cb4f164"
+        },
+        {
+          "path": "scripts/fgnet_retrieval_study.py",
+          "bytes": 56767,
+          "sha256": "0296a630b9416d57d1bc91bb4a1e2695b3aeabf750a7772ad7b8362e3d64ca8f"
+        },
+        {
+          "path": "scripts/export_lfw_evidence.py",
+          "bytes": 15367,
+          "sha256": "58b8ada95bfe47dd81c1bc6bed601cffd2fc6363aeadf28af9990c2d190dd50b"
+        },
+        {
+          "path": "src/age_gap/__init__.py",
+          "bytes": 23,
+          "sha256": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003"
+        },
+        {
+          "path": "src/age_gap/beauty.py",
+          "bytes": 18769,
+          "sha256": "fdaef46da7a609bce70943a3a39fe684baf655484d584ca71ec4e92cafb042eb"
+        },
+        {
+          "path": "src/age_gap/common/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/common/device.py",
+          "bytes": 4344,
+          "sha256": "597a52dcfb0f8fba4c794e8ca0b44013efb382e2e71088cfcf571189f54d42fb"
+        },
+        {
+          "path": "src/age_gap/common/io.py",
+          "bytes": 2439,
+          "sha256": "eff1ac8b84647d55eba4f2cdca9b86cd31c085c2a7d2bb5f203848e6e06fd075"
+        },
+        {
+          "path": "src/age_gap/common/logging.py",
+          "bytes": 1390,
+          "sha256": "c10569bb1f4cf2bc6f65acbff9242ec746ef32a7c04f92a35a33da070aec5017"
+        },
+        {
+          "path": "src/age_gap/common/manifest.py",
+          "bytes": 3383,
+          "sha256": "55717ceed0dda8d3b3239f0f9d9a0a63a3d442e027f3f0baf916ff0046af8ecd"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        },
+        {
+          "path": "src/age_gap/contrastive.py",
+          "bytes": 12647,
+          "sha256": "bccf1344d3228bc906d9e3e4b1fecddcc6fc8b8daa46c0eba2aa0809102afc12"
+        },
+        {
+          "path": "src/age_gap/datasets/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/datasets/age_anchors.py",
+          "bytes": 9596,
+          "sha256": "c7f1510f65bfd81260fee8d05c95728cfc8a872c6866c2ad3c9428c169809259"
+        },
+        {
+          "path": "src/age_gap/datasets/anonymize.py",
+          "bytes": 3063,
+          "sha256": "a70ddec135117d0a5ce8af00a9c1f4e5f252f5b06f1013f107a5e914fb77f34f"
+        },
+        {
+          "path": "src/age_gap/datasets/apparent_age.py",
+          "bytes": 2319,
+          "sha256": "71a77f20fed1f6ddd2bde062af370f5c6051cbd1fee8dded112de17baad6a674"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/gender_meta.py",
+          "bytes": 4040,
+          "sha256": "18ee00433d6c5ea44c1f4f05454a1ce6bee898a5f5b0b41c46fa4ce31eda13ba"
+        },
+        {
+          "path": "src/age_gap/datasets/group_validator.py",
+          "bytes": 4365,
+          "sha256": "c2b4ef64be8d5a69c34ea48c49fa40acb418031b133a07c9a1fde9d501d7961b"
+        },
+        {
+          "path": "src/age_gap/datasets/hard_negatives.py",
+          "bytes": 8016,
+          "sha256": "031e3e9cca81ece4767e28033064adf231086725b9be5510fc915f4e3ede3f16"
+        },
+        {
+          "path": "src/age_gap/datasets/identity_groups.py",
+          "bytes": 9546,
+          "sha256": "71c60ee4a1463af395ca43431b7d85e7fcda0c30ecf1deb419ea1c77ebc2fc36"
+        },
+        {
+          "path": "src/age_gap/datasets/llm_age_extractor.py",
+          "bytes": 12275,
+          "sha256": "08bf96525d0977ffac4d0bbd0ffc87a3331c703b3291eec382ef5e5d2791c0ec"
+        },
+        {
+          "path": "src/age_gap/datasets/pair_builder.py",
+          "bytes": 8361,
+          "sha256": "f8190115105cab133f0924625464449cad566b27de6042ce275b6af2eefe443c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/datasets/splits.py",
+          "bytes": 9033,
+          "sha256": "39edcd27520975c75c8c1587854f83886487e261be2c099ab479c2bb19e795dd"
+        },
+        {
+          "path": "src/age_gap/domain_adapt.py",
+          "bytes": 6028,
+          "sha256": "6783324f4c4d7c489c8135c203a0fe6860dfde9c942abb01c4f74bc92079e9c4"
+        },
+        {
+          "path": "src/age_gap/engagement/__init__.py",
+          "bytes": 924,
+          "sha256": "3acd396458ca30d83a53d4d2e909fb223b4be66232e6b87c0f9c69b02141715d"
+        },
+        {
+          "path": "src/age_gap/engagement/backfill.py",
+          "bytes": 10120,
+          "sha256": "2405620b042f79b51dd15831c488b660e4be765f79cf21ebd925dfcbd2a711e1"
+        },
+        {
+          "path": "src/age_gap/engagement/cluster.py",
+          "bytes": 3672,
+          "sha256": "2bea1143d3fa7d950118651ea61dc731f730e1f2f4c8b8a3ae0e61b91e73fbb0"
+        },
+        {
+          "path": "src/age_gap/engagement/deep.py",
+          "bytes": 19792,
+          "sha256": "8d1e8003322723e76c9e4f945e01af72ef15155abc255e567307258cf2edce84"
+        },
+        {
+          "path": "src/age_gap/engagement/features.py",
+          "bytes": 16414,
+          "sha256": "07bec9da0620b38d50313e75f71357bd6160f20f70583b180c272868505ae1f9"
+        },
+        {
+          "path": "src/age_gap/engagement/model.py",
+          "bytes": 8740,
+          "sha256": "669f755bc0d37e5cbbed133d5aea7047ab7531de99ac19141fb25052bc24184f"
+        },
+        {
+          "path": "src/age_gap/engagement/report.py",
+          "bytes": 30967,
+          "sha256": "088009ed10c6ddf3905bc7aae4a40212b3c4c9e4a507a016f3d0790397ceb60f"
+        },
+        {
+          "path": "src/age_gap/engagement/target.py",
+          "bytes": 8588,
+          "sha256": "0b39e2ce05d6b38e484052a788673bbe4604a57c68b159cbee84544a6c983a2b"
+        },
+        {
+          "path": "src/age_gap/evaluation/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/evaluation/age_leakage.py",
+          "bytes": 4259,
+          "sha256": "22d2d835103e227b50fcf6681a6b7ad872eed47f63be1105449b3058abcb6cba"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark.py",
+          "bytes": 3306,
+          "sha256": "1c319fba7db05d1f4f61f74ddcda26d37058ff25688ca3ed7d9b73f32f2090ff"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark_external.py",
+          "bytes": 12420,
+          "sha256": "2b96d693a13af7a318e812ac30b05e9be97159708ba11dfa6129a2b7b0af5017"
+        },
+        {
+          "path": "src/age_gap/evaluation/calibration.py",
+          "bytes": 5091,
+          "sha256": "b9481023f5cccbde22bfaa0c96c4655aab1043b60ead2cc638ee68e35f3288a6"
+        },
+        {
+          "path": "src/age_gap/evaluation/external_suite.py",
+          "bytes": 2533,
+          "sha256": "e83475bacb90581381f6ce016694ac6bf622fcbe309aa6cbe49b9929a9d47827"
+        },
+        {
+          "path": "src/age_gap/evaluation/fairness.py",
+          "bytes": 11013,
+          "sha256": "c06dc629deda58c4743047a70d0d3285ab99acccda4151414f170ef8772e7999"
+        },
+        {
+          "path": "src/age_gap/evaluation/fgnet.py",
+          "bytes": 15380,
+          "sha256": "5d74ed1da5fbf8c1ea8dfb146aa33648244bb24f6de510c520b13132226a6119"
+        },
+        {
+          "path": "src/age_gap/evaluation/human_audit.py",
+          "bytes": 2456,
+          "sha256": "dd4b4e2f6a95feb52530354633bade0ff1b0eb02a09bbcd179bfc1391168d78e"
+        },
+        {
+          "path": "src/age_gap/evaluation/internal_age_matched.py",
+          "bytes": 15908,
+          "sha256": "f560f1da5f2a71ee6fdb39dd122477b2049544d04a1ca802b4635bf7037cda46"
+        },
+        {
+          "path": "src/age_gap/evaluation/metrics.py",
+          "bytes": 5173,
+          "sha256": "1ce55a399c253704b4161c429309a6d6a118e1465d28ff3bc291660390f93b4c"
+        },
+        {
+          "path": "src/age_gap/evaluation/representation_diagnostics.py",
+          "bytes": 13062,
+          "sha256": "0794adf27ad8ccdf576a5f5bd4ee4af54b142331f1c11984726a64fb70c97748"
+        },
+        {
+          "path": "src/age_gap/evaluation/retrieval.py",
+          "bytes": 4695,
+          "sha256": "c841032deaf7ad5b8ca24deefd48260c87c51e2a1df618ddcefd47b892caa1bc"
+        },
+        {
+          "path": "src/age_gap/evaluation/subject_bootstrap.py",
+          "bytes": 5655,
+          "sha256": "15483a351bbf7e4c84558a676f4d8d1d434bc03e74d27d8ef82d9457c87984a4"
+        },
+        {
+          "path": "src/age_gap/infrastructure/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/base.py",
+          "bytes": 3227,
+          "sha256": "a081a93779613e11193d91f0d82050382b378382c640535c1f32d80a43b3a3e6"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/client.py",
+          "bytes": 15370,
+          "sha256": "5ec71f03dd629ba6848651a4cb2f1be44f08a6bc5b985ee79d1cda1cd55cd506"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/retry.py",
+          "bytes": 5315,
+          "sha256": "6462e83e06b7ef584d9b5bbe0ddc33148c465c3996ab056db6431f3d7311c350"
+        },
+        {
+          "path": "src/age_gap/models/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/models/adaface_ir.py",
+          "bytes": 9853,
+          "sha256": "8cf2c2dbcdb2434aeb6bf3f64f786243f528bb573925bc9330bf1841e15ddadf"
+        },
+        {
+          "path": "src/age_gap/models/adapter.py",
+          "bytes": 1465,
+          "sha256": "4e12d979541139f6543ab2053e7f65da574affce98b2c4a5b9ec0ba4254d738c"
+        },
+        {
+          "path": "src/age_gap/models/aging.py",
+          "bytes": 11847,
+          "sha256": "ee8cd962b42ab5b0a82e51eb9b07ff078d1597f7d69e80a80590ac5e2f8a1ab5"
+        },
+        {
+          "path": "src/age_gap/models/backbones.py",
+          "bytes": 2227,
+          "sha256": "ab659200fc03c85304a3d0908eedaed7711eff45b5bf00ac6b0b05973c140a87"
+        },
+        {
+          "path": "src/age_gap/models/embeddings.py",
+          "bytes": 4427,
+          "sha256": "302a13b14bbaee53ed54ba526ded227042dd7879af32420946096227bf6c5659"
+        },
+        {
+          "path": "src/age_gap/models/facenet.py",
+          "bytes": 3046,
+          "sha256": "13dd00de91c0c3ebe59bc30d06d5b551f161bfc9088c3f5afffc1adcda5346c4"
+        },
+        {
+          "path": "src/age_gap/models/iresnet.py",
+          "bytes": 9144,
+          "sha256": "28d1973c0634093107eea76545eaaaa3bb3abd3aafb82400f262b59e0336feb7"
+        },
+        {
+          "path": "src/age_gap/parsing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/parsing/ingest.py",
+          "bytes": 9926,
+          "sha256": "a87bfa7ad6305b7747a2f7289db2d0936ffb5100df302ef52cbd6a3029c41703"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_client.py",
+          "bytes": 12480,
+          "sha256": "bf80fa6d7a27a5135c6029ef0de469ec53d1ad0747d4383a50e613db57e90f1b"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_ingest.py",
+          "bytes": 8941,
+          "sha256": "4ebbcd511a66347768e8c926dcaedbf322ab7cecc58de3fb7b23b863cb96b6dd"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_scrape.py",
+          "bytes": 14625,
+          "sha256": "03219212deb9c4745bac59d33c816ec5bd84db0d81039a6b4e166e860869b6bd"
+        },
+        {
+          "path": "src/age_gap/parsing/vk_client.py",
+          "bytes": 8137,
+          "sha256": "f21451186ac85e58a3d84368d138cb68e0da6a9a557ab4c902b1a0aaae7e2e10"
+        },
+        {
+          "path": "src/age_gap/preprocessing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/preprocessing/crop_align.py",
+          "bytes": 2433,
+          "sha256": "69a327fbcc2676bc7f802ce3e96d7d577e6afbc90e60ae33509db3dc2240b581"
+        },
+        {
+          "path": "src/age_gap/preprocessing/detect.py",
+          "bytes": 3019,
+          "sha256": "f8e7ff55b3c7005a772260766ec3282283a9eba89fbdfd05ca471c4b245df79e"
+        },
+        {
+          "path": "src/age_gap/preprocessing/mtcnn_align.py",
+          "bytes": 4988,
+          "sha256": "a10bbce290361243cbbba4a5fa9b8abd7dcf12673d34c057f11c88b4761d5ac5"
+        },
+        {
+          "path": "src/age_gap/preprocessing/pipeline.py",
+          "bytes": 9472,
+          "sha256": "36d118b9710f7135330ebdbf8dcb50a47d4d6d0beed004c6d6a4e7d1d27012fe"
+        },
+        {
+          "path": "src/age_gap/preprocessing/quality.py",
+          "bytes": 2496,
+          "sha256": "90eaf81601fce09b8146eec9d5ea15b199ab00292a6a88966c6b5cf36c24db53"
+        },
+        {
+          "path": "src/age_gap/recsys.py",
+          "bytes": 5584,
+          "sha256": "d9e660a6f50806f8d8f66988390b63c1ceed45ebfea77e6b7b85a1cfcd699fa1"
+        },
+        {
+          "path": "src/age_gap/settings/__init__.py",
+          "bytes": 122,
+          "sha256": "031b68f30596847a15ff364c6cca21a2aa9b7d2326eb4d2511790094084e53e9"
+        },
+        {
+          "path": "src/age_gap/settings/config.py",
+          "bytes": 599,
+          "sha256": "61f398efc7b2855818fc929b7e54dc359520b06216a0ca6c82b73c40ef04a2e0"
+        },
+        {
+          "path": "src/age_gap/training/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/training/arcface_train.py",
+          "bytes": 11160,
+          "sha256": "3f578ab9ebbd034ecf36a0f79c43f5c2435d2a0e5267090b8a00b6e5696b26da"
+        },
+        {
+          "path": "src/age_gap/training/dataset.py",
+          "bytes": 3891,
+          "sha256": "a9081f56f915adf3c53466bb37c5a31f5500bb6e3aa123ae255f82a8ce81fbcd"
+        },
+        {
+          "path": "src/age_gap/training/disentangle.py",
+          "bytes": 8069,
+          "sha256": "96fa894d4443f621ddc1c5abdbd45e6187fe4502f41125f458990b26b40507f0"
+        },
+        {
+          "path": "src/age_gap/training/finetune.py",
+          "bytes": 16834,
+          "sha256": "ec073a2c2fef2d0bb2a6d44e610a064c469325cb6fa364ae8ed249d44594ffd8"
+        },
+        {
+          "path": "src/age_gap/training/losses.py",
+          "bytes": 1516,
+          "sha256": "b8e41b96b1713473be60b7dd77ed6dd8c4f2e00f6d376484e3b74506110645d1"
+        },
+        {
+          "path": "src/age_gap/training/sota_common.py",
+          "bytes": 15576,
+          "sha256": "382a4c28707d96f45e1d2008c8a7d228a9c0e00ac1ad18c887a45cb22422eedb"
+        },
+        {
+          "path": "src/age_gap/training/synthetic.py",
+          "bytes": 8443,
+          "sha256": "d04877b36dbdad9ff2e35635729700db378b4b32fe8690c11904f9a5a1883ebf"
+        },
+        {
+          "path": "src/age_gap/training/train.py",
+          "bytes": 7946,
+          "sha256": "c894284020345527a6b9469527c747217f93b667eb57548a08298eeead7ac067"
+        },
+        {
+          "path": "src/age_gap/settings/settings.toml",
+          "bytes": 3753,
+          "sha256": "13a84990cf071680c022bf13b64bb2191211a438270dea0b3c5501651db104de"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        }
+      ],
+      "private_input_count": 1,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 101,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 1,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/prepared.manifest.json",
+      "manifest_sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3",
+      "experiment": "cacd-vs-mapped-crops",
+      "created_at_utc": "2026-10-03T04:43:43.948150+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute",
+        "--phase",
+        "prepare"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "data/external/cacd_vs_aligned.manifest.json",
+          "bytes": 1387,
+          "sha256": "1c99706fb806cb9e3989bf091fe94e5fd136159a79030b7bbd79138cafed1ab2"
+        },
+        {
+          "path": "data/external/CACD_VS.tar",
+          "bytes": 198440960,
+          "sha256": "555a12479fd96302d87d83c20c59898e17cb5c1b53a962b257722db7a4143393"
+        },
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "scripts/reevaluate_cacd_serial.py",
+          "bytes": 20185,
+          "sha256": "424e8b9572f30dbb9d4ecbe6cb0cad9a89b334b6d47917316ca1296dc6669f6f"
+        },
+        {
+          "path": "uv.lock",
+          "bytes": 538634,
+          "sha256": "de80b2e7f90a55f54a66f5009b25c6e870c3b527e2389d74f2e9786c46daf91f"
+        },
+        {
+          "path": "pyproject.toml",
+          "bytes": 4391,
+          "sha256": "3998bd05f54cc56848cbb8d10c23b574db7963adb00d977c3d1df0fa2be91810"
+        },
+        {
+          "path": "scripts/reevaluate_cacd_metrics_v2.py",
+          "bytes": 7532,
+          "sha256": "3affff4a4bbb14c6ab56a7c16797a8be3bee1680256fe7151a95be9f8c128a09"
+        },
+        {
+          "path": "scripts/cacd_metrics_v2.py",
+          "bytes": 4150,
+          "sha256": "9fb7f928da6c7d5c558ab842ed71fd4724dbced0a9ec53e9741ac5c29c39f0f6"
+        },
+        {
+          "path": "scripts/benchmark_metrics_v2.py",
+          "bytes": 4244,
+          "sha256": "18e590a7e83e84855c8dfebe89acadf09d19d7e88fc80fa6d5c473bc6d103e45"
+        },
+        {
+          "path": "scripts/verification_metrics_v2.py",
+          "bytes": 4224,
+          "sha256": "74a9ca835c9a6e32a1339bc9e7a159d8b57c18fc7e7e21a09327d58294788651"
+        },
+        {
+          "path": "scripts/evaluate_lfw_bound.py",
+          "bytes": 23107,
+          "sha256": "ac2de94a1b47da6ad4eafaffd1127a69b75424f58c64630e1de6b1441cb4f164"
+        },
+        {
+          "path": "scripts/fgnet_retrieval_study.py",
+          "bytes": 56767,
+          "sha256": "0296a630b9416d57d1bc91bb4a1e2695b3aeabf750a7772ad7b8362e3d64ca8f"
+        },
+        {
+          "path": "scripts/export_lfw_evidence.py",
+          "bytes": 15367,
+          "sha256": "58b8ada95bfe47dd81c1bc6bed601cffd2fc6363aeadf28af9990c2d190dd50b"
+        },
+        {
+          "path": "src/age_gap/__init__.py",
+          "bytes": 23,
+          "sha256": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003"
+        },
+        {
+          "path": "src/age_gap/beauty.py",
+          "bytes": 18769,
+          "sha256": "fdaef46da7a609bce70943a3a39fe684baf655484d584ca71ec4e92cafb042eb"
+        },
+        {
+          "path": "src/age_gap/common/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/common/device.py",
+          "bytes": 4344,
+          "sha256": "597a52dcfb0f8fba4c794e8ca0b44013efb382e2e71088cfcf571189f54d42fb"
+        },
+        {
+          "path": "src/age_gap/common/io.py",
+          "bytes": 2439,
+          "sha256": "eff1ac8b84647d55eba4f2cdca9b86cd31c085c2a7d2bb5f203848e6e06fd075"
+        },
+        {
+          "path": "src/age_gap/common/logging.py",
+          "bytes": 1390,
+          "sha256": "c10569bb1f4cf2bc6f65acbff9242ec746ef32a7c04f92a35a33da070aec5017"
+        },
+        {
+          "path": "src/age_gap/common/manifest.py",
+          "bytes": 3383,
+          "sha256": "55717ceed0dda8d3b3239f0f9d9a0a63a3d442e027f3f0baf916ff0046af8ecd"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        },
+        {
+          "path": "src/age_gap/contrastive.py",
+          "bytes": 12647,
+          "sha256": "bccf1344d3228bc906d9e3e4b1fecddcc6fc8b8daa46c0eba2aa0809102afc12"
+        },
+        {
+          "path": "src/age_gap/datasets/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/datasets/age_anchors.py",
+          "bytes": 9596,
+          "sha256": "c7f1510f65bfd81260fee8d05c95728cfc8a872c6866c2ad3c9428c169809259"
+        },
+        {
+          "path": "src/age_gap/datasets/anonymize.py",
+          "bytes": 3063,
+          "sha256": "a70ddec135117d0a5ce8af00a9c1f4e5f252f5b06f1013f107a5e914fb77f34f"
+        },
+        {
+          "path": "src/age_gap/datasets/apparent_age.py",
+          "bytes": 2319,
+          "sha256": "71a77f20fed1f6ddd2bde062af370f5c6051cbd1fee8dded112de17baad6a674"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/gender_meta.py",
+          "bytes": 4040,
+          "sha256": "18ee00433d6c5ea44c1f4f05454a1ce6bee898a5f5b0b41c46fa4ce31eda13ba"
+        },
+        {
+          "path": "src/age_gap/datasets/group_validator.py",
+          "bytes": 4365,
+          "sha256": "c2b4ef64be8d5a69c34ea48c49fa40acb418031b133a07c9a1fde9d501d7961b"
+        },
+        {
+          "path": "src/age_gap/datasets/hard_negatives.py",
+          "bytes": 8016,
+          "sha256": "031e3e9cca81ece4767e28033064adf231086725b9be5510fc915f4e3ede3f16"
+        },
+        {
+          "path": "src/age_gap/datasets/identity_groups.py",
+          "bytes": 9546,
+          "sha256": "71c60ee4a1463af395ca43431b7d85e7fcda0c30ecf1deb419ea1c77ebc2fc36"
+        },
+        {
+          "path": "src/age_gap/datasets/llm_age_extractor.py",
+          "bytes": 12275,
+          "sha256": "08bf96525d0977ffac4d0bbd0ffc87a3331c703b3291eec382ef5e5d2791c0ec"
+        },
+        {
+          "path": "src/age_gap/datasets/pair_builder.py",
+          "bytes": 8361,
+          "sha256": "f8190115105cab133f0924625464449cad566b27de6042ce275b6af2eefe443c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/datasets/splits.py",
+          "bytes": 9033,
+          "sha256": "39edcd27520975c75c8c1587854f83886487e261be2c099ab479c2bb19e795dd"
+        },
+        {
+          "path": "src/age_gap/domain_adapt.py",
+          "bytes": 6028,
+          "sha256": "6783324f4c4d7c489c8135c203a0fe6860dfde9c942abb01c4f74bc92079e9c4"
+        },
+        {
+          "path": "src/age_gap/engagement/__init__.py",
+          "bytes": 924,
+          "sha256": "3acd396458ca30d83a53d4d2e909fb223b4be66232e6b87c0f9c69b02141715d"
+        },
+        {
+          "path": "src/age_gap/engagement/backfill.py",
+          "bytes": 10120,
+          "sha256": "2405620b042f79b51dd15831c488b660e4be765f79cf21ebd925dfcbd2a711e1"
+        },
+        {
+          "path": "src/age_gap/engagement/cluster.py",
+          "bytes": 3672,
+          "sha256": "2bea1143d3fa7d950118651ea61dc731f730e1f2f4c8b8a3ae0e61b91e73fbb0"
+        },
+        {
+          "path": "src/age_gap/engagement/deep.py",
+          "bytes": 19792,
+          "sha256": "8d1e8003322723e76c9e4f945e01af72ef15155abc255e567307258cf2edce84"
+        },
+        {
+          "path": "src/age_gap/engagement/features.py",
+          "bytes": 16414,
+          "sha256": "07bec9da0620b38d50313e75f71357bd6160f20f70583b180c272868505ae1f9"
+        },
+        {
+          "path": "src/age_gap/engagement/model.py",
+          "bytes": 8740,
+          "sha256": "669f755bc0d37e5cbbed133d5aea7047ab7531de99ac19141fb25052bc24184f"
+        },
+        {
+          "path": "src/age_gap/engagement/report.py",
+          "bytes": 30967,
+          "sha256": "088009ed10c6ddf3905bc7aae4a40212b3c4c9e4a507a016f3d0790397ceb60f"
+        },
+        {
+          "path": "src/age_gap/engagement/target.py",
+          "bytes": 8588,
+          "sha256": "0b39e2ce05d6b38e484052a788673bbe4604a57c68b159cbee84544a6c983a2b"
+        },
+        {
+          "path": "src/age_gap/evaluation/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/evaluation/age_leakage.py",
+          "bytes": 4259,
+          "sha256": "22d2d835103e227b50fcf6681a6b7ad872eed47f63be1105449b3058abcb6cba"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark.py",
+          "bytes": 3306,
+          "sha256": "1c319fba7db05d1f4f61f74ddcda26d37058ff25688ca3ed7d9b73f32f2090ff"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark_external.py",
+          "bytes": 12420,
+          "sha256": "2b96d693a13af7a318e812ac30b05e9be97159708ba11dfa6129a2b7b0af5017"
+        },
+        {
+          "path": "src/age_gap/evaluation/calibration.py",
+          "bytes": 5091,
+          "sha256": "b9481023f5cccbde22bfaa0c96c4655aab1043b60ead2cc638ee68e35f3288a6"
+        },
+        {
+          "path": "src/age_gap/evaluation/external_suite.py",
+          "bytes": 2533,
+          "sha256": "e83475bacb90581381f6ce016694ac6bf622fcbe309aa6cbe49b9929a9d47827"
+        },
+        {
+          "path": "src/age_gap/evaluation/fairness.py",
+          "bytes": 11013,
+          "sha256": "c06dc629deda58c4743047a70d0d3285ab99acccda4151414f170ef8772e7999"
+        },
+        {
+          "path": "src/age_gap/evaluation/fgnet.py",
+          "bytes": 15380,
+          "sha256": "5d74ed1da5fbf8c1ea8dfb146aa33648244bb24f6de510c520b13132226a6119"
+        },
+        {
+          "path": "src/age_gap/evaluation/human_audit.py",
+          "bytes": 2456,
+          "sha256": "dd4b4e2f6a95feb52530354633bade0ff1b0eb02a09bbcd179bfc1391168d78e"
+        },
+        {
+          "path": "src/age_gap/evaluation/internal_age_matched.py",
+          "bytes": 15908,
+          "sha256": "f560f1da5f2a71ee6fdb39dd122477b2049544d04a1ca802b4635bf7037cda46"
+        },
+        {
+          "path": "src/age_gap/evaluation/metrics.py",
+          "bytes": 5173,
+          "sha256": "1ce55a399c253704b4161c429309a6d6a118e1465d28ff3bc291660390f93b4c"
+        },
+        {
+          "path": "src/age_gap/evaluation/representation_diagnostics.py",
+          "bytes": 13062,
+          "sha256": "0794adf27ad8ccdf576a5f5bd4ee4af54b142331f1c11984726a64fb70c97748"
+        },
+        {
+          "path": "src/age_gap/evaluation/retrieval.py",
+          "bytes": 4695,
+          "sha256": "c841032deaf7ad5b8ca24deefd48260c87c51e2a1df618ddcefd47b892caa1bc"
+        },
+        {
+          "path": "src/age_gap/evaluation/subject_bootstrap.py",
+          "bytes": 5655,
+          "sha256": "15483a351bbf7e4c84558a676f4d8d1d434bc03e74d27d8ef82d9457c87984a4"
+        },
+        {
+          "path": "src/age_gap/infrastructure/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/base.py",
+          "bytes": 3227,
+          "sha256": "a081a93779613e11193d91f0d82050382b378382c640535c1f32d80a43b3a3e6"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/client.py",
+          "bytes": 15370,
+          "sha256": "5ec71f03dd629ba6848651a4cb2f1be44f08a6bc5b985ee79d1cda1cd55cd506"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/retry.py",
+          "bytes": 5315,
+          "sha256": "6462e83e06b7ef584d9b5bbe0ddc33148c465c3996ab056db6431f3d7311c350"
+        },
+        {
+          "path": "src/age_gap/models/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/models/adaface_ir.py",
+          "bytes": 9853,
+          "sha256": "8cf2c2dbcdb2434aeb6bf3f64f786243f528bb573925bc9330bf1841e15ddadf"
+        },
+        {
+          "path": "src/age_gap/models/adapter.py",
+          "bytes": 1465,
+          "sha256": "4e12d979541139f6543ab2053e7f65da574affce98b2c4a5b9ec0ba4254d738c"
+        },
+        {
+          "path": "src/age_gap/models/aging.py",
+          "bytes": 11847,
+          "sha256": "ee8cd962b42ab5b0a82e51eb9b07ff078d1597f7d69e80a80590ac5e2f8a1ab5"
+        },
+        {
+          "path": "src/age_gap/models/backbones.py",
+          "bytes": 2227,
+          "sha256": "ab659200fc03c85304a3d0908eedaed7711eff45b5bf00ac6b0b05973c140a87"
+        },
+        {
+          "path": "src/age_gap/models/embeddings.py",
+          "bytes": 4427,
+          "sha256": "302a13b14bbaee53ed54ba526ded227042dd7879af32420946096227bf6c5659"
+        },
+        {
+          "path": "src/age_gap/models/facenet.py",
+          "bytes": 3046,
+          "sha256": "13dd00de91c0c3ebe59bc30d06d5b551f161bfc9088c3f5afffc1adcda5346c4"
+        },
+        {
+          "path": "src/age_gap/models/iresnet.py",
+          "bytes": 9144,
+          "sha256": "28d1973c0634093107eea76545eaaaa3bb3abd3aafb82400f262b59e0336feb7"
+        },
+        {
+          "path": "src/age_gap/parsing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/parsing/ingest.py",
+          "bytes": 9926,
+          "sha256": "a87bfa7ad6305b7747a2f7289db2d0936ffb5100df302ef52cbd6a3029c41703"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_client.py",
+          "bytes": 12480,
+          "sha256": "bf80fa6d7a27a5135c6029ef0de469ec53d1ad0747d4383a50e613db57e90f1b"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_ingest.py",
+          "bytes": 8941,
+          "sha256": "4ebbcd511a66347768e8c926dcaedbf322ab7cecc58de3fb7b23b863cb96b6dd"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_scrape.py",
+          "bytes": 14625,
+          "sha256": "03219212deb9c4745bac59d33c816ec5bd84db0d81039a6b4e166e860869b6bd"
+        },
+        {
+          "path": "src/age_gap/parsing/vk_client.py",
+          "bytes": 8137,
+          "sha256": "f21451186ac85e58a3d84368d138cb68e0da6a9a557ab4c902b1a0aaae7e2e10"
+        },
+        {
+          "path": "src/age_gap/preprocessing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/preprocessing/crop_align.py",
+          "bytes": 2433,
+          "sha256": "69a327fbcc2676bc7f802ce3e96d7d577e6afbc90e60ae33509db3dc2240b581"
+        },
+        {
+          "path": "src/age_gap/preprocessing/detect.py",
+          "bytes": 3019,
+          "sha256": "f8e7ff55b3c7005a772260766ec3282283a9eba89fbdfd05ca471c4b245df79e"
+        },
+        {
+          "path": "src/age_gap/preprocessing/mtcnn_align.py",
+          "bytes": 4988,
+          "sha256": "a10bbce290361243cbbba4a5fa9b8abd7dcf12673d34c057f11c88b4761d5ac5"
+        },
+        {
+          "path": "src/age_gap/preprocessing/pipeline.py",
+          "bytes": 9472,
+          "sha256": "36d118b9710f7135330ebdbf8dcb50a47d4d6d0beed004c6d6a4e7d1d27012fe"
+        },
+        {
+          "path": "src/age_gap/preprocessing/quality.py",
+          "bytes": 2496,
+          "sha256": "90eaf81601fce09b8146eec9d5ea15b199ab00292a6a88966c6b5cf36c24db53"
+        },
+        {
+          "path": "src/age_gap/recsys.py",
+          "bytes": 5584,
+          "sha256": "d9e660a6f50806f8d8f66988390b63c1ceed45ebfea77e6b7b85a1cfcd699fa1"
+        },
+        {
+          "path": "src/age_gap/settings/__init__.py",
+          "bytes": 122,
+          "sha256": "031b68f30596847a15ff364c6cca21a2aa9b7d2326eb4d2511790094084e53e9"
+        },
+        {
+          "path": "src/age_gap/settings/config.py",
+          "bytes": 599,
+          "sha256": "61f398efc7b2855818fc929b7e54dc359520b06216a0ca6c82b73c40ef04a2e0"
+        },
+        {
+          "path": "src/age_gap/training/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/training/arcface_train.py",
+          "bytes": 11160,
+          "sha256": "3f578ab9ebbd034ecf36a0f79c43f5c2435d2a0e5267090b8a00b6e5696b26da"
+        },
+        {
+          "path": "src/age_gap/training/dataset.py",
+          "bytes": 3891,
+          "sha256": "a9081f56f915adf3c53466bb37c5a31f5500bb6e3aa123ae255f82a8ce81fbcd"
+        },
+        {
+          "path": "src/age_gap/training/disentangle.py",
+          "bytes": 8069,
+          "sha256": "96fa894d4443f621ddc1c5abdbd45e6187fe4502f41125f458990b26b40507f0"
+        },
+        {
+          "path": "src/age_gap/training/finetune.py",
+          "bytes": 16834,
+          "sha256": "ec073a2c2fef2d0bb2a6d44e610a064c469325cb6fa364ae8ed249d44594ffd8"
+        },
+        {
+          "path": "src/age_gap/training/losses.py",
+          "bytes": 1516,
+          "sha256": "b8e41b96b1713473be60b7dd77ed6dd8c4f2e00f6d376484e3b74506110645d1"
+        },
+        {
+          "path": "src/age_gap/training/sota_common.py",
+          "bytes": 15576,
+          "sha256": "382a4c28707d96f45e1d2008c8a7d228a9c0e00ac1ad18c887a45cb22422eedb"
+        },
+        {
+          "path": "src/age_gap/training/synthetic.py",
+          "bytes": 8443,
+          "sha256": "d04877b36dbdad9ff2e35635729700db378b4b32fe8690c11904f9a5a1883ebf"
+        },
+        {
+          "path": "src/age_gap/training/train.py",
+          "bytes": 7946,
+          "sha256": "c894284020345527a6b9469527c747217f93b667eb57548a08298eeead7ac067"
+        },
+        {
+          "path": "src/age_gap/settings/settings.toml",
+          "bytes": 3753,
+          "sha256": "13a84990cf071680c022bf13b64bb2191211a438270dea0b3c5501651db104de"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.json",
+          "bytes": 192,
+          "sha256": "6e850209a2e146fbb09a7823bb681d98e3f1287234f1b2400c173cac905cdf54"
+        }
+      ],
+      "private_input_count": 1,
+      "private_output_count": 5,
+      "input_integrity": {
+        "checked": 103,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 6,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/summary.manifest.json",
+      "manifest_sha256": "343567f6f4855506187010c3eea166bea1e997faf6f29183a5e81a8882d608cf",
+      "experiment": "cacd-vs-local-serial-4checkpoint-roc-v2",
+      "created_at_utc": "2026-10-03T06:06:56.506060+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute",
+        "--phase",
+        "aggregate"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.manifest.json",
+          "bytes": 20165,
+          "sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/frozen.manifest.json",
+          "bytes": 3300,
+          "sha256": "f3a6744dcc8bc0ab76c8ca46961ca9d3333aa76249179cc4dafdbe71d912fab8"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed42.manifest.json",
+          "bytes": 3273,
+          "sha256": "2ba76b0e19d45661847781013fd4b7a5eadb83bb323899fe12dcd87840230ed9"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed1.manifest.json",
+          "bytes": 3268,
+          "sha256": "f391fb4f233188eccea86c1d8cb777d85e54703be7737ed1b833c74da29bc9c8"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed2.manifest.json",
+          "bytes": 3268,
+          "sha256": "396a17113c000e579356f0459617593d5dffe0d387e8baf4870bcd30380c9992"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/summary.json",
+          "bytes": 13830,
+          "sha256": "32eac1a870d6cc3518f9ddb768cb0df89ce714f3edacf7628bbb0a337cc00891"
+        }
+      ],
+      "private_input_count": 9,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 16,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/tuned_seed1.manifest.json",
+      "manifest_sha256": "f391fb4f233188eccea86c1d8cb777d85e54703be7737ed1b833c74da29bc9c8",
+      "experiment": "cacd-vs-serial-checkpoint",
+      "created_at_utc": "2026-10-03T05:42:42.717818+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute",
+        "--phase",
+        "score",
+        "--role",
+        "tuned_seed1"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.manifest.json",
+          "bytes": 20165,
+          "sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed1.json",
+          "bytes": 367,
+          "sha256": "0c1a1319d6ce698bc4d26836f2a8951f71e9f9d6a9f25238de2515d42f746b73"
+        }
+      ],
+      "private_input_count": 5,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 8,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/tuned_seed2.manifest.json",
+      "manifest_sha256": "396a17113c000e579356f0459617593d5dffe0d387e8baf4870bcd30380c9992",
+      "experiment": "cacd-vs-serial-checkpoint",
+      "created_at_utc": "2026-10-03T06:04:14.024139+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute",
+        "--phase",
+        "score",
+        "--role",
+        "tuned_seed2"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.manifest.json",
+          "bytes": 20165,
+          "sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed2.json",
+          "bytes": 367,
+          "sha256": "edbadea690d6151f86b84edc0574c8971cf80a2d698eaede010bf2b2e44e546c"
+        }
+      ],
+      "private_input_count": 5,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 8,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_20261003/tuned_seed42.manifest.json",
+      "manifest_sha256": "2ba76b0e19d45661847781013fd4b7a5eadb83bb323899fe12dcd87840230ed9",
+      "experiment": "cacd-vs-serial-checkpoint",
+      "created_at_utc": "2026-10-03T05:23:04.062068+00:00",
+      "command": [
+        "scripts/reevaluate_cacd_serial.py",
+        "--out",
+        "metrics/cacd_serial_20261003",
+        "--execute",
+        "--phase",
+        "score",
+        "--role",
+        "tuned_seed42"
+      ],
+      "parameters": {
+        "device": "cpu",
+        "threads": 1,
+        "batch_size": 8,
+        "publication_ready": false
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.manifest.json",
+          "bytes": 20165,
+          "sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed42.json",
+          "bytes": 369,
+          "sha256": "ac630e20aa484b03e6fe486f7dea6b139b96518a0c2dc7b282379d67f294dadd"
+        }
+      ],
+      "private_input_count": 5,
+      "private_output_count": 1,
+      "input_integrity": {
+        "checked": 8,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      },
+      "output_integrity": {
+        "checked": 2,
+        "missing": [],
+        "checksum_mismatch": [],
+        "private_missing_count": 0,
+        "private_checksum_mismatch_count": 0,
+        "valid": true
+      }
+    },
+    {
+      "manifest": "metrics/cacd_serial_presentation_20261003/presentation.manifest.json",
+      "manifest_sha256": "c7a352d1d21d8c9dc86fe7fef46692ddb69c39ce39379fa9c6fc3daebfbf4376",
+      "experiment": "cacd-serial-roc-v2-presentation",
+      "created_at_utc": "2026-10-03T06:28:52.864546+00:00",
+      "command": [
+        "scripts/render_cacd_metrics_v2.py",
+        "--out",
+        "metrics/cacd_serial_presentation_20261003"
+      ],
+      "parameters": {
+        "fraction_precision": 4,
+        "main_and_supplement": true
+      },
+      "git": {
+        "commit": "890efb6bf761f302097341d56b8b8986978c3aa0",
+        "branch": "research",
+        "dirty": true
+      },
+      "inputs": [
+        {
+          "path": "metrics/cacd_serial_20261003/plan.manifest.json",
+          "bytes": 20551,
+          "sha256": "dd1ea24b4f2acf3670e9ce415b40164c5f8eadba65ba01efca512848993c1435"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/plan.json",
+          "bytes": 1876,
+          "sha256": "752a086afd3f2b344d1a8c2eb1205244b031eb897a549853dc011fe660204e6e"
+        },
+        {
+          "path": "data/external/cacd_vs_aligned.manifest.json",
+          "bytes": 1387,
+          "sha256": "1c99706fb806cb9e3989bf091fe94e5fd136159a79030b7bbd79138cafed1ab2"
+        },
+        {
+          "path": "data/external/CACD_VS.tar",
+          "bytes": 198440960,
+          "sha256": "555a12479fd96302d87d83c20c59898e17cb5c1b53a962b257722db7a4143393"
+        },
+        {
+          "path": "<external-artifact>/20180408-102900-casia-webface.pt",
+          "bytes": 115887415,
+          "sha256": "7a67afdbbc995fce5e10128675e318799a70698c2f433ba75dd7eb9a2f096e7d"
+        },
+        {
+          "path": "models/bb_facenet_seed42.pt",
+          "bytes": 115977947,
+          "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+        },
+        {
+          "path": "models/bb_facenet_seed1.pt",
+          "bytes": 115977225,
+          "sha256": "2e865ed3e6c0db1d006b8a63184f9f0903d376e5bf3fb11916f52623919362df"
+        },
+        {
+          "path": "models/bb_facenet_seed2.pt",
+          "bytes": 115977225,
+          "sha256": "b188ad7cb7de3adca30e8514a02ef8f99c6f3e9d6cb1738deb31c246d8d7ae13"
+        },
+        {
+          "path": "scripts/reevaluate_cacd_serial.py",
+          "bytes": 20185,
+          "sha256": "424e8b9572f30dbb9d4ecbe6cb0cad9a89b334b6d47917316ca1296dc6669f6f"
+        },
+        {
+          "path": "uv.lock",
+          "bytes": 538634,
+          "sha256": "de80b2e7f90a55f54a66f5009b25c6e870c3b527e2389d74f2e9786c46daf91f"
+        },
+        {
+          "path": "pyproject.toml",
+          "bytes": 4391,
+          "sha256": "3998bd05f54cc56848cbb8d10c23b574db7963adb00d977c3d1df0fa2be91810"
+        },
+        {
+          "path": "scripts/reevaluate_cacd_metrics_v2.py",
+          "bytes": 7532,
+          "sha256": "3affff4a4bbb14c6ab56a7c16797a8be3bee1680256fe7151a95be9f8c128a09"
+        },
+        {
+          "path": "scripts/cacd_metrics_v2.py",
+          "bytes": 4150,
+          "sha256": "9fb7f928da6c7d5c558ab842ed71fd4724dbced0a9ec53e9741ac5c29c39f0f6"
+        },
+        {
+          "path": "scripts/benchmark_metrics_v2.py",
+          "bytes": 4244,
+          "sha256": "18e590a7e83e84855c8dfebe89acadf09d19d7e88fc80fa6d5c473bc6d103e45"
+        },
+        {
+          "path": "scripts/verification_metrics_v2.py",
+          "bytes": 4224,
+          "sha256": "74a9ca835c9a6e32a1339bc9e7a159d8b57c18fc7e7e21a09327d58294788651"
+        },
+        {
+          "path": "scripts/evaluate_lfw_bound.py",
+          "bytes": 23107,
+          "sha256": "ac2de94a1b47da6ad4eafaffd1127a69b75424f58c64630e1de6b1441cb4f164"
+        },
+        {
+          "path": "scripts/fgnet_retrieval_study.py",
+          "bytes": 56767,
+          "sha256": "0296a630b9416d57d1bc91bb4a1e2695b3aeabf750a7772ad7b8362e3d64ca8f"
+        },
+        {
+          "path": "scripts/export_lfw_evidence.py",
+          "bytes": 15367,
+          "sha256": "58b8ada95bfe47dd81c1bc6bed601cffd2fc6363aeadf28af9990c2d190dd50b"
+        },
+        {
+          "path": "src/age_gap/__init__.py",
+          "bytes": 23,
+          "sha256": "41362a5ea4931c546433d4c48290c5707bf02dbbea1c3aafa9f43d1225e47003"
+        },
+        {
+          "path": "src/age_gap/beauty.py",
+          "bytes": 18769,
+          "sha256": "fdaef46da7a609bce70943a3a39fe684baf655484d584ca71ec4e92cafb042eb"
+        },
+        {
+          "path": "src/age_gap/common/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/common/device.py",
+          "bytes": 4344,
+          "sha256": "597a52dcfb0f8fba4c794e8ca0b44013efb382e2e71088cfcf571189f54d42fb"
+        },
+        {
+          "path": "src/age_gap/common/io.py",
+          "bytes": 2439,
+          "sha256": "eff1ac8b84647d55eba4f2cdca9b86cd31c085c2a7d2bb5f203848e6e06fd075"
+        },
+        {
+          "path": "src/age_gap/common/logging.py",
+          "bytes": 1390,
+          "sha256": "c10569bb1f4cf2bc6f65acbff9242ec746ef32a7c04f92a35a33da070aec5017"
+        },
+        {
+          "path": "src/age_gap/common/manifest.py",
+          "bytes": 3383,
+          "sha256": "55717ceed0dda8d3b3239f0f9d9a0a63a3d442e027f3f0baf916ff0046af8ecd"
+        },
+        {
+          "path": "src/age_gap/common/schemas.py",
+          "bytes": 8853,
+          "sha256": "e55e3cb953b7e1e838b120501a7a62fffa20bd49ddbfa24e0b34ba9e1c1d3290"
+        },
+        {
+          "path": "src/age_gap/contrastive.py",
+          "bytes": 12647,
+          "sha256": "bccf1344d3228bc906d9e3e4b1fecddcc6fc8b8daa46c0eba2aa0809102afc12"
+        },
+        {
+          "path": "src/age_gap/datasets/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/datasets/age_anchors.py",
+          "bytes": 9596,
+          "sha256": "c7f1510f65bfd81260fee8d05c95728cfc8a872c6866c2ad3c9428c169809259"
+        },
+        {
+          "path": "src/age_gap/datasets/anonymize.py",
+          "bytes": 3063,
+          "sha256": "a70ddec135117d0a5ce8af00a9c1f4e5f252f5b06f1013f107a5e914fb77f34f"
+        },
+        {
+          "path": "src/age_gap/datasets/apparent_age.py",
+          "bytes": 2319,
+          "sha256": "71a77f20fed1f6ddd2bde062af370f5c6051cbd1fee8dded112de17baad6a674"
+        },
+        {
+          "path": "src/age_gap/datasets/clean.py",
+          "bytes": 3238,
+          "sha256": "774dd6244a62ece2fb6b2c2f286ff967c37959ae06e338df49e1c0d0f151329c"
+        },
+        {
+          "path": "src/age_gap/datasets/dedup.py",
+          "bytes": 3373,
+          "sha256": "4c903fe1762fe87e2322b5894a03b78651783d8a07cab3ae16bba550794f4714"
+        },
+        {
+          "path": "src/age_gap/datasets/gender_meta.py",
+          "bytes": 4040,
+          "sha256": "18ee00433d6c5ea44c1f4f05454a1ce6bee898a5f5b0b41c46fa4ce31eda13ba"
+        },
+        {
+          "path": "src/age_gap/datasets/group_validator.py",
+          "bytes": 4365,
+          "sha256": "c2b4ef64be8d5a69c34ea48c49fa40acb418031b133a07c9a1fde9d501d7961b"
+        },
+        {
+          "path": "src/age_gap/datasets/hard_negatives.py",
+          "bytes": 8016,
+          "sha256": "031e3e9cca81ece4767e28033064adf231086725b9be5510fc915f4e3ede3f16"
+        },
+        {
+          "path": "src/age_gap/datasets/identity_groups.py",
+          "bytes": 9546,
+          "sha256": "71c60ee4a1463af395ca43431b7d85e7fcda0c30ecf1deb419ea1c77ebc2fc36"
+        },
+        {
+          "path": "src/age_gap/datasets/llm_age_extractor.py",
+          "bytes": 12275,
+          "sha256": "08bf96525d0977ffac4d0bbd0ffc87a3331c703b3291eec382ef5e5d2791c0ec"
+        },
+        {
+          "path": "src/age_gap/datasets/pair_builder.py",
+          "bytes": 8361,
+          "sha256": "f8190115105cab133f0924625464449cad566b27de6042ce275b6af2eefe443c"
+        },
+        {
+          "path": "src/age_gap/datasets/person_clusters.py",
+          "bytes": 10128,
+          "sha256": "8764f78f439f1be6583115883f272492567dea2e8c9de1f5deddc75d9e78aa22"
+        },
+        {
+          "path": "src/age_gap/datasets/splits.py",
+          "bytes": 9033,
+          "sha256": "39edcd27520975c75c8c1587854f83886487e261be2c099ab479c2bb19e795dd"
+        },
+        {
+          "path": "src/age_gap/domain_adapt.py",
+          "bytes": 6028,
+          "sha256": "6783324f4c4d7c489c8135c203a0fe6860dfde9c942abb01c4f74bc92079e9c4"
+        },
+        {
+          "path": "src/age_gap/engagement/__init__.py",
+          "bytes": 924,
+          "sha256": "3acd396458ca30d83a53d4d2e909fb223b4be66232e6b87c0f9c69b02141715d"
+        },
+        {
+          "path": "src/age_gap/engagement/backfill.py",
+          "bytes": 10120,
+          "sha256": "2405620b042f79b51dd15831c488b660e4be765f79cf21ebd925dfcbd2a711e1"
+        },
+        {
+          "path": "src/age_gap/engagement/cluster.py",
+          "bytes": 3672,
+          "sha256": "2bea1143d3fa7d950118651ea61dc731f730e1f2f4c8b8a3ae0e61b91e73fbb0"
+        },
+        {
+          "path": "src/age_gap/engagement/deep.py",
+          "bytes": 19792,
+          "sha256": "8d1e8003322723e76c9e4f945e01af72ef15155abc255e567307258cf2edce84"
+        },
+        {
+          "path": "src/age_gap/engagement/features.py",
+          "bytes": 16414,
+          "sha256": "07bec9da0620b38d50313e75f71357bd6160f20f70583b180c272868505ae1f9"
+        },
+        {
+          "path": "src/age_gap/engagement/model.py",
+          "bytes": 8740,
+          "sha256": "669f755bc0d37e5cbbed133d5aea7047ab7531de99ac19141fb25052bc24184f"
+        },
+        {
+          "path": "src/age_gap/engagement/report.py",
+          "bytes": 30967,
+          "sha256": "088009ed10c6ddf3905bc7aae4a40212b3c4c9e4a507a016f3d0790397ceb60f"
+        },
+        {
+          "path": "src/age_gap/engagement/target.py",
+          "bytes": 8588,
+          "sha256": "0b39e2ce05d6b38e484052a788673bbe4604a57c68b159cbee84544a6c983a2b"
+        },
+        {
+          "path": "src/age_gap/evaluation/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/evaluation/age_leakage.py",
+          "bytes": 4259,
+          "sha256": "22d2d835103e227b50fcf6681a6b7ad872eed47f63be1105449b3058abcb6cba"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark.py",
+          "bytes": 3306,
+          "sha256": "1c319fba7db05d1f4f61f74ddcda26d37058ff25688ca3ed7d9b73f32f2090ff"
+        },
+        {
+          "path": "src/age_gap/evaluation/benchmark_external.py",
+          "bytes": 12420,
+          "sha256": "2b96d693a13af7a318e812ac30b05e9be97159708ba11dfa6129a2b7b0af5017"
+        },
+        {
+          "path": "src/age_gap/evaluation/calibration.py",
+          "bytes": 5091,
+          "sha256": "b9481023f5cccbde22bfaa0c96c4655aab1043b60ead2cc638ee68e35f3288a6"
+        },
+        {
+          "path": "src/age_gap/evaluation/external_suite.py",
+          "bytes": 2533,
+          "sha256": "e83475bacb90581381f6ce016694ac6bf622fcbe309aa6cbe49b9929a9d47827"
+        },
+        {
+          "path": "src/age_gap/evaluation/fairness.py",
+          "bytes": 11013,
+          "sha256": "c06dc629deda58c4743047a70d0d3285ab99acccda4151414f170ef8772e7999"
+        },
+        {
+          "path": "src/age_gap/evaluation/fgnet.py",
+          "bytes": 15380,
+          "sha256": "5d74ed1da5fbf8c1ea8dfb146aa33648244bb24f6de510c520b13132226a6119"
+        },
+        {
+          "path": "src/age_gap/evaluation/human_audit.py",
+          "bytes": 2456,
+          "sha256": "dd4b4e2f6a95feb52530354633bade0ff1b0eb02a09bbcd179bfc1391168d78e"
+        },
+        {
+          "path": "src/age_gap/evaluation/internal_age_matched.py",
+          "bytes": 15908,
+          "sha256": "f560f1da5f2a71ee6fdb39dd122477b2049544d04a1ca802b4635bf7037cda46"
+        },
+        {
+          "path": "src/age_gap/evaluation/metrics.py",
+          "bytes": 5173,
+          "sha256": "1ce55a399c253704b4161c429309a6d6a118e1465d28ff3bc291660390f93b4c"
+        },
+        {
+          "path": "src/age_gap/evaluation/representation_diagnostics.py",
+          "bytes": 13062,
+          "sha256": "0794adf27ad8ccdf576a5f5bd4ee4af54b142331f1c11984726a64fb70c97748"
+        },
+        {
+          "path": "src/age_gap/evaluation/retrieval.py",
+          "bytes": 4695,
+          "sha256": "c841032deaf7ad5b8ca24deefd48260c87c51e2a1df618ddcefd47b892caa1bc"
+        },
+        {
+          "path": "src/age_gap/evaluation/subject_bootstrap.py",
+          "bytes": 5655,
+          "sha256": "15483a351bbf7e4c84558a676f4d8d1d434bc03e74d27d8ef82d9457c87984a4"
+        },
+        {
+          "path": "src/age_gap/infrastructure/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/base.py",
+          "bytes": 3227,
+          "sha256": "a081a93779613e11193d91f0d82050382b378382c640535c1f32d80a43b3a3e6"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/client.py",
+          "bytes": 15370,
+          "sha256": "5ec71f03dd629ba6848651a4cb2f1be44f08a6bc5b985ee79d1cda1cd55cd506"
+        },
+        {
+          "path": "src/age_gap/infrastructure/llm/retry.py",
+          "bytes": 5315,
+          "sha256": "6462e83e06b7ef584d9b5bbe0ddc33148c465c3996ab056db6431f3d7311c350"
+        },
+        {
+          "path": "src/age_gap/models/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/models/adaface_ir.py",
+          "bytes": 9853,
+          "sha256": "8cf2c2dbcdb2434aeb6bf3f64f786243f528bb573925bc9330bf1841e15ddadf"
+        },
+        {
+          "path": "src/age_gap/models/adapter.py",
+          "bytes": 1465,
+          "sha256": "4e12d979541139f6543ab2053e7f65da574affce98b2c4a5b9ec0ba4254d738c"
+        },
+        {
+          "path": "src/age_gap/models/aging.py",
+          "bytes": 11847,
+          "sha256": "ee8cd962b42ab5b0a82e51eb9b07ff078d1597f7d69e80a80590ac5e2f8a1ab5"
+        },
+        {
+          "path": "src/age_gap/models/backbones.py",
+          "bytes": 2227,
+          "sha256": "ab659200fc03c85304a3d0908eedaed7711eff45b5bf00ac6b0b05973c140a87"
+        },
+        {
+          "path": "src/age_gap/models/embeddings.py",
+          "bytes": 4427,
+          "sha256": "302a13b14bbaee53ed54ba526ded227042dd7879af32420946096227bf6c5659"
+        },
+        {
+          "path": "src/age_gap/models/facenet.py",
+          "bytes": 3046,
+          "sha256": "13dd00de91c0c3ebe59bc30d06d5b551f161bfc9088c3f5afffc1adcda5346c4"
+        },
+        {
+          "path": "src/age_gap/models/iresnet.py",
+          "bytes": 9144,
+          "sha256": "28d1973c0634093107eea76545eaaaa3bb3abd3aafb82400f262b59e0336feb7"
+        },
+        {
+          "path": "src/age_gap/parsing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/parsing/ingest.py",
+          "bytes": 9926,
+          "sha256": "a87bfa7ad6305b7747a2f7289db2d0936ffb5100df302ef52cbd6a3029c41703"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_client.py",
+          "bytes": 12480,
+          "sha256": "bf80fa6d7a27a5135c6029ef0de469ec53d1ad0747d4383a50e613db57e90f1b"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_ingest.py",
+          "bytes": 8941,
+          "sha256": "4ebbcd511a66347768e8c926dcaedbf322ab7cecc58de3fb7b23b863cb96b6dd"
+        },
+        {
+          "path": "src/age_gap/parsing/reddit_scrape.py",
+          "bytes": 14625,
+          "sha256": "03219212deb9c4745bac59d33c816ec5bd84db0d81039a6b4e166e860869b6bd"
+        },
+        {
+          "path": "src/age_gap/parsing/vk_client.py",
+          "bytes": 8137,
+          "sha256": "f21451186ac85e58a3d84368d138cb68e0da6a9a557ab4c902b1a0aaae7e2e10"
+        },
+        {
+          "path": "src/age_gap/preprocessing/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/preprocessing/crop_align.py",
+          "bytes": 2433,
+          "sha256": "69a327fbcc2676bc7f802ce3e96d7d577e6afbc90e60ae33509db3dc2240b581"
+        },
+        {
+          "path": "src/age_gap/preprocessing/detect.py",
+          "bytes": 3019,
+          "sha256": "f8e7ff55b3c7005a772260766ec3282283a9eba89fbdfd05ca471c4b245df79e"
+        },
+        {
+          "path": "src/age_gap/preprocessing/mtcnn_align.py",
+          "bytes": 4988,
+          "sha256": "a10bbce290361243cbbba4a5fa9b8abd7dcf12673d34c057f11c88b4761d5ac5"
+        },
+        {
+          "path": "src/age_gap/preprocessing/pipeline.py",
+          "bytes": 9472,
+          "sha256": "36d118b9710f7135330ebdbf8dcb50a47d4d6d0beed004c6d6a4e7d1d27012fe"
+        },
+        {
+          "path": "src/age_gap/preprocessing/quality.py",
+          "bytes": 2496,
+          "sha256": "90eaf81601fce09b8146eec9d5ea15b199ab00292a6a88966c6b5cf36c24db53"
+        },
+        {
+          "path": "src/age_gap/recsys.py",
+          "bytes": 5584,
+          "sha256": "d9e660a6f50806f8d8f66988390b63c1ceed45ebfea77e6b7b85a1cfcd699fa1"
+        },
+        {
+          "path": "src/age_gap/settings/__init__.py",
+          "bytes": 122,
+          "sha256": "031b68f30596847a15ff364c6cca21a2aa9b7d2326eb4d2511790094084e53e9"
+        },
+        {
+          "path": "src/age_gap/settings/config.py",
+          "bytes": 599,
+          "sha256": "61f398efc7b2855818fc929b7e54dc359520b06216a0ca6c82b73c40ef04a2e0"
+        },
+        {
+          "path": "src/age_gap/training/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "src/age_gap/training/arcface_train.py",
+          "bytes": 11160,
+          "sha256": "3f578ab9ebbd034ecf36a0f79c43f5c2435d2a0e5267090b8a00b6e5696b26da"
+        },
+        {
+          "path": "src/age_gap/training/dataset.py",
+          "bytes": 3891,
+          "sha256": "a9081f56f915adf3c53466bb37c5a31f5500bb6e3aa123ae255f82a8ce81fbcd"
+        },
+        {
+          "path": "src/age_gap/training/disentangle.py",
+          "bytes": 8069,
+          "sha256": "96fa894d4443f621ddc1c5abdbd45e6187fe4502f41125f458990b26b40507f0"
+        },
+        {
+          "path": "src/age_gap/training/finetune.py",
+          "bytes": 16834,
+          "sha256": "ec073a2c2fef2d0bb2a6d44e610a064c469325cb6fa364ae8ed249d44594ffd8"
+        },
+        {
+          "path": "src/age_gap/training/losses.py",
+          "bytes": 1516,
+          "sha256": "b8e41b96b1713473be60b7dd77ed6dd8c4f2e00f6d376484e3b74506110645d1"
+        },
+        {
+          "path": "src/age_gap/training/sota_common.py",
+          "bytes": 15576,
+          "sha256": "382a4c28707d96f45e1d2008c8a7d228a9c0e00ac1ad18c887a45cb22422eedb"
+        },
+        {
+          "path": "src/age_gap/training/synthetic.py",
+          "bytes": 8443,
+          "sha256": "d04877b36dbdad9ff2e35635729700db378b4b32fe8690c11904f9a5a1883ebf"
+        },
+        {
+          "path": "src/age_gap/training/train.py",
+          "bytes": 7946,
+          "sha256": "c894284020345527a6b9469527c747217f93b667eb57548a08298eeead7ac067"
+        },
+        {
+          "path": "src/age_gap/settings/settings.toml",
+          "bytes": 3753,
+          "sha256": "13a84990cf071680c022bf13b64bb2191211a438270dea0b3c5501651db104de"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.manifest.json",
+          "bytes": 20165,
+          "sha256": "2005d760aaea272ecfffb725172c97039dd975e54f0328b9a0476c00f715d9c3"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/prepared.json",
+          "bytes": 192,
+          "sha256": "6e850209a2e146fbb09a7823bb681d98e3f1287234f1b2400c173cac905cdf54"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/frozen.manifest.json",
+          "bytes": 3300,
+          "sha256": "f3a6744dcc8bc0ab76c8ca46961ca9d3333aa76249179cc4dafdbe71d912fab8"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/frozen.json",
+          "bytes": 414,
+          "sha256": "b45db257725e2b851f4ad09bdfb0a51f89ad4ce7d0a7f9f1b5f7cb8763950785"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed42.manifest.json",
+          "bytes": 3273,
+          "sha256": "2ba76b0e19d45661847781013fd4b7a5eadb83bb323899fe12dcd87840230ed9"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed42.json",
+          "bytes": 369,
+          "sha256": "ac630e20aa484b03e6fe486f7dea6b139b96518a0c2dc7b282379d67f294dadd"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed1.manifest.json",
+          "bytes": 3268,
+          "sha256": "f391fb4f233188eccea86c1d8cb777d85e54703be7737ed1b833c74da29bc9c8"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed1.json",
+          "bytes": 367,
+          "sha256": "0c1a1319d6ce698bc4d26836f2a8951f71e9f9d6a9f25238de2515d42f746b73"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed2.manifest.json",
+          "bytes": 3268,
+          "sha256": "396a17113c000e579356f0459617593d5dffe0d387e8baf4870bcd30380c9992"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/tuned_seed2.json",
+          "bytes": 367,
+          "sha256": "edbadea690d6151f86b84edc0574c8971cf80a2d698eaede010bf2b2e44e546c"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/summary.manifest.json",
+          "bytes": 19195,
+          "sha256": "343567f6f4855506187010c3eea166bea1e997faf6f29183a5e81a8882d608cf"
+        },
+        {
+          "path": "metrics/cacd_serial_20261003/summary.json",
+          "bytes": 13830,
+          "sha256": "32eac1a870d6cc3518f9ddb768cb0df89ce714f3edacf7628bbb0a337cc00891"
+        },
+        {
+          "path": "scripts/render_cacd_metrics_v2.py",
+          "bytes": 10472,
+          "sha256": "ec4513862fdeb0d1a439f3d0027fd0b87220c1390cac470b72bd1b9285fa3633"
+        },
+        {
+          "path": "scripts/render_fgnet_evidence.py",
+          "bytes": 14515,
+          "sha256": "ad3292266e3f805479bce33bb16d1d2422cf515bc84dd249e4980e51c0ff5fd3"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "metrics/cacd_serial_presentation_20261003/cacd_table.tex",
+          "bytes": 1437,
+          "sha256": "175f024eef7e71760c3c68bb7381302b2e060eadf165d895e84aca2b856bdbdf"
+        },
+        {
+          "path": "metrics/cacd_serial_presentation_20261003/cacd_main_summary.tex",
+          "bytes": 543,
+          "sha256": "9901f018411bc4804e0a4a6ef4a86789df4a55ba065cd2f864bdacd95ec701eb"
+        }
+      ],
+      "private_input_count": 11,
+      "private_output_count": 0,
+      "input_integrity": {
+        "checked": 127,
         "missing": [],
         "checksum_mismatch": [],
         "private_missing_count": 0,

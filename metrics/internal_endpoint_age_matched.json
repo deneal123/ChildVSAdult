@@ -1,0 +1,153 @@
+{
+  "protocol": "internal endpoint-age-matched evaluation; distinct from legacy age-bucket negatives",
+  "parameters": {
+    "seed": 42,
+    "endpoint_age_tolerance_years": 2,
+    "min_positive_gap_years": 25,
+    "split": "test"
+  },
+  "diagnostics": {
+    "protocol": "fixed-anchor, counterpart-endpoint age match; nearest age then seeded tie-break",
+    "seed": 42,
+    "split": "test",
+    "min_positive_gap_years": 25,
+    "endpoint_age_tolerance_years": 2,
+    "eligible_positive_count": 154,
+    "matched_positive_count": 154,
+    "unmatched_positive_count": 0,
+    "coverage": 1.0,
+    "candidate_count_per_positive": {
+      "min": 2,
+      "median": 127.0,
+      "max": 915,
+      "with_candidates": 154
+    },
+    "matched_endpoint_age_error_years": {
+      "mean": 0.12987012987012986,
+      "max": 2
+    },
+    "positive_age_gap_years": {
+      "n": 154,
+      "mean": 32.57142857142857,
+      "median": 29.0,
+      "min": 25,
+      "max": 73
+    },
+    "negative_age_gap_years": {
+      "n": 154,
+      "mean": 32.5974025974026,
+      "median": 29.0,
+      "min": 25,
+      "max": 74
+    },
+    "positive_counterpart_age_years": {
+      "n": 154,
+      "mean": 36.88961038961039,
+      "median": 34.5,
+      "min": 1,
+      "max": 85
+    },
+    "negative_impostor_age_years": {
+      "n": 154,
+      "mean": 36.91558441558441,
+      "median": 34.5,
+      "min": 1,
+      "max": 84
+    },
+    "age_gap_only_roc_auc": 0.5001264968797436,
+    "age_gap_only_predictive_auc": 0.5001264968797436,
+    "age_gap_class_mean_difference_years": -0.025974025974029757,
+    "unmatched_reason": "no_other_identity_face_within_tolerance",
+    "matched_positive_count_before_crop_filter": 154,
+    "dropped_for_missing_crops_or_arcface_embedding": 0
+  },
+  "verification_metrics": {
+    "n_pairs": 308.0,
+    "n_pos": 154.0,
+    "n_neg": 154.0,
+    "roc_auc": 0.9701467363805026,
+    "eer": 0.08441558441558439,
+    "tar@far=0.01": 0.7857142857142857,
+    "tar@far=0.001": 0.7857142857142857
+  },
+  "model_comparison_same_matched_subset": {
+    "facenet_frozen": {
+      "n_pairs": 308.0,
+      "n_pos": 154.0,
+      "n_neg": 154.0,
+      "roc_auc": 0.7676673975375274,
+      "eer": 0.3181818181818182,
+      "tar@far=0.01": 0.3246753246753247,
+      "tar@far=0.001": 0.3246753246753247
+    },
+    "facenet_tuned": {
+      "n_pairs": 308.0,
+      "n_pos": 154.0,
+      "n_neg": 154.0,
+      "roc_auc": 0.8330241187384044,
+      "eer": 0.2597402597402597,
+      "tar@far=0.01": 0.2532467532467532,
+      "tar@far=0.001": 0.2532467532467532
+    },
+    "arcface": {
+      "n_pairs": 308.0,
+      "n_pos": 154.0,
+      "n_neg": 154.0,
+      "roc_auc": 0.9701467363805026,
+      "eer": 0.08441558441558439,
+      "tar@far=0.01": 0.7857142857142857,
+      "tar@far=0.001": 0.7857142857142857
+    }
+  },
+  "facenet_tuned_checkpoint": "models/bb_facenet_seed42.pt",
+  "facenet_paired_subject_bootstrap": {
+    "method": "paired identity-cluster bootstrap; dyad multiplicity product; percentile 95% CI",
+    "seed": 42,
+    "requested_replicates": 2000,
+    "valid_replicates": 2000,
+    "subject_count": 216,
+    "matched_observation_count": 154,
+    "point_estimates": {
+      "facenet_frozen": 0.7676673975375274,
+      "facenet_tuned": 0.8330241187384044,
+      "delta_comparison_minus_reference": 0.06535672120087699
+    },
+    "ci95": {
+      "facenet_frozen": [
+        0.6768948125122404,
+        0.8520563129114016
+      ],
+      "facenet_tuned": [
+        0.7523581114812034,
+        0.9060184447042706
+      ],
+      "delta_comparison_minus_reference": [
+        0.005175483215931998,
+        0.13036794057926393
+      ]
+    }
+  },
+  "facenet_leave_one_subject_out": {
+    "method": "leave one subject out; remove linked matched observations",
+    "n": 216,
+    "delta_comparison_minus_reference": {
+      "mean": 0.06535704105646699,
+      "median": 0.0654227045165407,
+      "min": 0.05821502770083098,
+      "max": 0.07030679327976619,
+      "p05": 0.06233786886885839,
+      "p95": 0.06879835824961492,
+      "positive_fraction": 1.0
+    }
+  },
+  "previous_arcface_point_estimate": {
+    "n_pairs": 308.0,
+    "n_pos": 154.0,
+    "n_neg": 154.0,
+    "roc_auc": 0.9701467363805026,
+    "eer": 0.08441558441558439,
+    "tar@far=0.01": 0.7857142857142857,
+    "tar@far=0.001": 0.7857142857142857
+  },
+  "skipped_missing_embeddings": 0
+}

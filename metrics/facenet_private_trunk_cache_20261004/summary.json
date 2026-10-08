@@ -1,0 +1,27 @@
+{
+  "cache_complete": true,
+  "encoded_crops": 7957,
+  "shape": [
+    7957,
+    1792,
+    1,
+    1
+  ],
+  "source_rows": {
+    "low": {
+      "train": 1200,
+      "val": 9158
+    },
+    "cross": {
+      "train": 1200,
+      "val": 9158
+    }
+  },
+  "initial_state_sha256": "01c9d8279c3465d8aa48ddbb3acd8aee293c9b0616987be04dca958571e2cd82",
+  "model_state_unchanged": true,
+  "test_crops_encoded": false,
+  "accelerator_qualified": false,
+  "training_complete": false,
+  "scientific_evaluation_complete": false,
+  "publication_ready": false
+}

@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "experiment": "lookalike-impostor-difficulty-curve",
+  "created_at_utc": "2026-09-23T18:42:08.113557+00:00",
+  "command": [
+    "scripts/hardneg_curve.py",
+    "--backbones",
+    "facenet",
+    "facenet:tuned",
+    "--tuned-suffix",
+    "seed42",
+    "--splits",
+    "test",
+    "--out",
+    "hardneg_curve_facenet_clean.json",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "backbones": [
+      "facenet",
+      "facenet:tuned"
+    ],
+    "crops": "faces",
+    "tuned_suffix": "seed42",
+    "max_age_difference": 5.0,
+    "splits": [
+      "test"
+    ],
+    "miner": "cached InsightFace w600k_r50",
+    "ranks": [
+      1,
+      10,
+      50,
+      200
+    ],
+    "bootstrap_replicates": 1000,
+    "bootstrap_seed": 0,
+    "manifest_only": true
+  },
+  "metrics": {
+    "facenet": {
+      "random | overall": {
+        "auc": 0.7664,
+        "ci95": [
+          0.7569,
+          0.7757
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "random | 25+": {
+        "auc": 0.5675,
+        "ci95": [
+          0.5186,
+          0.6113
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank200 | overall": {
+        "auc": 0.7203,
+        "ci95": [
+          0.7096,
+          0.7297
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank200 | 25+": {
+        "auc": 0.4923,
+        "ci95": [
+          0.4416,
+          0.5396
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank50 | overall": {
+        "auc": 0.6262,
+        "ci95": [
+          0.6154,
+          0.6376
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank50 | 25+": {
+        "auc": 0.3814,
+        "ci95": [
+          0.3341,
+          0.4274
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank10 | overall": {
+        "auc": 0.5472,
+        "ci95": [
+          0.5355,
+          0.5584
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank10 | 25+": {
+        "auc": 0.305,
+        "ci95": [
+          0.2602,
+          0.3461
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank1 | overall": {
+        "auc": 0.4282,
+        "ci95": [
+          0.4163,
+          0.4394
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank1 | 25+": {
+        "auc": 0.2028,
+        "ci95": [
+          0.1656,
+          0.2396
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      }
+    },
+    "facenet:tuned": {
+      "random | overall": {
+        "auc": 0.896,
+        "ci95": [
+          0.8898,
+          0.9019
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "random | 25+": {
+        "auc": 0.811,
+        "ci95": [
+          0.7746,
+          0.8452
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank200 | overall": {
+        "auc": 0.8668,
+        "ci95": [
+          0.8597,
+          0.8741
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank200 | 25+": {
+        "auc": 0.7592,
+        "ci95": [
+          0.7173,
+          0.7984
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank50 | overall": {
+        "auc": 0.8019,
+        "ci95": [
+          0.793,
+          0.8113
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank50 | 25+": {
+        "auc": 0.6573,
+        "ci95": [
+          0.6057,
+          0.7047
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank10 | overall": {
+        "auc": 0.7287,
+        "ci95": [
+          0.7189,
+          0.7388
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank10 | 25+": {
+        "auc": 0.5623,
+        "ci95": [
+          0.5098,
+          0.6111
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      },
+      "rank1 | overall": {
+        "auc": 0.5888,
+        "ci95": [
+          0.5772,
+          0.6002
+        ],
+        "n_pos": 4762,
+        "n_neg": 4762
+      },
+      "rank1 | 25+": {
+        "auc": 0.4041,
+        "ci95": [
+          0.3544,
+          0.4555
+        ],
+        "n_pos": 141,
+        "n_neg": 4762
+      }
+    },
+    "_note": {
+      "майнер": "w600k_r50 (кеш)",
+      "смысл": "rank1 = самый похожий импостер (состязательный отбор), random = как в статье",
+      "контроль": "если порядок моделей сохраняется как на лёгких негативах, смещение майнера не определяет результат"
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "data/interim/face_genderage.jsonl",
+      "bytes": 3357793,
+      "sha256": "e09ae22c379b40d375dbf0c1e327724cb6fe4b82cadd8d654a5fe03bcef952e7"
+    },
+    {
+      "path": "models/bb_facenet_seed42.pt",
+      "bytes": 115977947,
+      "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+    },
+    {
+      "path": "cache/embeddings/baseline_arcface.npz",
+      "bytes": 102874027,
+      "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/hardneg_curve_facenet_clean.json",
+      "bytes": 3619,
+      "sha256": "a6070a3376c97533b519ccdee3e2834f19ad45973acfef527a72816bbd25fd01"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

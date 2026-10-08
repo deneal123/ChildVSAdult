@@ -1,0 +1,11 @@
+{
+  "preflight_complete": true,
+  "prerequisite_hashes_verified": true,
+  "identity_classes": 9204,
+  "retained_images": 22571,
+  "source_files": 22680,
+  "training_complete": false,
+  "full_joint_fas": false,
+  "scientific_evaluation_complete": false,
+  "publication_ready": false
+}

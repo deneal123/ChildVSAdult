@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "experiment": "cacd-vs-verification",
+  "created_at_utc": "2026-09-23T09:02:40.504008+00:00",
+  "command": [
+    "scripts/eval_cacd_vs.py",
+    "--checkpoints",
+    "models/bb_facenet_seed42.pt",
+    "models/bb_facenet_seed1.pt",
+    "models/bb_facenet_seed2.pt"
+  ],
+  "parameters": {
+    "backbone": "facenet",
+    "checkpoint": "models\\bb_facenet_seed42.pt",
+    "protocol": "official identity-disjoint 10 folds"
+  },
+  "metrics": {
+    "n_pairs": 4000.0,
+    "accuracy_10fold": 0.9700000000000001,
+    "roc_auc": 0.9944895,
+    "eer": 0.03149999999999997,
+    "tar@far=0.01": 0.946,
+    "tar@far=0.001": 0.884,
+    "accuracy_10fold_ci95": [
+      0.967,
+      0.9730000000000001
+    ],
+    "roc_auc_ci95": [
+      0.9923377125,
+      0.9962094812500001
+    ],
+    "eer_ci95": [
+      0.025499999999999967,
+      0.03649999999999998
+    ],
+    "tar@far=0.01_ci95": [
+      0.9255,
+      0.9575125
+    ],
+    "tar@far=0.001_ci95": [
+      0.869,
+      0.9145
+    ]
+  },
+  "inputs": [
+    {
+      "path": "data/external/cacd_vs_aligned.npz",
+      "bytes": 265802876,
+      "sha256": "cc2f5b5ac85603fc6c642bf7a7d6425d8256386389bf6ef29a2285e89d07a32c"
+    },
+    {
+      "path": "models/bb_facenet_seed42.pt",
+      "bytes": 115977947,
+      "sha256": "91e76c2de09dfa43c114780486671a7c2350264c67ccffd8aab8f45a5f0651d4"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/cacd_vs/bb_facenet_seed42.json",
+      "bytes": 713,
+      "sha256": "511651042b060e134e6de9594e4a9b9082e22ef0f2efcac95fced38791910756"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

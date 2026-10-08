@@ -1,0 +1,387 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "cells": {
+    "random_head_lr1e-06_s42": {
+      "version": "strong-training-trajectory-v1",
+      "epochs": 8,
+      "selected_epoch": 8,
+      "checkpoint_selection": "last_epoch",
+      "training_loss_first": 0.2927502725493237,
+      "training_loss_last": 0.2104314395422931,
+      "training_loss_change": -0.08231883300703058,
+      "validation_auc_first": 0.9880207891920544,
+      "validation_auc_last": 0.9643456666520883,
+      "validation_auc_change": -0.023675122539966065,
+      "diagnostic_peak_auc_epoch": 1,
+      "diagnostic_peak_auc": 0.9880207891920544,
+      "last_minus_peak_auc": -0.023675122539966065,
+      "validation_loss": null,
+      "validation_loss_status": "not collected by v1 trainer; cannot infer from AUC",
+      "history": [
+        {
+          "epoch": 1,
+          "training_loss": 0.2927502725493237,
+          "validation_auc": 0.9880207891920544,
+          "mean_gradient_norm": 0.3872194476790856,
+          "epoch_seconds": 494.59399999992456
+        },
+        {
+          "epoch": 2,
+          "training_loss": 0.2661628800757685,
+          "validation_auc": 0.9747234745859028,
+          "mean_gradient_norm": 0.3636995545596838,
+          "epoch_seconds": 482.6570000000065
+        },
+        {
+          "epoch": 3,
+          "training_loss": 0.24078732757176208,
+          "validation_auc": 0.9594586145120381,
+          "mean_gradient_norm": 0.35648439949573557,
+          "epoch_seconds": 460.4529999999795
+        },
+        {
+          "epoch": 4,
+          "training_loss": 0.22910726292319086,
+          "validation_auc": 0.9541806668793477,
+          "mean_gradient_norm": 0.36019893772063216,
+          "epoch_seconds": 455.844000000041
+        },
+        {
+          "epoch": 5,
+          "training_loss": 0.22291416319136614,
+          "validation_auc": 0.9545079393135225,
+          "mean_gradient_norm": 0.3602422630218321,
+          "epoch_seconds": 454.76500000001397
+        },
+        {
+          "epoch": 6,
+          "training_loss": 0.21830847289041508,
+          "validation_auc": 0.9574172634348983,
+          "mean_gradient_norm": 0.3591178892605464,
+          "epoch_seconds": 455.10899999993853
+        },
+        {
+          "epoch": 7,
+          "training_loss": 0.21427694502419264,
+          "validation_auc": 0.9609590503586046,
+          "mean_gradient_norm": 0.35661548329086057,
+          "epoch_seconds": 480.344000000041
+        },
+        {
+          "epoch": 8,
+          "training_loss": 0.2104314395422931,
+          "validation_auc": 0.9643456666520883,
+          "mean_gradient_norm": 0.3533302338365693,
+          "epoch_seconds": 464.030999999959
+        }
+      ],
+      "limitation": "descriptive recorded history; peak is not checkpoint selection; no mechanism conclusion"
+    },
+    "random_head_lr1e-06_s1": {
+      "version": "strong-training-trajectory-v1",
+      "epochs": 8,
+      "selected_epoch": 8,
+      "checkpoint_selection": "last_epoch",
+      "training_loss_first": 0.2927576032897554,
+      "training_loss_last": 0.21048436028226708,
+      "training_loss_change": -0.08227324300748834,
+      "validation_auc_first": 0.9880049549676088,
+      "validation_auc_last": 0.9644650433502434,
+      "validation_auc_change": -0.02353991161736535,
+      "diagnostic_peak_auc_epoch": 1,
+      "diagnostic_peak_auc": 0.9880049549676088,
+      "last_minus_peak_auc": -0.02353991161736535,
+      "validation_loss": null,
+      "validation_loss_status": "not collected by v1 trainer; cannot infer from AUC",
+      "history": [
+        {
+          "epoch": 1,
+          "training_loss": 0.2927576032897554,
+          "validation_auc": 0.9880049549676088,
+          "mean_gradient_norm": 0.38719133320797366,
+          "epoch_seconds": 453.2179999999935
+        },
+        {
+          "epoch": 2,
+          "training_loss": 0.26609002047892466,
+          "validation_auc": 0.9746094157071024,
+          "mean_gradient_norm": 0.3634577031107648,
+          "epoch_seconds": 468.2029999999795
+        },
+        {
+          "epoch": 3,
+          "training_loss": 0.2407517175750439,
+          "validation_auc": 0.9592486202643448,
+          "mean_gradient_norm": 0.35628145027824915,
+          "epoch_seconds": 458.85900000005495
+        },
+        {
+          "epoch": 4,
+          "training_loss": 0.22901419687474825,
+          "validation_auc": 0.954034224149949,
+          "mean_gradient_norm": 0.35997653667909896,
+          "epoch_seconds": 459.5470000000205
+        },
+        {
+          "epoch": 5,
+          "training_loss": 0.2229969616524344,
+          "validation_auc": 0.9545981753154839,
+          "mean_gradient_norm": 0.3607270990828303,
+          "epoch_seconds": 459.530999999959
+        },
+        {
+          "epoch": 6,
+          "training_loss": 0.21836853936369002,
+          "validation_auc": 0.9573957059967976,
+          "mean_gradient_norm": 0.35901498474419835,
+          "epoch_seconds": 458.96899999992456
+        },
+        {
+          "epoch": 7,
+          "training_loss": 0.21425265455257797,
+          "validation_auc": 0.9609065875667666,
+          "mean_gradient_norm": 0.356718233177525,
+          "epoch_seconds": 459.670999999973
+        },
+        {
+          "epoch": 8,
+          "training_loss": 0.21048436028226708,
+          "validation_auc": 0.9644650433502434,
+          "mean_gradient_norm": 0.35374111939796904,
+          "epoch_seconds": 459.25
+        }
+      ],
+      "limitation": "descriptive recorded history; peak is not checkpoint selection; no mechanism conclusion"
+    },
+    "random_head_lr1e-06_s2": {
+      "version": "strong-training-trajectory-v1",
+      "epochs": 8,
+      "selected_epoch": 8,
+      "checkpoint_selection": "last_epoch",
+      "training_loss_first": 0.29274302378106715,
+      "training_loss_last": 0.2103242082346216,
+      "training_loss_change": -0.08241881554644553,
+      "validation_auc_first": 0.9880121566781247,
+      "validation_auc_last": 0.9642846428864914,
+      "validation_auc_change": -0.023727513791633292,
+      "diagnostic_peak_auc_epoch": 1,
+      "diagnostic_peak_auc": 0.9880121566781247,
+      "last_minus_peak_auc": -0.023727513791633292,
+      "validation_loss": null,
+      "validation_loss_status": "not collected by v1 trainer; cannot infer from AUC",
+      "history": [
+        {
+          "epoch": 1,
+          "training_loss": 0.29274302378106715,
+          "validation_auc": 0.9880121566781247,
+          "mean_gradient_norm": 0.38728194790315773,
+          "epoch_seconds": 442.2029999999795
+        },
+        {
+          "epoch": 2,
+          "training_loss": 0.266105757708201,
+          "validation_auc": 0.9746442080767803,
+          "mean_gradient_norm": 0.36374614864527466,
+          "epoch_seconds": 455.93799999996554
+        },
+        {
+          "epoch": 3,
+          "training_loss": 0.2406312282785012,
+          "validation_auc": 0.9591361114225758,
+          "mean_gradient_norm": 0.35579691003009745,
+          "epoch_seconds": 458.01500000001397
+        },
+        {
+          "epoch": 4,
+          "training_loss": 0.22896927620266078,
+          "validation_auc": 0.9539148712985175,
+          "mean_gradient_norm": 0.36003998009576405,
+          "epoch_seconds": 458.85899999993853
+        },
+        {
+          "epoch": 5,
+          "training_loss": 0.22294528667143884,
+          "validation_auc": 0.9545584943674754,
+          "mean_gradient_norm": 0.3608699146310787,
+          "epoch_seconds": 458.56300000008196
+        },
+        {
+          "epoch": 6,
+          "training_loss": 0.2182429428696713,
+          "validation_auc": 0.9572148762920214,
+          "mean_gradient_norm": 0.35859948255942614,
+          "epoch_seconds": 459.25
+        },
+        {
+          "epoch": 7,
+          "training_loss": 0.2142305733724455,
+          "validation_auc": 0.9607388020197793,
+          "mean_gradient_norm": 0.356513059859214,
+          "epoch_seconds": 459.26599999994505
+        },
+        {
+          "epoch": 8,
+          "training_loss": 0.2103242082346216,
+          "validation_auc": 0.9642846428864914,
+          "mean_gradient_norm": 0.3534733638634727,
+          "epoch_seconds": 457.9220000000205
+        }
+      ],
+      "limitation": "descriptive recorded history; peak is not checkpoint selection; no mechanism conclusion"
+    },
+    "random_tail_lr1e-06_s42": {
+      "version": "strong-training-trajectory-v1",
+      "epochs": 8,
+      "selected_epoch": 8,
+      "checkpoint_selection": "last_epoch",
+      "training_loss_first": 0.2224517053742217,
+      "training_loss_last": 0.15060229195554217,
+      "training_loss_change": -0.07184941341867954,
+      "validation_auc_first": 0.9940195755845989,
+      "validation_auc_last": 0.986512436233265,
+      "validation_auc_change": -0.007507139351333847,
+      "diagnostic_peak_auc_epoch": 2,
+      "diagnostic_peak_auc": 0.9942807210543342,
+      "last_minus_peak_auc": -0.007768284821069171,
+      "validation_loss": null,
+      "validation_loss_status": "not collected by v1 trainer; cannot infer from AUC",
+      "history": [
+        {
+          "epoch": 1,
+          "training_loss": 0.2224517053742217,
+          "validation_auc": 0.9940195755845989,
+          "mean_gradient_norm": 0.7423638234230462,
+          "epoch_seconds": 481.375
+        },
+        {
+          "epoch": 2,
+          "training_loss": 0.20483379238977348,
+          "validation_auc": 0.9942807210543342,
+          "mean_gradient_norm": 0.7254622562927989,
+          "epoch_seconds": 704.795999999973
+        },
+        {
+          "epoch": 3,
+          "training_loss": 0.19128994929631402,
+          "validation_auc": 0.9934775872514653,
+          "mean_gradient_norm": 0.6873114827838228,
+          "epoch_seconds": 786.609000000055
+        },
+        {
+          "epoch": 4,
+          "training_loss": 0.17941436925861393,
+          "validation_auc": 0.9920914725976584,
+          "mean_gradient_norm": 0.6412065328356705,
+          "epoch_seconds": 500.3279999999795
+        },
+        {
+          "epoch": 5,
+          "training_loss": 0.16948837746433412,
+          "validation_auc": 0.9905415309529756,
+          "mean_gradient_norm": 0.6194873158241593,
+          "epoch_seconds": 533.1879999999655
+        },
+        {
+          "epoch": 6,
+          "training_loss": 0.16159794713180323,
+          "validation_auc": 0.989190089435229,
+          "mean_gradient_norm": 0.5971003926927992,
+          "epoch_seconds": 591.7339999999385
+        },
+        {
+          "epoch": 7,
+          "training_loss": 0.1554916647792674,
+          "validation_auc": 0.9879462920276445,
+          "mean_gradient_norm": 0.5724692385654034,
+          "epoch_seconds": 565.9070000000065
+        },
+        {
+          "epoch": 8,
+          "training_loss": 0.15060229195554217,
+          "validation_auc": 0.986512436233265,
+          "mean_gradient_norm": 0.5588608796719524,
+          "epoch_seconds": 552.8589999999385
+        }
+      ],
+      "limitation": "descriptive recorded history; peak is not checkpoint selection; no mechanism conclusion"
+    },
+    "random_tail_lr1e-06_s1": {
+      "version": "strong-training-trajectory-v1",
+      "epochs": 8,
+      "selected_epoch": 8,
+      "checkpoint_selection": "last_epoch",
+      "training_loss_first": 0.22243610065166866,
+      "training_loss_last": 0.1505729704114377,
+      "training_loss_change": -0.07186313024023097,
+      "validation_auc_first": 0.9939149838550527,
+      "validation_auc_last": 0.9864110876581235,
+      "validation_auc_change": -0.007503896196929261,
+      "diagnostic_peak_auc_epoch": 2,
+      "diagnostic_peak_auc": 0.9943202589220013,
+      "last_minus_peak_auc": -0.007909171263877801,
+      "validation_loss": null,
+      "validation_loss_status": "not collected by v1 trainer; cannot infer from AUC",
+      "history": [
+        {
+          "epoch": 1,
+          "training_loss": 0.22243610065166866,
+          "validation_auc": 0.9939149838550527,
+          "mean_gradient_norm": 0.7251122304937139,
+          "epoch_seconds": 545.5
+        },
+        {
+          "epoch": 2,
+          "training_loss": 0.20479071069206622,
+          "validation_auc": 0.9943202589220013,
+          "mean_gradient_norm": 0.6975843286166437,
+          "epoch_seconds": 570.344000000041
+        },
+        {
+          "epoch": 3,
+          "training_loss": 0.19121303806171527,
+          "validation_auc": 0.9933448325413916,
+          "mean_gradient_norm": 0.6577066130073942,
+          "epoch_seconds": 527.561999999918
+        },
+        {
+          "epoch": 4,
+          "training_loss": 0.1793076421619886,
+          "validation_auc": 0.9920344789283435,
+          "mean_gradient_norm": 0.6158961781586751,
+          "epoch_seconds": 524.359999999986
+        },
+        {
+          "epoch": 5,
+          "training_loss": 0.16934684799155444,
+          "validation_auc": 0.9906407810164437,
+          "mean_gradient_norm": 0.58037043103178,
+          "epoch_seconds": 522.265000000014
+        },
+        {
+          "epoch": 6,
+          "training_loss": 0.1615705577635379,
+          "validation_auc": 0.9888472212438442,
+          "mean_gradient_norm": 0.5709591983339501,
+          "epoch_seconds": 522.344000000041
+        },
+        {
+          "epoch": 7,
+          "training_loss": 0.15537537197194048,
+          "validation_auc": 0.9878272014901722,
+          "mean_gradient_norm": 0.6171681961058829,
+          "epoch_seconds": 523.3129999999655
+        },
+        {
+          "epoch": 8,
+          "training_loss": 0.1505729704114377,
+          "validation_auc": 0.9864110876581235,
+          "mean_gradient_norm": 0.624261216508826,
+          "epoch_seconds": 517.859000000055
+        }
+      ],
+      "limitation": "descriptive recorded history; peak is not checkpoint selection; no mechanism conclusion"
+    }
+  },
+  "limitation": "recorded completed histories only; incomplete matrix; no validation loss or mechanism decision"
+}

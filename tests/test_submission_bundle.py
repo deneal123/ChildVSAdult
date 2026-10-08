@@ -109,10 +109,11 @@ def test_tbiom_packages_evidence_separately_and_binds_its_hash(tmp_path, monkeyp
 
     def fake_export(command, cwd):
         if command[1] == "-m":
-            assert command[2] in {"scripts.export_lfw_evidence", "scripts.export_curation_evidence", "scripts.export_roc_v2_evidence"}
+            assert command[2] in {"scripts.export_lfw_evidence", "scripts.export_curation_evidence", "scripts.export_roc_v2_evidence", "scripts.export_cacd_evidence"}
             filename = {"scripts.export_lfw_evidence": "lfw_evidence_bundle.zip",
                         "scripts.export_curation_evidence": "curation_evidence_bundle.zip",
-                        "scripts.export_roc_v2_evidence": "roc_v2_evidence_bundle.zip"}[command[2]]
+                        "scripts.export_roc_v2_evidence": "roc_v2_evidence_bundle.zip",
+                        "scripts.export_cacd_evidence": "cacd_evidence_bundle.zip"}[command[2]]
         else:
             assert "export_public_evidence.py" in command[1]
             filename = "public_evidence_bundle.zip"
@@ -139,11 +140,15 @@ def test_tbiom_packages_evidence_separately_and_binds_its_hash(tmp_path, monkeyp
     roc = sub / "upload/roc-v2-evidence.zip"
     roc_record = next(item for item in manifest["artifacts"] if item["file"] == roc.name)
     assert roc_record["sha256"] == build_submission._sha256(roc)
+    cacd = sub / "upload/cacd-evidence.zip"
+    cacd_record = next(item for item in manifest["artifacts"] if item["file"] == cacd.name)
+    assert cacd_record["sha256"] == build_submission._sha256(cacd)
     with zipfile.ZipFile(sub / "upload/manuscript-source.zip") as archive:
         assert "publication-evidence.zip" not in archive.namelist()
         assert "lfw-evidence.zip" not in archive.namelist()
         assert "curation-evidence.zip" not in archive.namelist()
         assert "roc-v2-evidence.zip" not in archive.namelist()
+        assert "cacd-evidence.zip" not in archive.namelist()
 
 
 def test_evidence_export_failure_preserves_previous_upload(tmp_path, monkeypatch):
@@ -167,6 +172,7 @@ def test_non_tbiom_package_does_not_export_tbiom_evidence(tmp_path, monkeypatch)
     assert not (sub / "upload/lfw-evidence.zip").exists()
     assert not (sub / "upload/curation-evidence.zip").exists()
     assert not (sub / "upload/roc-v2-evidence.zip").exists()
+    assert not (sub / "upload/cacd-evidence.zip").exists()
 
 
 def test_lfw_export_failure_preserves_previous_uploads_after_first_export_succeeds(tmp_path, monkeypatch):
@@ -223,6 +229,33 @@ def test_curation_export_failure_preserves_all_previous_uploads(tmp_path, monkey
 
     monkeypatch.setattr(build_submission, "_run", exports)
     with pytest.raises(RuntimeError, match="curation checksum failure"):
+        build_submission._package_uploads(sub, {}, include_experiment_index=True)
+    for name, data in originals.items():
+        assert (sub / "upload" / name).read_bytes() == data
+
+
+def test_cacd_export_failure_preserves_all_previous_uploads(tmp_path, monkeypatch):
+    sub = _synthetic_submission(tmp_path)
+    (sub / "upload").mkdir()
+    originals = {name: b"previous valid bytes" for name in (
+        "main.pdf", "publication-evidence.zip", "lfw-evidence.zip", "curation-evidence.zip",
+        "roc-v2-evidence.zip", "cacd-evidence.zip")}
+    for name, data in originals.items():
+        (sub / "upload" / name).write_bytes(data)
+
+    def exports(command, cwd):
+        if "scripts.export_cacd_evidence" in command:
+            return subprocess.CompletedProcess(command, 1, "", "CACD checksum failure")
+        staging = Path(command[command.index("--out") + 1])
+        staging.mkdir(parents=True)
+        filename = {"scripts.export_lfw_evidence": "lfw_evidence_bundle.zip",
+            "scripts.export_curation_evidence": "curation_evidence_bundle.zip",
+            "scripts.export_roc_v2_evidence": "roc_v2_evidence_bundle.zip"}.get(command[2], "public_evidence_bundle.zip")
+        (staging / filename).write_bytes(b"new intermediate archive")
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(build_submission, "_run", exports)
+    with pytest.raises(RuntimeError, match="CACD checksum failure"):
         build_submission._package_uploads(sub, {}, include_experiment_index=True)
     for name, data in originals.items():
         assert (sub / "upload" / name).read_bytes() == data

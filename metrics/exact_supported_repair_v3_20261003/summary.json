@@ -1,0 +1,239 @@
+{
+  "arms": {
+    "LOW": {
+      "affected_singleton_people": 1,
+      "eligible_new_people": 395,
+      "maximum_candidate_attempts": 4096,
+      "complete": true,
+      "source_profile": {
+        "positive_pairs": 600,
+        "images": 1096,
+        "recorded_people": 500
+      },
+      "repaired_profile": {
+        "positive_pairs": 600,
+        "images": 1096,
+        "recorded_people": 500
+      },
+      "attempts": 164,
+      "negative_diagnostics": {
+        "negative_pairs": 600,
+        "unique_negative_faces": 978,
+        "unique_negative_persons": 500,
+        "max_negative_face_reuse": 4,
+        "negative_face_reuse_histogram": {
+          "1": 765,
+          "2": 205,
+          "3": 7,
+          "4": 1
+        },
+        "negative_pairs_reused": 0,
+        "positive_persons_in_arm": 500,
+        "negative_endpoint_a_in_arm_positive_person_fraction": 1.0,
+        "negative_endpoint_a_is_its_positive_face_a_fraction": 1.0,
+        "negative_endpoint_b_in_arm_positive_person_fraction": 1.0,
+        "negative_endpoint_b_age_bin_match_fraction": 1.0,
+        "negative_endpoint_b_exact_age_error_histogram": {
+          "0": 600
+        }
+      },
+      "global_exact_matching": {
+        "positive_targets": 600,
+        "maximum_matched_targets": 600,
+        "unmatched_targets": 0,
+        "targets_without_exact_candidate": 0,
+        "candidate_unique_negative_edges": 37142,
+        "candidate_count_histogram": {
+          "1": 4,
+          "2": 3,
+          "4": 3,
+          "6": 12,
+          "7": 5,
+          "8": 9,
+          "10": 19,
+          "14": 9,
+          "15": 24,
+          "17": 7,
+          "19": 9,
+          "21": 10,
+          "23": 19,
+          "25": 19,
+          "32": 22,
+          "40": 13,
+          "58": 7,
+          "59": 36,
+          "60": 38,
+          "66": 26,
+          "75": 48,
+          "76": 38,
+          "79": 5,
+          "80": 45,
+          "98": 51,
+          "106": 2,
+          "107": 117
+        },
+        "full_fixed_positive_protocol_feasible": true,
+        "positive_images": 1096,
+        "positive_recorded_people": 500,
+        "known_genuine_edges_excluded": true,
+        "unique_unordered_negative_edges": true,
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": null
+          }
+        }
+      }
+    },
+    "CROSS": {
+      "affected_singleton_people": 2,
+      "eligible_new_people": 107,
+      "maximum_candidate_attempts": 4096,
+      "complete": true,
+      "source_profile": {
+        "positive_pairs": 600,
+        "images": 1096,
+        "recorded_people": 500
+      },
+      "repaired_profile": {
+        "positive_pairs": 600,
+        "images": 1096,
+        "recorded_people": 500
+      },
+      "attempts": 1,
+      "negative_diagnostics": {
+        "negative_pairs": 600,
+        "unique_negative_faces": 1032,
+        "unique_negative_persons": 500,
+        "max_negative_face_reuse": 4,
+        "negative_face_reuse_histogram": {
+          "1": 879,
+          "2": 141,
+          "3": 9,
+          "4": 3
+        },
+        "negative_pairs_reused": 0,
+        "positive_persons_in_arm": 500,
+        "negative_endpoint_a_in_arm_positive_person_fraction": 1.0,
+        "negative_endpoint_a_is_its_positive_face_a_fraction": 1.0,
+        "negative_endpoint_b_in_arm_positive_person_fraction": 1.0,
+        "negative_endpoint_b_age_bin_match_fraction": 1.0,
+        "negative_endpoint_b_exact_age_error_histogram": {
+          "0": 600
+        }
+      },
+      "global_exact_matching": {
+        "positive_targets": 600,
+        "maximum_matched_targets": 600,
+        "unmatched_targets": 0,
+        "targets_without_exact_candidate": 0,
+        "candidate_unique_negative_edges": 16368,
+        "candidate_count_histogram": {
+          "1": 14,
+          "2": 9,
+          "3": 13,
+          "5": 28,
+          "6": 21,
+          "8": 20,
+          "9": 3,
+          "10": 12,
+          "11": 1,
+          "12": 14,
+          "13": 16,
+          "14": 3,
+          "15": 64,
+          "16": 2,
+          "17": 49,
+          "18": 8,
+          "25": 26,
+          "26": 26,
+          "27": 23,
+          "31": 33,
+          "34": 6,
+          "35": 29,
+          "38": 1,
+          "39": 40,
+          "46": 6,
+          "50": 2,
+          "51": 51,
+          "55": 3,
+          "58": 8,
+          "59": 4,
+          "60": 2,
+          "61": 52,
+          "80": 1,
+          "81": 5,
+          "83": 2,
+          "84": 3
+        },
+        "full_fixed_positive_protocol_feasible": true,
+        "positive_images": 1096,
+        "positive_recorded_people": 500,
+        "known_genuine_edges_excluded": true,
+        "unique_unordered_negative_edges": true,
+        "uniform_age_balance": {
+          "age_a": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "age_b": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.49999999999999994
+          },
+          "age_gap": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": 0.5
+          },
+          "ordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": null
+          },
+          "unordered_endpoint_ages": {
+            "empirical_weighted_total_variation": 0.0,
+            "equal_prior_weighted_in_sample_oracle_accuracy": 0.5,
+            "weighted_rank_auc_positive_higher": null
+          }
+        }
+      }
+    }
+  },
+  "complete": true,
+  "training_ready": false,
+  "publication_ready": false,
+  "replacement_selection": "seed42 hash order; singleton pair/two-image profiles; no recognition outcomes",
+  "heldout_unchanged": true,
+  "known_genuine_negative_edges_excluded": true,
+  "identity_purity": "recorded-person mapping only; human/benchmark audits pending",
+  "scope": "fresh exact-supported control preparation, not training or quality-balance proof",
+  "replacement_quality_sidecar": {
+    "duplicate_rows": 19,
+    "excluded_duplicate_faces": 6,
+    "conflicting_rows": 0,
+    "policy": "all duplicate face keys excluded from replacement eligibility"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "total": 33697,
+  "categories": {
+    "single": 31275,
+    "multi_person": 2034,
+    "unknown": 336,
+    "meme": 49,
+    "collage": 3
+  },
+  "percentages": {
+    "single": 92.81241653559664,
+    "multi_person": 6.036145650948155,
+    "unknown": 0.997121405466362,
+    "meme": 0.1454135382971778,
+    "collage": 0.008902869691663946
+  },
+  "human_ground_truth": false
+}

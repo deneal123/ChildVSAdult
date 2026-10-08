@@ -1,0 +1,27 @@
+\begin{table}[!t]
+\caption{Absolute age-probe and fit-only constant MAE points (years). Strong rows cover exactly the 9 explicitly declared cells of the 36-cell (random|lookalike) x (head|tail|full) x LR $10^{-6}$/$10^{-5}$ x seed {42,1,2} matrix; every remaining cell is not rendered. The matrix stays incomplete. Weak rows use different architecture/preprocessing and unverified training history, not a controlled causal family comparison. Repeated physical probe records are deduplicated, not independent replications. Image-weighted and equal-person MAE are separate denominators; no new interval or significance test, age-removal claim, mechanism or identity-independence clearance.}
+\label{tab:age-probe-absolute-points}
+\centering\scriptsize
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Model/reference & Image-weighted MAE & Equal-person MAE \\
+\midrule
+Fit-only mean & 9.4523 & 9.3086 \\
+Fit-only median & 9.1354 & 9.0775 \\
+Strong frozen & 9.9156 & 10.2270 \\
+Strong random head, LR $10^{-5}$, seed 1 & 8.9230 & 8.9645 \\
+Strong random head, LR $10^{-5}$, seed 2 & 8.8890 & 8.9003 \\
+Strong random head, LR $10^{-5}$, seed 42 & 9.1964 & 9.2281 \\
+Strong random head, LR $10^{-6}$, seed 1 & 9.9099 & 10.0599 \\
+Strong random head, LR $10^{-6}$, seed 2 & 9.9149 & 10.0634 \\
+Strong random head, LR $10^{-6}$, seed 42 & 9.9424 & 10.0899 \\
+Strong random tail, LR $10^{-6}$, seed 1 & 8.2777 & 8.5267 \\
+Strong random tail, LR $10^{-6}$, seed 2 & 8.3478 & 8.5830 \\
+Strong random tail, LR $10^{-6}$, seed 42 & 8.3245 & 8.5659 \\
+Weak frozen & 5.7657 & 5.9908 \\
+Weak, seed 1 & 5.9866 & 6.1513 \\
+Weak, seed 2 & 5.9962 & 6.1627 \\
+Weak, seed 42 & 5.9123 & 6.0781 \\
+\bottomrule
+\end{tabular}
+\end{table}

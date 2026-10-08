@@ -84,8 +84,8 @@ The gain is \emph{targeted}, not a uniform verification gain &
 Historical AgeDB-30 AUC decreases; source-bound CACD-VS loses accuracy/TAR@FAR1\% and raises EER (S\ref{sec:cacd-serial}). Source-bound LFW supports AUC gain, but accuracy/low-FAR gain CIs include zero (S\ref{sec:lfw-bound}) & Bounded \\
 Explicit caption age anchors add little within the tested same-post ablation &
 Pre-clean ablation: age anchors add $+0.009$ on the original 25+ bucket (\mainsec{V-A}); this does not isolate the causal source effect & Bounded \\
-Long-gap pairs outperform short-gap pairs under a partial within-VK control &
-Fixed 10-epoch LOW/CROSS $\Delta$AUC $+0.0257{\pm}0.0009$ over three seeds, but total images 1{,}398 vs.\ 1{,}121; restricted-budget retraining and generic/noise controls pending (S\ref{sec:matched-source}) & Bounded \\
+The full-image-budget within-VK control does not establish long-gap superiority &
+Replacement three-checkpoint CROSS--LOW 25+ AUC $+0.0031$, paired subject CI $[-0.0198,+0.0261]$ (Table~\ref{tab:oriented-source}); historical $+0.0257$ had unequal image budgets. Completed fixed-permutation noise sensitivity does not replace generic/co-occurrence controls or identity adjudication & Bounded \\
 Real mined pairs outperform the tested FRAN controls under the historical protocol &
 $+$real $0.848$ vs.\ FRAN $0.727$ and gap-matched FRAN-gm $0.759$ ($+0.089$); native-resolution control (\mainsec{V-B}) & Est. \\
 Tested objectives have similar historical point estimates &
@@ -107,7 +107,7 @@ An exploratory one-seed curve shows null/negative strong-backbone gains; the pla
 Platform-agnostic / cross-cultural generalization & one platform family, then/now format; single non-VK test & Open \\
 Drop-in upgrade to a general-purpose verifier & mixed AUC/accuracy/low-FAR trade-offs; large-gap primary endpoint uses small FG-NET & Open (excluded) \\
 Human-grade label-noise guarantee & corpus-scale automatic cross-checks only; prespecified multi-annotator audit not yet completed (S\ref{sec:audit}) & Open \\
-Controlled method comparison, not published-system parity & common-protocol MTLFace/CACon reimplementations over three seeds; published protocols remain non-comparable & Bounded \\
+Restricted-stage comparison, not full-method parity & three-seed MTLFace/CACon-CP variants; joint synthesis and final-linear stages remain incomplete & Bounded \\
 Legal/ethical clearance for biometric processing & formal institutional determination not yet obtained (\mainsec{VIII}) & Open (institutional gate) \\
 \bottomrule
 \end{tabular}
@@ -191,16 +191,257 @@ epoch, without validation-based early stopping. BatchNorm running statistics are
 scope; affine parameters follow the declared trainable scope. Requested, executed and selected epochs
 are recorded separately. Earlier best-validation checkpoints with adaptive BatchNorm are exploratory,
 not cells of this confirmatory matrix. Both negative arms use the same held-out evaluation pairs.
-The pipeline records training loss, mean gradient norm, external/internal verification metrics,
-linear CKA, mean cosine drift, identity separability and an identity-group-disjoint age-gap
-linear-probe MAE with an intercept and constant-predictor controls. Validation-loss trajectories and
-evaluation on corrected endpoint-age-matched FG-NET remain to be completed. The interpretation
+Completed fixed-last head/tail cells record training loss, validation AUC and mean gradient norm;
+validation loss was not collected and cannot be recovered from AUC. Partial native-bound diagnostics
+measure linear CKA, cosine drift, descriptive cosine separation and per-image age regression using
+person-disjoint folds, fit-only scaling and matched-denominator mean/median constant controls.
+Subject intervals condition on fixed checkpoints and probe predictions, not training-seed populations.
+These measurements do not establish age removal or a mechanism; an age-gap probe is not age decoding.
+Corrected endpoint-age-matched FG-NET evaluation is partial, not a completed matrix. The interpretation
 is fixed before reading the complete matrix: a random-impostor ceiling requires near-perfect frozen
 random AUC but does not imply task-level ceiling when look-alike AUC is low; insufficient plasticity is
 supported only if widening scope or increasing LR increases representation change and restores transfer;
 catastrophic forgetting requires broad external degradation rather than a task-specific large-gap drop.
 Completed cells will provide machine-readable per-seed trajectories and deltas; the full matrix
 is not yet available, and a negative fine-tuning result will be retained.
+
+\section{Partial Common-Image Feature Diagnostics}\label{sec:common-image-feature-diagnostics}
+Tables~\ref{tab:common-mechanism-strong} and~\ref{tab:common-mechanism-weak}
+describe nine AdaFace checkpoints: the initial six random/head--tail/LR $10^{-6}$
+and random/head/LR $10^{-5}$ seeds 42/1/2, plus
+the three cached FaceNet checkpoints on the same 650 images and 5{,}308
+endpoint-age-matched pairs from 82 recorded people. Exact pair arrays and
+image metadata agree across bindings; this is not human identity clearance.
+Each family is compared with its own frozen reference. Different architectures,
+preprocessing and unverified weak training history preclude a controlled causal
+comparison between families. Repeated weak bindings are rendered once.
+
+Head changes are smaller than tail changes in these descriptive CKA/drift
+measurements, but neither quantity is a measure of improved verification.
+All nine strong separation-change intervals are below zero; the three weak
+intervals are above zero. Tail age-MAE-change intervals are below zero,
+as are the LR $10^{-5}$ head seed1/2 intervals; the remaining head and weak
+age-MAE-change intervals include zero. Lower age MAE
+means easier age decoding, not age removal. These nominal paired subject
+intervals condition on fixed checkpoints and fixed out-of-fold predictions;
+probes are not refitted within resamples and no multiplicity correction is
+applied. They are not intervals of seed means or training-seed populations.
+
+Table~\ref{tab:age-probe-absolute-points} separates image-weighted and
+equal-person MAE and includes fit-only mean/median constant references.
+It covers the same nine strong checkpoints as the feature tables.
+Its fourteen unique model points are deduplicated from repeated native records,
+not independent replications. The strong frozen linear probe has a larger
+point error than the constants at these fixed settings; this does not prove
+absence of age information. No new absolute-error interval or significance
+test is supplied. These diagnostics do not identify saturation, inadequate
+plasticity or catastrophic forgetting; validation loss, the full matrix and
+broader external checks remain open.
+
+% BEGIN GENERATED COMMON FEATURE V2
+\begin{table*}[!t]
+\caption{Strong arm: 9 of 36 expected tuned checkpoints, each conditional on its own fixed checkpoint (descriptive, not the full matrix). Frozen reference separation SMD is 3.3424 (95\% CI $[3.1406,3.5781]$), the same bound reference in every row. $\Delta$MAE and SMD deltas are tuned minus frozen; each interval is the paired subject/endpoint bootstrap interval for this checkpoint, not a seed mean and not an ensemble. Age intervals hold OOF probe predictions fixed, with no probe refitting. Lower age MAE means easier age decoding, not age removal. Descriptive only: no mechanism decision, no training-seed population inference, no identity-independence clearance and no multiplicity correction; not deployment-calibrated.}
+\label{tab:common-mechanism-strong}
+\centering\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Checkpoint & CKA & Cos.\ drift & Age $\Delta$MAE & Age $\Delta$MAE 95\% CI & Sep.\ SMD & Sep.\ $\Delta$SMD & Sep.\ $\Delta$95\% CI \\
+\midrule
+random, head, LR $10^{-5}$, seed 1 & 0.6715 & 0.3757 & -1.2625 & $[-2.4808,-0.2478]$ & 2.6011 & -0.7413 & $[-0.9322,-0.5181]$ \\
+random, head, LR $10^{-5}$, seed 2 & 0.6734 & 0.3758 & -1.3266 & $[-2.5444,-0.3325]$ & 2.5983 & -0.7441 & $[-0.9376,-0.5182]$ \\
+random, head, LR $10^{-5}$, seed 42 & 0.6734 & 0.3759 & -0.9989 & $[-2.2444,+0.0367]$ & 2.6113 & -0.7311 & $[-0.9243,-0.5048]$ \\
+random, head, LR $10^{-6}$, seed 1 & 0.9470 & 0.0570 & -0.1671 & $[-0.6659,+0.3229]$ & 3.2063 & -0.1362 & $[-0.2470,-0.0142]$ \\
+random, head, LR $10^{-6}$, seed 2 & 0.9468 & 0.0574 & -0.1635 & $[-0.6650,+0.3315]$ & 3.2038 & -0.1386 & $[-0.2503,-0.0156]$ \\
+random, head, LR $10^{-6}$, seed 42 & 0.9470 & 0.0570 & -0.1371 & $[-0.6410,+0.3588]$ & 3.2072 & -0.1352 & $[-0.2456,-0.0121]$ \\
+random, tail, LR $10^{-6}$, seed 1 & 0.6002 & 0.4563 & -1.7002 & $[-2.7847,-0.5906]$ & 3.0691 & -0.2733 & $[-0.4699,-0.0590]$ \\
+random, tail, LR $10^{-6}$, seed 2 & 0.6030 & 0.4543 & -1.6439 & $[-2.7657,-0.5049]$ & 3.0826 & -0.2599 & $[-0.4584,-0.0446]$ \\
+random, tail, LR $10^{-6}$, seed 42 & 0.6020 & 0.4546 & -1.6610 & $[-2.7840,-0.5394]$ & 3.0797 & -0.2627 & $[-0.4562,-0.0522]$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\begin{table*}[!t]
+\caption{Weak arm: the same bound weak tuned family appears in every binding and is rendered once (deduplicated, not averaged or ensembled). Frozen reference separation SMD is 1.7918 (95\% CI $[1.6217,1.9877]$). $\Delta$MAE and SMD deltas are tuned minus frozen; intervals are conditional paired subject bootstrap intervals, not a seed mean and not an ensemble. Lower age MAE means easier age decoding, not age removal. Descriptive only: no mechanism decision, no training-seed population inference and no identity-independence clearance; weak training history unverified. Age intervals hold OOF predictions fixed, without probe refitting or multiplicity correction. Different architecture/preprocessing, not a causal family comparison.}
+\label{tab:common-mechanism-weak}
+\centering\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Checkpoint & CKA & Cos.\ drift & Age $\Delta$MAE & Age $\Delta$MAE 95\% CI & Sep.\ SMD & Sep.\ $\Delta$SMD & Sep.\ $\Delta$95\% CI \\
+\midrule
+tuned, seed 42 & 0.8896 & 0.1750 & +0.0873 & $[-0.1872,+0.3449]$ & 2.0631 & +0.2713 & $[+0.1100,+0.4236]$ \\
+tuned, seed 1 & 0.8909 & 0.1670 & +0.1605 & $[-0.1255,+0.4245]$ & 2.0686 & +0.2768 & $[+0.1181,+0.4291]$ \\
+tuned, seed 2 & 0.8926 & 0.1589 & +0.1719 & $[-0.1025,+0.4370]$ & 2.0767 & +0.2849 & $[+0.1309,+0.4288]$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+% END GENERATED COMMON FEATURE V2
+
+% BEGIN GENERATED ABSOLUTE AGE POINTS V3
+\begin{table}[!t]
+\caption{Absolute age-probe and fit-only constant MAE points (years). Strong rows cover exactly the 9 explicitly declared cells of the 36-cell (random|lookalike) x (head|tail|full) x LR $10^{-6}$/$10^{-5}$ x seed {42,1,2} matrix; every remaining cell is not rendered. The matrix stays incomplete. Weak rows use different architecture/preprocessing and unverified training history, not a controlled causal family comparison. Repeated physical probe records are deduplicated, not independent replications. Image-weighted and equal-person MAE are separate denominators; no new interval or significance test, age-removal claim, mechanism or identity-independence clearance.}
+\label{tab:age-probe-absolute-points}
+\centering\scriptsize
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Model/reference & Image-weighted MAE & Equal-person MAE \\
+\midrule
+Fit-only mean & 9.4523 & 9.3086 \\
+Fit-only median & 9.1354 & 9.0775 \\
+Strong frozen & 9.9156 & 10.2270 \\
+Strong random head, LR $10^{-5}$, seed 1 & 8.9230 & 8.9645 \\
+Strong random head, LR $10^{-5}$, seed 2 & 8.8890 & 8.9003 \\
+Strong random head, LR $10^{-5}$, seed 42 & 9.1964 & 9.2281 \\
+Strong random head, LR $10^{-6}$, seed 1 & 9.9099 & 10.0599 \\
+Strong random head, LR $10^{-6}$, seed 2 & 9.9149 & 10.0634 \\
+Strong random head, LR $10^{-6}$, seed 42 & 9.9424 & 10.0899 \\
+Strong random tail, LR $10^{-6}$, seed 1 & 8.2777 & 8.5267 \\
+Strong random tail, LR $10^{-6}$, seed 2 & 8.3478 & 8.5830 \\
+Strong random tail, LR $10^{-6}$, seed 42 & 8.3245 & 8.5659 \\
+Weak frozen & 5.7657 & 5.9908 \\
+Weak, seed 1 & 5.9866 & 6.1513 \\
+Weak, seed 2 & 5.9962 & 6.1627 \\
+Weak, seed 42 & 5.9123 & 6.0781 \\
+\bottomrule
+\end{tabular}
+\end{table}
+% END GENERATED ABSOLUTE AGE POINTS V3
+
+\section{Partial Fixed8 AdaFace ROC-v2}\label{sec:strong-fixed8-roc-v2}
+Nine completed cells cover random negatives: head/tail at learning rate $10^{-6}$
+and head at $10^{-5}$, each with seeds 42/1/2; they are not the full matrix. Overall evaluation
+uses 5{,}308 pairs/82 subjects, the 25+ stratum 430 pairs/75 subjects, from the same 650 images.
+Tables~\ref{tab:strong-fixed8-overall} and~\ref{tab:strong-fixed8-large-gap-25plus}
+report each checkpoint separately. In the initial six LR $10^{-6}$ cells,
+overall head AUC decreases; tail AUC-change intervals include zero. Overall EER
+and both low-FAR TAR changes are unfavorable with nominal conditional intervals
+excluding zero; all 25+ change intervals include zero for those six cells.
+For all three LR $10^{-5}$ head checkpoints, 25+ AUC decreases and EER increases
+with conditional intervals excluding zero; TAR at FAR 0.1\% also decreases.
+The 25+ TAR-change interval at FAR 1\% includes zero for seed2, but excludes it
+for seeds42/1. These are checkpoint-conditional results, not intervals of seed means.
+No equivalence or mechanism follows from an
+inconclusive interval. These strata share FG-NET, and identity independence remains
+unverified. Source-bound generated tables do not recover missing validation loss.
+
+% BEGIN GENERATED STRONG FIXED8 ROC V1
+\begin{table*}[!t]
+\caption{Overall: 9 evaluated fixed8 AdaFace checkpoints from the 36-cell matrix. Entries and paired subject intervals are per checkpoint, not a seed mean or an ensemble. No training-seed population inference, mechanism claim or identity-independence clearance. Empirical thresholds are reselected, not deployment-calibrated; no multiplicity correction.}
+\label{tab:strong-fixed8-overall}
+\centering\scriptsize
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Cell & Metric & Frozen & Tuned & Delta & Paired delta 95\% CI \\
+\midrule
+random/head/1e-05/s1 & ROC-AUC & 0.9896 & 0.9606 & -0.0290 & $[-0.0397,-0.0190]$ \\
+random/head/1e-05/s1 & Interpolated EER & 0.0452 & 0.1010 & +0.0558 & $[+0.0364,+0.0716]$ \\
+random/head/1e-05/s1 & Discrete minimax EER & 0.0452 & 0.1010 & +0.0558 & $[+0.0364,+0.0716]$ \\
+random/head/1e-05/s1 & TAR@FAR=1\% & 0.8971 & 0.6654 & -0.2317 & $[-0.2788,-0.1574]$ \\
+random/head/1e-05/s1 & TAR@FAR=0.1\% & 0.7931 & 0.5607 & -0.2325 & $[-0.3432,-0.1359]$ \\
+random/head/1e-05/s2 & ROC-AUC & 0.9896 & 0.9604 & -0.0292 & $[-0.0397,-0.0190]$ \\
+random/head/1e-05/s2 & Interpolated EER & 0.0452 & 0.0995 & +0.0543 & $[+0.0363,+0.0725]$ \\
+random/head/1e-05/s2 & Discrete minimax EER & 0.0452 & 0.0995 & +0.0543 & $[+0.0363,+0.0725]$ \\
+random/head/1e-05/s2 & TAR@FAR=1\% & 0.8971 & 0.6669 & -0.2302 & $[-0.2812,-0.1600]$ \\
+random/head/1e-05/s2 & TAR@FAR=0.1\% & 0.7931 & 0.5452 & -0.2479 & $[-0.3635,-0.1381]$ \\
+random/head/1e-05/s42 & ROC-AUC & 0.9896 & 0.9612 & -0.0284 & $[-0.0391,-0.0185]$ \\
+random/head/1e-05/s42 & Interpolated EER & 0.0452 & 0.0998 & +0.0546 & $[+0.0356,+0.0709]$ \\
+random/head/1e-05/s42 & Discrete minimax EER & 0.0452 & 0.0998 & +0.0546 & $[+0.0356,+0.0709]$ \\
+random/head/1e-05/s42 & TAR@FAR=1\% & 0.8971 & 0.6639 & -0.2332 & $[-0.2809,-0.1591]$ \\
+random/head/1e-05/s42 & TAR@FAR=0.1\% & 0.7931 & 0.5659 & -0.2272 & $[-0.3477,-0.1418]$ \\
+random/head/1e-06/s1 & ROC-AUC & 0.9896 & 0.9824 & -0.0071 & $[-0.0113,-0.0031]$ \\
+random/head/1e-06/s1 & Interpolated EER & 0.0452 & 0.0659 & +0.0207 & $[+0.0098,+0.0318]$ \\
+random/head/1e-06/s1 & Discrete minimax EER & 0.0452 & 0.0659 & +0.0207 & $[+0.0098,+0.0318]$ \\
+random/head/1e-06/s1 & TAR@FAR=1\% & 0.8971 & 0.8399 & -0.0573 & $[-0.1091,-0.0179]$ \\
+random/head/1e-06/s1 & TAR@FAR=0.1\% & 0.7931 & 0.7442 & -0.0490 & $[-0.1337,-0.0045]$ \\
+random/head/1e-06/s2 & ROC-AUC & 0.9896 & 0.9823 & -0.0072 & $[-0.0114,-0.0032]$ \\
+random/head/1e-06/s2 & Interpolated EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0099,+0.0321]$ \\
+random/head/1e-06/s2 & Discrete minimax EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0099,+0.0321]$ \\
+random/head/1e-06/s2 & TAR@FAR=1\% & 0.8971 & 0.8399 & -0.0573 & $[-0.1091,-0.0177]$ \\
+random/head/1e-06/s2 & TAR@FAR=0.1\% & 0.7931 & 0.7408 & -0.0524 & $[-0.1354,-0.0053]$ \\
+random/head/1e-06/s42 & ROC-AUC & 0.9896 & 0.9825 & -0.0071 & $[-0.0113,-0.0031]$ \\
+random/head/1e-06/s42 & Interpolated EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0097,+0.0316]$ \\
+random/head/1e-06/s42 & Discrete minimax EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0097,+0.0316]$ \\
+random/head/1e-06/s42 & TAR@FAR=1\% & 0.8971 & 0.8402 & -0.0569 & $[-0.1083,-0.0172]$ \\
+random/head/1e-06/s42 & TAR@FAR=0.1\% & 0.7931 & 0.7468 & -0.0463 & $[-0.1305,-0.0037]$ \\
+random/tail/1e-06/s1 & ROC-AUC & 0.9896 & 0.9846 & -0.0050 & $[-0.0110,+0.0002]$ \\
+random/tail/1e-06/s1 & Interpolated EER & 0.0452 & 0.0625 & +0.0173 & $[+0.0035,+0.0307]$ \\
+random/tail/1e-06/s1 & Discrete minimax EER & 0.0452 & 0.0625 & +0.0173 & $[+0.0035,+0.0307]$ \\
+random/tail/1e-06/s1 & TAR@FAR=1\% & 0.8971 & 0.8173 & -0.0799 & $[-0.1385,-0.0124]$ \\
+random/tail/1e-06/s1 & TAR@FAR=0.1\% & 0.7931 & 0.6895 & -0.1036 & $[-0.3002,-0.0187]$ \\
+random/tail/1e-06/s2 & ROC-AUC & 0.9896 & 0.9850 & -0.0045 & $[-0.0103,+0.0006]$ \\
+random/tail/1e-06/s2 & Interpolated EER & 0.0452 & 0.0618 & +0.0166 & $[+0.0027,+0.0306]$ \\
+random/tail/1e-06/s2 & Discrete minimax EER & 0.0452 & 0.0618 & +0.0166 & $[+0.0027,+0.0306]$ \\
+random/tail/1e-06/s2 & TAR@FAR=1\% & 0.8971 & 0.8210 & -0.0761 & $[-0.1407,-0.0119]$ \\
+random/tail/1e-06/s2 & TAR@FAR=0.1\% & 0.7931 & 0.6937 & -0.0995 & $[-0.2949,-0.0199]$ \\
+random/tail/1e-06/s42 & ROC-AUC & 0.9896 & 0.9850 & -0.0046 & $[-0.0104,+0.0006]$ \\
+random/tail/1e-06/s42 & Interpolated EER & 0.0452 & 0.0614 & +0.0162 & $[+0.0028,+0.0299]$ \\
+random/tail/1e-06/s42 & Discrete minimax EER & 0.0452 & 0.0614 & +0.0162 & $[+0.0028,+0.0299]$ \\
+random/tail/1e-06/s42 & TAR@FAR=1\% & 0.8971 & 0.8210 & -0.0761 & $[-0.1392,-0.0126]$ \\
+random/tail/1e-06/s42 & TAR@FAR=0.1\% & 0.7931 & 0.6963 & -0.0968 & $[-0.2976,-0.0188]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[!t]
+\caption{25+ years: 9 evaluated fixed8 AdaFace checkpoints from the 36-cell matrix. Entries and paired subject intervals are per checkpoint, not a seed mean or an ensemble. No training-seed population inference, mechanism claim or identity-independence clearance. Empirical thresholds are reselected, not deployment-calibrated; no multiplicity correction.}
+\label{tab:strong-fixed8-large-gap-25plus}
+\centering\scriptsize
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Cell & Metric & Frozen & Tuned & Delta & Paired delta 95\% CI \\
+\midrule
+random/head/1e-05/s1 & ROC-AUC & 0.9676 & 0.9130 & -0.0547 & $[-0.0997,-0.0205]$ \\
+random/head/1e-05/s1 & Interpolated EER & 0.0837 & 0.1814 & +0.0977 & $[+0.0336,+0.1584]$ \\
+random/head/1e-05/s1 & Discrete minimax EER & 0.0837 & 0.1814 & +0.0977 & $[+0.0336,+0.1584]$ \\
+random/head/1e-05/s1 & TAR@FAR=1\% & 0.7628 & 0.5209 & -0.2419 & $[-0.4972,-0.0118]$ \\
+random/head/1e-05/s1 & TAR@FAR=0.1\% & 0.6977 & 0.3860 & -0.3116 & $[-0.5094,-0.0303]$ \\
+random/head/1e-05/s2 & ROC-AUC & 0.9676 & 0.9133 & -0.0544 & $[-0.0986,-0.0211]$ \\
+random/head/1e-05/s2 & Interpolated EER & 0.0837 & 0.1814 & +0.0977 & $[+0.0331,+0.1530]$ \\
+random/head/1e-05/s2 & Discrete minimax EER & 0.0837 & 0.1814 & +0.0977 & $[+0.0331,+0.1530]$ \\
+random/head/1e-05/s2 & TAR@FAR=1\% & 0.7628 & 0.5023 & -0.2605 & $[-0.4916,+0.0048]$ \\
+random/head/1e-05/s2 & TAR@FAR=0.1\% & 0.6977 & 0.3907 & -0.3070 & $[-0.5132,-0.0186]$ \\
+random/head/1e-05/s42 & ROC-AUC & 0.9676 & 0.9164 & -0.0512 & $[-0.0946,-0.0184]$ \\
+random/head/1e-05/s42 & Interpolated EER & 0.0837 & 0.1721 & +0.0884 & $[+0.0298,+0.1502]$ \\
+random/head/1e-05/s42 & Discrete minimax EER & 0.0837 & 0.1721 & +0.0884 & $[+0.0298,+0.1502]$ \\
+random/head/1e-05/s42 & TAR@FAR=1\% & 0.7628 & 0.5070 & -0.2558 & $[-0.4630,-0.0033]$ \\
+random/head/1e-05/s42 & TAR@FAR=0.1\% & 0.6977 & 0.4140 & -0.2837 & $[-0.4788,-0.0231]$ \\
+random/head/1e-06/s1 & ROC-AUC & 0.9676 & 0.9658 & -0.0018 & $[-0.0144,+0.0110]$ \\
+random/head/1e-06/s1 & Interpolated EER & 0.0837 & 0.0884 & +0.0047 & $[-0.0380,+0.0312]$ \\
+random/head/1e-06/s1 & Discrete minimax EER & 0.0837 & 0.0884 & +0.0047 & $[-0.0380,+0.0312]$ \\
+random/head/1e-06/s1 & TAR@FAR=1\% & 0.7628 & 0.8000 & +0.0372 & $[-0.0779,+0.1442]$ \\
+random/head/1e-06/s1 & TAR@FAR=0.1\% & 0.6977 & 0.7767 & +0.0791 & $[-0.0639,+0.1385]$ \\
+random/head/1e-06/s2 & ROC-AUC & 0.9676 & 0.9658 & -0.0018 & $[-0.0148,+0.0112]$ \\
+random/head/1e-06/s2 & Interpolated EER & 0.0837 & 0.0837 & +0.0000 & $[-0.0382,+0.0317]$ \\
+random/head/1e-06/s2 & Discrete minimax EER & 0.0837 & 0.0837 & +0.0000 & $[-0.0382,+0.0317]$ \\
+random/head/1e-06/s2 & TAR@FAR=1\% & 0.7628 & 0.8047 & +0.0419 & $[-0.0787,+0.1468]$ \\
+random/head/1e-06/s2 & TAR@FAR=0.1\% & 0.6977 & 0.7814 & +0.0837 & $[-0.0645,+0.1420]$ \\
+random/head/1e-06/s42 & ROC-AUC & 0.9676 & 0.9656 & -0.0020 & $[-0.0148,+0.0110]$ \\
+random/head/1e-06/s42 & Interpolated EER & 0.0837 & 0.0837 & +0.0000 & $[-0.0390,+0.0311]$ \\
+random/head/1e-06/s42 & Discrete minimax EER & 0.0837 & 0.0837 & +0.0000 & $[-0.0390,+0.0311]$ \\
+random/head/1e-06/s42 & TAR@FAR=1\% & 0.7628 & 0.8000 & +0.0372 & $[-0.0789,+0.1445]$ \\
+random/head/1e-06/s42 & TAR@FAR=0.1\% & 0.6977 & 0.7767 & +0.0791 & $[-0.0667,+0.1381]$ \\
+random/tail/1e-06/s1 & ROC-AUC & 0.9676 & 0.9718 & +0.0042 & $[-0.0221,+0.0272]$ \\
+random/tail/1e-06/s1 & Interpolated EER & 0.0837 & 0.0791 & -0.0047 & $[-0.0497,+0.0503]$ \\
+random/tail/1e-06/s1 & Discrete minimax EER & 0.0837 & 0.0791 & -0.0047 & $[-0.0497,+0.0503]$ \\
+random/tail/1e-06/s1 & TAR@FAR=1\% & 0.7628 & 0.7581 & -0.0047 & $[-0.3615,+0.1297]$ \\
+random/tail/1e-06/s1 & TAR@FAR=0.1\% & 0.6977 & 0.4279 & -0.2698 & $[-0.3957,+0.1273]$ \\
+random/tail/1e-06/s2 & ROC-AUC & 0.9676 & 0.9728 & +0.0051 & $[-0.0199,+0.0278]$ \\
+random/tail/1e-06/s2 & Interpolated EER & 0.0837 & 0.0791 & -0.0047 & $[-0.0497,+0.0486]$ \\
+random/tail/1e-06/s2 & Discrete minimax EER & 0.0837 & 0.0791 & -0.0047 & $[-0.0497,+0.0486]$ \\
+random/tail/1e-06/s2 & TAR@FAR=1\% & 0.7628 & 0.7674 & +0.0047 & $[-0.3575,+0.1341]$ \\
+random/tail/1e-06/s2 & TAR@FAR=0.1\% & 0.6977 & 0.4326 & -0.2651 & $[-0.3881,+0.1324]$ \\
+random/tail/1e-06/s42 & ROC-AUC & 0.9676 & 0.9729 & +0.0052 & $[-0.0199,+0.0278]$ \\
+random/tail/1e-06/s42 & Interpolated EER & 0.0837 & 0.0791 & -0.0047 & $[-0.0498,+0.0498]$ \\
+random/tail/1e-06/s42 & Discrete minimax EER & 0.0837 & 0.0791 & -0.0047 & $[-0.0498,+0.0498]$ \\
+random/tail/1e-06/s42 & TAR@FAR=1\% & 0.7628 & 0.7814 & +0.0186 & $[-0.3615,+0.1395]$ \\
+random/tail/1e-06/s42 & TAR@FAR=0.1\% & 0.6977 & 0.4279 & -0.2698 & $[-0.3957,+0.1347]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED STRONG FIXED8 ROC V1
 
 \section{Global FG-NET ROC-v2}\label{sec:fgnet-roc-v2}
 The original global endpoint-age-matched protocol is reconstructed from all 650 bound cached images,
@@ -440,8 +681,10 @@ map, \emph{not} a controlled comparison: the methods use different backbones, tr
 preprocessing and evaluation protocols. In particular, FG-NET leave-one-out identification (LOIO),
 megaface-style identification (MF1) and verification accuracy on fixed pair protocols answer different
 questions. Missing cells mean that the primary paper did not report that benchmark under the named
-protocol. Our complete three-seed common-backbone MTLFace and CACon experiments are reported
-separately and never mixed with this table.
+protocol. Our three-seed restricted common-backbone MTLFace/CACon-CP experiments are reported
+separately and never mixed with this table. MTLFace-CP omits joint synthesis; CACon-CP substitutes
+FRAN and lacks the supervised final-linear stage. Equal compute has not been demonstrated;
+these restricted comparators do not complete full-method reproduction.
 
 \begin{table*}[!t]
 \caption{Published results from the cited primary papers (\%). These numbers are not directly
@@ -464,11 +707,11 @@ CDD-AFL~\cite{wu2024cddafl} & -- & 94.50 & 99.50 & -- & -- \\
 \end{table*}
 
 \begin{table*}[!t]
-\caption{Historical controlled common-protocol reimplementations (mean$\pm$SD over three seeds).
+\caption{Historical restricted common-protocol variants (mean$\pm$SD over three seeds).
 ArcFace-R50/CASIA, recorded person-group split and eight-epoch requested budget are fixed.
 FG-NET columns use legacy random impostors; the corrected endpoint-age-matched results follow.
 All entries are ROC-AUC except LFW accuracy. Identity purity still awaits human review.
-This is not an exact reproduction of published large-scale systems.}
+Omitted stages are disclosed above; equal compute and full-method parity are not established.}
 \label{tab:controlled-sota}
 \centering
 \footnotesize
@@ -663,7 +906,7 @@ epoch in both arms; the earlier best-validation comparison selected LOW epoch 1
 versus CROSS epoch 10 and is not used for fixed-step inference.
 
 \begin{table}[!t]
-\caption{Fixed-epoch VK LOW/CROSS control on the endpoint-age-matched FG-NET
+\caption{Historical fixed-epoch VK LOW/CROSS control with unequal full image budgets; not the replacement experiment below. Endpoint-age-matched FG-NET
 25+ protocol (215 positive/215 negative pairs, 75 subjects). CIs resample
 subjects on both sides of a pair; all seeds reuse the same people.}
 \label{tab:matched-source}
@@ -691,6 +934,72 @@ also require blinded adjudication. The manifest-backed local evidence is
 \path{metrics/matched_agegap_fixed10_last/summary.json} and its six run
 records; no face crops or biometric templates are part of the submission.
 
+\subsection{Full-image-budget replacement}
+Each replacement arm uses 500 recorded people, 1{,}096 total images and 600
+positive/600 negative pairs. Within each arm, negative assignment matches
+positive ordered endpoint ages and image exposure; between-arm age/quality and
+person selection remain different. Original FaceNet/CASIA head fine-tuning uses
+uniform row shuffle, batch 64, LR $3\times10^{-5}$, frozen-all BatchNorm statistics,
+and epoch 10 (last), on CUDA for all seeds 42/1/2. This changes data construction
+and BatchNorm policy relative to the historical experiment, not just hardware.
+
+\begin{table}[!t]
+\caption{Replacement CUDA LOW/CROSS control. Means across three checkpoints; paired subject-bootstrap 95\% CI for CROSS minus LOW, not an ensemble AUC. Smaller EER is better.}
+\label{tab:oriented-source}
+\centering\footnotesize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Subset & Metric & Frozen & LOW & CROSS & $\Delta$ [95\% CI] \\
+\midrule
+Overall & AUC & .8870 & .8829 & .8865 & +.0036 [$-.0021,+.0107$] \\
+25+ & AUC & .8023 & .7932 & .7963 & +.0031 [$-.0198,+.0261$] \\
+25+ & EER & .2791 & .2760 & .2899 & +.0140 [$-.0301,+.0500$] \\
+25+ & TAR@FAR .01 & .4465 & .4186 & .3643 & $-.0543$ [$-.1277,+.0868$] \\
+25+ & TAR@FAR .001 & .4233 & .3721 & .3581 & $-.0140$ [$-.1209,+.0783$] \\
+\bottomrule
+\end{tabular}}
+\end{table}
+Overall has 5{,}308 pairs/82 subjects; 25+ has 430 pairs/75 subjects, all
+215 source large-gap positives retained. Both strata share the FG-NET corpus.
+All 2{,}000 bootstrap draws are valid, shared across models; positive pairs use
+owner multiplicity once, negatives endpoint multiplicity products. Intervals are
+conditional on fixed checkpoints/protocol, not a training-seed population, and
+are not multiplicity-corrected. ROC thresholds are reselected on evaluation
+scores, not development-calibrated deployment thresholds. Interpolated and
+discrete-minimax EER coincide at the reported point estimates.
+The 25+ AUC leave-one-subject-out CROSS--LOW range is $[-.0011,+.0076]$;
+both this sensitivity and the CI fail to establish superiority. CROSS versus
+frozen AUC difference is $-.0060$ with CI $[-.0324,+.0217]$.
+No causal source claim or training-identity independence is established.
+Evidence: \path{metrics/oriented_cuda_fgnet_20261004/summary.json} and native
+manifest; full score/embedding artifacts are private biometric data, not public
+submission attachments. Generic/co-occurrence controls and human overlap
+adjudication remain open.
+
+\subsection{Fixed-permutation supervision-noise sensitivity}
+Using the same full-budget CROSS images, negative pairs, held-out data and
+fixed10/last/frozen-BatchNorm protocol, permutation seed 42 changes 576 of 600
+positive-label pairs to different recorded persons, retaining 24 genuine pairs.
+This is 96\% artificial positive-label noise (48\% of all rows), not an estimate
+of mining error. Training seeds 42/1/2 are distinct from the permutation seed.
+On the shared endpoint-age-matched FG-NET protocol, mean AUC falls from 0.8865
+to 0.8653 overall (noise--clean $-0.0212$, paired subject 95\% CI
+$[-0.0260,-0.0164]$), and from 0.7963 to 0.7748 on 25+
+($-0.0216$, CI $[-0.0319,-0.0114]$). All three per-checkpoint 25+ AUC
+intervals exclude zero; leave-one-subject-out mean differences remain negative
+($[-0.0230,-0.0199]$). However, 25+ EER changes from 0.2899 to 0.3070
+($+0.0171$, CI $[-0.0039,+0.0409]$), TAR@FAR1\% from 0.3643 to 0.3411
+($-0.0233$, CI $[-0.0962,+0.0061]$), and TAR@FAR0.1\% from 0.3581 to 0.3333
+($-0.0248$, CI $[-0.0857,+0.0067]$): those intervals include zero.
+All 2{,}000 shared subject-bootstrap draws are valid in both strata;
+conditioning, endpoint weights and test-derived threshold limitations are
+as above. The result supports sensitivity to this specific artificial permutation,
+not robustness across permutations, empirical annotation precision, co-occurrence
+control or causal source superiority. Evidence:
+\path{metrics/oriented_noise_cuda_fgnet_20261004/summary.json} and native manifest;
+private score/embedding artifacts are not public attachments.
+
 \section{Figures Referenced from the Main Paper}\label{sec:figs}
 These five plots visualize the headroom, data-scaling, objective, apparent-attribute and external-benchmark results. Secondary scaling/fairness/hard-negative tables are kept here so the main manuscript remains focused and within the 10-page limit.
 
@@ -703,7 +1012,7 @@ These five plots visualize the headroom, data-scaling, objective, apparent-attri
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_scaling.pdf}
+\includegraphics[width=\columnwidth]{fig_scaling_layout_v2.pdf}
 \caption{Exploratory scaling sweep: external (FG-NET large-gap) and internal (our.25+) ROC-AUC vs.\ training identities (log scale). The recorded 10\% point reaches roughly 96\% of the gain, but intermediate checkpoints were overwritten; shaded bands show the recorded seed variation, not yet a fully checkpoint-verifiable result.}
 \label{fig:scaling}
 \end{figure}
@@ -724,7 +1033,7 @@ These five plots visualize the headroom, data-scaling, objective, apparent-attri
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_external.pdf}
+\includegraphics[width=\columnwidth]{fig_external_layout_v2.pdf}
 \caption{Historical random-impostor external results, not the corrected endpoint-age-matched FG-NET headline. The $+$pairs gain over the frozen baseline (with the historical 95\% CIs) is shown for FG-NET large-gap, a child$\leftrightarrow$adult subset of the same FG-NET corpus, and a separate cross-platform Reddit source. The two FG-NET estimates are dependent; these gains must not be substituted for corrected-protocol results.}
 \label{fig:external}
 \end{figure}

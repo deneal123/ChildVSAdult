@@ -1,0 +1,17 @@
+{
+  "recorded_by": "root coordinator after authoritative execution-handle polling",
+  "check_date": "2026-10-03",
+  "session_id": 75476,
+  "terminal_exit_code": 1,
+  "execution_complete": false,
+  "last_reported_completed_role": "frozen",
+  "last_reported_started_role": "tuned_seed42",
+  "completed_summary_manifest_present": false,
+  "partial_cache_files": ["private/embeddings_frozen.npz"],
+  "terminal_traceback_captured": false,
+  "failure_cause": "undetermined; contemporaneous exporter MemoryError and memory pressure do not establish this process cause",
+  "source_plan_reverification": "99 inputs and 1 plan output valid after failure",
+  "partial_embeddings_are_completed_scientific_result": false,
+  "retry_performed": false,
+  "publication_ready": false
+}

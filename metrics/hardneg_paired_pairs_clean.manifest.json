@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "experiment": "paired-lookalike-impostor-model-comparison",
+  "created_at_utc": "2026-09-23T18:43:20.476873+00:00",
+  "command": [
+    "scripts/hardneg_paired.py",
+    "--a",
+    "facenet:tuned",
+    "--b",
+    "adaface_ir101",
+    "--tuned-suffix",
+    "pairs_clean",
+    "--manifest-only"
+  ],
+  "parameters": {
+    "model_a": "facenet:tuned",
+    "model_b": "adaface_ir101",
+    "crops": "faces",
+    "tuned_suffix": "pairs_clean",
+    "max_age_difference": 5.0,
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 0,
+    "ranks": [
+      1,
+      10,
+      50,
+      200
+    ],
+    "manifest_only": true
+  },
+  "metrics": {
+    "random": {
+      "facenet:tuned": 0.8109,
+      "adaface_ir101": 0.9555,
+      "delta": -0.1446,
+      "delta_ci95": [
+        -0.1777,
+        -0.1127
+      ],
+      "P(delta>0)": 0.0,
+      "n_pos": 141,
+      "n_neg": 4762
+    },
+    "rank200": {
+      "facenet:tuned": 0.7592,
+      "adaface_ir101": 0.9218,
+      "delta": -0.1627,
+      "delta_ci95": [
+        -0.2019,
+        -0.1227
+      ],
+      "P(delta>0)": 0.0,
+      "n_pos": 141,
+      "n_neg": 4762
+    },
+    "rank50": {
+      "facenet:tuned": 0.6573,
+      "adaface_ir101": 0.8354,
+      "delta": -0.1782,
+      "delta_ci95": [
+        -0.2244,
+        -0.1282
+      ],
+      "P(delta>0)": 0.0,
+      "n_pos": 141,
+      "n_neg": 4762
+    },
+    "rank10": {
+      "facenet:tuned": 0.5623,
+      "adaface_ir101": 0.7045,
+      "delta": -0.1422,
+      "delta_ci95": [
+        -0.1904,
+        -0.0896
+      ],
+      "P(delta>0)": 0.0,
+      "n_pos": 141,
+      "n_neg": 4762
+    },
+    "rank1": {
+      "facenet:tuned": 0.4041,
+      "adaface_ir101": 0.4743,
+      "delta": -0.0702,
+      "delta_ci95": [
+        -0.1123,
+        -0.0248
+      ],
+      "P(delta>0)": 0.001,
+      "n_pos": 141,
+      "n_neg": 4762
+    }
+  },
+  "inputs": [
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    },
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "data/interim/face_genderage.jsonl",
+      "bytes": 3357793,
+      "sha256": "e09ae22c379b40d375dbf0c1e327724cb6fe4b82cadd8d654a5fe03bcef952e7"
+    },
+    {
+      "path": "cache/embeddings/baseline_arcface.npz",
+      "bytes": 102874027,
+      "sha256": "5d0167ad5f16c2241ee435fd31d2c6e18577fd181ee1e9b3bcffc065b0773a16"
+    },
+    {
+      "path": "models/bb_facenet_pairs_clean.pt",
+      "bytes": 115981621,
+      "sha256": "9b7ceee8e66dfe975081c928aaa2b24fdf547d3abf68b5c73cc7b38f063405a9"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "metrics/hardneg_paired_pairs_clean.json",
+      "bytes": 1135,
+      "sha256": "6f69594c94835af321f6bea27ddad78ec9c512fa2288b2838ef10f788b597264"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

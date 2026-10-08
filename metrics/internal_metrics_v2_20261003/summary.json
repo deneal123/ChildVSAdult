@@ -1,0 +1,378 @@
+{
+  "metric_version": "empirical-roc-v2",
+  "subsets": {
+    "original_tolerance": {
+      "n_positive": 154,
+      "n_negative": 154,
+      "recorded_people": 216,
+      "metrics": {
+        "roc_auc": {
+          "frozen": {
+            "point": 0.7676252319109462,
+            "ci95": [
+              0.6768948125122404,
+              0.8520542046300726
+            ]
+          },
+          "tuned": {
+            "point": 0.8330662843649856,
+            "ci95": [
+              0.7523520260416318,
+              0.9060184447042706
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": 0.06544105245403942,
+            "ci95": [
+              0.0051202181675655154,
+              0.13060306155043208
+            ]
+          }
+        },
+        "eer_interpolated": {
+          "frozen": {
+            "point": 0.3181818181818182,
+            "ci95": [
+              0.21738105004101718,
+              0.40335474358539786
+            ]
+          },
+          "tuned": {
+            "point": 0.2597402597402597,
+            "ci95": [
+              0.17276584220978516,
+              0.35136386386386376
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": -0.05844155844155846,
+            "ci95": [
+              -0.14125517149339376,
+              0.035460992907801414
+            ]
+          }
+        },
+        "eer_discrete_minimax": {
+          "frozen": {
+            "point": 0.3181818181818182,
+            "ci95": [
+              0.21738105004101718,
+              0.40335474358539786
+            ]
+          },
+          "tuned": {
+            "point": 0.2597402597402597,
+            "ci95": [
+              0.17276584220978516,
+              0.35136386386386376
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": -0.05844155844155846,
+            "ci95": [
+              -0.14125517149339376,
+              0.035460992907801414
+            ]
+          }
+        },
+        "tar@far=0.01": {
+          "frozen": {
+            "point": 0.33766233766233766,
+            "ci95": [
+              0.22287483266398928,
+              0.5460144454596876
+            ]
+          },
+          "tuned": {
+            "point": 0.4025974025974026,
+            "ci95": [
+              0.16778415241394243,
+              0.6064755077658303
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": 0.06493506493506496,
+            "ci95": [
+              -0.21540123456790125,
+              0.2258523472331495
+            ]
+          }
+        },
+        "tar@far=0.001": {
+          "frozen": {
+            "point": 0.3246753246753247,
+            "ci95": [
+              0.21498991935483872,
+              0.5266736526946106
+            ]
+          },
+          "tuned": {
+            "point": 0.2532467532467532,
+            "ci95": [
+              0.1575244618395303,
+              0.5750289735099335
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": -0.07142857142857145,
+            "ci95": [
+              -0.2202468487394958,
+              0.20412665066026386
+            ]
+          }
+        }
+      },
+      "operating_points": {
+        "frozen": {
+          "0.01": {
+            "tar": 0.33766233766233766,
+            "far_achieved": 0.006493506493506494,
+            "similarity_threshold": 0.3581051230430603,
+            "reject_all": false
+          },
+          "0.001": {
+            "tar": 0.3246753246753247,
+            "far_achieved": 0.0,
+            "similarity_threshold": 0.3681071996688843,
+            "reject_all": false
+          }
+        },
+        "tuned": {
+          "0.01": {
+            "tar": 0.4025974025974026,
+            "far_achieved": 0.006493506493506494,
+            "similarity_threshold": 0.3018583059310913,
+            "reject_all": false
+          },
+          "0.001": {
+            "tar": 0.2532467532467532,
+            "far_achieved": 0.0,
+            "similarity_threshold": 0.366968035697937,
+            "reject_all": false
+          }
+        }
+      }
+    },
+    "exact_age_subset": {
+      "n_positive": 140,
+      "n_negative": 140,
+      "recorded_people": 203,
+      "metrics": {
+        "roc_auc": {
+          "frozen": {
+            "point": 0.77,
+            "ci95": [
+              0.6698967109039099,
+              0.8588699255199205
+            ]
+          },
+          "tuned": {
+            "point": 0.8410204081632654,
+            "ci95": [
+              0.7516776788780344,
+              0.9170069197640406
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": 0.07102040816326538,
+            "ci95": [
+              0.00757696757212695,
+              0.1406726871612958
+            ]
+          }
+        },
+        "eer_interpolated": {
+          "frozen": {
+            "point": 0.3142857142857143,
+            "ci95": [
+              0.20976128188358403,
+              0.40790570175438595
+            ]
+          },
+          "tuned": {
+            "point": 0.2571428571428571,
+            "ci95": [
+              0.15383211678832118,
+              0.3453372640233677
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": -0.05714285714285716,
+            "ci95": [
+              -0.15727384940927522,
+              0.03449788263762854
+            ]
+          }
+        },
+        "eer_discrete_minimax": {
+          "frozen": {
+            "point": 0.3142857142857143,
+            "ci95": [
+              0.20976128188358403,
+              0.40790570175438595
+            ]
+          },
+          "tuned": {
+            "point": 0.2571428571428571,
+            "ci95": [
+              0.15383211678832118,
+              0.3453372640233677
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": -0.05714285714285716,
+            "ci95": [
+              -0.15727384940927522,
+              0.03449788263762854
+            ]
+          }
+        },
+        "tar@far=0.01": {
+          "frozen": {
+            "point": 0.36428571428571427,
+            "ci95": [
+              0.19752680311890838,
+              0.5413533834586466
+            ]
+          },
+          "tuned": {
+            "point": 0.39285714285714285,
+            "ci95": [
+              0.151497113997114,
+              0.6159893381334808
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": 0.02857142857142858,
+            "ci95": [
+              -0.21239460664762036,
+              0.2619047619047619
+            ]
+          }
+        },
+        "tar@far=0.001": {
+          "frozen": {
+            "point": 0.29285714285714287,
+            "ci95": [
+              0.18790897651006713,
+              0.5151658090337334
+            ]
+          },
+          "tuned": {
+            "point": 0.24285714285714285,
+            "ci95": [
+              0.14166482300884956,
+              0.5901639344262295
+            ]
+          },
+          "tuned_minus_frozen": {
+            "point": -0.05000000000000002,
+            "ci95": [
+              -0.2222222222222222,
+              0.2373083131557707
+            ]
+          }
+        }
+      },
+      "operating_points": {
+        "frozen": {
+          "0.01": {
+            "tar": 0.36428571428571427,
+            "far_achieved": 0.007142857142857143,
+            "similarity_threshold": 0.32019713521003723,
+            "reject_all": false
+          },
+          "0.001": {
+            "tar": 0.29285714285714287,
+            "far_achieved": 0.0,
+            "similarity_threshold": 0.3736453056335449,
+            "reject_all": false
+          }
+        },
+        "tuned": {
+          "0.01": {
+            "tar": 0.39285714285714285,
+            "far_achieved": 0.007142857142857143,
+            "similarity_threshold": 0.3018583059310913,
+            "reject_all": false
+          },
+          "0.001": {
+            "tar": 0.24285714285714285,
+            "far_achieved": 0.0,
+            "similarity_threshold": 0.366968035697937,
+            "reject_all": false
+          }
+        }
+      }
+    }
+  },
+  "exact_minus_original_model_delta": {
+    "roc_auc": {
+      "point": 0.005579355709225964,
+      "ci95": [
+        -0.008321748548251268,
+        0.029608821298345234
+      ]
+    },
+    "eer_interpolated": {
+      "point": 0.0012987012987012991,
+      "ci95": [
+        -0.05703703270962603,
+        0.03615177985564295
+      ]
+    },
+    "eer_discrete_minimax": {
+      "point": 0.0012987012987012991,
+      "ci95": [
+        -0.05703703270962603,
+        0.03615177985564295
+      ]
+    },
+    "tar@far=0.01": {
+      "point": -0.036363636363636376,
+      "ci95": [
+        -0.10894360856928917,
+        0.08871415226431924
+      ]
+    },
+    "tar@far=0.001": {
+      "point": 0.021428571428571436,
+      "ci95": [
+        -0.10204510224725853,
+        0.07623402895768237
+      ]
+    }
+  },
+  "bootstrap": {
+    "seed": 42,
+    "requested": 2000,
+    "valid": 2000,
+    "recorded_people": 216,
+    "sampling": "joint recorded-person dyad-multiplicity product; positive/negative matched block same weight",
+    "scope": "conditional fixed checkpoint, selected protocol and reselected test ROC thresholds; not training-seed uncertainty",
+    "threshold_reselection": true,
+    "multiple_comparisons_corrected": false
+  },
+  "scope": "paired sensitivity of saved internal scores; subset selection changes composition; no new training or image processing",
+  "eer_scope": "interpolated ROC crossing and discrete minimax reported separately; do not pool with differently defined EER",
+  "deployment_calibration": false,
+  "verified_identity_independence": false,
+  "publication_ready": false,
+  "source_protocol": {
+    "rule": "retain original whole matched blocks iff both endpoint ages exactly equal; no re-mining or score-based selection",
+    "original_blocks": 154,
+    "exact_blocks": 140,
+    "retained_fraction": 0.9090909090909091,
+    "original_recorded_people": 216,
+    "exact_recorded_people": 203,
+    "bootstrap_seed": 42,
+    "n_boot": 2000,
+    "training_seed": 42,
+    "device": "cpu",
+    "threads": 2,
+    "selection_based_on_scores": false,
+    "public_preregistration": false,
+    "publication_ready": false,
+    "limits": "subset changes age/identity composition; does not test causal shortcut use or exact rematching coverage; legacy training provenance unverified"
+  }
+}

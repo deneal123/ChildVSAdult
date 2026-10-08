@@ -1,0 +1,25 @@
+{
+  "arms": {
+    "LOW": {
+      "affected_singleton_people": 1,
+      "eligible_new_people": 395,
+      "maximum_candidate_attempts": 64,
+      "complete": false,
+      "source_profile": {
+        "positive_pairs": 600,
+        "images": 1096,
+        "recorded_people": 500
+      }
+    }
+  },
+  "complete": false,
+  "training_ready": false,
+  "publication_ready": false,
+  "scope": "bounded repair failed; not global positive-selection impossibility",
+  "replacement_quality_sidecar": {
+    "duplicate_rows": 19,
+    "excluded_duplicate_faces": 6,
+    "conflicting_rows": 0,
+    "policy": "all duplicate face keys excluded from replacement eligibility"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "experiment": "strong-backbone-mechanism-study",
+  "created_at_utc": "2026-09-25T16:57:17.101103+00:00",
+  "command": [
+    "scripts\\strong_backbone_study.py"
+  ],
+  "parameters": {
+    "backbone": "adaface_ir101",
+    "negative_type": "random",
+    "scope": "head",
+    "learning_rate": 1e-05,
+    "seed": 1,
+    "epochs": 8,
+    "patience": 3,
+    "batch_size": 16
+  },
+  "metrics": {
+    "LFW.acc": 0.9831666666666665,
+    "agedb_30.acc": 0.9766666666666666,
+    "agedb_30.roc": 0.9892132222222222,
+    "calfw.acc": 0.9561666666666667,
+    "calfw.roc": 0.9753715555555555,
+    "cacd_vs.acc": 0.9935,
+    "cacd_vs.roc": 0.99571275,
+    "cacd_vs.eer": 0.009499999999999953,
+    "cacd_vs.tar@far=0.01": 0.9905,
+    "cacd_vs.tar@far=0.001": 0.9865,
+    "fgnet.roc": 0.9844874623795009,
+    "fgnet.large_gap": 0.9454682211357653,
+    "our.overall": 0.9886269739077763,
+    "our.25+": 0.9680270776804946,
+    "linear_cka": 0.8802396059036255,
+    "mean_cosine_drift": 0.0979500263929367,
+    "frozen_identity_separability": 0.4035327136516571,
+    "tuned_identity_separability": 0.4204220175743103,
+    "frozen_age_gap_probe_mae": 14.61406832690878,
+    "tuned_age_gap_probe_mae": 15.295265013092394,
+    "diagnostic_pairs": 512.0
+  },
+  "inputs": [
+    {
+      "path": "data/processed/pairs.jsonl",
+      "bytes": 23882451,
+      "sha256": "3d30730ccbc6d07e4a82236aa8d82ce19f08c9bd49fce8cb0a96fea348b7ae5d"
+    },
+    {
+      "path": "models/adaface_ir101.pt",
+      "bytes": 261111273,
+      "sha256": "e312d79222d28027f146ed495e182e48fe0dddf404cdbbdabcccdbdd07cc3758"
+    },
+    {
+      "path": "metrics/model_inventory.json",
+      "bytes": 4937,
+      "sha256": "b8a7fa564cb1fb1105362fcd69d5e33f3a1feda98011c94c4c7291954061f245"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "models/strong_backbone_study/e8_random_head_lr1e-05_s1.pt",
+      "bytes": 261180091,
+      "sha256": "aabfd44f53b6e1ac182e20a0ace73516e3f9eeff9a9c0b6b30b956d21ee67e7b"
+    },
+    {
+      "path": "metrics/strong_backbone_study/run_e8_random_head_lr1e-05_s1.json",
+      "bytes": 3139,
+      "sha256": "2c13ce053a324f647926db7cf6558a723d1980b7b06481e19e413fcfd515a8b3"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "torch": "2.12.0+cu132",
+      "torchvision": "0.27.0+cu132",
+      "scikit-learn": "1.9.0",
+      "opencv-python-headless": "4.13.0.92"
+    }
+  },
+  "git": {
+    "commit": "45bb1c87b948b0a98acdf2fe653319d5c99261ad",
+    "branch": "research",
+    "dirty": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "protocol": "official identity-disjoint 10 folds",
+  "checkpoints": [
+    "models\\bb_facenet_seed42.pt",
+    "models\\bb_facenet_seed1.pt",
+    "models\\bb_facenet_seed2.pt"
+  ],
+  "metrics": {
+    "accuracy_10fold": {
+      "mean": 0.9700000000000001,
+      "std": 0.0027499999999999747,
+      "n_seeds": 3
+    },
+    "eer": {
+      "mean": 0.031333333333333324,
+      "std": 0.0012583057392117633,
+      "n_seeds": 3
+    },
+    "roc_auc": {
+      "mean": 0.9946635,
+      "std": 0.00016979417687306667,
+      "n_seeds": 3
+    },
+    "tar@far=0.001": {
+      "mean": 0.8896666666666667,
+      "std": 0.006658328118479399,
+      "n_seeds": 3
+    },
+    "tar@far=0.01": {
+      "mean": 0.9483333333333333,
+      "std": 0.0020816659994661343,
+      "n_seeds": 3
+    }
+  }
+}

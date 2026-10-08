@@ -1,0 +1,36 @@
+{
+  "diagnostic_complete": true,
+  "training_complete": false,
+  "scientific_evaluation_complete": false,
+  "full_method_parity": false,
+  "optimizer_steps": 3,
+  "eval_forwards": 3,
+  "pairs_presented": 48,
+  "probe_parameter_changed": true,
+  "steps": [
+    {
+      "step": 1,
+      "pairs": 16,
+      "loss": 0.3742724061012268,
+      "peak_allocated_mib": 4570.84521484375,
+      "peak_reserved_mib": 5376.0,
+      "elapsed_seconds": 38.28200000000652
+    },
+    {
+      "step": 2,
+      "pairs": 16,
+      "loss": 0.3350432515144348,
+      "peak_allocated_mib": 5081.62353515625,
+      "peak_reserved_mib": 5582.0,
+      "elapsed_seconds": 43.53200000000652
+    },
+    {
+      "step": 3,
+      "pairs": 16,
+      "loss": 0.36060500144958496,
+      "peak_allocated_mib": 5082.70166015625,
+      "peak_reserved_mib": 5582.0,
+      "elapsed_seconds": 47.78200000000652
+    }
+  ]
+}

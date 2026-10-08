@@ -1,0 +1,345 @@
+{
+  "overall": {
+    "metric_version": "empirical-roc-v2",
+    "n_pairs": 5308,
+    "n_subjects": 82,
+    "actual_tuned_checkpoint_count": 1,
+    "models": {
+      "frozen": {
+        "roc_auc": {
+          "point": 0.9895657349047008,
+          "ci95": [
+            0.9844207661435129,
+            0.993852297788308
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "eer_interpolated": {
+          "point": 0.045214770158251705,
+          "ci95": [
+            0.03363586828760458,
+            0.0580687295887972
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "eer_discrete_minimax": {
+          "point": 0.045214770158251705,
+          "ci95": [
+            0.03363586828760458,
+            0.0580687295887972
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "tar@far=0.01": {
+          "point": 0.8971363978899773,
+          "ci95": [
+            0.8643575503205535,
+            0.9345255847094083
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "tar@far=0.001": {
+          "point": 0.7931424265259985,
+          "ci95": [
+            0.7567171270076334,
+            0.8774062740675541
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        }
+      },
+      "random_tail_lr1e-06_s2": {
+        "roc_auc": {
+          "point": 0.9850492268569602,
+          "ci95": [
+            0.9778452110988497,
+            0.9908881659054304
+          ],
+          "delta_vs_frozen": -0.004516508047740619,
+          "delta_ci95": [
+            -0.010323686731093507,
+            0.0006444948491227179
+          ],
+          "loo_delta_min": -0.005561805033259093,
+          "loo_delta_max": -0.003231925181139683
+        },
+        "eer_interpolated": {
+          "point": 0.06179351921627732,
+          "ci95": [
+            0.047233306180126444,
+            0.07824697647079777
+          ],
+          "delta_vs_frozen": 0.016578749058025616,
+          "delta_ci95": [
+            0.002732166241619352,
+            0.030550208254090175
+          ],
+          "loo_delta_min": 0.014572501121233296,
+          "loo_delta_max": 0.018574205138633643
+        },
+        "eer_discrete_minimax": {
+          "point": 0.06179351921627732,
+          "ci95": [
+            0.047233306180126444,
+            0.07824697647079777
+          ],
+          "delta_vs_frozen": 0.016578749058025616,
+          "delta_ci95": [
+            0.002732166241619352,
+            0.030550208254090175
+          ],
+          "loo_delta_min": 0.014572501121233296,
+          "loo_delta_max": 0.018574205138633643
+        },
+        "tar@far=0.01": {
+          "point": 0.821024868123587,
+          "ci95": [
+            0.7597914455798007,
+            0.8929199763823901
+          ],
+          "delta_vs_frozen": -0.07611152976639035,
+          "delta_ci95": [
+            -0.1406794024617497,
+            -0.0119048573117534
+          ],
+          "loo_delta_min": -0.08895825204838081,
+          "loo_delta_max": -0.06799083269671502
+        },
+        "tar@far=0.001": {
+          "point": 0.6936699321778448,
+          "ci95": [
+            0.5314941595718935,
+            0.7760503629764065
+          ],
+          "delta_vs_frozen": -0.09947249434815375,
+          "delta_ci95": [
+            -0.2948713035442488,
+            -0.01985646254417629
+          ],
+          "loo_delta_min": -0.11497326203208558,
+          "loo_delta_max": -0.08541746825702201
+        }
+      }
+    },
+    "loo_valid": 82,
+    "loo_unavailable": 0,
+    "bootstrap": {
+      "requested": 2000,
+      "valid": 2000,
+      "seed": 0,
+      "shared_draws_across_models": true,
+      "positive_weight": "owner multiplicity once",
+      "negative_weight": "endpoint multiplicity product",
+      "thresholds_reselected": true
+    },
+    "scope": "individual fixed-checkpoint subject intervals; no fabricated three-seed aggregate, no training-seed population inference; test ROC not deployment calibration; not multiplicity corrected",
+    "training_identity_independence": "unverified",
+    "publication_ready": false
+  },
+  "large_gap_25plus": {
+    "metric_version": "empirical-roc-v2",
+    "n_pairs": 430,
+    "n_subjects": 75,
+    "actual_tuned_checkpoint_count": 1,
+    "models": {
+      "frozen": {
+        "roc_auc": {
+          "point": 0.9676365603028665,
+          "ci95": [
+            0.9343526413118497,
+            0.9926066011025059
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "eer_interpolated": {
+          "point": 0.08372093023255814,
+          "ci95": [
+            0.04093500797448166,
+            0.13659180872118992
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "eer_discrete_minimax": {
+          "point": 0.08372093023255814,
+          "ci95": [
+            0.04093500797448166,
+            0.13659180872118992
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "tar@far=0.01": {
+          "point": 0.7627906976744186,
+          "ci95": [
+            0.620683362698213,
+            0.9150981338481335
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        },
+        "tar@far=0.001": {
+          "point": 0.6976744186046512,
+          "ci95": [
+            0.6052597840755736,
+            0.8959879490090833
+          ],
+          "delta_vs_frozen": 0.0,
+          "delta_ci95": [
+            0.0,
+            0.0
+          ],
+          "loo_delta_min": null,
+          "loo_delta_max": null
+        }
+      },
+      "random_tail_lr1e-06_s2": {
+        "roc_auc": {
+          "point": 0.9727852893455923,
+          "ci95": [
+            0.9444907553107789,
+            0.9916752438278557
+          ],
+          "delta_vs_frozen": 0.005148729042725786,
+          "delta_ci95": [
+            -0.019937043317150724,
+            0.027790984246201935
+          ],
+          "loo_delta_min": -0.0017203996983408132,
+          "loo_delta_max": 0.009546925566343067
+        },
+        "eer_interpolated": {
+          "point": 0.07906976744186046,
+          "ci95": [
+            0.03783783783783784,
+            0.14400169491525422
+          ],
+          "delta_vs_frozen": -0.004651162790697674,
+          "delta_ci95": [
+            -0.04972593410574581,
+            0.048622468284840924
+          ],
+          "loo_delta_min": -0.014043085067274474,
+          "loo_delta_max": 0.005050505050505041
+        },
+        "eer_discrete_minimax": {
+          "point": 0.07906976744186046,
+          "ci95": [
+            0.03783783783783784,
+            0.14400169491525422
+          ],
+          "delta_vs_frozen": -0.004651162790697674,
+          "delta_ci95": [
+            -0.04972593410574581,
+            0.048622468284840924
+          ],
+          "loo_delta_min": -0.014043085067274474,
+          "loo_delta_max": 0.005050505050505041
+        },
+        "tar@far=0.01": {
+          "point": 0.7674418604651163,
+          "ci95": [
+            0.3828520408163265,
+            0.9086548913043478
+          ],
+          "delta_vs_frozen": 0.0046511627906976605,
+          "delta_ci95": [
+            -0.3574666098323387,
+            0.13411251105216618
+          ],
+          "loo_delta_min": -0.02450980392156854,
+          "loo_delta_max": 0.039408866995073955
+        },
+        "tar@far=0.001": {
+          "point": 0.4325581395348837,
+          "ci95": [
+            0.3535749106272343,
+            0.870984992237364
+          ],
+          "delta_vs_frozen": -0.2651162790697675,
+          "delta_ci95": [
+            -0.388089530561889,
+            0.1323774509803921
+          ],
+          "loo_delta_min": -0.326923076923077,
+          "loo_delta_max": 0.05581395348837204
+        }
+      }
+    },
+    "loo_valid": 75,
+    "loo_unavailable": 0,
+    "bootstrap": {
+      "requested": 2000,
+      "valid": 2000,
+      "seed": 0,
+      "shared_draws_across_models": true,
+      "positive_weight": "owner multiplicity once",
+      "negative_weight": "endpoint multiplicity product",
+      "thresholds_reselected": true
+    },
+    "scope": "individual fixed-checkpoint subject intervals; no fabricated three-seed aggregate, no training-seed population inference; test ROC not deployment calibration; not multiplicity corrected",
+    "training_identity_independence": "unverified",
+    "publication_ready": false
+  },
+  "execution_complete": true,
+  "publication_ready": false,
+  "coverage": {
+    "source_positives": 2659,
+    "retained_positives": 2654,
+    "source_25plus_positives": 215,
+    "retained_25plus_positives": 215
+  },
+  "peak_allocated_bytes": 484335616,
+  "peak_reserved_bytes": 517996544,
+  "limitation": "actual fixed checkpoints; both strata share FG-NET; completed matrix and representation diagnostics remain separate"
+}

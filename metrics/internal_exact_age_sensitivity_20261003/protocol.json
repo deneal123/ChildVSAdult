@@ -1,0 +1,17 @@
+{
+  "rule": "retain original whole matched blocks iff both endpoint ages exactly equal; no re-mining or score-based selection",
+  "original_blocks": 154,
+  "exact_blocks": 140,
+  "retained_fraction": 0.9090909090909091,
+  "original_recorded_people": 216,
+  "exact_recorded_people": 203,
+  "bootstrap_seed": 42,
+  "n_boot": 2000,
+  "training_seed": 42,
+  "device": "cpu",
+  "threads": 2,
+  "selection_based_on_scores": false,
+  "public_preregistration": false,
+  "publication_ready": false,
+  "limits": "subset changes age/identity composition; does not test causal shortcut use or exact rematching coverage; legacy training provenance unverified"
+}

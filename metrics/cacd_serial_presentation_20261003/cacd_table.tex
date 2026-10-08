@@ -1,0 +1,19 @@
+% BEGIN GENERATED CACD SERIAL ROC V2
+\begin{table*}[!t]
+\caption{Source-bound CACD-VS serial ROC-v2 evaluation: 4{,}000 official pairs, ten folds. Mean/SD describe three fixed legacy training checkpoints, not an ensemble or training-seed population. Paired mean-change intervals resample pairs jointly across checkpoints within each fold/class, conditional on these weights; reused subjects/photos are not accounted for without person metadata. Accuracy selects a fixed-grid threshold on the other nine folds, reselected per draw. ROC operating points are test-derived, not deployment-calibrated. Negative EER change is improvement. Historical CACD operating points are not pooled.}
+\label{tab:cacd-serial-roc-v2}
+\centering\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Metric & Frozen & Tuned mean$\pm$SD & Tuned$-$frozen & Paired pair 95\% CI \\
+\midrule
+ROC-AUC & 0.9948 & 0.9947$\pm$0.0002 & -0.0001 & $[-0.0011,+0.0009]$ \\
+Interpolated EER & 0.0220 & 0.0313$\pm$0.0013 & +0.0093 & $[+0.0050,+0.0145]$ \\
+Discrete minimax EER & 0.0220 & 0.0313$\pm$0.0013 & +0.0093 & $[+0.0050,+0.0145]$ \\
+TAR@FAR=1\% & 0.9625 & 0.9493$\pm$0.0023 & -0.0132 & $[-0.0283,-0.0020]$ \\
+TAR@FAR=0.1\% & 0.8955 & 0.8985$\pm$0.0083 & +0.0030 & $[-0.0415,+0.0343]$ \\
+LOFO fixed-grid accuracy & 0.9790 & 0.9707$\pm$0.0018 & -0.0083 & $[-0.0139,-0.0019]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED CACD SERIAL ROC V2

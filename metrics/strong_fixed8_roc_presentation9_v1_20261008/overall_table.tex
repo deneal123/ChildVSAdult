@@ -1,0 +1,56 @@
+\begin{table*}[!t]
+\caption{Overall: 9 evaluated fixed8 AdaFace checkpoints from the 36-cell matrix. Entries and paired subject intervals are per checkpoint, not a seed mean or an ensemble. No training-seed population inference, mechanism claim or identity-independence clearance. Empirical thresholds are reselected, not deployment-calibrated; no multiplicity correction.}
+\label{tab:strong-fixed8-overall}
+\centering\scriptsize
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Cell & Metric & Frozen & Tuned & Delta & Paired delta 95\% CI \\
+\midrule
+random/head/1e-05/s1 & ROC-AUC & 0.9896 & 0.9606 & -0.0290 & $[-0.0397,-0.0190]$ \\
+random/head/1e-05/s1 & Interpolated EER & 0.0452 & 0.1010 & +0.0558 & $[+0.0364,+0.0716]$ \\
+random/head/1e-05/s1 & Discrete minimax EER & 0.0452 & 0.1010 & +0.0558 & $[+0.0364,+0.0716]$ \\
+random/head/1e-05/s1 & TAR@FAR=1\% & 0.8971 & 0.6654 & -0.2317 & $[-0.2788,-0.1574]$ \\
+random/head/1e-05/s1 & TAR@FAR=0.1\% & 0.7931 & 0.5607 & -0.2325 & $[-0.3432,-0.1359]$ \\
+random/head/1e-05/s2 & ROC-AUC & 0.9896 & 0.9604 & -0.0292 & $[-0.0397,-0.0190]$ \\
+random/head/1e-05/s2 & Interpolated EER & 0.0452 & 0.0995 & +0.0543 & $[+0.0363,+0.0725]$ \\
+random/head/1e-05/s2 & Discrete minimax EER & 0.0452 & 0.0995 & +0.0543 & $[+0.0363,+0.0725]$ \\
+random/head/1e-05/s2 & TAR@FAR=1\% & 0.8971 & 0.6669 & -0.2302 & $[-0.2812,-0.1600]$ \\
+random/head/1e-05/s2 & TAR@FAR=0.1\% & 0.7931 & 0.5452 & -0.2479 & $[-0.3635,-0.1381]$ \\
+random/head/1e-05/s42 & ROC-AUC & 0.9896 & 0.9612 & -0.0284 & $[-0.0391,-0.0185]$ \\
+random/head/1e-05/s42 & Interpolated EER & 0.0452 & 0.0998 & +0.0546 & $[+0.0356,+0.0709]$ \\
+random/head/1e-05/s42 & Discrete minimax EER & 0.0452 & 0.0998 & +0.0546 & $[+0.0356,+0.0709]$ \\
+random/head/1e-05/s42 & TAR@FAR=1\% & 0.8971 & 0.6639 & -0.2332 & $[-0.2809,-0.1591]$ \\
+random/head/1e-05/s42 & TAR@FAR=0.1\% & 0.7931 & 0.5659 & -0.2272 & $[-0.3477,-0.1418]$ \\
+random/head/1e-06/s1 & ROC-AUC & 0.9896 & 0.9824 & -0.0071 & $[-0.0113,-0.0031]$ \\
+random/head/1e-06/s1 & Interpolated EER & 0.0452 & 0.0659 & +0.0207 & $[+0.0098,+0.0318]$ \\
+random/head/1e-06/s1 & Discrete minimax EER & 0.0452 & 0.0659 & +0.0207 & $[+0.0098,+0.0318]$ \\
+random/head/1e-06/s1 & TAR@FAR=1\% & 0.8971 & 0.8399 & -0.0573 & $[-0.1091,-0.0179]$ \\
+random/head/1e-06/s1 & TAR@FAR=0.1\% & 0.7931 & 0.7442 & -0.0490 & $[-0.1337,-0.0045]$ \\
+random/head/1e-06/s2 & ROC-AUC & 0.9896 & 0.9823 & -0.0072 & $[-0.0114,-0.0032]$ \\
+random/head/1e-06/s2 & Interpolated EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0099,+0.0321]$ \\
+random/head/1e-06/s2 & Discrete minimax EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0099,+0.0321]$ \\
+random/head/1e-06/s2 & TAR@FAR=1\% & 0.8971 & 0.8399 & -0.0573 & $[-0.1091,-0.0177]$ \\
+random/head/1e-06/s2 & TAR@FAR=0.1\% & 0.7931 & 0.7408 & -0.0524 & $[-0.1354,-0.0053]$ \\
+random/head/1e-06/s42 & ROC-AUC & 0.9896 & 0.9825 & -0.0071 & $[-0.0113,-0.0031]$ \\
+random/head/1e-06/s42 & Interpolated EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0097,+0.0316]$ \\
+random/head/1e-06/s42 & Discrete minimax EER & 0.0452 & 0.0663 & +0.0211 & $[+0.0097,+0.0316]$ \\
+random/head/1e-06/s42 & TAR@FAR=1\% & 0.8971 & 0.8402 & -0.0569 & $[-0.1083,-0.0172]$ \\
+random/head/1e-06/s42 & TAR@FAR=0.1\% & 0.7931 & 0.7468 & -0.0463 & $[-0.1305,-0.0037]$ \\
+random/tail/1e-06/s1 & ROC-AUC & 0.9896 & 0.9846 & -0.0050 & $[-0.0110,+0.0002]$ \\
+random/tail/1e-06/s1 & Interpolated EER & 0.0452 & 0.0625 & +0.0173 & $[+0.0035,+0.0307]$ \\
+random/tail/1e-06/s1 & Discrete minimax EER & 0.0452 & 0.0625 & +0.0173 & $[+0.0035,+0.0307]$ \\
+random/tail/1e-06/s1 & TAR@FAR=1\% & 0.8971 & 0.8173 & -0.0799 & $[-0.1385,-0.0124]$ \\
+random/tail/1e-06/s1 & TAR@FAR=0.1\% & 0.7931 & 0.6895 & -0.1036 & $[-0.3002,-0.0187]$ \\
+random/tail/1e-06/s2 & ROC-AUC & 0.9896 & 0.9850 & -0.0045 & $[-0.0103,+0.0006]$ \\
+random/tail/1e-06/s2 & Interpolated EER & 0.0452 & 0.0618 & +0.0166 & $[+0.0027,+0.0306]$ \\
+random/tail/1e-06/s2 & Discrete minimax EER & 0.0452 & 0.0618 & +0.0166 & $[+0.0027,+0.0306]$ \\
+random/tail/1e-06/s2 & TAR@FAR=1\% & 0.8971 & 0.8210 & -0.0761 & $[-0.1407,-0.0119]$ \\
+random/tail/1e-06/s2 & TAR@FAR=0.1\% & 0.7931 & 0.6937 & -0.0995 & $[-0.2949,-0.0199]$ \\
+random/tail/1e-06/s42 & ROC-AUC & 0.9896 & 0.9850 & -0.0046 & $[-0.0104,+0.0006]$ \\
+random/tail/1e-06/s42 & Interpolated EER & 0.0452 & 0.0614 & +0.0162 & $[+0.0028,+0.0299]$ \\
+random/tail/1e-06/s42 & Discrete minimax EER & 0.0452 & 0.0614 & +0.0162 & $[+0.0028,+0.0299]$ \\
+random/tail/1e-06/s42 & TAR@FAR=1\% & 0.8971 & 0.8210 & -0.0761 & $[-0.1392,-0.0126]$ \\
+random/tail/1e-06/s42 & TAR@FAR=0.1\% & 0.7931 & 0.6963 & -0.0968 & $[-0.2976,-0.0188]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

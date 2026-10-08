@@ -1,0 +1,23 @@
+% BEGIN GENERATED FGNET ROC V2
+\begin{table*}[!t]
+\caption{Global endpoint-age-matched FG-NET ROC-v2: overall 2654 positive/negative pairs and 82 subjects; 25+ stratum 215 positive/negative pairs and 75 subjects. Shared person bootstrap across frozen and three tuned checkpoints; positive weight is one owner multiplicity, negative weight the product of both endpoints. Tuned entries are mean and SD of checkpoint metrics; paired delta CI is conditional on these fixed weights, not a training-seed population interval. TAR maximizes attainable empirical ROC at FAR no greater than target, accepting tied scores together. Thresholds are reselected per draw, not calibrated for deployment. Interpolated and discrete minimax EER are separate definitions; negative EER deltas favor tuning. Intervals are not multiplicity-corrected; training independence remains unverified.}
+\label{tab:fgnet-roc-v2}
+\centering\footnotesize
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Stratum & Metric & Frozen & Tuned mean$\pm$SD & Mean delta & Paired delta 95\% CI \\
+\midrule
+Overall & ROC-AUC & 0.8870 & 0.9202$\pm$0.0005 & +0.0332 & $[+0.0151,+0.0504]$ \\
+Overall & Interpolated EER & 0.1929 & 0.1531$\pm$0.0011 & -0.0398 & $[-0.0618,-0.0156]$ \\
+Overall & Discrete minimax EER & 0.1929 & 0.1531$\pm$0.0011 & -0.0398 & $[-0.0618,-0.0156]$ \\
+Overall & TAR@FAR=1\% & 0.4819 & 0.5677$\pm$0.0042 & +0.0858 & $[-0.0138,+0.1683]$ \\
+Overall & TAR@FAR=0.1\% & 0.3056 & 0.3016$\pm$0.0325 & -0.0040 & $[-0.1912,+0.2154]$ \\
+25+ years & ROC-AUC & 0.8023 & 0.8491$\pm$0.0017 & +0.0468 & $[+0.0074,+0.0916]$ \\
+25+ years & Interpolated EER & 0.2791 & 0.2202$\pm$0.0027 & -0.0589 & $[-0.1084,+0.0076]$ \\
+25+ years & Discrete minimax EER & 0.2791 & 0.2202$\pm$0.0027 & -0.0589 & $[-0.1084,+0.0076]$ \\
+25+ years & TAR@FAR=1\% & 0.4465 & 0.4434$\pm$0.0107 & -0.0031 & $[-0.1606,+0.0947]$ \\
+25+ years & TAR@FAR=0.1\% & 0.4233 & 0.3271$\pm$0.0117 & -0.0961 & $[-0.1653,+0.0876]$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% END GENERATED FGNET ROC V2

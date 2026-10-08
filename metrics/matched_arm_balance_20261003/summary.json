@@ -1,0 +1,1404 @@
+{
+  "arms": {
+    "LOW": {
+      "train_positive_pairs": 600,
+      "train_negative_pairs": 600,
+      "unique_images": 1096,
+      "recorded_people": 500,
+      "unique_photos_with_metadata": 1096,
+      "images_missing_quality_rows": 0,
+      "image_reuse_minimum": 1,
+      "image_reuse_maximum": 8,
+      "image_reuse_mean": 2.18978102189781,
+      "label_age_auc": {
+        "age_a": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5
+        },
+        "age_b": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5000027777777778
+        },
+        "age_gap": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5003875
+        },
+        "age_younger": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5
+        },
+        "age_older": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5000027777777778
+        }
+      },
+      "label_quality_pair_min_auc": {
+        "image_width": {
+          "n_total": 1200,
+          "n_observed": 1196,
+          "n_missing": 4,
+          "observed_positive": 598,
+          "observed_negative": 598,
+          "auc_positive_higher": 0.5499896533595822
+        },
+        "image_height": {
+          "n_total": 1200,
+          "n_observed": 1196,
+          "n_missing": 4,
+          "observed_positive": 598,
+          "observed_negative": 598,
+          "auc_positive_higher": 0.5432909027863222
+        },
+        "face_width": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5346416666666667
+        },
+        "face_height": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5335333333333334
+        },
+        "blur_var": {
+          "n_total": 1200,
+          "n_observed": 1196,
+          "n_missing": 4,
+          "observed_positive": 598,
+          "observed_negative": 598,
+          "auc_positive_higher": 0.5146530799431773
+        },
+        "det_score": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5099027777777778
+        },
+        "face_quality_score": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5177361111111112
+        },
+        "pose_yaw_proxy_abs": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5263333333333333
+        },
+        "pose_roll_rad_abs": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5240472222222222
+        }
+      }
+    },
+    "CROSS": {
+      "train_positive_pairs": 600,
+      "train_negative_pairs": 600,
+      "unique_images": 1096,
+      "recorded_people": 500,
+      "unique_photos_with_metadata": 1096,
+      "images_missing_quality_rows": 0,
+      "image_reuse_minimum": 1,
+      "image_reuse_maximum": 8,
+      "image_reuse_mean": 2.18978102189781,
+      "label_age_auc": {
+        "age_a": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5
+        },
+        "age_b": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5000083333333333
+        },
+        "age_gap": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5000291666666666
+        },
+        "age_younger": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.49999999999999994
+        },
+        "age_older": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5000083333333333
+        }
+      },
+      "label_quality_pair_min_auc": {
+        "image_width": {
+          "n_total": 1200,
+          "n_observed": 1162,
+          "n_missing": 38,
+          "observed_positive": 581,
+          "observed_negative": 581,
+          "auc_positive_higher": 0.5117860179345363
+        },
+        "image_height": {
+          "n_total": 1200,
+          "n_observed": 1162,
+          "n_missing": 38,
+          "observed_positive": 581,
+          "observed_negative": 581,
+          "auc_positive_higher": 0.5208125346233717
+        },
+        "face_width": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.505525
+        },
+        "face_height": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5076083333333333
+        },
+        "blur_var": {
+          "n_total": 1200,
+          "n_observed": 1162,
+          "n_missing": 38,
+          "observed_positive": 581,
+          "observed_negative": 581,
+          "auc_positive_higher": 0.5111757578630233
+        },
+        "det_score": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5022083333333334
+        },
+        "face_quality_score": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5040319444444444
+        },
+        "pose_yaw_proxy_abs": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.5071388888888889
+        },
+        "pose_roll_rad_abs": {
+          "n_total": 1200,
+          "n_observed": 1200,
+          "n_missing": 0,
+          "observed_positive": 600,
+          "observed_negative": 600,
+          "auc_positive_higher": 0.512598611111111
+        }
+      }
+    }
+  },
+  "unique_image_view": {
+    "caption_age": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 39.0,
+        "mean": 16.971715328467152,
+        "population_sd": 6.111503689732917,
+        "p05_p25_median_p75_p95": [
+          4.0,
+          14.0,
+          17.0,
+          20.0,
+          26.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 97.0,
+        "mean": 22.833029197080293,
+        "population_sd": 17.68026148840615,
+        "p05_p25_median_p75_p95": [
+          2.0,
+          5.0,
+          28.0,
+          35.0,
+          51.25
+        ]
+      },
+      "cross_minus_low_mean": 5.861313868613141,
+      "smd_cross_minus_low": 0.4431103195971213,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5763746903138154,
+      "ecdf_max_distance": 0.4680656934306569,
+      "observed_range_overlap": [
+        1.0,
+        39.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.8357664233576643
+    },
+    "image_width": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1094,
+        "n_missing": 2,
+        "minimum": 310.0,
+        "maximum": 2560.0,
+        "mean": 1115.254113345521,
+        "population_sd": 492.06919683695685,
+        "p05_p25_median_p75_p95": [
+          506.95000000000005,
+          750.0,
+          970.0,
+          1364.75,
+          2045.6999999999998
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1079,
+        "n_missing": 17,
+        "minimum": 179.0,
+        "maximum": 2560.0,
+        "mean": 1191.0157553290082,
+        "population_sd": 547.9380209670419,
+        "p05_p25_median_p75_p95": [
+          365.5,
+          743.5,
+          1159.0,
+          1620.0,
+          1963.5999999999985
+        ]
+      },
+      "cross_minus_low_mean": 75.76164198348715,
+      "smd_cross_minus_low": 0.1454846855198102,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5433102117371186,
+      "ecdf_max_distance": 0.13076889190851437,
+      "observed_range_overlap": [
+        310.0,
+        2560.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9786839666357738
+    },
+    "image_height": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1094,
+        "n_missing": 2,
+        "minimum": 269.0,
+        "maximum": 2560.0,
+        "mean": 1313.9579524680073,
+        "population_sd": 537.6502350015949,
+        "p05_p25_median_p75_p95": [
+          600.0,
+          960.0,
+          1200.0,
+          1612.5,
+          2560.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1079,
+        "n_missing": 17,
+        "minimum": 216.0,
+        "maximum": 2560.0,
+        "mean": 1567.002780352178,
+        "population_sd": 699.7010661794499,
+        "p05_p25_median_p75_p95": [
+          480.0,
+          1023.0,
+          1542.0,
+          2160.0,
+          2560.0
+        ]
+      },
+      "cross_minus_low_mean": 253.04482788417067,
+      "smd_cross_minus_low": 0.40554728480661095,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.6028789606464107,
+      "ecdf_max_distance": 0.21000299891733998,
+      "observed_range_overlap": [
+        269.0,
+        2560.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9990732159406858
+    },
+    "face_width": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 48.519073486328125,
+        "maximum": 1296.5427856445312,
+        "mean": 292.2579638171588,
+        "population_sd": 184.50383635417268,
+        "p05_p25_median_p75_p95": [
+          79.83749389648438,
+          151.2388038635254,
+          248.6232147216797,
+          382.6252670288086,
+          674.0838623046875
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 48.361854553222656,
+        "maximum": 1394.51904296875,
+        "mean": 324.143028176614,
+        "population_sd": 219.84902031238252,
+        "p05_p25_median_p75_p95": [
+          77.86978912353516,
+          148.48341751098633,
+          264.8250274658203,
+          448.6729202270508,
+          764.4586029052734
+        ]
+      },
+      "cross_minus_low_mean": 31.885064359455214,
+      "smd_cross_minus_low": 0.15711002710459895,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5277127510789067,
+      "ecdf_max_distance": 0.08394160583941612,
+      "observed_range_overlap": [
+        48.519073486328125,
+        1296.5427856445312
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9981751824817519
+    },
+    "face_height": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 57.90538024902344,
+        "maximum": 1467.7092590332031,
+        "mean": 379.662011042346,
+        "population_sd": 238.1306333990865,
+        "p05_p25_median_p75_p95": [
+          101.9092788696289,
+          194.60817337036133,
+          329.2653856277466,
+          492.03073596954346,
+          860.9222030639648
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 55.56561279296875,
+        "maximum": 1603.548583984375,
+        "mean": 424.8258277491061,
+        "population_sd": 292.624535369777,
+        "p05_p25_median_p75_p95": [
+          100.95252990722656,
+          190.66532135009766,
+          340.8297309875488,
+          589.1547374725342,
+          986.8698501586914
+        ]
+      },
+      "cross_minus_low_mean": 45.16381670676009,
+      "smd_cross_minus_low": 0.16929701357574825,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5275812176993979,
+      "ecdf_max_distance": 0.09306569343065685,
+      "observed_range_overlap": [
+        57.90538024902344,
+        1467.7092590332031
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9936131386861314
+    },
+    "blur_var": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1094,
+        "n_missing": 2,
+        "minimum": 30.024442140993063,
+        "maximum": 8768.28339278591,
+        "mean": 354.4086562715227,
+        "population_sd": 586.4813292278723,
+        "p05_p25_median_p75_p95": [
+          41.53852379902811,
+          85.25815406895714,
+          169.09333787108244,
+          371.4909276573836,
+          1221.381324248398
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1079,
+        "n_missing": 17,
+        "minimum": 30.1516484851502,
+        "maximum": 5479.277760218442,
+        "mean": 262.6420569825951,
+        "population_sd": 440.9325398179124,
+        "p05_p25_median_p75_p95": [
+          34.83042941184883,
+          58.46159247598889,
+          117.76125002322867,
+          278.6519647834126,
+          947.0995260897728
+        ]
+      },
+      "cross_minus_low_mean": -91.76659928892764,
+      "smd_cross_minus_low": -0.17687010298943695,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.4078290379913692,
+      "ecdf_max_distance": 0.15065154444243017,
+      "observed_range_overlap": [
+        30.1516484851502,
+        5479.277760218442
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9981718464351006,
+      "CROSS_fraction_within_LOW_observed_range": 1.0
+    },
+    "det_score": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 0.5352,
+        "maximum": 0.9215,
+        "mean": 0.8258827554744526,
+        "population_sd": 0.05958018797672316,
+        "p05_p25_median_p75_p95": [
+          0.7128749999999999,
+          0.79375,
+          0.83875,
+          0.868725,
+          0.8992
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 0.5483,
+        "maximum": 0.9254,
+        "mean": 0.8258867700729927,
+        "population_sd": 0.055218834376139656,
+        "p05_p25_median_p75_p95": [
+          0.7239500000000001,
+          0.79395,
+          0.83585,
+          0.8682,
+          0.8967
+        ]
+      },
+      "cross_minus_low_mean": 4.014598540158509e-06,
+      "smd_cross_minus_low": 6.98909170349907e-05,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.49170215847940757,
+      "ecdf_max_distance": 0.04470802919708028,
+      "observed_range_overlap": [
+        0.5483,
+        0.9215
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9990875912408759,
+      "CROSS_fraction_within_LOW_observed_range": 0.9990875912408759
+    },
+    "face_quality_score": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 0.5732,
+        "maximum": 0.9599,
+        "mean": 0.8318730839416059,
+        "population_sd": 0.07382002290029618,
+        "p05_p25_median_p75_p95": [
+          0.713375,
+          0.776775,
+          0.8343,
+          0.896625,
+          0.937425
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 0.4986,
+        "maximum": 0.9562,
+        "mean": 0.8105049270072993,
+        "population_sd": 0.07511746417864297,
+        "p05_p25_median_p75_p95": [
+          0.704275,
+          0.75685,
+          0.79925,
+          0.873175,
+          0.9340250000000001
+        ]
+      },
+      "cross_minus_low_mean": -0.021368156934306604,
+      "smd_cross_minus_low": -0.28693039767045453,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.41522673690660133,
+      "ecdf_max_distance": 0.15967153284671537,
+      "observed_range_overlap": [
+        0.5732,
+        0.9562
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9981751824817519,
+      "CROSS_fraction_within_LOW_observed_range": 0.9963503649635036
+    },
+    "pose_yaw_proxy_abs": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 3.715708189710342e-05,
+        "maximum": 9.437191961688058,
+        "mean": 0.18436505976814516,
+        "population_sd": 0.3645351866785386,
+        "p05_p25_median_p75_p95": [
+          0.006606808776750424,
+          0.04563766597720717,
+          0.11383975181772504,
+          0.2292177860125497,
+          0.5327841806883702
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 7.624588585795173e-05,
+        "maximum": 2.3389634351058595,
+        "mean": 0.12597846610183971,
+        "population_sd": 0.16693902065811467,
+        "p05_p25_median_p75_p95": [
+          0.0061484192822011076,
+          0.03198571006765161,
+          0.07578586538789618,
+          0.16826799057857228,
+          0.3685507455481381
+        ]
+      },
+      "cross_minus_low_mean": -0.05838659366630544,
+      "smd_cross_minus_low": -0.20594275325714403,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.41844597474559114,
+      "ecdf_max_distance": 0.14872262773722622,
+      "observed_range_overlap": [
+        7.624588585795173e-05,
+        2.3389634351058595
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9954379562043796,
+      "CROSS_fraction_within_LOW_observed_range": 1.0
+    },
+    "pose_roll_rad_abs": {
+      "LOW": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 0.0010072780922816028,
+        "maximum": 2.006954347327449,
+        "mean": 0.2272719114810781,
+        "population_sd": 0.2482128235228106,
+        "p05_p25_median_p75_p95": [
+          0.011310946623872045,
+          0.06252255011019302,
+          0.15057107954023913,
+          0.29456623176614344,
+          0.7039630712471717
+        ]
+      },
+      "CROSS": {
+        "n_total": 1096,
+        "n_observed": 1096,
+        "n_missing": 0,
+        "minimum": 0.00024753197325326487,
+        "maximum": 1.6971765329651158,
+        "mean": 0.13786681194247313,
+        "population_sd": 0.15784814812850514,
+        "p05_p25_median_p75_p95": [
+          0.006977283237541194,
+          0.032889029561108216,
+          0.08353776405354701,
+          0.18577385843453145,
+          0.4488342993425981
+        ]
+      },
+      "cross_minus_low_mean": -0.08940509953860495,
+      "smd_cross_minus_low": -0.42983806213630643,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.3717757672225478,
+      "ecdf_max_distance": 0.20894160583941607,
+      "observed_range_overlap": [
+        0.0010072780922816028,
+        1.6971765329651158
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9963503649635036,
+      "CROSS_fraction_within_LOW_observed_range": 0.9927007299270073
+    }
+  },
+  "all_train_endpoint_exposure_view": {
+    "image_width": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2396,
+        "n_missing": 4,
+        "minimum": 310.0,
+        "maximum": 2560.0,
+        "mean": 1109.5680300500835,
+        "population_sd": 490.77222203328864,
+        "p05_p25_median_p75_p95": [
+          498.25,
+          750.0,
+          966.0,
+          1359.0,
+          1944.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2362,
+        "n_missing": 38,
+        "minimum": 179.0,
+        "maximum": 2560.0,
+        "mean": 1177.5033869602032,
+        "population_sd": 551.7631643479735,
+        "p05_p25_median_p75_p95": [
+          348.5500000000001,
+          725.0,
+          1124.0,
+          1620.0,
+          1958.149999999997
+        ]
+      },
+      "cross_minus_low_mean": 67.93535691011971,
+      "smd_cross_minus_low": 0.13010474173210518,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5372835971326753,
+      "ecdf_max_distance": 0.12270980847277224,
+      "observed_range_overlap": [
+        310.0,
+        2560.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9745977984758679
+    },
+    "image_height": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2396,
+        "n_missing": 4,
+        "minimum": 269.0,
+        "maximum": 2560.0,
+        "mean": 1309.012103505843,
+        "population_sd": 536.7749894066446,
+        "p05_p25_median_p75_p95": [
+          600.0,
+          960.0,
+          1184.0,
+          1600.0,
+          2560.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2362,
+        "n_missing": 38,
+        "minimum": 216.0,
+        "maximum": 2560.0,
+        "mean": 1549.2722269263336,
+        "population_sd": 704.9140902725151,
+        "p05_p25_median_p75_p95": [
+          480.0,
+          996.0,
+          1500.0,
+          2160.0,
+          2560.0
+        ]
+      },
+      "cross_minus_low_mean": 240.26012342049057,
+      "smd_cross_minus_low": 0.3834892702552292,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5954166660776712,
+      "ecdf_max_distance": 0.2045916210901884,
+      "observed_range_overlap": [
+        269.0,
+        2560.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9991532599491956
+    },
+    "face_width": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 48.519073486328125,
+        "maximum": 1296.5427856445312,
+        "mean": 289.6191277556618,
+        "population_sd": 183.65775987502815,
+        "p05_p25_median_p75_p95": [
+          79.3536376953125,
+          148.17236709594727,
+          244.3786849975586,
+          378.3726348876953,
+          673.7975341796871
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 48.361854553222656,
+        "maximum": 1394.51904296875,
+        "mean": 320.16691292524337,
+        "population_sd": 217.38069997249326,
+        "p05_p25_median_p75_p95": [
+          77.54696960449219,
+          145.42918395996094,
+          261.552001953125,
+          441.7722053527832,
+          757.769775390625
+        ]
+      },
+      "cross_minus_low_mean": 30.547785169581573,
+      "smd_cross_minus_low": 0.1518076515161077,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5266635416666667,
+      "ecdf_max_distance": 0.08041666666666669,
+      "observed_range_overlap": [
+        48.519073486328125,
+        1296.5427856445312
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9983333333333333
+    },
+    "face_height": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 57.90538024902344,
+        "maximum": 1467.7092590332031,
+        "mean": 376.66537300169466,
+        "population_sd": 238.0324049241338,
+        "p05_p25_median_p75_p95": [
+          101.71694946289062,
+          192.26612663269043,
+          327.8863296508789,
+          489.67041015625,
+          874.7127685546875
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 55.56561279296875,
+        "maximum": 1603.548583984375,
+        "mean": 418.977073328495,
+        "population_sd": 288.55761077036345,
+        "p05_p25_median_p75_p95": [
+          99.62837219238281,
+          188.5164794921875,
+          339.07518768310547,
+          585.9028625488281,
+          973.2513763427725
+        ]
+      },
+      "cross_minus_low_mean": 42.31170032680035,
+      "smd_cross_minus_low": 0.159966094377971,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5257255208333333,
+      "ecdf_max_distance": 0.09041666666666659,
+      "observed_range_overlap": [
+        57.90538024902344,
+        1467.7092590332031
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9945833333333334
+    },
+    "blur_var": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2396,
+        "n_missing": 4,
+        "minimum": 30.024442140993063,
+        "maximum": 8768.28339278591,
+        "mean": 343.79878436992146,
+        "population_sd": 564.433063407489,
+        "p05_p25_median_p75_p95": [
+          41.32041085643006,
+          85.24280868825825,
+          167.94142636059735,
+          364.972247697829,
+          1177.6647959229163
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2362,
+        "n_missing": 38,
+        "minimum": 30.1516484851502,
+        "maximum": 5479.277760218442,
+        "mean": 263.72175708226484,
+        "population_sd": 435.03552803510814,
+        "p05_p25_median_p75_p95": [
+          34.68839255630384,
+          58.26800772129583,
+          118.06630556495202,
+          287.985037692222,
+          931.6510808839922
+        ]
+      },
+      "cross_minus_low_mean": -80.07702728765662,
+      "smd_cross_minus_low": -0.15891292951039973,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.4109694890863831,
+      "ecdf_max_distance": 0.14506501804446864,
+      "observed_range_overlap": [
+        30.1516484851502,
+        5479.277760218442
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9979131886477463,
+      "CROSS_fraction_within_LOW_observed_range": 1.0
+    },
+    "det_score": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 0.5352,
+        "maximum": 0.9215,
+        "mean": 0.8267107083333334,
+        "population_sd": 0.059085031715584255,
+        "p05_p25_median_p75_p95": [
+          0.7136,
+          0.79445,
+          0.8392,
+          0.8698,
+          0.8990049999999999
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 0.5483,
+        "maximum": 0.9254,
+        "mean": 0.825164,
+        "population_sd": 0.05667786108643597,
+        "p05_p25_median_p75_p95": [
+          0.7220799999999999,
+          0.7934749999999999,
+          0.836,
+          0.86785,
+          0.8967
+        ]
+      },
+      "cross_minus_low_mean": -0.0015467083333333687,
+      "smd_cross_minus_low": -0.026716230290773947,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.48624791666666667,
+      "ecdf_max_distance": 0.05249999999999999,
+      "observed_range_overlap": [
+        0.5483,
+        0.9215
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9991666666666666,
+      "CROSS_fraction_within_LOW_observed_range": 0.9991666666666666
+    },
+    "face_quality_score": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 0.5732,
+        "maximum": 0.9599,
+        "mean": 0.831872125,
+        "population_sd": 0.07345892538567188,
+        "p05_p25_median_p75_p95": [
+          0.714395,
+          0.7767,
+          0.8337,
+          0.8958250000000001,
+          0.9379
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 0.4986,
+        "maximum": 0.9562,
+        "mean": 0.8097926666666666,
+        "population_sd": 0.07584236742232024,
+        "p05_p25_median_p75_p95": [
+          0.70126,
+          0.75685,
+          0.7981,
+          0.872725,
+          0.9346049999999999
+        ]
+      },
+      "cross_minus_low_mean": -0.022079458333333357,
+      "smd_cross_minus_low": -0.29573280977726024,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.41370789930555557,
+      "ecdf_max_distance": 0.16583333333333333,
+      "observed_range_overlap": [
+        0.5732,
+        0.9562
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.9983333333333333,
+      "CROSS_fraction_within_LOW_observed_range": 0.9954166666666666
+    },
+    "pose_yaw_proxy_abs": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 3.715708189710342e-05,
+        "maximum": 9.437191961688058,
+        "mean": 0.18013697122536432,
+        "population_sd": 0.34524425032874007,
+        "p05_p25_median_p75_p95": [
+          0.006647467915886555,
+          0.04564427886925819,
+          0.11350906781831324,
+          0.22795805596145663,
+          0.5269261579236352
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 7.624588585795173e-05,
+        "maximum": 2.3389634351058595,
+        "mean": 0.12446477785766855,
+        "population_sd": 0.16153284708360188,
+        "p05_p25_median_p75_p95": [
+          0.006429111957456771,
+          0.031778813185204674,
+          0.07418534098622244,
+          0.1671467953895262,
+          0.36843291481351614
+        ]
+      },
+      "cross_minus_low_mean": -0.05567219336769577,
+      "smd_cross_minus_low": -0.20655740511218768,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.41749878472222224,
+      "ecdf_max_distance": 0.15333333333333332,
+      "observed_range_overlap": [
+        7.624588585795173e-05,
+        2.3389634351058595
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.99625,
+      "CROSS_fraction_within_LOW_observed_range": 1.0
+    },
+    "pose_roll_rad_abs": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 0.0010072780922816028,
+        "maximum": 2.006954347327449,
+        "mean": 0.22434972133739275,
+        "population_sd": 0.24718963935101698,
+        "p05_p25_median_p75_p95": [
+          0.010624049664542874,
+          0.059374499019893306,
+          0.14760137172203022,
+          0.29050899624627397,
+          0.7048258962122667
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 0.00024753197325326487,
+        "maximum": 1.6971765329651158,
+        "mean": 0.13808070213271653,
+        "population_sd": 0.15855459465276606,
+        "p05_p25_median_p75_p95": [
+          0.006747194149009858,
+          0.03254538473405161,
+          0.08368520234924441,
+          0.18577385843453145,
+          0.4614538553113948
+        ]
+      },
+      "cross_minus_low_mean": -0.08626901920467622,
+      "smd_cross_minus_low": -0.41544137832784467,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.37776336805555555,
+      "ecdf_max_distance": 0.2008333333333333,
+      "observed_range_overlap": [
+        0.0010072780922816028,
+        1.6971765329651158
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.99625,
+      "CROSS_fraction_within_LOW_observed_range": 0.9920833333333333
+    },
+    "caption_age": {
+      "LOW": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 39.0,
+        "mean": 17.000416666666666,
+        "population_sd": 6.092173927238307,
+        "p05_p25_median_p75_p95": [
+          4.0,
+          15.0,
+          17.0,
+          20.0,
+          26.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 2400,
+        "n_observed": 2400,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 97.0,
+        "mean": 22.980833333333333,
+        "population_sd": 18.127317303972173,
+        "p05_p25_median_p75_p95": [
+          2.0,
+          5.0,
+          27.0,
+          35.0,
+          53.0
+        ]
+      },
+      "cross_minus_low_mean": 5.980416666666667,
+      "smd_cross_minus_low": 0.4422578189767033,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.5711383680555555,
+      "ecdf_max_distance": 0.4650000000000001,
+      "observed_range_overlap": [
+        1.0,
+        39.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.825
+    }
+  },
+  "positive_pair_endpoint_view": {
+    "age_a": {
+      "LOW": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 38.0,
+        "mean": 16.363333333333333,
+        "population_sd": 6.0686068326172595,
+        "p05_p25_median_p75_p95": [
+          3.0,
+          14.0,
+          17.0,
+          20.0,
+          26.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 97.0,
+        "mean": 10.035,
+        "population_sd": 12.873633584449523,
+        "p05_p25_median_p75_p95": [
+          1.0,
+          3.0,
+          5.0,
+          10.0,
+          37.049999999999955
+        ]
+      },
+      "cross_minus_low_mean": -6.328333333333333,
+      "smd_cross_minus_low": -0.6288241072226294,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.2255611111111111,
+      "ecdf_max_distance": 0.6233333333333334,
+      "observed_range_overlap": [
+        1.0,
+        38.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9533333333333334
+    },
+    "age_b": {
+      "LOW": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 39.0,
+        "mean": 17.638333333333332,
+        "population_sd": 6.051242067175594,
+        "p05_p25_median_p75_p95": [
+          4.0,
+          15.0,
+          18.0,
+          21.0,
+          27.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 68.0,
+        "mean": 35.928333333333335,
+        "population_sd": 12.504127207535207,
+        "p05_p25_median_p75_p95": [
+          6.0,
+          30.0,
+          35.0,
+          42.0,
+          57.049999999999955
+        ]
+      },
+      "cross_minus_low_mean": 18.290000000000003,
+      "smd_cross_minus_low": 1.8620141883069623,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.9263291666666666,
+      "ecdf_max_distance": 0.8633333333333334,
+      "observed_range_overlap": [
+        1.0,
+        39.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.695
+    },
+    "age_gap": {
+      "LOW": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 2.0,
+        "mean": 1.535,
+        "population_sd": 0.49877349568717055,
+        "p05_p25_median_p75_p95": [
+          1.0,
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 25.0,
+        "maximum": 77.0,
+        "mean": 31.906666666666666,
+        "population_sd": 7.251525510002859,
+        "p05_p25_median_p75_p95": [
+          25.0,
+          27.0,
+          30.0,
+          35.0,
+          48.0
+        ]
+      },
+      "cross_minus_low_mean": 30.371666666666666,
+      "smd_cross_minus_low": 5.909209047781651,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 1.0,
+      "ecdf_max_distance": 1.0,
+      "observed_range_overlap": null,
+      "LOW_fraction_within_CROSS_observed_range": 0.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.0
+    },
+    "age_younger": {
+      "LOW": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 38.0,
+        "mean": 16.233333333333334,
+        "population_sd": 6.045567706087567,
+        "p05_p25_median_p75_p95": [
+          3.0,
+          14.0,
+          17.0,
+          20.0,
+          25.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 1.0,
+        "maximum": 39.0,
+        "mean": 7.028333333333333,
+        "population_sd": 6.51722312202231,
+        "p05_p25_median_p75_p95": [
+          1.0,
+          3.0,
+          5.0,
+          8.0,
+          20.0
+        ]
+      },
+      "cross_minus_low_mean": -9.205000000000002,
+      "smd_cross_minus_low": -1.464407004513744,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.16593333333333332,
+      "ecdf_max_distance": 0.68,
+      "observed_range_overlap": [
+        1.0,
+        38.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 1.0,
+      "CROSS_fraction_within_LOW_observed_range": 0.9983333333333333
+    },
+    "age_older": {
+      "LOW": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 2.0,
+        "maximum": 39.0,
+        "mean": 17.768333333333334,
+        "population_sd": 6.044115365837714,
+        "p05_p25_median_p75_p95": [
+          4.0,
+          15.75,
+          18.0,
+          21.0,
+          27.0
+        ]
+      },
+      "CROSS": {
+        "n_total": 600,
+        "n_observed": 600,
+        "n_missing": 0,
+        "minimum": 26.0,
+        "maximum": 97.0,
+        "mean": 38.935,
+        "population_sd": 10.287084540011,
+        "p05_p25_median_p75_p95": [
+          28.950000000000003,
+          32.0,
+          35.0,
+          44.0,
+          62.0
+        ]
+      },
+      "cross_minus_low_mean": 21.166666666666668,
+      "smd_cross_minus_low": 2.5088831578357214,
+      "smd_status": "finite",
+      "arm_auc_cross_higher": 0.9925805555555556,
+      "ecdf_max_distance": 0.94,
+      "observed_range_overlap": [
+        26.0,
+        39.0
+      ],
+      "LOW_fraction_within_CROSS_observed_range": 0.07166666666666667,
+      "CROSS_fraction_within_LOW_observed_range": 0.65
+    }
+  },
+  "shared_heldout_rows": 19372,
+  "budgets_equal": true,
+  "quality_balanced": "not asserted; descriptive diagnostics only",
+  "causal_source_superiority": false,
+  "training_identity_independence": "unverified",
+  "publication_ready": false,
+  "inference": "no p-values or confidence intervals; reused images and recorded persons are dependent",
+  "estimand": "different positive age-gap training regimes under fixed budgets; not a causal comparison of sources",
+  "age_balance_constraint": "joint endpoint ages determine age gap; exact joint-age matching cannot preserve disjoint LOW/CROSS gap ranges",
+  "measurement_scope": "caption ages and post-hoc quality sidecar; yaw is a five-landmark proxy, not calibrated 3D pose",
+  "unmeasured": [
+    "verified identity purity",
+    "capture context",
+    "scan/digital type",
+    "collage origin",
+    "generic-source control"
+  ],
+  "scope": "read-only metadata diagnostics; no new processing of images, resampling, rebalancing or retraining"
+}

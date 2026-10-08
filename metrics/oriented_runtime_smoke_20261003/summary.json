@@ -1,0 +1,17 @@
+{
+  "stages": {
+    "train": 2,
+    "evaluation": 2
+  },
+  "finite_losses": [
+    0.25427037477493286,
+    0.29515376687049866,
+    0.5530968904495239,
+    0.502292275428772
+  ],
+  "frozen_bn_buffers_unchanged": true,
+  "smoke_complete": true,
+  "training_complete": false,
+  "publication_ready": false,
+  "scope": "bounded actual FaceNet CPU train/eval probe, not long-run stability proof"
+}

@@ -5,6 +5,53 @@ import json
 from scripts import build_publication_artifact_index as index
 
 
+def test_serial_cacd_native_and_presentation_coverage_is_explicit():
+    assert "cacd_serial_20261003/*.manifest.json" in index.INCLUDE
+    assert "cacd_serial_presentation_20261003/presentation.manifest.json" in index.INCLUDE
+    assert not any("submission_snapshot" in path or "visual_review" in path for path in index.INCLUDE)
+
+
+def test_fixed8_cuda_native_diagnostics_and_presentation_coverage_is_explicit():
+    assert {
+        "adaface_fixed8_cuda_*/summary.manifest.json",
+        "facenet_fixed8_validation*_v2_*/summary.manifest.json",
+        "strong_queue_remaining*_v2_*/*/train/summary.manifest.json",
+        "strong_queue_remaining*_v2_*/*/fgnet/summary.manifest.json",
+        "strong_mechanism_*_v1_*/summary.manifest.json",
+        "common_mechanism_*_v1_*/summary.manifest.json",
+        "strong_native_trajector*_v1_*/summary.manifest.json",
+        "native_person_age_baselines*_v2_*/summary.manifest.json",
+        "weak_native_cache_keys_v2_*/summary.manifest.json",
+        "strong_fixed8_roc_presentation*_v1_*/presentation.manifest.json",
+    } <= set(index.INCLUDE)
+    assert not any("queue.json" in path for path in index.INCLUDE)
+
+
+def test_nested_queue_native_manifests_discovered_without_ledger_completion(tmp_path, monkeypatch):
+    metrics = tmp_path / "metrics"
+    queue = metrics / "strong_queue_remaining30_v2_test"
+    manifests = []
+    for stage in ("train", "fgnet"):
+        path = queue / "random_head_lr1e-05_s42" / stage / "summary.manifest.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps({"experiment": "synthetic", "inputs": [], "outputs": [],
+                                    "parameters": {}}), encoding="utf-8")
+        manifests.append(path.relative_to(tmp_path).as_posix())
+    (queue / "queue.json").write_text(json.dumps({"status": "complete"}), encoding="utf-8")
+    monkeypatch.setattr(index, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(index, "METRICS", metrics)
+    monkeypatch.setattr(index, "OUTPUT", metrics / "index.json")
+    monkeypatch.setattr(index, "INCLUDE", (
+        "strong_queue_remaining*_v2_*/*/train/summary.manifest.json",
+        "strong_queue_remaining*_v2_*/*/fgnet/summary.manifest.json",
+    ))
+    index.main()
+    result = json.loads(index.OUTPUT.read_text(encoding="utf-8"))
+    assert {row["manifest"] for row in result["entries"]} == set(manifests)
+    assert result["complete"] is False
+    assert "strong-backbone summary missing" in result["incomplete_experiments"]
+
+
 def test_nested_literal_manifest_is_not_falsely_reported_missing(tmp_path, monkeypatch):
     metrics = tmp_path / "metrics"
     nested = metrics / "nested"
