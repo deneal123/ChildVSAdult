@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / "latex/papers/journal-1-tbiom/en"
-EVIDENCE = ROOT / "metrics/strong_fixed8_roc_presentation9_v1_20261008"
+EVIDENCE = ROOT / "metrics/strong_fixed8_roc_presentation11_v1_e339_20261009"
 
 
 def test_presentation_outputs_are_bound_and_metrics_match_native_summary():
@@ -38,7 +38,7 @@ def test_partial_scope_and_shared_counts_match_presentation():
     summary = json.loads((EVIDENCE / "summary.json").read_text(encoding="utf-8"))
     source = (PAPER / "supplement.tex").read_text(encoding="utf-8")
     main = (PAPER / "main.tex").read_text(encoding="utf-8")
-    assert summary["evaluated_checkpoint_count"] == 9
+    assert summary["evaluated_checkpoint_count"] == 11
     assert summary["expected_matrix_cells"] == 36
     assert summary["mechanism_complete"] is False
     assert summary["publication_ready"] is False
@@ -50,6 +50,19 @@ def test_partial_scope_and_shared_counts_match_presentation():
     assert "identity independence remains\nunverified" in source
     assert "Partial Fixed8 AdaFace ROC-v2" in main
     assert "Neither result completes the planned fixed-budget" in main
+
+
+def test_main_high_lr_count_matches_the_explicit_eleven_cell_roc_snapshot():
+    summary = json.loads((EVIDENCE / "summary.json").read_text(encoding="utf-8"))
+    high = {name: row for name, row in summary["cells"].items() if "_lr1e-05_" in name}
+    assert len(high) == 5
+    assert sum("_head_" in name for name in high) == 3
+    assert sum("_tail_" in name for name in high) == 2
+    for row in high.values():
+        assert row["large_gap_25plus"]["roc_auc"]["delta_ci95"][1] < 0
+        assert row["large_gap_25plus"]["eer_interpolated"]["delta_ci95"][0] > 0
+    main = (PAPER / "main.tex").read_text(encoding="utf-8")
+    assert "five additional high-LR checkpoints (three head, two tail)" in main
 
 
 def test_all_six_overall_operating_losses_reported_without_25plus_gain_claim():
@@ -81,3 +94,20 @@ def test_high_lr_head_losses_and_seed2_low_far_uncertainty_are_reported():
     source = (PAPER / "supplement.tex").read_text(encoding="utf-8")
     assert "includes zero for seed2" in source
     assert "not intervals of seed means" in source
+
+
+def test_two_high_lr_tail_losses_are_conditional_not_a_completed_matrix():
+    summary = json.loads((EVIDENCE / "summary.json").read_text(encoding="utf-8"))
+    for seed in (42, 1):
+        cell = summary["cells"][f"random_tail_lr1e-05_s{seed}"]
+        for stratum in ("overall", "large_gap_25plus"):
+            for metric, row in cell[stratum].items():
+                lo, hi = row["delta_ci95"]
+                if metric.startswith("eer_"):
+                    assert lo > 0
+                else:
+                    assert hi < 0
+    source = (PAPER / "supplement.tex").read_text(encoding="utf-8")
+    assert "The two LR $10^{-5}$ tail seeds42/1 checkpoints" in source
+    assert "with all conditional intervals excluding\nzero" in source
+    assert "they are not the full matrix" in source

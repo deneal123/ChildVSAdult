@@ -1,0 +1,16 @@
+{
+  "pages": {
+    "main": 10,
+    "supplement": 10
+  },
+  "current_source_matches": true,
+  "references_checked": true,
+  "textually_nonblank_pages": 20,
+  "source_privacy_scanner_passed": true,
+  "upload_package_created": false,
+  "compiler_execution_attested": false,
+  "visual_review_completed": false,
+  "portal_proof_checked": false,
+  "publication_ready": false,
+  "scope": "staged source/PDF/log consistency only; process execution separately observed by root"
+}

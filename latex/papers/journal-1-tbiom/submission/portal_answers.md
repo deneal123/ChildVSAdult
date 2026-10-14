@@ -27,8 +27,9 @@
 ### Черновик фактического описания — дополнить решением комитета
 
 > This study was not placed under institutional review board oversight before the retrospective
-> analysis. A formal retrospective determination was subsequently obtained from [OFFICIAL BOARD],
-> decision [APPROVAL OR EXEMPTION], reference [REFERENCE], dated [DATE].
+> analysis. No formal institutional determination has yet been obtained; the authors do not
+> self-declare exemption. Before submission, replace this pending-status sentence with the
+> actual decision of [OFFICIAL BOARD], [DECISION], reference [REFERENCE], dated [DATE].
 >
 > The research involves no interaction and no intervention with any person. It is a retrospective
 > analysis of photographs already published in public social-media communities. No individual is

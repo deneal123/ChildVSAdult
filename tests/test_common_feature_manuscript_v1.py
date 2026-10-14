@@ -11,9 +11,9 @@ from scripts.render_common_mechanism_v2 import strong_table, weak_table
 
 ROOT = Path(__file__).resolve().parents[1]
 SUPPLEMENT = ROOT / "latex/papers/journal-1-tbiom/en/supplement.tex"
-FEATURE = ROOT / "metrics/common_mechanism_presentation9_v2_20261008"
-AGE = ROOT / "metrics/age_probe_absolute_presentation14_v3_full_20261008"
-ROC = ROOT / "metrics/strong_fixed8_roc_presentation9_v1_20261008"
+FEATURE = ROOT / "metrics/common_mechanism_presentation11_v2_e339_20261009"
+AGE = ROOT / "metrics/age_probe_absolute_presentation16_v3_full_e339_20261009"
+ROC = ROOT / "metrics/strong_fixed8_roc_presentation11_v1_e339_20261009"
 
 
 def bound_summary(directory):
@@ -61,6 +61,7 @@ def test_native_tables_unchanged_except_explicit_tabular_fit_wrapper(directory, 
         f"% END GENERATED {marker}", 1)[0]
     # Format-only wrappers apply to tabular, never rewrite cells or captions.
     normalized = block.replace("\\resizebox{\\textwidth}{!}{%\n", "").replace(
+        "\\resizebox{\\columnwidth}{!}{%\n", "").replace(
         "\\end{tabular}%\n}\n", "\\end{tabular}\n")
     native = (directory / filename).read_text(encoding="utf-8")
     assert render(bound_summary(directory)) == native
@@ -80,14 +81,14 @@ def test_person_age_changes_equal_absolute_points_not_image_weighted_points():
             tuned = age["models"][family + "/" + name]
             person_delta = tuned["mae_person"] - frozen["mae_person"]
             assert person_delta == pytest.approx(row["paired_age_error"]["delta_mae_person"], abs=1e-12)
-    assert age["native_probe_records"] == 40
-    assert age["unique_model_points"] == 14
+    assert age["native_probe_records"] == 52
+    assert age["unique_model_points"] == 16
 
 
 def test_descriptive_interval_interpretation_matches_all_rows():
     summary = bound_summary(FEATURE)
     assert (summary["n_images"], summary["n_pairs"], summary["n_persons"]) == (650, 5308, 82)
-    assert (summary["observed_strong_cells"], summary["expected_strong_matrix_cells"]) == (9, 36)
+    assert (summary["observed_strong_cells"], summary["expected_strong_matrix_cells"]) == (11, 36)
     assert summary["mechanism_complete"] is False
     assert summary["publication_ready"] is False
     for name, row in summary["strong"]["cells"].items():
@@ -119,10 +120,11 @@ def test_absolute_point_denominators_and_constant_claim_are_not_significance():
     assert "separates image-weighted and\nequal-person MAE" in source
 
 
-def test_feature_age_and_roc_share_exact_declared_nine_cells():
+def test_feature_age_and_roc_share_exact_declared_eleven_cells():
     expected = {f"random_{scope}_lr1e-06_s{seed}"
                 for scope in ("head", "tail") for seed in (42, 1, 2)}
     expected |= {f"random_head_lr1e-05_s{seed}" for seed in (42, 1, 2)}
+    expected |= {f"random_tail_lr1e-05_s{seed}" for seed in (42, 1)}
     feature, age, roc = bound_summary(FEATURE), bound_summary(AGE), bound_summary(ROC)
     assert set(feature["strong"]["cells"]) == expected
     assert set(feature["strong"]["diagnostics"]) == expected
@@ -130,6 +132,6 @@ def test_feature_age_and_roc_share_exact_declared_nine_cells():
             if key.startswith("strong/") and key != "strong/frozen"} == expected
     assert set(roc["cells"]) == expected
     source = SUPPLEMENT.read_text(encoding="utf-8")
-    assert "describe nine AdaFace checkpoints" in source
-    assert "the same nine strong checkpoints" in source
-    assert "fourteen unique model points" in source
+    assert "describe eleven AdaFace checkpoints" in source
+    assert "the same eleven strong checkpoints" in source
+    assert "sixteen unique model points" in source

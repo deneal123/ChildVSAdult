@@ -1,0 +1,231 @@
+{
+  "reviewer": "root Codex visual inspection",
+  "check_date": "2026-10-03",
+  "scope": "150-dpi rendering of the two E80 upload PDFs, all pages viewed individually; layout and navigation observations, not numeric validation or portal proof",
+  "render_commands": [
+    "pdftoppm -r 150 -png .work/submission-e80-roc-evidence/upload/main.pdf .work/e82-visual-proof/main",
+    "pdftoppm -r 150 -png .work/submission-e80-roc-evidence/upload/supplement.pdf .work/e82-visual-proof/supplement"
+  ],
+  "main": [
+    {
+      "page": 1,
+      "layout": "clear",
+      "notes": "Title, author block, abstract, keywords and two columns readable; no overlap.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-01.png",
+        "bytes": 657170,
+        "sha256": "6c864ad0c570dcfcb485e339461013008369d343e088756c2a51e01cd583231d"
+      }
+    },
+    {
+      "page": 2,
+      "layout": "clear",
+      "notes": "Data/curation methods fit both columns; subsection spacing loose but no clipping.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-02.png",
+        "bytes": 672411,
+        "sha256": "8a8844c678fb1f86d6b93545397372b352390e42392d024acdf6e55a7cfe2be7"
+      }
+    },
+    {
+      "page": 3,
+      "layout": "clear",
+      "notes": "Tables I-V and five-box pipeline readable; Synthetic Aging table cell has loose word spacing, not an overlap.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-03.png",
+        "bytes": 383852,
+        "sha256": "1ca44bad467061522d84efed506127bb3c1db9be49ea780fa62b6e747ddfa1a0"
+      }
+    },
+    {
+      "page": 4,
+      "layout": "clear",
+      "notes": "Protocol, corrected headline and synthesis paragraphs readable and within margins.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-04.png",
+        "bytes": 750880,
+        "sha256": "c48ecadb5da6c32647e3f56d8113bdc5254874aedb2f476abf98f73782d52776"
+      }
+    },
+    {
+      "page": 5,
+      "layout": "clear",
+      "notes": "Tables VI-VIII readable; corrected gain CI sign cross-checked against generated TeX.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-05.png",
+        "bytes": 587279,
+        "sha256": "c1192312bcd2ff1b665713be57fd0e15ece9da86dabaf127e2ad363c2ccd1cf6"
+      }
+    },
+    {
+      "page": 6,
+      "layout": "clear",
+      "notes": "Table IX and results paragraphs readable; stale supplementary scaling table reference requires navigation fix.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-06.png",
+        "bytes": 706429,
+        "sha256": "25224bde75478cf8e91e6464c4b47960aa6b92706ff07bb1592e1e64f44f13a4"
+      }
+    },
+    {
+      "page": 7,
+      "layout": "clear",
+      "notes": "Tables X-XIV readable; apparent-strata supplementary table reference is stale.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-07.png",
+        "bytes": 525246,
+        "sha256": "d2f0af8165c9cb1631cfcde0428ab18acd36a9a304d4f564a12218c39039c0be"
+      }
+    },
+    {
+      "page": 8,
+      "layout": "clear",
+      "notes": "Hard-negative/discussion/limitations readable; supplementary hard-negative table reference is stale.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-08.png",
+        "bytes": 700204,
+        "sha256": "335df6a0adc29691b9c7e1a589d99036351105ae3ae58f9a16148b912036fc21"
+      }
+    },
+    {
+      "page": 9,
+      "layout": "clear",
+      "notes": "Ethics and reproducibility text readable; no private face examples or clipping observed.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-09.png",
+        "bytes": 684540,
+        "sha256": "65e489bf8888135f97d9fe4082aa23703f86a73505121dab833e7454d857c981"
+      }
+    },
+    {
+      "page": 10,
+      "layout": "clear",
+      "notes": "Conclusion/funding/references fit; references readable, no blank page.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/main-10.png",
+        "bytes": 749630,
+        "sha256": "ff72eed7e2f8d716b7ea1a686b78fbe411068ddb4480927c200b64e3412a0d33"
+      }
+    }
+  ],
+  "supplement": [
+    {
+      "page": 1,
+      "layout": "clear",
+      "notes": "Overview and audit text readable; overview local section refs actually match aux; global main/local reference convention is ambiguous.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-01.png",
+        "bytes": 550532,
+        "sha256": "ce73459324ab8eff2fbeafc7e55518d5b2d68b89c079a7b3ba7827bba0928e31"
+      }
+    },
+    {
+      "page": 2,
+      "layout": "clear",
+      "notes": "Historical and claims tables readable; main objective/scaling/transfer/dedup reference targets require correction.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-02.png",
+        "bytes": 438927,
+        "sha256": "344fac9c7ccfa51137b82b27a0fac383fa1680ab7cb4f6ee0876218eef57a35b"
+      }
+    },
+    {
+      "page": 3,
+      "layout": "clear",
+      "notes": "Audit table and mechanism protocol readable; dedup Table XI is a stale main-table reference.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-03.png",
+        "bytes": 549984,
+        "sha256": "7c5c36f270f1f4a933bb793fdd6f40da8abcfbb148af5bbb21ecc4518a2f4ace"
+      }
+    },
+    {
+      "page": 4,
+      "layout": "clear",
+      "notes": "Three ROC/CI tables with dense captions readable; no overlap with subsequent text.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-04.png",
+        "bytes": 526225,
+        "sha256": "e50c32c40c22ed52d1b5e856ba1eda8f4f2c235fca21388e60f1b36d2441e73c"
+      }
+    },
+    {
+      "page": 5,
+      "layout": "clear",
+      "notes": "Lineage, sensitivity, distributions and data card fit; no clipping.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-05.png",
+        "bytes": 656639,
+        "sha256": "cc17c37cb5281617c0788482e5098cbbd887f69a6506a0b0e1153ee28b8f0d1e"
+      }
+    },
+    {
+      "page": 6,
+      "layout": "clear",
+      "notes": "CMC plot, retrieval/error/control text readable; bibliography starts while later floats remain, nonblocking.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-06.png",
+        "bytes": 604656,
+        "sha256": "a93e8e402c7efdd1dc6185b82ca6cd8b2d993324a98f1f7a6c6c7487b7da9415"
+      }
+    },
+    {
+      "page": 7,
+      "layout": "clear",
+      "notes": "Published/common-protocol/corrected/retrieval tables all fit; bibliography continuation readable.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-07.png",
+        "bytes": 364050,
+        "sha256": "90998d7122936f0cab80dfa52916c518659d3e1f86893c98ac232c316317e739"
+      }
+    },
+    {
+      "page": 8,
+      "layout": "clear",
+      "notes": "Error/scaling tables and headroom/scaling figures readable; axis labels not clipped.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-08.png",
+        "bytes": 383407,
+        "sha256": "690744b55d45a2b413a2774a405c416f931f0cdfaa8f7f0a8637d9bce689ceb9"
+      }
+    },
+    {
+      "page": 9,
+      "layout": "clear",
+      "notes": "Strata/hard-negative/matched control tables and objective/fairness figures fit; control table small but readable at full-page rendering.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-09.png",
+        "bytes": 322260,
+        "sha256": "2577a4a3033613db92ce48e7ef4130248c289725b854c8b4f7740610fa1d15a2"
+      }
+    },
+    {
+      "page": 10,
+      "layout": "clear",
+      "notes": "One floating external-results graph and caption, large whitespace but not an empty page; labels/caption readable.",
+      "render_record": {
+        "path": ".work/e82-visual-proof/supplement-10.png",
+        "bytes": 87595,
+        "sha256": "fe77d3ce320437358c3801073a74e6a0438edec617b029509340528859fef7c7"
+      }
+    }
+  ],
+  "all_20_pages_viewed": true,
+  "blank_or_clipped_pages_observed": 0,
+  "overlapping_tables_observed": 0,
+  "navigation_corrections_pending": true,
+  "portal_proof_checked": false,
+  "compiler_execution_attested": false,
+  "privacy_certified": false,
+  "publication_ready": false,
+  "main_pdf_record": {
+    "path": ".work/submission-e80-roc-evidence/upload/main.pdf",
+    "bytes": 304837,
+    "sha256": "d3ee68a49ca5b16cbce6a82c2461ba5f3715e306effe02f8f736cb4e5b6b920d"
+  },
+  "supplement_pdf_record": {
+    "path": ".work/submission-e80-roc-evidence/upload/supplement.pdf",
+    "bytes": 435108,
+    "sha256": "d9fbad366e55c0691f720ccd0bcbf092124fc141a3a6641dffe42892bb6672f3"
+  }
+}

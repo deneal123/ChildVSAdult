@@ -54,16 +54,19 @@ def test_noise_headline_and_supplement_match_bound_metrics():
         42,
     )
     main, supplement = documents()
-    paragraph = main.split("A fixed artificial identity permutation", 1)[1].split("\n\n", 1)[0]
+    paragraph = main.split("Three fixed artificial identity permutations", 1)[1].split("\n\n", 1)[0]
     section = supplement.split(r"\subsection{Fixed-permutation supervision-noise sensitivity}", 1)[
         1
     ].split(r"\section{", 1)[0]
-    auc = data["large_gap_25plus"]["metrics"]["roc_auc"]
-    delta = auc["cross_minus_low"]
-    assert f"{auc['cross']['mean']:.4f}" in paragraph
-    assert f"{delta['mean']:.4f}" in paragraph
-    lo, hi = delta["mean_checkpoint_ci95"]
-    assert f"[{lo:.4f},{hi:.4f}]" in paragraph
+    additional = result("noise_perm12_cuda_fgnet_v2_e391_20261009", "oriented-cuda-noise-permutation-full-fgnet-roc-v2")
+    aucs = [data["large_gap_25plus"]["metrics"]["roc_auc"], *[
+        additional[f"permutation_seed{seed}"]["large_gap_25plus"]["metrics"]["roc_auc"] for seed in (1, 2)]]
+    means = [metric["cross"]["mean"] for metric in aucs]
+    deltas = [metric["cross_minus_low"]["mean"] for metric in aucs]
+    assert f"{min(means):.4f}--{max(means):.4f}" in paragraph
+    assert f"{min(deltas):.4f}" in paragraph and f"{max(deltas):.4f}" in paragraph
+    assert all(metric["cross_minus_low"]["mean_checkpoint_ci95"][1] < 0 for metric in aucs)
+    assert "each nominal paired subject CI excludes zero" in paragraph
     for subset in ("overall", "large_gap_25plus"):
         for metric in data[subset]["metrics"].values():
             # Overall secondary EER/TAR are not claimed in this subsection.
@@ -76,7 +79,45 @@ def test_noise_headline_and_supplement_match_bound_metrics():
             lo, hi = delta["mean_checkpoint_ci95"]
             assert f"[{lo:+.4f},{hi:+.4f}]" in section
     assert "not an estimate" in section
-    assert "not robustness across permutations" in section
+    assert "not population-level robustness across permutations" in section
+
+
+def test_all_three_noise_arms_are_linked_to_full_metric_tables():
+    old = result("oriented_noise_cuda_fgnet_20261004", "oriented-cuda-noise-full-fgnet-roc-v2")
+    new = result("noise_perm12_cuda_fgnet_v2_e391_20261009", "oriented-cuda-noise-permutation-full-fgnet-roc-v2")
+    _, supplement = documents()
+    for stratum, label in (("overall", "overall"), ("large_gap_25plus", "25plus")):
+        body = supplement.split(r"\label{tab:noise-permutations-" + label + "}", 1)[1].split(r"\end{table*}", 1)[0]
+        rows = [line.strip().removesuffix(r"\\").strip().split(" & ") for line in body.splitlines()
+            if line.startswith(("42 & ", "1 & ", "2 & "))]
+        assert len(rows) == 15
+        pos = 0
+        for seed in (42, 1, 2):
+            arm = old[stratum] if seed == 42 else new[f"permutation_seed{seed}"][stratum]
+            for name in ("roc_auc", "eer_interpolated", "eer_discrete_minimax", "tar@far=0.01", "tar@far=0.001"):
+                metric = arm["metrics"][name]
+                delta = metric["cross_minus_low"]
+                lo, hi = delta["mean_checkpoint_ci95"]
+                row = [field.replace("$", "").strip() for field in rows[pos]]
+                assert row[0] == str(seed)
+                assert row[2:] == [f"{metric['frozen']['point']:.4f}",
+                    f"{metric['low']['mean']:.4f}\\pm{metric['low']['sd']:.4f}",
+                    f"{metric['cross']['mean']:.4f}\\pm{metric['cross']['sd']:.4f}",
+                    f"{delta['mean']:+.4f}", f"[{lo:+.4f},{hi:+.4f}]"]
+                pos += 1
+
+
+def test_noise_low_far_interval_limitations_are_not_overstated():
+    data = result("noise_perm12_cuda_fgnet_v2_e391_20261009", "oriented-cuda-noise-permutation-full-fgnet-roc-v2")
+    _, supplement = documents()
+    section = supplement.split(r"\subsection{Fixed-permutation supervision-noise sensitivity}", 1)[1].split(r"\section{", 1)[0]
+    first = data["permutation_seed1"]["large_gap_25plus"]["metrics"]
+    second = data["permutation_seed2"]["large_gap_25plus"]["metrics"]
+    assert first["tar@far=0.001"]["cross_minus_low"]["mean_checkpoint_ci95"][1] < 0
+    assert second["tar@far=0.001"]["cross_minus_low"]["mean_checkpoint_ci95"][1] == 0
+    assert "only permutation 1 excludes zero nominally" in section
+    assert "not consistent evidence of operating-point deterioration across arms" in section
+    assert "not a population of training seeds or permutations" in section
 
 
 def test_replacement_table_cells_match_bound_metrics():

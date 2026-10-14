@@ -1,0 +1,24 @@
+{
+  "main_pages": 10,
+  "supplement_pages": 10,
+  "upload_artifacts": 6,
+  "source_zip_matches_staged_sources": true,
+  "staged_sources_match_current_master": true,
+  "staged_and_upload_pdf_bytes_match": true,
+  "textual_nonblank_pages_checked": 20,
+  "evidence_archive_members": [
+    18,
+    6,
+    8
+  ],
+  "archived_index_entries": 89,
+  "archived_index_complete": false,
+  "archived_index_missing_expected": 5,
+  "compiler_execution_attested": false,
+  "all_pages_visually_reviewed": false,
+  "full_private_input_reverification": false,
+  "portal_proof_checked": false,
+  "privacy_certified": false,
+  "publication_ready": false,
+  "scope": "current-source/package byte consistency and textual PDF checks; not compilation provenance or publication clearance"
+}

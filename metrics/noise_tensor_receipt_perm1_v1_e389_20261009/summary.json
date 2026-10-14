@@ -1,0 +1,30 @@
+{
+  "accepted_checkpoint_tensor_inspection": true,
+  "seeds": [
+    {
+      "training_seed": 42,
+      "finite_tensors": 716,
+      "changed_head_parameter_tensors": 3,
+      "unchanged_frozen_tensors": 713
+    },
+    {
+      "training_seed": 1,
+      "finite_tensors": 716,
+      "changed_head_parameter_tensors": 3,
+      "unchanged_frozen_tensors": 713
+    },
+    {
+      "training_seed": 2,
+      "finite_tensors": 716,
+      "changed_head_parameter_tensors": 3,
+      "unchanged_frozen_tensors": 713
+    }
+  ],
+  "device": "cpu-serialization-only",
+  "neural_forward_performed": false,
+  "training_replayed": false,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "permutation_seed": 1,
+  "scope": "checkpoint tensor/history inspection; native transitive-byte training acceptance is separate"
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "Local supplement layout only; no all-main-pages, portal, privacy or scientific certification",
+  "individually_viewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "supplement_pages": 12,
+  "blank_pages_observed": false,
+  "table_clipping_observed": false,
+  "unresolved_layout": [
+    "Figure 3 log-scale tick labels around 3000/4000 are crowded; fix before final submission"
+  ],
+  "renderer": "MiKTeX pdftoppm",
+  "dpi": 150,
+  "portal_proof_checked": false,
+  "main_pages_reviewed_here": false,
+  "publication_ready": false
+}

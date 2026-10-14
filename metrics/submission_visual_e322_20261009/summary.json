@@ -1,0 +1,42 @@
+{
+  "scope": "Root individually viewed local main/supplement pages; no portal, science or rights certification",
+  "main_pages": 10,
+  "supplement_pages": 13,
+  "individually_viewed_main_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "individually_viewed_supplement_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "blank_pages_observed": false,
+  "table_clipping_observed": false,
+  "external_chance_label_clears_bars": true,
+  "scaling_four_ticks_readable": true,
+  "renderer": "MiKTeX pdftoppm",
+  "dpi": 100,
+  "unresolved_layout": [],
+  "portal_proof_checked": false,
+  "scientific_evidence_validated": false,
+  "publication_ready": false
+}

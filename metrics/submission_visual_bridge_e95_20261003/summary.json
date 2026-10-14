@@ -1,0 +1,17 @@
+{
+  "scope": "exact rendered-page byte bridge to E92 root inspection; layout only",
+  "main_pages": 10,
+  "supplement_pages": 10,
+  "previously_viewed_page_exact_matches": 20,
+  "newly_viewed_pages": 0,
+  "all_20_pages_layout_covered": true,
+  "upload_consistency_verified": false,
+  "portal_proof_checked": false,
+  "compiler_execution_attested": false,
+  "privacy_certified": false,
+  "publication_ready": false,
+  "render_commands": [
+    "pdftoppm -r 150 -png .work/submission-e94-cacd-full/manuscript/main.pdf .work/submission-e95-visual/main",
+    "pdftoppm -r 150 -png .work/submission-e94-cacd-full/supplement/supplement.pdf .work/submission-e95-visual/supplement"
+  ]
+}

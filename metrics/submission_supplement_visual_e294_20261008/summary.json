@@ -1,0 +1,29 @@
+{
+  "scope": "Local supplement layout only; no all-main-pages, portal, privacy or scientific certification",
+  "individually_viewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "supplement_pages": 13,
+  "blank_pages_observed": false,
+  "table_clipping_observed": false,
+  "unresolved_layout": [
+    "Figure 6 chance annotation is cramped near rightmost bars; improve before final submission"
+  ],
+  "renderer": "MiKTeX pdftoppm",
+  "dpi": 100,
+  "portal_proof_checked": false,
+  "main_pages_reviewed_here": false,
+  "publication_ready": false
+}

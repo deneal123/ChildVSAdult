@@ -1,0 +1,217 @@
+{
+  "execution_complete": true,
+  "publication_ready": false,
+  "results": {
+    "strong": {
+      "separability": {
+        "status": "ok",
+        "version": "fixed-pair-subject-separability-v1",
+        "models": {
+          "frozen": {
+            "negative_mean": 0.046219571817897195,
+            "positive_mean": 0.4871569057461927,
+            "negative_variance": 0.0054129213082005035,
+            "positive_variance": 0.0293932785726828,
+            "standardized_mean_difference": 3.3424395748456983,
+            "ci95": [
+              3.140638840699264,
+              3.5781270737510686
+            ],
+            "delta_vs_frozen": 0.0,
+            "delta_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "random_tail_lr1e-05_s42": {
+            "negative_mean": 0.4587866138900576,
+            "positive_mean": 0.8494681263568488,
+            "negative_variance": 0.06279134279123447,
+            "positive_variance": 0.01424351640664143,
+            "standardized_mean_difference": 1.9906468070585328,
+            "ci95": [
+              1.7786715245261209,
+              2.248676884723666
+            ],
+            "delta_vs_frozen": -1.3517927677871655,
+            "delta_ci95": [
+              -1.615643003435179,
+              -1.0628063525491733
+            ]
+          }
+        },
+        "n_pairs": 5308,
+        "n_persons": 82,
+        "requested_draws": 2000,
+        "valid_draws": 2000,
+        "seed": 0,
+        "positive_weight": "owner multiplicity once",
+        "negative_weight": "endpoint multiplicity product",
+        "limitation": "fixed image-pair cosine separation, not Gaussian d-prime or recognition accuracy; conditional fixed checkpoints/protocol, no training-seed population inference"
+      },
+      "diagnostics": {
+        "random_tail_lr1e-05_s42": {
+          "representation": {
+            "mean_cosine_drift": 0.7090891278815892,
+            "linear_cka": 0.3930949349802406,
+            "n_images": 650,
+            "limitation": "descriptive representation change; not a mechanism decision"
+          },
+          "paired_age_error": {
+            "delta_mae_person": -3.0167993662500288,
+            "ci95": [
+              -4.068970766357538,
+              -2.001416214385833
+            ],
+            "n_persons": 82,
+            "resamples": 2000,
+            "seed": 0,
+            "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+          }
+        }
+      }
+    },
+    "weak": {
+      "separability": {
+        "status": "ok",
+        "version": "fixed-pair-subject-separability-v1",
+        "models": {
+          "frozen": {
+            "negative_mean": 0.26653772236648793,
+            "positive_mean": 0.5758600654798127,
+            "negative_variance": 0.02282892167010392,
+            "positive_variance": 0.03677261604323062,
+            "standardized_mean_difference": 1.791833107783519,
+            "ci95": [
+              1.6217373336487566,
+              1.987690317022973
+            ],
+            "delta_vs_frozen": 0.0,
+            "delta_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "tuned_seed1": {
+            "negative_mean": 0.13212042378479952,
+            "positive_mean": 0.5162275947392486,
+            "negative_variance": 0.026486730809107028,
+            "positive_variance": 0.04247048148273096,
+            "standardized_mean_difference": 2.068604975476412,
+            "ci95": [
+              1.9157978581953294,
+              2.248422030448761
+            ],
+            "delta_vs_frozen": 0.2767718676928932,
+            "delta_ci95": [
+              0.11811635912582398,
+              0.42913304449307327
+            ]
+          },
+          "tuned_seed2": {
+            "negative_mean": 0.13136836766130583,
+            "positive_mean": 0.5154839618648764,
+            "negative_variance": 0.026279571135007066,
+            "positive_variance": 0.042141899653564345,
+            "standardized_mean_difference": 2.076733334183601,
+            "ci95": [
+              1.927651097321642,
+              2.252589378417624
+            ],
+            "delta_vs_frozen": 0.28490022640008217,
+            "delta_ci95": [
+              0.1309357502140207,
+              0.4287725789204149
+            ]
+          },
+          "tuned_seed42": {
+            "negative_mean": 0.14127506434185094,
+            "positive_mean": 0.5221877542765462,
+            "negative_variance": 0.02633140955078419,
+            "positive_variance": 0.04184340392528585,
+            "standardized_mean_difference": 2.063138862941983,
+            "ci95": [
+              1.9107779459277414,
+              2.24131641138514
+            ],
+            "delta_vs_frozen": 0.2713057551584641,
+            "delta_ci95": [
+              0.10996329741967724,
+              0.42361669375823213
+            ]
+          }
+        },
+        "n_pairs": 5308,
+        "n_persons": 82,
+        "requested_draws": 2000,
+        "valid_draws": 2000,
+        "seed": 0,
+        "positive_weight": "owner multiplicity once",
+        "negative_weight": "endpoint multiplicity product",
+        "limitation": "fixed image-pair cosine separation, not Gaussian d-prime or recognition accuracy; conditional fixed checkpoints/protocol, no training-seed population inference"
+      },
+      "diagnostics": {
+        "tuned_seed42": {
+          "representation": {
+            "mean_cosine_drift": 0.17497878684312573,
+            "linear_cka": 0.8896195028802558,
+            "n_images": 650,
+            "limitation": "descriptive representation change; not a mechanism decision"
+          },
+          "paired_age_error": {
+            "delta_mae_person": 0.08730144348701968,
+            "ci95": [
+              -0.18715005243960708,
+              0.3449144024460971
+            ],
+            "n_persons": 82,
+            "resamples": 2000,
+            "seed": 0,
+            "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+          }
+        },
+        "tuned_seed1": {
+          "representation": {
+            "mean_cosine_drift": 0.1670140911562724,
+            "linear_cka": 0.8909087333835289,
+            "n_images": 650,
+            "limitation": "descriptive representation change; not a mechanism decision"
+          },
+          "paired_age_error": {
+            "delta_mae_person": 0.16047189153606117,
+            "ci95": [
+              -0.12547081680522493,
+              0.4245238546954305
+            ],
+            "n_persons": 82,
+            "resamples": 2000,
+            "seed": 0,
+            "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+          }
+        },
+        "tuned_seed2": {
+          "representation": {
+            "mean_cosine_drift": 0.15885581778451585,
+            "linear_cka": 0.8925736563421365,
+            "n_images": 650,
+            "limitation": "descriptive representation change; not a mechanism decision"
+          },
+          "paired_age_error": {
+            "delta_mae_person": 0.17190810806785572,
+            "ci95": [
+              -0.10254412313800922,
+              0.43701819373528794
+            ],
+            "n_persons": 82,
+            "resamples": 2000,
+            "seed": 0,
+            "limitation": "conditional fixed OOF predictions; no probe refitting or seed-population CI"
+          }
+        }
+      }
+    }
+  },
+  "n_images": 650,
+  "n_pairs": 5308,
+  "limitation": "common fixed image pairs, conditional fixed checkpoints/folds; weak training history and train-benchmark independence unverified; incomplete strong matrix; no mechanism decision"
+}

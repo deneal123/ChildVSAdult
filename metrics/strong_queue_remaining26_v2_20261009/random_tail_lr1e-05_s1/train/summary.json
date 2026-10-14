@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 708781568,
+  "peak_reserved_bytes": 778043392,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.1690483109258682,
+      "validation_auc": 0.9760554094837752,
+      "mean_gradient_norm": 4.66595609667341,
+      "epoch_seconds": 758.5460000000021
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.136491435654154,
+      "validation_auc": 0.9761814632645277,
+      "mean_gradient_norm": 5.476322064209952,
+      "epoch_seconds": 721.875
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.12753001329845515,
+      "validation_auc": 0.9763746694188329,
+      "mean_gradient_norm": 5.457070209698092,
+      "epoch_seconds": 670.7350000000151
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.12098948042324953,
+      "validation_auc": 0.9767445797947379,
+      "mean_gradient_norm": 5.424695136304399,
+      "epoch_seconds": 731.5
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.11478198793300554,
+      "validation_auc": 0.9772016737919882,
+      "mean_gradient_norm": 5.228033159287018,
+      "epoch_seconds": 738.4060000000172
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.108415373607612,
+      "validation_auc": 0.9756565491854651,
+      "mean_gradient_norm": 5.034795265990478,
+      "epoch_seconds": 723.5149999999849
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.10153572703080771,
+      "validation_auc": 0.9752355591276888,
+      "mean_gradient_norm": 4.5254736421487545,
+      "epoch_seconds": 793.7969999999914
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.0937818897880254,
+      "validation_auc": 0.9731696697720029,
+      "mean_gradient_norm": 3.892707159109302,
+      "epoch_seconds": 750.375
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 32954,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

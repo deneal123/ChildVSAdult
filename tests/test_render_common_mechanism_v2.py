@@ -50,6 +50,27 @@ def synthetic_pair_linkage(monkeypatch):
     monkeypatch.setattr(render, "audit_shared_pairs", fake)
 
 
+def test_ten_declared_checkpoints_include_high_lr_tail_without_fake_completion():
+    """Synthetic schema coverage only, not acceptance of ten native bindings."""
+    names = [f"random_{scope}_lr1e-06_s{seed}"
+             for scope in ("head", "tail") for seed in (42, 1, 2)]
+    names += [f"random_head_lr1e-05_s{seed}" for seed in (42, 1, 2)]
+    names.append("random_tail_lr1e-05_s42")
+    payload = render.collect([native(name) for name in names])
+    assert set(payload["strong"]["cells"]) == set(names)
+    assert payload["observed_strong_cells"] == 10
+    assert payload["expected_strong_matrix_cells"] == 36
+    assert payload["mechanism_complete"] is False
+    assert payload["publication_ready"] is False
+    strong = render.strong_table(payload)
+    assert strong.count("random, ") == 10
+    assert "random, tail, LR $10^{-5}$, seed 42" in strong
+    assert "10 of 36" in strong
+    assert "no mechanism decision" in strong
+    weak = render.weak_table(payload)
+    assert weak.count("tuned, seed ") == 3
+
+
 def sep_model(smd=3.34, delta=0.0, ci=(3.14, 3.58), delta_ci=(0.0, 0.0)):
     return dict(negative_mean=.046, positive_mean=.487, negative_variance=.0054,
                 positive_variance=.029, standardized_mean_difference=smd, ci95=list(ci),

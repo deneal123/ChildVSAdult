@@ -75,6 +75,23 @@ def test_declared_cells_are_exact_membership():
     assert payload["matrix_complete"] is False
 
 
+def test_ten_cell_age_points_are_deduplicated_and_still_partial():
+    """Repeated synthetic probes are not ten independently accepted experiments."""
+    declared = [*DECLARED, "random_head_lr1e-05_s2", "random_tail_lr1e-05_s42"]
+    payload = render.collect([native(declared), native(declared)], declared)
+    assert payload["expected_cells"] == sorted(declared)
+    assert payload["expected_strong_cells"] == payload["observed_strong_cells"] == 10
+    assert payload["unique_model_points"] == 15
+    assert payload["native_probe_records"] == 50  # Only these two synthetic fixtures.
+    assert payload["matrix_complete"] is False
+    assert payload["mechanism_complete"] is False
+    assert payload["publication_ready"] is False
+    text = render.table(payload)
+    assert "10 explicitly declared cells" in text
+    assert "Strong random tail, LR $10^{-5}$, seed 42" in text
+    assert "not independent replications" in text
+
+
 @pytest.mark.parametrize("change", ["nan", "negative", "boolean", "missing_denominator",
                                    "wrong_reference", "incomplete", "missing_model", "injection",
                                    "unexpected_cell", "missing_cell"])

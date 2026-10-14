@@ -31,6 +31,17 @@ def test_aggregate_skips_missing_faces():
     assert gender == "F" and age == 22 and cons == 1.0
 
 
+def test_tie_retains_first_label_in_saved_face_order():
+    attrs = {"a": ("F", 20), "b": ("M", 30)}
+    assert aggregate_group(["a", "b"], attrs) == ("F", 25, 0.5)
+    assert aggregate_group(["b", "a"], attrs) == ("M", 25, 0.5)
+
+
+def test_unknown_is_counted_not_confidence_filtered():
+    attrs = {"a": ("?", 20), "b": ("?", 30), "c": ("M", 40)}
+    assert aggregate_group(["missing", "a", "b", "c"], attrs) == ("?", 30, 0.667)
+
+
 def test_identity_group_roundtrip_new_fields():
     g = IdentityGroup(
         identity_group_id="g1",

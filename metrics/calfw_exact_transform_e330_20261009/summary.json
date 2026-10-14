@@ -1,0 +1,78 @@
+{
+  "execution_complete": true,
+  "source_images": 4,
+  "transforms": 10,
+  "bin_endpoints": 12000,
+  "checks": 40,
+  "per_transform": {
+    "resize_area": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    }
+  },
+  "exact_matches": 0,
+  "unmatched": 40,
+  "ambiguous": 0,
+  "independent_replay": true,
+  "approximate_matching": false,
+  "identity_crosswalk": false,
+  "global_absence_claim": false,
+  "publication_ready": false,
+  "limitation": "Four fixed samples/ten pixel transforms only; no global or identity inference"
+}

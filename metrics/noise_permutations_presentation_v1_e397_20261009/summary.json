@@ -1,0 +1,21 @@
+{
+  "execution_complete": true,
+  "presentation_complete": true,
+  "source_statistics_independently_accepted": true,
+  "permutation_seeds": [
+    42,
+    1,
+    2
+  ],
+  "training_seeds": [
+    42,
+    1,
+    2
+  ],
+  "rows_per_stratum": 15,
+  "strata": 2,
+  "causal_source_evidence": false,
+  "publication_ready": false,
+  "training_identity_independence": "unverified",
+  "scope": "aggregate-only projection; original permutation42 previously accepted E169, added1/2 independently replayed E392; no new neural inference, seed-population inference, empirical identity audit or publication clearance"
+}

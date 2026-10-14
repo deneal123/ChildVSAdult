@@ -1,0 +1,49 @@
+{
+  "recognition": {
+    "identity": 34.275978088378906,
+    "age": 1429.3297119140625,
+    "adversarial_age": 1445.232421875,
+    "total": 38.59577178955078,
+    "gradient_norm": 189.43519831876634
+  },
+  "fas": {
+    "discriminator_loss": 0.5045258402824402,
+    "generator_loss": 43.48100280761719,
+    "adversarial_loss": 0.3099496364593506,
+    "identity_loss": 0.0013218052918091416,
+    "age_loss": 2.023477554321289,
+    "discriminator_gradient_norm": 3.369088687977422,
+    "generator_gradient_norm": 31.133870059822495,
+    "discriminator_updated": true,
+    "generator_updated": true,
+    "recognizer_updated": false,
+    "generator_bn_policy": "adapt",
+    "full_joint_fas": false
+  },
+  "updated_recognition_parameter_tensors": 26,
+  "updated_classifier_parameter_tensors": 1,
+  "recognition_buffers_frozen": true,
+  "recognizer_state_unchanged_during_fas": true,
+  "identity_head_unchanged_during_fas": true,
+  "embeddings_finite": true,
+  "embedding_shape": [
+    2,
+    512
+  ],
+  "target_group": 1,
+  "joint_steps_complete": true,
+  "training_complete": false,
+  "scientific_evaluation_complete": false,
+  "full_method_parity": false,
+  "publication_ready": false,
+  "real_crop_joint_smoke_complete": true,
+  "cuda_smoke_complete": true,
+  "cuda_probed": true,
+  "common_budget_matched": false,
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "torch_version": "2.12.0+cu132",
+  "cuda_version": "13.2",
+  "peak_allocated_bytes": 1784184832,
+  "peak_reserved_bytes": 1920991232
+}

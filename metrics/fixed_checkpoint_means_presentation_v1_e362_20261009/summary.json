@@ -1,0 +1,12 @@
+{
+  "execution_complete": true,
+  "presentation_complete": true,
+  "source_statistics_independently_accepted": true,
+  "configurations": 4,
+  "checkpoints": 12,
+  "rows_per_stratum": 20,
+  "full_matrix_complete": false,
+  "mechanism_complete": false,
+  "publication_ready": false,
+  "scope": "metadata projection of accepted native fixed-checkpoint means; no new inference, training, transitive-input rehash, seed-population interval, mechanism or publication clearance"
+}

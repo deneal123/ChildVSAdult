@@ -1,0 +1,34 @@
+{
+  "main_pages": 10,
+  "supplement_pages": 10,
+  "newly_individually_viewed_pages": [
+    "main-06.png",
+    "main-07.png",
+    "main-08.png",
+    "supplement-03.png",
+    "supplement-04.png",
+    "supplement-05.png",
+    "supplement-06.png",
+    "supplement-08.png",
+    "supplement-09.png",
+    "supplement-10.png"
+  ],
+  "exact_prior_review_bridges": [
+    "main-01.png",
+    "main-02.png",
+    "main-03.png",
+    "main-04.png",
+    "main-05.png",
+    "main-09.png",
+    "main-10.png",
+    "supplement-01.png",
+    "supplement-02.png",
+    "supplement-07.png"
+  ],
+  "all_20_pages_layout_covered": true,
+  "observations": "Root inspected ten changed pages; noise subsection and claims/table XVIII readable; no observed clipping, overlaps or blank pages. Font fallback T1/ptm/m/scit warnings remain. Scientific/ethical gates not certified.",
+  "dpi": 150,
+  "portal_proof_checked": false,
+  "publication_ready": false,
+  "privacy_certified": false
+}

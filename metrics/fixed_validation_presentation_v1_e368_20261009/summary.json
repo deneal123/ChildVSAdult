@@ -1,0 +1,10 @@
+{
+  "presentation_complete": true,
+  "source_statistics_independently_accepted": true,
+  "validation_pairs": 9158,
+  "checkpoints": 1,
+  "historical_epoch_loss_recovery": false,
+  "mechanism_claim": false,
+  "publication_ready": false,
+  "scope": "metadata-only projection of accepted retrospective frozen/last measurement; no new data, inference, training, transitive-input rehash, population inference or mechanism clearance"
+}

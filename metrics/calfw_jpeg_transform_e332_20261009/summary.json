@@ -1,0 +1,978 @@
+{
+  "execution_complete": true,
+  "source_images": 4,
+  "transforms": 10,
+  "bin_endpoints": 12000,
+  "checks": 640,
+  "per_variant": {
+    "resize_area@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_area@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_cubic@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_lanczos4@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "resize_linear_exact@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop112_center@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_area@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop160_area@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop192_area@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg70": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg75": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg80": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg85": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg90": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg95": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg100": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpegdefault": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg70@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg75@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg80@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg85@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg90@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg95@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpeg100@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    },
+    "crop128_linear@jpegdefault@bgr2rgb": {
+      "checks": 4,
+      "exact_matches": 0,
+      "unmatched": 4,
+      "ambiguous": 0
+    }
+  },
+  "exact_matches": 0,
+  "unmatched": 640,
+  "ambiguous": 0,
+  "independent_replay": true,
+  "approximate_matching": false,
+  "identity_crosswalk": false,
+  "global_absence_claim": false,
+  "publication_ready": false,
+  "limitation": "Four fixed samples/160 JPEG variants only; no global or identity inference"
+}

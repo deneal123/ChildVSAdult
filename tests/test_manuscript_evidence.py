@@ -468,10 +468,10 @@ def test_strong_campaign_description_distinguishes_fixed_budget_from_exploratory
     assert "without validation-based early stopping" in protocol
     assert "running statistics are frozen" in protocol
     assert "best-validation checkpoints with adaptive BatchNorm are exploratory" in protocol
-    assert "identity-group-disjoint" in protocol
-    assert "constant-predictor controls" in protocol
-    assert "Validation-loss trajectories" in protocol
-    assert "full matrix\nis not yet available" in protocol
+    assert "person-disjoint folds, fit-only scaling" in protocol
+    assert "matched-denominator mean/median constant controls" in protocol
+    assert "validation loss was not collected and cannot be recovered from AUC" in protocol
+    assert "full matrix is not yet available" in " ".join(protocol.split())
     assert "patience three" not in protocol
 
 
@@ -479,7 +479,7 @@ def test_supplement_bounds_historical_figures_and_matched_table_width():
     text = (ROOT / "latex/papers/journal-1-tbiom/en/supplement.tex").read_text(encoding="utf-8")
     table = text.partition(r"\label{tab:matched-source}")[2].partition(r"\end{table}")[0]
     assert r"\resizebox{\columnwidth}{!}" in table
-    figure = text.partition(r"\includegraphics[width=\columnwidth]{fig_external.pdf}")[2].partition(r"\end{figure}")[0]
+    figure = text.partition(r"\includegraphics[width=\columnwidth]{fig_external_layout_v2.pdf}")[2].partition(r"\end{figure}")[0]
     assert "Historical random-impostor" in figure
     assert "not the corrected endpoint-age-matched FG-NET headline" in figure
     assert "two FG-NET estimates are dependent" in figure
@@ -504,12 +504,14 @@ def test_partial_source_control_discloses_total_image_budget_confound():
     result = verified_result(ROOT / "metrics/matched_arm_image_budget_20261002/summary.json", ROOT)
     assert result["positive_image_budget_equal"] is True
     assert result["all_train_image_budget_equal"] is False
-    main = MAIN.read_text(encoding="utf-8").partition(r"\textbf{Partial source control.}")[2].partition(r"\subsection")[0]
+    main = MAIN.read_text(encoding="utf-8").partition(r"\textbf{Within-source age-gap control.}")[2].partition(r"\begin{table}")[0]
     supplement = SUPPLEMENT.read_text(encoding="utf-8").partition(r"\section{Partial Matched-Source Control}")[2].partition(r"\section")[0]
     for arm in ("LOW", "CROSS"):
         count = result["arms"][arm]["all_train_images"]
-        assert _latex_int(count) in main and _latex_int(count) in supplement
-    assert "total training images differ" in main
+        assert _latex_int(count) in supplement
+    assert "earlier $+0.0257$ control had unequal total image budgets" in main
+    assert "last of 10 epochs" in main and "1{,}096 images" in main
+    assert "paired subject 95\\% CI" in main
     assert "not only the 1{,}096 selected positive images" in supplement
     assert "not fully matched" in supplement
     assert "arm's own positive pool" not in supplement

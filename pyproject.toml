@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "age-gap"
-version = "0.1.0"
+version = "0.1.1"
 description = "Controlled, consent-based, human-reviewed cross-age identity matching from naturally anchored social posts."
 requires-python = ">=3.10,<3.13"
 # Базовые зависимости MVP-1 (конвейер данных): парсинг, препроцессинг лиц, схемы.

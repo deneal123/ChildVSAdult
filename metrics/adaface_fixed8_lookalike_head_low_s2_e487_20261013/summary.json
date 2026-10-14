@@ -1,0 +1,69 @@
+{
+  "training_complete": true,
+  "evaluation_complete": false,
+  "publication_ready": false,
+  "peak_allocated_bytes": 651918848,
+  "peak_reserved_bytes": 729808896,
+  "history": [
+    {
+      "epoch": 1,
+      "training_loss": 0.3202719750911853,
+      "validation_auc": 0.9288660344009972,
+      "mean_gradient_norm": 0.4998574061228622,
+      "epoch_seconds": 665.703
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.3134561616231507,
+      "validation_auc": 0.9319247582454935,
+      "mean_gradient_norm": 0.4893739375369122,
+      "epoch_seconds": 602.0159999999998
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.30846730168213293,
+      "validation_auc": 0.9334794215414417,
+      "mean_gradient_norm": 0.48773162477337406,
+      "epoch_seconds": 584.1399999999999
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.30431395694274166,
+      "validation_auc": 0.9346499141207945,
+      "mean_gradient_norm": 0.4859813547314898,
+      "epoch_seconds": 561.047
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.3004505852191741,
+      "validation_auc": 0.9357020315643818,
+      "mean_gradient_norm": 0.4835320969309633,
+      "epoch_seconds": 534.7810000000004
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.2966047172693336,
+      "validation_auc": 0.9365921820615312,
+      "mean_gradient_norm": 0.4807124591311999,
+      "epoch_seconds": 550.25
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.2931257128887511,
+      "validation_auc": 0.9373718745351379,
+      "mean_gradient_norm": 0.47742705137833275,
+      "epoch_seconds": 811.8589999999995
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.28973335461984373,
+      "validation_auc": 0.9380489307105307,
+      "mean_gradient_norm": 0.4747031044790471,
+      "epoch_seconds": 4448.6410000000005
+    }
+  ],
+  "train_pairs": 44358,
+  "validation_pairs": 9158,
+  "unique_crop_files": 31382,
+  "limitation": "one native fixed-budget training cell; no mechanism conclusion before shared evaluation/representation diagnostics and completed matrix"
+}

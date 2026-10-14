@@ -1,0 +1,365 @@
+{
+  "reviewer": "root Codex visual inspection",
+  "check_date": "2026-10-03",
+  "scope": "Current compiled E82 staged PDFs: seven changed page images individually viewed, thirteen exact-byte-identical to individually root-viewed E80 images. Layout/navigation only, not numeric or portal validation.",
+  "render_commands": [
+    "pdftoppm -r 150 -png .work/submission-e82-navigation/manuscript/main.pdf .work/e82-navigation-visual/main",
+    "pdftoppm -r 150 -png .work/submission-e82-navigation/supplement/supplement.pdf .work/e82-navigation-visual/supplement"
+  ],
+  "changed_pages": {
+    "main": {
+      "6": "Scaling/apparent-strata descriptive references readable; both columns fit and remain clear.",
+      "8": "Hard-negative descriptive reference readable; discussion/limitations remain within margins."
+    },
+    "supplement": {
+      "1": "Explicit main/local reference convention readable; correct overview SII/SIII/SVII/SVIII/SIX/SXIV confirmed from extracted text/aux.",
+      "2": "Claims table main Sec V-F/V-D/V-I and main Table V targets corrected; all rows fit, no clipping or overlap.",
+      "3": "Automatic audit main Tables III/IV/V explicitly qualified; table and mechanism paragraphs fit.",
+      "5": "Data-card main Sec VIII references explicit; quality table/text fit after wrapping changes.",
+      "6": "Card/retrieval/control text wraps differently but is readable; CMC figure and bibliography clear."
+    }
+  },
+  "all_20_pages_layout_covered": true,
+  "blank_or_clipped_pages_observed": 0,
+  "overlapping_tables_observed": 0,
+  "navigation_corrections_pending": false,
+  "upload_consistency_verified": false,
+  "portal_proof_checked": false,
+  "compiler_execution_attested": false,
+  "privacy_certified": false,
+  "publication_ready": false,
+  "main_pdf_record": {
+    "path": ".work/submission-e82-navigation/manuscript/main.pdf",
+    "bytes": 304824,
+    "sha256": "22e6655cc774efbfb4227422fdb4b6d073af971ede627a9a25f04bf456276d26"
+  },
+  "main": [
+    {
+      "page": 1,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-01.png",
+        "bytes": 657170,
+        "sha256": "6c864ad0c570dcfcb485e339461013008369d343e088756c2a51e01cd583231d"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-01.png",
+        "bytes": 657170,
+        "sha256": "6c864ad0c570dcfcb485e339461013008369d343e088756c2a51e01cd583231d"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 2,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-02.png",
+        "bytes": 672411,
+        "sha256": "8a8844c678fb1f86d6b93545397372b352390e42392d024acdf6e55a7cfe2be7"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-02.png",
+        "bytes": 672411,
+        "sha256": "8a8844c678fb1f86d6b93545397372b352390e42392d024acdf6e55a7cfe2be7"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 3,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-03.png",
+        "bytes": 383852,
+        "sha256": "1ca44bad467061522d84efed506127bb3c1db9be49ea780fa62b6e747ddfa1a0"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-03.png",
+        "bytes": 383852,
+        "sha256": "1ca44bad467061522d84efed506127bb3c1db9be49ea780fa62b6e747ddfa1a0"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 4,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-04.png",
+        "bytes": 750880,
+        "sha256": "c48ecadb5da6c32647e3f56d8113bdc5254874aedb2f476abf98f73782d52776"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-04.png",
+        "bytes": 750880,
+        "sha256": "c48ecadb5da6c32647e3f56d8113bdc5254874aedb2f476abf98f73782d52776"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 5,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-05.png",
+        "bytes": 587279,
+        "sha256": "c1192312bcd2ff1b665713be57fd0e15ece9da86dabaf127e2ad363c2ccd1cf6"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-05.png",
+        "bytes": 587279,
+        "sha256": "c1192312bcd2ff1b665713be57fd0e15ece9da86dabaf127e2ad363c2ccd1cf6"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 6,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-06.png",
+        "bytes": 707388,
+        "sha256": "98c1538e5bd56834c471f8194b32356861ab3d435073e6c44052e76e533ffa52"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-06.png",
+        "bytes": 706429,
+        "sha256": "25224bde75478cf8e91e6464c4b47960aa6b92706ff07bb1592e1e64f44f13a4"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Scaling/apparent-strata descriptive references readable; both columns fit and remain clear."
+    },
+    {
+      "page": 7,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-07.png",
+        "bytes": 525246,
+        "sha256": "d2f0af8165c9cb1631cfcde0428ab18acd36a9a304d4f564a12218c39039c0be"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-07.png",
+        "bytes": 525246,
+        "sha256": "d2f0af8165c9cb1631cfcde0428ab18acd36a9a304d4f564a12218c39039c0be"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 8,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-08.png",
+        "bytes": 699931,
+        "sha256": "dc8fda179c6d76364d1e88023c477967376d473d14fc9220071408c0a33da775"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-08.png",
+        "bytes": 700204,
+        "sha256": "335df6a0adc29691b9c7e1a589d99036351105ae3ae58f9a16148b912036fc21"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Hard-negative descriptive reference readable; discussion/limitations remain within margins."
+    },
+    {
+      "page": 9,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-09.png",
+        "bytes": 684540,
+        "sha256": "65e489bf8888135f97d9fe4082aa23703f86a73505121dab833e7454d857c981"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-09.png",
+        "bytes": 684540,
+        "sha256": "65e489bf8888135f97d9fe4082aa23703f86a73505121dab833e7454d857c981"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 10,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/main-10.png",
+        "bytes": 749630,
+        "sha256": "ff72eed7e2f8d716b7ea1a686b78fbe411068ddb4480927c200b64e3412a0d33"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/main-10.png",
+        "bytes": 749630,
+        "sha256": "ff72eed7e2f8d716b7ea1a686b78fbe411068ddb4480927c200b64e3412a0d33"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    }
+  ],
+  "supplement_pdf_record": {
+    "path": ".work/submission-e82-navigation/supplement/supplement.pdf",
+    "bytes": 435125,
+    "sha256": "bdd744c1da3ff0d572f52df18c3081f3412dc296d5ab6aafe97438eac7347ffb"
+  },
+  "supplement": [
+    {
+      "page": 1,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-01.png",
+        "bytes": 552024,
+        "sha256": "5c33676a1d2f6aaeae54fe9c3334c3e25e44be76b10fe842ffe2f377ae0fc312"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-01.png",
+        "bytes": 550532,
+        "sha256": "ce73459324ab8eff2fbeafc7e55518d5b2d68b89c079a7b3ba7827bba0928e31"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Explicit main/local reference convention readable; correct overview SII/SIII/SVII/SVIII/SIX/SXIV confirmed from extracted text/aux."
+    },
+    {
+      "page": 2,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-02.png",
+        "bytes": 444497,
+        "sha256": "60f486d0c47d2cf4200f097b36e3871ead560a7e2ed8d2b78d33727ece9bf10c"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-02.png",
+        "bytes": 438927,
+        "sha256": "344fac9c7ccfa51137b82b27a0fac383fa1680ab7cb4f6ee0876218eef57a35b"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Claims table main Sec V-F/V-D/V-I and main Table V targets corrected; all rows fit, no clipping or overlap."
+    },
+    {
+      "page": 3,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-03.png",
+        "bytes": 550999,
+        "sha256": "385e8fcda23bfda3d8283da2e80b12e7957b7ca62283e31436a5cad6df09277c"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-03.png",
+        "bytes": 549984,
+        "sha256": "7c5c36f270f1f4a933bb793fdd6f40da8abcfbb148af5bbb21ecc4518a2f4ace"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Automatic audit main Tables III/IV/V explicitly qualified; table and mechanism paragraphs fit."
+    },
+    {
+      "page": 4,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-04.png",
+        "bytes": 526225,
+        "sha256": "e50c32c40c22ed52d1b5e856ba1eda8f4f2c235fca21388e60f1b36d2441e73c"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-04.png",
+        "bytes": 526225,
+        "sha256": "e50c32c40c22ed52d1b5e856ba1eda8f4f2c235fca21388e60f1b36d2441e73c"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 5,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-05.png",
+        "bytes": 656343,
+        "sha256": "9b691419edbe9f076ad30645760b64bfeb4f8483d6c8faef0341e8decfb4913d"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-05.png",
+        "bytes": 656639,
+        "sha256": "cc17c37cb5281617c0788482e5098cbbd887f69a6506a0b0e1153ee28b8f0d1e"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Data-card main Sec VIII references explicit; quality table/text fit after wrapping changes."
+    },
+    {
+      "page": 6,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-06.png",
+        "bytes": 624734,
+        "sha256": "7c05de4c5ef3a5f2f00185de04be7f4886fd4db3bd5b37a853166882f4012c7a"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-06.png",
+        "bytes": 604656,
+        "sha256": "a93e8e402c7efdd1dc6185b82ca6cd8b2d993324a98f1f7a6c6c7487b7da9415"
+      },
+      "inspection_mode": "root newly viewed page",
+      "layout": "clear",
+      "notes": "Card/retrieval/control text wraps differently but is readable; CMC figure and bibliography clear."
+    },
+    {
+      "page": 7,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-07.png",
+        "bytes": 364050,
+        "sha256": "90998d7122936f0cab80dfa52916c518659d3e1f86893c98ac232c316317e739"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-07.png",
+        "bytes": 364050,
+        "sha256": "90998d7122936f0cab80dfa52916c518659d3e1f86893c98ac232c316317e739"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 8,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-08.png",
+        "bytes": 383407,
+        "sha256": "690744b55d45a2b413a2774a405c416f931f0cdfaa8f7f0a8637d9bce689ceb9"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-08.png",
+        "bytes": 383407,
+        "sha256": "690744b55d45a2b413a2774a405c416f931f0cdfaa8f7f0a8637d9bce689ceb9"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 9,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-09.png",
+        "bytes": 322260,
+        "sha256": "2577a4a3033613db92ce48e7ef4130248c289725b854c8b4f7740610fa1d15a2"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-09.png",
+        "bytes": 322260,
+        "sha256": "2577a4a3033613db92ce48e7ef4130248c289725b854c8b4f7740610fa1d15a2"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    },
+    {
+      "page": 10,
+      "render_record": {
+        "path": ".work/e82-navigation-visual/supplement-10.png",
+        "bytes": 87595,
+        "sha256": "fe77d3ce320437358c3801073a74e6a0438edec617b029509340528859fef7c7"
+      },
+      "prior_render_record": {
+        "path": ".work/e82-visual-proof/supplement-10.png",
+        "bytes": 87595,
+        "sha256": "fe77d3ce320437358c3801073a74e6a0438edec617b029509340528859fef7c7"
+      },
+      "inspection_mode": "exact-byte-identical previously viewed page",
+      "layout": "clear",
+      "notes": "Exact same rendered bytes as root-viewed E80 page; layout unchanged."
+    }
+  ]
+}
